@@ -1,0 +1,30 @@
+export type UserType = {
+    id?: number;
+    uuid?: string;
+    name?: string;
+    email?: string;
+    phone_number?: string;
+    document?: string | null;
+    photo_profile?: string | null;
+    address_1?: string | null;
+    address_2?: string | null;
+    address_number?: string | null;
+    address_complement?: string | null;
+    address_zip_code?: string | null;
+    address_city?: string | null;
+    address_state?: string | null;
+    full_address?: string | null;
+    newsletter?: number;
+    first_time?: number;
+    is_blocked?: number;
+    block_expire_at?: string | null;
+    account_verified_at?: string;
+    last_activity?: string | null;
+    account_number?: string | null;
+    accepted_term?: number;
+    home_dir?: string;
+    advert_slots?: number;
+    deleted_at?: string | null;
+    created_at?: string | null;
+    updated_at?: string | null;
+}

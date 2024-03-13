@@ -14,7 +14,20 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@/client/routes": ["src/routes/client.ts"],
+      "@/components": ["src/components/index.ts"],
+      "@/container": ["src/repository/Services/container.ts"],
+      "@/helpers": ["src/helpers/index.ts"],
+      "@/hooks": ["src/hooks/index.ts"],
+      "@/interfaces": ["src/repository/Interfaces/index.ts"],
+      "@/layouts": ["src/layouts/index.tsx"],
+      "@/repository": ["src/repository/Interfaces/index.ts"],
+      "@/templates/forms": ["src/templates/Forms/index.ts"],
+      "@/teste": ["src/teste/src/index.ts"],
+      "@/themes/default": ["src/themes/default.tsx"],
+      "@/types": ["src/repository/Types/_index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
