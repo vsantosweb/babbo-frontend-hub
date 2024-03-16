@@ -4,5 +4,20 @@
   "sourceRoot": "apps/client",
   "projectType": "application",
   "targets": {},
-  "tags": []
+  "tags": [],
+  "serve": {
+    "builder": "@nrwl/web:dev-server",
+    "options": {
+      "buildTarget": "client:build",
+      "host": "localhost",
+      "ssl": true,
+      "sslKey": "../../certs/key.pem",
+      "sslCert": "../../certs/cert.pem"
+    },
+    "configurations": {
+      "production": {
+        "buildTarget": "client:build:production"
+      }
+    }
+  }
 }

@@ -5,13 +5,13 @@ export type EventDisplayType = {
     size?: string,
 }
 
-export type EventType = {
+export interface EventInterface  {
     id?: number;
     uuid?: string;
     name?: string;
     slug?: string;
     description?: string;
-    banner_url?: string;
+    event_image?: string;
     tags?: string;
     start_date?: string;
     geolocation?: string;
@@ -26,6 +26,6 @@ export type EventType = {
 export interface EventBanner {
     uuid: string;
     slug: string;
-    banner_url: string;
+    event_image: string;
     impressions: number;
 }

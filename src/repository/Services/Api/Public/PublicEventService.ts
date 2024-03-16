@@ -1,5 +1,5 @@
 import { EventRepositoryInterface } from "@/interfaces";
-import { EventBanner, EventDisplayType, EventType } from "@/types";
+import { EventBanner, EventDisplayType, EventInterface } from "@/types";
 import { AxiosInstance } from 'axios';
 import ApiService from "..";
 import { injectable } from "inversify";
@@ -22,11 +22,11 @@ export class PublicEventService implements EventRepositoryInterface {
     /**
      * Retorna uma lista de eventos com base nos parâmetros fornecidos.
      * @param {string} params - Parâmetros de filtro para a consulta de eventos.
-     * @returns {Promise<EventType[]>} Uma promessa que resolve com uma lista de eventos.
+     * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
      */
-    async events(params?: string): Promise<EventType[]> {
+    async events(params?: string): Promise<EventInterface[]> {
         try {
-            const response = await this.api.get<EventType[]>(`/events?${params}`);
+            const response = await this.api.get(`/events?${params}`);
             return response.data;
         } catch (error) {
             console.error('Erro ao obter eventos:', error);
@@ -37,11 +37,11 @@ export class PublicEventService implements EventRepositoryInterface {
     /**
      * Retorna os detalhes de um evento com base no ID fornecido.
      * @param {number|string} id - O ID do evento.
-     * @returns {Promise<EventType>} Uma promessa que resolve com os detalhes do evento.
+     * @returns {Promise<EventInterface>} Uma promessa que resolve com os detalhes do evento.
      */
-    async event(id: number | string): Promise<EventType> {
+    async event(id: number | string): Promise<EventInterface> {
         try {
-            const response = await this.api.get<EventType>(`/events/${id}`);
+            const response = await this.api.get<EventInterface>(`/events/${id}`);
             return response.data;
         } catch (error) {
             console.error('Erro ao obter detalhes do evento:', error);
@@ -52,11 +52,11 @@ export class PublicEventService implements EventRepositoryInterface {
     /**
      * Retorna uma lista de eventos relacionados ao evento com o ID fornecido.
      * @param {number|string} id - O ID do evento.
-     * @returns {Promise<EventType[]>} Uma promessa que resolve com uma lista de eventos relacionados.
+     * @returns {Promise<EventInterface[]>} Uma promessa que resolve com uma lista de eventos relacionados.
      */
-    async related(id: number | string): Promise<EventType[]> {
+    async related(id: number | string): Promise<EventInterface[]> {
         try {
-            const response = await this.api.get<EventType[]>(`/events/${id}/related`);
+            const response = await this.api.get<EventInterface[]>(`/events/${id}/related`);
             return response.data;
         } catch (error) {
             console.error('Erro ao obter eventos relacionados:', error);

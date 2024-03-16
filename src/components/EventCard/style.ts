@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
 
 export const CardEvent = styled.div`
-  border-radius: ${({ theme }:any) => theme.defaultRadius};
+  border-radius: ${({ theme }: any) => theme.defaultRadius};
   background: #fff;
   /* border: solid 1px #eee; */
-  max-width: 320px;
+  max-width: 100%;
+  /* max-width: 320px; */
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -35,10 +36,10 @@ overflow: hidden;
 `
 export const CardEventImage = styled.img`
   /* box-shadow: 0 13px 27px -5px #32325d40,0 8px 16px -8px #0000004d,0 -6px 16px -6px #00000008; */
-  border-top-left-radius: ${({ theme }:any) => theme.defaultRadius};
-  border-top-right-radius: ${({ theme }:any) => theme.defaultRadius};
-  border-bottom-left-radius: ${({ theme }:any) => theme.defaultRadius};
-  border-bottom-right-radius: ${({ theme }:any) => theme.defaultRadius};
+  border-top-left-radius: ${({ theme }: any) => theme.defaultRadius};
+  border-top-right-radius: ${({ theme }: any) => theme.defaultRadius};
+  border-bottom-left-radius: ${({ theme }: any) => theme.defaultRadius};
+  border-bottom-right-radius: ${({ theme }: any) => theme.defaultRadius};
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -54,7 +55,7 @@ export const CardEventImage = styled.img`
   -o-user-drag: none;
 `;
 
-export const CardEventBody = styled.a`
+export const CardEventBody = styled.div`
   display: flex;
   flex-direction: column;
   gap:5px;
@@ -75,7 +76,7 @@ export const CategoryTag = styled.div`
   background: ${({ theme }: any) => theme.colors.primary};
   margin-top: -11px;
   margin-left: 10px;
-  border-radius: ${({ theme }:any) => theme.defaultRadius};
+  border-radius: ${({ theme }: any) => theme.defaultRadius};
   padding-left: 10px;
   padding-right: 10px;
   color: #fff;
@@ -96,13 +97,13 @@ export const CardEventDateInfo = styled.span`
 `
 export const CardEventMutedText = styled.span`
   display: flex;
-  gap: 4px;
+  gap: 2px;
   align-items: center;
   font-weight: 500;
   color: #818181;
 `
 export const CardEventTitle = styled.h1`
-  font-size: 1.4em;
+  font-size: 1.2em;
   display: box;
   line-clamp: 2;
   overflow: hidden;
@@ -147,7 +148,7 @@ export const OwnerImage = styled.div`
       width: 100%;
       border-radius: 100%;
     }`
-    ;
+  ;
 export const OwnerName = styled.div`
 color: unset;
     font-size: 12px;

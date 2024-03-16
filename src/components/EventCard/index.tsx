@@ -3,32 +3,35 @@ import Link from 'next/link'
 
 import * as Styled from './style';
 import { CiCalendar, CiClock2, CiLocationOn } from "react-icons/ci";
+import { theme } from '@/themes/default';
+import { EventInterface } from '@/types';
 
 interface Props {
     data?: any;
     category?: any;
     image?: string
 }
-export const EventCard = ({ data, category, image }: Props) => {
+export const EventCard = (event: EventInterface) => {
+    console.log(event, 'caralho')
     return (
         <Styled.CardEvent>
             <Styled.CardEventImageContainer>
-                <Styled.CardEventImage src={'https://images.sympla.com.br/65e6070ed5f5f-lg.png'} />
+                <Styled.CardEventImage src={event.event_image} />
             </Styled.CardEventImageContainer>
             <Styled.CardEventBody>
                 <Styled.CardEventDetails>
                     <Styled.CardEventDateInfo>
-                        <Styled.CardEventMutedText style={{color: '#e969c0'}}>
+                        <Styled.CardEventMutedText style={{color: theme.colors.primary}}>
                             <CiCalendar /> <span>18 de Nov</span>
                         </Styled.CardEventMutedText>
                         -
-                        <Styled.CardEventMutedText style={{color: '#e969c0'}}>
+                        <Styled.CardEventMutedText style={{color: theme.colors.primary}}>
                             <CiClock2 /> <span>19h</span>
                         </Styled.CardEventMutedText>
                     </Styled.CardEventDateInfo>
-                    <Styled.CardEventTitle>Coldplay World Tour</Styled.CardEventTitle>
+                    <Styled.CardEventTitle>{event.name}</Styled.CardEventTitle>
 
-                    <Styled.CardEventMutedText> <CiLocationOn /> Alians Parque</Styled.CardEventMutedText>
+                    <Styled.CardEventMutedText> <CiLocationOn /> {event.place_name}</Styled.CardEventMutedText>
                 </Styled.CardEventDetails>
                 <Styled.CardEventInfo>
 

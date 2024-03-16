@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
-import * as Collection from './style';
+
+// import { ServiceHeader } from '@/components';
+import { useState, useEffect, useRef } from 'react'
+import * as Styles from './style';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Banner, EventCard, EventSearch } from '@/components';
 import { Stack } from '@chakra-ui/react';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import Link from 'next/link';
@@ -16,20 +17,21 @@ const mediaSizes = {
     1366: { slidesPerView: 4, spaceBetween: 20 }
 }
 
-export default function CategoryCollection({ data }: any) {
+
+export function HomeDiscovery(dataDiscovery) {
     return (
         <Stack spacing={8}>
             <Banner />
             {
-                data.map((category: string, key: string) => (
-                    <Collection.Container key={key}>
-                        <Collection.Header>
-                            <Collection.Title>{category.name} </Collection.Title>
+                dataDiscovery.map((category: any, key: string) => (
+                    <Styles.Container key={key}>
+                        <Styles.Header>
+                            <Styles.Title>{category.name} </Styles.Title>
                             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                                 <button className={`slideNav el-${category.id}-prev `}><FaAngleLeft /></button>
                                 <button className={`slideNav el-${category.id}-next`}><FaAngleRight /></button>
                             </div>
-                        </Collection.Header>
+                        </Styles.Header>
 
                         <Swiper
                             className='swiper-container'
@@ -43,22 +45,20 @@ export default function CategoryCollection({ data }: any) {
                             {category.trips.map((trip, key) => (
                                 <SwiperSlide key={key} >
                                     <Link href={'/event/example-event'}>
-                                        <>
                                         <EventCard
                                             key={key}
                                             data={trip}
                                             category={category}
                                             image={'https://picsum.photos/id/' + Math.floor(Math.random() * 500) + '/500/350.jpg'}
                                         />
-                                        </>
                                     </Link>
                                 </SwiperSlide>
                             ))}
                         </Swiper>
-                    </Collection.Container>
+                    </Styles.Container>
 
                 ))
             }
         </Stack>
-    )
+    );
 }

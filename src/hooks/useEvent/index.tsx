@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { EventBanner, EventDisplayType, EventType } from '@/types';
+import { EventBanner, EventDisplayType, EventInterface } from '@/types';
 import container from 'src/repository/providers/container';
 import { EventRepositoryInterface } from '@/interfaces';
 
@@ -11,7 +11,7 @@ export function useEvent() {
 
     const eventService = container.get<EventRepositoryInterface>('public');
 
-    async function fetchEvents(params?: string): Promise<EventType[]> {
+    async function fetchEvents(params?: string): Promise<EventInterface[] | any> {
         setLoading(true);
         setError(null);
 
@@ -26,7 +26,7 @@ export function useEvent() {
         }
     }
 
-    async function fetchEvent(id: number | string): Promise<EventType> {
+    async function fetchEvent(id: number | string) {
         setLoading(true);
         setError(null);
 
@@ -41,7 +41,7 @@ export function useEvent() {
         }
     }
 
-    async function fetchRelatedEvents(id: number | string): Promise<EventType[]> {
+    async function fetchRelatedEvents(id: number | string): Promise<EventInterface[]> {
         setLoading(true);
         setError(null);
 

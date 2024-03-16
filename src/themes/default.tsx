@@ -19,12 +19,13 @@ export type ThemeProps = {
 
 export const theme: ThemeProps = {
   defaultContainer: {
-    width: '980px',
+    width: '1280px',
     spacing: '.9em',
   },
 
   colors: {
-    primary: '#002A5C',
+    // primary: '#6f2cf6',
+    primary: '#ea1e63',
     secondary: '#15FF83',
     text: '#333',
     background: '#fff',
@@ -38,7 +39,7 @@ export const theme: ThemeProps = {
     body: 'Helvetica Neue, Helvetica, Arial, sans-serif',
     heading: 'Helvetica Neue, Helvetica, Arial, sans-serif',
   },
-  defaultRadius: '25px',
+  defaultRadius: '15px',
 };
 
 const activeLabelStyles = {
@@ -51,6 +52,7 @@ const variantOutlined = () => ({
       borderColor: theme.colors.primary,
       boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px;',
     },
+    borderRadius: '20px'
   },
 });
 
@@ -101,7 +103,7 @@ const charkaExtendThemeConfig = {
     Button: {
       baseStyle: {
         borderRadius: theme.defaultRadius,
-        backgroundColor: "#002A5C", // Sua cor personalizada
+        backgroundColor: theme.colors.primary, // Sua cor personalizada
         color: "white", // Define a cor do texto, se necessário
         _hover: {
           backgroundColor: "blue.800", // Cor ao passar o mouse, ajuste conforme necessário
@@ -127,6 +129,9 @@ const charkaExtendThemeConfig = {
       },
     },
     Input: {
+      baseStyle: {
+        borderRadius: '100%',
+      },
       sizes: {
         lg: {
           field: {

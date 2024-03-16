@@ -26,6 +26,7 @@
       "@/templates/forms": ["src/templates/Forms/index.ts"],
       "@/teste": ["src/teste/src/index.ts"],
       "@/themes/default": ["src/themes/default.tsx"],
+      "@/themes/babbo/templates": ["src/themes/babbo/templates/index.ts"],
       "@/types": ["src/repository/Types/_index.ts"]
     }
   },

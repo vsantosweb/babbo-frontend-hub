@@ -5,7 +5,7 @@ const GlobalStyles = css`
 @import '~line-awesome/dist/line-awesome/css/line-awesome.css';
 
   body,
-  html, #root {
+  html, #root, #__next, .app {
     height: 100%;
   }
   body {
@@ -16,12 +16,45 @@ const GlobalStyles = css`
   *:focus {
     outline: none !important;
   }
+  .swiper-pagination-bullet{
+    background: #ea1e63;
+    border:solid 1px #fff;
+  }
+  .slideNavBanner{
+    color:#ea1e63;
+    background-color: #000;
+    border-radius: 100%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3em;
+    transform: translateY(-50%);
+    &.el-banner-prev{
+      position: absolute;
+      z-index: 2;
+      top:50%;
+      margin-left: 8px;
+
+    }
+    &.el-banner-next{
+      position: absolute;
+      z-index: 2;
+      top:50%;
+      right: 0;
+      margin-right: 8px;
+
+    }
+  }
   .slideNav {
-    width: 35px;
-    height: 35px;
+    width: 25px;
+    height: 25px;
     border-radius: 100%;
     background: none;
-    border: solid 1px;
+    /* background: #000; */
+    color: #ea1e63;
+    /* border: solid 1px; */
     outline: none;
     font-size: 24px;
     box-shadow: none;
@@ -108,28 +141,6 @@ const GlobalStyles = css`
     }
   }
 
-  .slideNav {
-    width: 35px;
-    height: 35px;
-    border-radius: 100%;
-    background: none;
-    border: solid 1px;
-    outline: none;
-    font-size: 24px;
-    box-shadow: none;
-    margin-bottom: 0;  
-    margin-right: 0.4em;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: center;
-    &:focus {
-      outline: none;
-    }
-    &.swiper-button-disabled{
-      opacity: .4;
-    }
-  }
   /* .swiper-container{
     padding: 0px 1em;
   } */
