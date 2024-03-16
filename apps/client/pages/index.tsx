@@ -1,8 +1,6 @@
 import Layout from '@/layouts';
 import { useEvent } from '@/hooks';
 import { Suspense, useEffect, useState } from 'react';
-import CategoryCollection from './CategoryCollection';
-import trips from './CategoryCollection/trips-by-category.json'
 import { Container } from 'react-grid-system';
 import { Banner, EventCard, EventCardFeatured, EventSearch, Navigation } from '@/components';
 import { HomeDiscovery } from '@/themes/babbo/templates';
@@ -32,7 +30,6 @@ export function Index() {
         <HomeDiscovery dataDiscovery={events} />
 
       </Box>
-      {/* <CategoryCollection data={trips} /> */}
 
     </Layout>
 

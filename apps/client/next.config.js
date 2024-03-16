@@ -12,6 +12,7 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx'],
 };
 
 const plugins = [
