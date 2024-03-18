@@ -16,7 +16,7 @@ export const EventCard = (event: EventInterface) => {
     return (
         <Styled.CardEvent>
             <Styled.CardEventImageContainer>
-                <Styled.CardEventImage src={event.event_image} />
+                <Styled.CardEventImage src={`${event.event_image}.jpg`} />
             </Styled.CardEventImageContainer>
             <Styled.CardEventBody>
                 <Styled.CardEventDetails>
