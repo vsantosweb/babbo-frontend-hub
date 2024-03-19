@@ -22,11 +22,16 @@ export function Index() {
    * Note: The corresponding styles are in the ./index.none file.
    */
   return (
-    <Layout title={'home'} name={'client'}>
+    <Layout
+      title={'Babbo - Encontre bares, baladas, shows e muito mais aqui.'}
+      name={'client'}
+      description={'Babbo encontre baladas, barzinhos, shows, roles, e muito mais.'}
+      keywords={'guia,baladas,shows,roles,festas,party,bares'}
+    >
       {/* <EventSearch/> */}
       <Box mt={8}>
         {/* <Banner /> */}
-
+        <Box pb={6}><img src={'https://placehold.co/1280x120'} /> <hr /></Box>
         <HomeDiscovery dataDiscovery={events} />
 
       </Box>

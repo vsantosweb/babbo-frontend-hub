@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { EventBanner, EventDisplayType, EventInterface } from '@/types';
 import container from 'src/repository/providers/container';
 import { EventRepositoryInterface } from '@/interfaces';
+import moment from 'moment';
 
 
 export function useEvent() {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const [event, setEvent] = useState<EventInterface | null>(null);
 
     const eventService = container.get<EventRepositoryInterface>('public');
 
@@ -32,6 +34,7 @@ export function useEvent() {
 
         try {
             const event = await eventService.event(id);
+            setEvent(event.data)
             return event;
         } catch (error) {
             setError('Erro ao buscar detalhes do evento. Por favor, tente novamente mais tarde.');
@@ -41,7 +44,7 @@ export function useEvent() {
         }
     }
 
-    async function fetchRelatedEvents(id: number | string): Promise<EventInterface[]> {
+    async function fetchRelatedEvents(id: number | string): Promise<any> {
         setLoading(true);
         setError(null);
 
@@ -86,6 +89,22 @@ export function useEvent() {
         }
     }
 
+    const getFormattedDate = (event: EventInterface | null): { fully: string, partial: string } => {
+
+        const diffDate = moment(event?.end_date).diff(event?.start_date, 'days');
+
+        if (diffDate > 0) return {
+            fully: `${moment(event?.start_date).format('DD MMM - YYYY, LT').toUpperCase()} > ${moment(event?.end_date).format('DD MMM - YYYY, LT').toUpperCase()}`,
+            partial: `${moment(event?.start_date).format('DD MMM').toUpperCase()} • ${moment(event?.end_date).format('DD MMM').toUpperCase()}`,
+        }
+
+        return {
+            fully: `${moment(event?.start_date).format('DD MMM - YYYY, LT').toUpperCase()}`,
+            partial: `${moment(event?.start_date).format('DD MMM [-] HH a').toUpperCase()}`,
+        }
+
+    }
+
     return {
         loading,
         error,
@@ -93,6 +112,7 @@ export function useEvent() {
         fetchEvent,
         fetchRelatedEvents,
         fetchEventCategories,
-        fetchEventBanners
+        fetchEventBanners,
+        getFormattedDate
     };
 }

@@ -14,6 +14,7 @@ export interface EventInterface  {
     event_image?: string;
     tags?: string;
     start_date?: string;
+    end_date?: string;
     geolocation?: string;
     full_address?: string;
     place_name?: string;

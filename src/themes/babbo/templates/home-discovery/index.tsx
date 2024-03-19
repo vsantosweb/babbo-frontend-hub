@@ -27,14 +27,13 @@ export function HomeDiscovery({ dataDiscovery }: { dataDiscovery: EventInterface
     eventsMock;
 
     const renderWithAdSense = (event: EventInterface, index: number) => {
-        
+
         if ((index + 1) % 12 === 0) {
             return (
                 <Fragment key={event.id}>
-                    <Col style={{ marginBottom: '15px', }} sm={6} md={6} lg={6} xl={3}>
+                    <Col sm={6} md={6} lg={6} xl={3}>
                         <Link
-                            style={{ display: 'block !important' }}
-                            target={'_blank'}
+                            // target={'_blank'}
                             href={{ pathname: `evento/${event.slug}`, query: { id: event.uuid } }}>
                             <EventCard {...event} />
                         </Link>
@@ -48,6 +47,7 @@ export function HomeDiscovery({ dataDiscovery }: { dataDiscovery: EventInterface
         } else {
             return <Col key={index} sm={6} md={6} lg={6} xl={3}>
                 <Link
+                    // target={'_blank'}
                     href={{ pathname: `event/${event.slug}`, query: { id: event.uuid } }}>
                     <EventCard {...event} />
                 </Link>

@@ -14,12 +14,12 @@ export function Footer() {
         spacing={4}
         justify={{ base: 'center', md: 'space-between' }}
         align={{ base: 'center', md: 'center' }}>
-        <Stack direction={'row'} spacing={6}>
+        {/* <Stack direction={'row'} spacing={6}>
           <Box as="a" href={'#'}>Home</Box>
           <Box as="a" href={'#'}>About</Box>
           <Box as="a" href={'#'}>Blog</Box>
           <Box as="a" href={'#'}>Contact</Box>
-        </Stack>
+        </Stack> */}
         <Text>© {moment().format('Y')} Babbo. All rights reserved</Text>
       </Container>
     </Box>

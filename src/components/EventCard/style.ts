@@ -19,6 +19,7 @@ export const CardEvent = styled.div`
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
+  
   &:hover {
     /* box-shadow: 0 0 15px 3px rgba(0, 0, 0, 0.07); */
     transition: all 0.5s;
@@ -30,7 +31,7 @@ export const CardEvent = styled.div`
   }
 `;
 export const CardEventImageContainer = styled.div`
-max-height: 280px;
+max-height: 380px;
 height: 280px;
 overflow: hidden;
 `
@@ -98,18 +99,19 @@ export const CardEventDateInfo = styled.span`
 export const CardEventMutedText = styled.span`
   display: flex;
   gap: 2px;
+  font-size: .9rem;
   align-items: center;
   font-weight: 500;
   color: #818181;
 `
 export const CardEventTitle = styled.h1`
-  font-size: 1.2em;
+  font-size: 1.1rem;
   display: box;
   line-clamp: 2;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-weight: bold;
+  font-weight: 600;
 `;
 
 export const CardEventInfo = styled.div`

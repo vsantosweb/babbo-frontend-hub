@@ -7,7 +7,13 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import SwiperCore from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
+
+import moment from 'moment'
+import 'moment/locale/pt-BR'  // without this line it didn't work
+moment.locale('pt-BR')
+
 SwiperCore.use([Navigation, Pagination]);
+
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (

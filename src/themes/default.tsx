@@ -24,8 +24,8 @@ export const theme: ThemeProps = {
   },
 
   colors: {
-    // primary: '#6f2cf6',
-    primary: '#ea1e63',
+    primary: '#6f2cf6',
+    // primary: '#ea1e63',
     secondary: '#15FF83',
     text: '#333',
     background: '#fff',

@@ -4,7 +4,7 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 export function Banner() {
     return (
-        <div style={{ width: '100%', maxWidth: theme.defaultContainer.width, maxHeight: '410px', background: '#ddd', borderRadius: '20px' }}>
+        <div style={{marginBottom: '3em', width: '100%', maxWidth: theme.defaultContainer.width, maxHeight: '410px', background: '#ddd', borderRadius: '20px' }}>
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             </div>
             <Swiper

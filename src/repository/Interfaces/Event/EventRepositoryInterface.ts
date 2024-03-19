@@ -23,7 +23,7 @@ export interface EventRepositoryInterface {
      * @param {number|string} id - O ID do evento.
      * @returns {Promise<EventInterface[]>} Uma promessa que resolve com uma lista de eventos relacionados.
      */
-    related(id: number | string): Promise<EventInterface[]>;
+    related(id: number | string): Promise<any>;
 
     /**
      * Retorna uma lista de categorias de eventos disponíveis.

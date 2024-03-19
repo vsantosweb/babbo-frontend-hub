@@ -5,6 +5,7 @@ export * from './EventSearch';
 export * from './Footer';
 export * from './Banner';
 export * from './Sharebutton';
+export * from './RelatedEvents';
 
 
 

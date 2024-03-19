@@ -52,11 +52,10 @@ export class PublicEventService implements EventRepositoryInterface {
     /**
      * Retorna uma lista de eventos relacionados ao evento com o ID fornecido.
      * @param {number|string} id - O ID do evento.
-     * @returns {Promise<EventInterface[]>} Uma promessa que resolve com uma lista de eventos relacionados.
      */
-    async related(id: number | string): Promise<EventInterface[]> {
+    async related(id: number | string): Promise<any> {
         try {
-            const response = await this.api.get<EventInterface[]>(`/events/${id}/related`);
+            const response = await this.api.get<EventInterface>(`/events/${id}/related`);
             return response.data;
         } catch (error) {
             console.error('Erro ao obter eventos relacionados:', error);
