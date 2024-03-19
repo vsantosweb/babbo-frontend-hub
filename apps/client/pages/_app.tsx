@@ -9,7 +9,7 @@ import SwiperCore from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
 
 import moment from 'moment'
-import 'moment/locale/pt-BR'  // without this line it didn't work
+import 'moment/locale/pt-br'  // without this line it didn't work
 moment.locale('pt-BR')
 
 SwiperCore.use([Navigation, Pagination]);
