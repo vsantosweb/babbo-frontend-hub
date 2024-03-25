@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   Box,
@@ -15,19 +15,19 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
 import {
   HamburgerIcon,
   CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
-} from '@chakra-ui/icons'
+} from '@chakra-ui/icons';
 import { theme } from '@/themes/default';
 import { EventSearch } from '../EventSearch';
 import Link from 'next/link';
 
 export function Navigation() {
-  const { isOpen, onToggle } = useDisclosure()
+  const { isOpen, onToggle } = useDisclosure();
 
   return (
     <Box>
@@ -41,38 +41,50 @@ export function Navigation() {
         borderStyle={'solid'}
         // background={'#000'}
         borderColor={useColorModeValue('gray.200', 'gray.900')}
-        align={'center'}>
-        <Flex gap={4} width={theme.defaultContainer.width} margin={'auto'} alignItems={'center'}>
-          <Flex
-            ml={{ base: -2 }}
-            display={{ base: 'flex', md: 'none' }}>
+        align={'center'}
+      >
+        <Flex
+          gap={4}
+          width={theme.defaultContainer.width}
+          margin={'auto'}
+          alignItems={'center'}
+        >
+          <Flex ml={{ base: -2 }} display={{ base: 'flex', md: 'none' }}>
             <IconButton
               onClick={onToggle}
-              icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
+              icon={
+                isOpen ? (
+                  <CloseIcon w={3} h={3} />
+                ) : (
+                  <HamburgerIcon w={5} h={5} />
+                )
+              }
               variant={'primary'}
               aria-label={'Toggle Navigation'}
             />
           </Flex>
-          <Flex gap={5} flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }} alignItems={'center'}>
+          <Flex
+            gap={5}
+            flex={{ base: 1 }}
+            justify={{ base: 'center', md: 'start' }}
+            alignItems={'center'}
+          >
             <Text
               as={Link}
               href={'/'}
               fontWeight={'bold'}
+              fontSize={'2em'}
               textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
               fontFamily={'heading'}
-              color={theme.colors.primary}>
+              color={theme.colors.primary}
+            >
               Babbo
             </Text>
 
             <EventSearch />
-
           </Flex>
 
-          <Stack
-            justify={'flex-end'}
-            direction={'row'}
-            spacing={6}>
-
+          <Stack justify={'flex-end'} direction={'row'} spacing={6}>
             <Button
               as={'a'}
               display={{ base: 'none', md: 'inline-flex' }}
@@ -83,7 +95,8 @@ export function Navigation() {
               href={'#'}
               _hover={{
                 bg: 'pink.300',
-              }}>
+              }}
+            >
               Anuncie seu evento
             </Button>
           </Stack>
@@ -94,13 +107,13 @@ export function Navigation() {
         <MobileNav />
       </Collapse>
     </Box>
-  )
+  );
 }
 
 const DesktopNav = () => {
-  const linkColor = useColorModeValue('gray.600', 'gray.200')
-  const linkHoverColor = useColorModeValue('gray.800', 'white')
-  const popoverContentBgColor = useColorModeValue('white', 'gray.800')
+  const linkColor = useColorModeValue('gray.600', 'gray.200');
+  const linkHoverColor = useColorModeValue('gray.800', 'white');
+  const popoverContentBgColor = useColorModeValue('white', 'gray.800');
 
   return (
     <Stack direction={'row'} spacing={4}>
@@ -118,7 +131,8 @@ const DesktopNav = () => {
                 _hover={{
                   textDecoration: 'none',
                   color: linkHoverColor,
-                }}>
+                }}
+              >
                 {navItem.label}
               </Box>
             </PopoverTrigger>
@@ -130,7 +144,8 @@ const DesktopNav = () => {
                 bg={popoverContentBgColor}
                 p={4}
                 rounded={'xl'}
-                minW={'sm'}>
+                minW={'sm'}
+              >
                 <Stack>
                   {navItem.children.map((child) => (
                     <DesktopSubNav key={child.label} {...child} />
@@ -142,8 +157,8 @@ const DesktopNav = () => {
         </Box>
       ))}
     </Stack>
-  )
-}
+  );
+};
 
 const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   return (
@@ -154,13 +169,15 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
       display={'block'}
       p={2}
       rounded={'md'}
-      _hover={{ bg: useColorModeValue('pink.50', 'gray.900') }}>
+      _hover={{ bg: useColorModeValue('pink.50', 'gray.900') }}
+    >
       <Stack direction={'row'} align={'center'}>
         <Box>
           <Text
             transition={'all .3s ease'}
             _groupHover={{ color: 'pink.400' }}
-            fontWeight={500}>
+            fontWeight={500}
+          >
             {label}
           </Text>
           <Text fontSize={'sm'}>{subLabel}</Text>
@@ -172,17 +189,22 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
           _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
           justify={'flex-end'}
           align={'center'}
-          flex={1}>
+          flex={1}
+        >
           <Icon color={'pink.400'} w={5} h={5} as={ChevronRightIcon} />
         </Flex>
       </Stack>
     </Box>
-  )
-}
+  );
+};
 
 const MobileNav = () => {
   return (
-    <Stack bg={useColorModeValue('white', 'gray.800')} p={4} display={{ md: 'none' }}>
+    <Stack
+      bg={useColorModeValue('white', 'gray.800')}
+      p={4}
+      display={{ md: 'none' }}
+    >
       <Button
         as={'a'}
         fontSize={'sm'}
@@ -192,18 +214,19 @@ const MobileNav = () => {
         href={'#'}
         _hover={{
           bg: 'pink.300',
-        }}>
+        }}
+      >
         Anuncie seu evento
       </Button>
       {/* {NAV_ITEMS.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
       ))} */}
     </Stack>
-  )
-}
+  );
+};
 
 const MobileNavItem = ({ label, children, href }: NavItem) => {
-  const { isOpen, onToggle } = useDisclosure()
+  const { isOpen, onToggle } = useDisclosure();
 
   return (
     <Stack spacing={4} onClick={children && onToggle}>
@@ -215,8 +238,12 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         alignItems="center"
         _hover={{
           textDecoration: 'none',
-        }}>
-        <Text fontWeight={600} color={useColorModeValue('gray.600', 'gray.200')}>
+        }}
+      >
+        <Text
+          fontWeight={600}
+          color={useColorModeValue('gray.600', 'gray.200')}
+        >
           {label}
         </Text>
         {children && (
@@ -237,7 +264,8 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
           borderLeft={1}
           borderStyle={'solid'}
           borderColor={useColorModeValue('gray.200', 'gray.700')}
-          align={'start'}>
+          align={'start'}
+        >
           {children &&
             children.map((child) => (
               <Box as="a" key={child.label} py={2} href={child.href}>
@@ -247,14 +275,14 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         </Stack>
       </Collapse>
     </Stack>
-  )
-}
+  );
+};
 
 interface NavItem {
-  label: string
-  subLabel?: string
-  children?: Array<NavItem>
-  href?: string
+  label: string;
+  subLabel?: string;
+  children?: Array<NavItem>;
+  href?: string;
 }
 
 const NAV_ITEMS: Array<NavItem> = [
@@ -296,4 +324,4 @@ const NAV_ITEMS: Array<NavItem> = [
     label: 'Hire Designers',
     href: '#',
   },
-]
+];

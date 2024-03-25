@@ -10,7 +10,7 @@ export type layout = 'client';
 
 export interface LayoutProps {
   name: layout;
-  children?: JSX.Element | JSX.Element[];
+  children?: JSX.Element | JSX.Element[] | undefined;
   title?: string;
   description?: string
   image?: string,

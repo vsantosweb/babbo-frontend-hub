@@ -1,14 +1,14 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 export const CardEvent = styled.div`
   border-radius: ${({ theme }: any) => theme.defaultRadius};
   background: #fff;
   /* border: solid 1px #eee; */
+  width: 100%;
   max-width: 100%;
-  /* max-width: 320px; */
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
   margin-bottom: 2em;
   -khtml-user-select: none !important;
   -o-user-select: none !important;
@@ -19,7 +19,7 @@ export const CardEvent = styled.div`
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
-  
+
   &:hover {
     /* box-shadow: 0 0 15px 3px rgba(0, 0, 0, 0.07); */
     transition: all 0.5s;
@@ -31,10 +31,10 @@ export const CardEvent = styled.div`
   }
 `;
 export const CardEventImageContainer = styled.div`
-max-height: 380px;
-height: 280px;
-overflow: hidden;
-`
+  max-height: 380px;
+  height: 340px;
+  overflow: hidden;
+`;
 export const CardEventImage = styled.img`
   /* box-shadow: 0 13px 27px -5px #32325d40,0 8px 16px -8px #0000004d,0 -6px 16px -6px #00000008; */
   border-top-left-radius: ${({ theme }: any) => theme.defaultRadius};
@@ -59,17 +59,16 @@ export const CardEventImage = styled.img`
 export const CardEventBody = styled.div`
   display: flex;
   flex-direction: column;
-  gap:5px;
-  padding: .3em .3em;
+  gap: 5px;
+  padding: 0.3em 0.3em;
   text-decoration: none;
   position: relative;
   color: inherit;
   -khtml-user-select: none !important;
   -o-user-select: none !important;
   -moz-user-select: none !important;
-  -webkit-user-select: none ;
+  -webkit-user-select: none;
   user-select: none !important;
-
 `;
 
 export const CategoryTag = styled.div`
@@ -89,21 +88,20 @@ export const CardEventDetails = styled.div`
   display: flex;
   gap: 5px;
   flex-direction: column;
-`
+`;
 export const CardEventDateInfo = styled.span`
   display: flex;
   align-items: center;
   gap: 10px;
-
-`
+`;
 export const CardEventMutedText = styled.span`
   display: flex;
   gap: 2px;
-  font-size: .9rem;
+  font-size: 0.9rem;
   align-items: center;
   font-weight: 500;
   color: #818181;
-`
+`;
 export const CardEventTitle = styled.h1`
   font-size: 1.1rem;
   display: box;
@@ -144,21 +142,20 @@ export const CardEventFooter = styled.div`
 
 export const OwnerImage = styled.div`
   margin-right: 5px;
-    max-width: 25px;
+  max-width: 25px;
+  border-radius: 100%;
+  image {
+    width: 100%;
     border-radius: 100%;
-    image {
-      width: 100%;
-      border-radius: 100%;
-    }`
-  ;
+  }
+`;
 export const OwnerName = styled.div`
-color: unset;
-    font-size: 12px;
-    font-weight: bold;
+  color: unset;
+  font-size: 12px;
+  font-weight: bold;
 `;
 
 export const OwnerInfo = styled.div`
   display: flex;
   align-items: center;
-
 `;

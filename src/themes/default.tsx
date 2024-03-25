@@ -49,10 +49,11 @@ const activeLabelStyles = {
 const variantOutlined = () => ({
   field: {
     _focus: {
-      borderColor: theme.colors.primary,
-      boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px;',
+      // borderColor: theme.colors.primary,
+      // boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px;',
+      boxShadow: 'none',
     },
-    borderRadius: '20px'
+    borderRadius: '20px',
   },
 });
 
@@ -74,6 +75,7 @@ const variantFlushed = () => ({
 });
 
 // Chakra theme extension
+// Chakra theme extension
 const charkaExtendThemeConfig = {
   config: {
     initialColorMode: 'light',
@@ -81,16 +83,19 @@ const charkaExtendThemeConfig = {
   },
   colors: {
     primary: {
-      50: theme.colors.primary,
-      100: theme.colors.primary,
-      500: theme.colors.primary, // you need this
-    },
-    secondary: {
-      50: theme.colors.secondary,
-      100: theme.colors.secondary,
-      500: theme.colors.secondary, // you need this
+      50: '#F0E6F6',
+      100: '#D3BDF0',
+      200: '#B693E9',
+      300: '#9969E3',
+      400: '#7C3FDD',
+      500: '#6F2CF6', // Sua nova cor principal
+      600: '#571EAD',
+      700: '#3E1578',
+      800: '#260C43',
+      900: '#130420',
     },
   },
+
   components: {
     // Steps,
     Alert: {
@@ -103,15 +108,23 @@ const charkaExtendThemeConfig = {
     Button: {
       baseStyle: {
         borderRadius: theme.defaultRadius,
-        backgroundColor: theme.colors.primary, // Sua cor personalizada
-        color: "white", // Define a cor do texto, se necessário
-        _hover: {
-          backgroundColor: "blue.800", // Cor ao passar o mouse, ajuste conforme necessário
-        },
+        fontWeight: 'bold',
       },
-      defaultProps: {
-        size: 'md',
-        // colorScheme: 'primary',
+      variants: {
+        solid: {
+          bg: 'primary.500',
+          color: 'white',
+          _hover: {
+            bg: 'primary.400',
+          },
+        },
+        outline: {
+          borderColor: 'primary.500',
+          color: 'primary.500',
+          _hover: {
+            bg: 'primary.50',
+          },
+        },
       },
     },
     IconButton: {
@@ -130,7 +143,7 @@ const charkaExtendThemeConfig = {
     },
     Input: {
       baseStyle: {
-        borderRadius: '100%',
+        borderRadius: theme.defaultRadius,
       },
       sizes: {
         lg: {
@@ -162,7 +175,7 @@ const charkaExtendThemeConfig = {
         flushed: variantFlushed,
       },
       defaultProps: {
-        size: 'lg',
+        size: 'md',
       },
     },
     FormLabel: {
@@ -178,6 +191,7 @@ export const chakraTheme = extendTheme(
     defaultProps: {
       variant: 'outline',
     },
+
     components: ['Input', 'NumberInput', 'PinInput', 'Select'],
   }),
   charkaExtendThemeConfig
@@ -193,4 +207,3 @@ export const Theme = ({ children }: any) => {
     </ChakraProvider>
   );
 };
-
