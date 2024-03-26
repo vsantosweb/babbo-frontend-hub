@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/client/routes": ["src/routes/client.ts"],
+      "@/routes": ["src/routes/index.ts"],
       "@/components": ["src/components/index.ts"],
       "@/container": ["src/repository/Services/container.ts"],
       "@/helpers": ["src/helpers/index.ts"],

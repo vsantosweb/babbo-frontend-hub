@@ -32,20 +32,7 @@ export default function ClientLayout({
         minHeight: '100%',
       }}
     >
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        {keywords && <meta name="keywords" content={keywords} />}
-        {<meta property="og:title" content={title} />}
-        {<meta property="og:description" content={description} />}
-        {image && <meta property="og:image" content={image} />}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={router.asPath} />
-        <meta name="twitter:card" content="summary_large_image" />
-        {<meta name="twitter:title" content={title} />}
-        {<meta name="twitter:description" content={description} />}
-        {<meta name="twitter:image" content={image} />}
-      </Head>
+     
       {/* <Header /> */}
       <Navigation />
       <div
@@ -63,7 +50,6 @@ export default function ClientLayout({
         {children}
       </div>
       <Footer />
-      {/* <footer style={{background: 'green', position: 'relative', bottom: '0'}}>footer</footer> */}
     </div>
   );
 }

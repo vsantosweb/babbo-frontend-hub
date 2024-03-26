@@ -7,6 +7,7 @@ export const DefaultWrapper = styled.div`
   min-height: 100%;
   width: 100%;
   background: #f3f4f6;
+  
 `;
 
 export const DefaultContainer = styled.div`

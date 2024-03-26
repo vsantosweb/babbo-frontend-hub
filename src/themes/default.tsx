@@ -22,7 +22,6 @@ export const theme: ThemeProps = {
     width: '1280px',
     spacing: '.9em',
   },
-
   colors: {
     primary: '#6f2cf6',
     // primary: '#ea1e63',
@@ -39,7 +38,7 @@ export const theme: ThemeProps = {
     body: 'Helvetica Neue, Helvetica, Arial, sans-serif',
     heading: 'Helvetica Neue, Helvetica, Arial, sans-serif',
   },
-  defaultRadius: '15px',
+  defaultRadius: '20px',
 };
 
 const activeLabelStyles = {
@@ -49,7 +48,7 @@ const activeLabelStyles = {
 const variantOutlined = () => ({
   field: {
     _focus: {
-      // borderColor: theme.colors.primary,
+      borderColor: theme.colors.primary,
       // boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px;',
       boxShadow: 'none',
     },
@@ -200,7 +199,7 @@ export const chakraTheme = extendTheme(
 export const Theme = ({ children }: any) => {
   return (
     <ChakraProvider theme={chakraTheme}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={{...theme, ...chakraTheme}}>
         <Global styles={GlobalStyles} />
         {children}
       </ThemeProvider>

@@ -1,0 +1,8 @@
+{
+  "name": "manager",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/manager",
+  "projectType": "application",
+  "targets": {},
+  "tags": []
+}

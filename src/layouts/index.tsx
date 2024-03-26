@@ -1,12 +1,14 @@
 import React from 'react';
 
 import ClientLayout from './ClientLayout';
+import AuthLayout from './AuthLayout';
 
 const layouts = {
   client: ClientLayout,
+  auth: AuthLayout
 };
 
-export type layout = 'client';
+export type layout = 'client' | 'auth';
 
 export interface LayoutProps {
   name: layout;
