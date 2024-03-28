@@ -1,3 +1,4 @@
+import Layout from '@/layouts';
 import styled from '@emotion/styled';
 
 const StyledPage = styled.div`
@@ -12,7 +13,8 @@ export function Index() {
    * Note: The corresponding styles are in the ./index.@emotion/styled file.
    */
   return (
-    <StyledPage>
+    <Layout name="manager">
+      <StyledPage>
       <div className="wrapper">
         <div className="container">
           <div id="welcome">
@@ -470,6 +472,7 @@ export function Index() {
         </div>
       </div>
     </StyledPage>
+    </Layout>
   );
 }
 

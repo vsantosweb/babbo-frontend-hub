@@ -13,7 +13,6 @@ body,
     font-family: "Poppins", sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    font-size: 87%;
 
   }
 

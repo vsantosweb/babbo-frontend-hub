@@ -41,17 +41,13 @@ function EventShow() {
     >
       {!event ? <Loader /> : <Stack spacing={8}>
         <Flex
-          boxShadow={{
-            base: 'none',
-            md: 'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px',
-          }}
+
           mx={{ base: '-1em' }}
           mt={{ md: '2em' }}
           flexDirection={{ base: 'column', md: 'row' }}
           gap={3}
         >
           <Box
-            flex={1}
             borderRadius={{ base: '0', md: 'xl' }}
             position={'relative'}
           >
@@ -60,12 +56,17 @@ function EventShow() {
               as="img"
               borderRadius={{ base: '0', md: 'xl' }}
               alt={event?.name}
+              boxShadow={{
+                base: 'none',
+                md: 'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px',
+              }}
               src={`${event?.event_image}.jpg`}
               // srcSet={`${event?.event_image}-lg.jpg 1600w,${event?.event_image}-md.jpg 800w,${event?.event_image}-xs.jpg 400w`}
               // sizes="(max-width: 767px) 95vw, (max-width: 991px) 90vw, 50vw"
               // loading="lazy"
               className="event-banner-img"
               style={{
+                width: '100%',
                 maxWidth: '100%',
                 height: '520px',
                 objectFit: 'cover',
@@ -91,7 +92,7 @@ function EventShow() {
             </Box>
           </Box>
           <Stack
-            spacing={8}
+            spacing={6}
             p={{ base: '1em', md: '1em' }}
             mt={{ base: 4, md: 0 }}
             flex={1}
@@ -104,26 +105,9 @@ function EventShow() {
               <Flex gap={2} direction={'column'}>
                 <Heading size={'md'}>Detalhes</Heading>
                 <TruncateText text={event.description || ''} limit={50} />
-                {/* <Text>{event?.description}
-                                <div dangerouslySetInnerHTML={{ __html: event?.description as string }}></div>
-
-                                Fuga dolorum eos animi saepe rerum veniam repellendus. Natus ex impedit excepturi consequatur distinctio.
-                                Fuga dolorum eos animi saepe rerum veniam repellendus. Natus ex impedit excepturi consequatur distinctio.
-                                Fuga dolorum eos animi saepe rerum veniam repellendus. Natus ex impedit excepturi consequatur distinctio.
-                                Fuga dolorum eos animi saepe rerum veniam repellendus. Natus ex impedit excepturi consequatur distinctio.
-                                Fuga dolorum eos animi saepe rerum veniam repellendus. Natus ex impedit excepturi consequatur distinctio.
-                                Fuga dolorum eos animi saepe rerum veniam repellendus. Natus ex impedit excepturi consequatur distinctio.
-                                Fuga dolorum eos animi saepe rerum veniam repellendus. Natus ex impedit excepturi consequatur distinctio.
-                                Fuga dolorum eos animi saepe rerum veniam repellendus. Natus ex impedit excepturi consequatur distinctio.
-                                Fuga dolorum eos animi saepe rerum veniam repellendus. Natus ex impedit excepturi consequatur distinctio.
-                                Fuga dolorum eos animi saepe rerum veniam repellendus. Natus ex impedit excepturi consequatur distinctio.
-                                Fuga dolorum eos animi saepe rerum veniam repellendus. Natus ex impedit excepturi consequatur distinctio.
-                                Fuga dolorum eos animi saepe rerum veniam repellendus. Natus ex impedit excepturi consequatur distinctio.
-                                 </Text>
-                                <Link href={'#'}>Read more</Link> */}
               </Flex>
             </Stack>
-            <Stack spacing={6}>
+            <Stack spacing={4}>
               <Flex gap={4} alignItems={'center'}>
                 <Box
                   padding={4}

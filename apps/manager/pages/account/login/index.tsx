@@ -7,14 +7,16 @@ import { useRouter } from "next/router";
 import * as Styled from '../styles';
 import Link from "next/link";
 import { CredentialsType } from "@/types";
-import { useAuth } from "@/hooks";
+import { useAuth, AuthProviderInterface } from "@/hooks";
 import Layout from '@/layouts';
 import { FaArrowRightLong } from "react-icons/fa6";
 
 const Login: NextPage = ({ layout }: any) => {
 
   const { handleSubmit, register, formState: { isValid, errors } } = useForm({ mode: 'onChange' });
+
   const { login, socialLogin } = useAuth();
+
   const [errorMessage, setErrorMessage] = React.useState(null);
   const [buttonState, setButonState] = React.useState<any>({ disabled: !isValid, isLoading: false })
   const route = useRouter();

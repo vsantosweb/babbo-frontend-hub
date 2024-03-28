@@ -32,11 +32,10 @@ export const CardEvent = styled.div`
 `;
 export const CardEventImageContainer = styled.div`
   max-height: 380px;
-  height: 340px;
+  height: 400px;
   overflow: hidden;
 `;
 export const CardEventImage = styled.img`
-  /* box-shadow: 0 13px 27px -5px #32325d40,0 8px 16px -8px #0000004d,0 -6px 16px -6px #00000008; */
   border-top-left-radius: ${({ theme }: any) => theme.defaultRadius};
   border-top-right-radius: ${({ theme }: any) => theme.defaultRadius};
   border-bottom-left-radius: ${({ theme }: any) => theme.defaultRadius};
@@ -86,24 +85,22 @@ export const CategoryTag = styled.div`
 `;
 export const CardEventDetails = styled.div`
   display: flex;
-  gap: 5px;
   flex-direction: column;
 `;
 export const CardEventDateInfo = styled.span`
   display: flex;
   align-items: center;
-  gap: 10px;
 `;
 export const CardEventMutedText = styled.span`
   display: flex;
-  gap: 2px;
+  gap: 6px;
   font-size: 0.9rem;
   align-items: center;
   font-weight: 500;
   color: #818181;
 `;
 export const CardEventTitle = styled.h1`
-  font-size: 1.1rem;
+  font-size: 1rem;
   display: box;
   line-clamp: 2;
   overflow: hidden;

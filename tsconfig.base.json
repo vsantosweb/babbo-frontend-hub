@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@/routes": ["src/routes/index.ts"],
+      "@/tools": ["src/tools/index.ts"],
       "@/components": ["src/components/index.ts"],
       "@/container": ["src/repository/Services/container.ts"],
       "@/helpers": ["src/helpers/index.ts"],

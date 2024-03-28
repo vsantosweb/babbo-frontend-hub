@@ -11,7 +11,6 @@ import Cookies from 'js-cookie';
 
 const privatePaths = managerRoutes.filter((nav: RouteProps) => nav.private).map(x => x.path);
 
-console.log(privatePaths, 'privatePaths')
 // Define o tipo para o objeto do usuário
 export interface UseAuthProps {
   login: (credentials: CredentialsType) => Promise<ApiResponseType | null>
@@ -26,7 +25,7 @@ interface AuthState {
   isAuthenticated: boolean;
 }
 
-interface AuthProviderInterface {
+export interface AuthProviderInterface {
   login: (credentials: CredentialsType) => Promise<ApiResponseType | null>
   logout: () => Promise<ApiResponseType | null>
   loading?: boolean,
@@ -40,12 +39,16 @@ const AuthContext = createContext<AuthProviderInterface | undefined>(undefined)
  * Hook personalizado para gerenciar a autenticação do usuário.
  * @returns {AuthProviderInterface} Um objeto contendo informações e funções relacionadas à autenticação do usuário.
  */
-export const useAuth = (serivce?: string): AuthProviderInterface => {
+export const useAuth = () => {
 
   const context = useContext(AuthContext);
 
+  if (!context) {
+    throw new Error('useAuth must be used within an AccessibilityProvider');
+  }
+
   // Retorna os estados e funções necessários para gerenciar a autenticação do usuário
-  return { ...context };
+  return context;
 };
 
 
@@ -92,11 +95,10 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
 
   const session = async (url: string) => {
 
-    const token = Cookies.get()
-    console.log(token, 'token')
+
     return await authService.session().then((response) => {
 
-      let user = response.data.data;
+      let user = response?.data?.data;
 
       if (user && router.pathname === '/account/login') router.push(`/`)
 
@@ -131,15 +133,18 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
       // Se a resposta for bem-sucedida e contiver dados do usuário, atualiza o estado do usuário
       if (response && response.data) {
 
-        Cookies.set('token', response.data.data.token, { expires: new Date(response.data.data.expires_in * 1000) })
+        const expiresAt = new Date(response.data.data.expires_in * 1000);
+
+        Cookies.set('token', response?.data.data.token, { expires: expiresAt })
+        Cookies.set('token-exp', expiresAt.toString(), { expires: expiresAt });
 
         router.push('/');
 
-        setUser(response.data.user);
+        setUser(response?.data.user);
 
       }
       // Retorna a resposta da função de login
-      return response.data;
+      return response?.data;
     } catch (error) {
       console.error('Erro ao realizar o login:', error);
       return null;

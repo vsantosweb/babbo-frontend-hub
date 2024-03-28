@@ -76,6 +76,13 @@ const variantFlushed = () => ({
 // Chakra theme extension
 // Chakra theme extension
 const charkaExtendThemeConfig = {
+  fonts:{
+    sizes: {
+      sm: "12px", // Exemplo de tamanho de fonte pequeno
+      md: "14px", // Tamanho de fonte médio (padrão)
+      lg: "20px", // Exemplo de tamanho de fonte grande
+    },
+  },
   config: {
     initialColorMode: 'light',
     useSystemColorMode: false,
@@ -190,7 +197,7 @@ export const chakraTheme = extendTheme(
     defaultProps: {
       variant: 'outline',
     },
-
+ 
     components: ['Input', 'NumberInput', 'PinInput', 'Select'],
   }),
   charkaExtendThemeConfig

@@ -1,4 +1,4 @@
-import { EventRepositoryInterface } from '@/interfaces';
+import { EventRepositoryInterface, PublicRepositoryInterface } from '@/interfaces';
 import { EventBanner, EventDisplayType, EventInterface } from '@/types';
 import { AxiosInstance } from 'axios';
 import ApiService from '..';
@@ -8,7 +8,7 @@ import { injectable } from 'inversify';
  * Serviço responsável por recuperar informações sobre eventos do cliente.
  */
 @injectable()
-export class PublicEventService implements EventRepositoryInterface {
+export class PublicEventService implements PublicRepositoryInterface {
   protected api: AxiosInstance;
 
   /**
@@ -128,6 +128,20 @@ export class PublicEventService implements EventRepositoryInterface {
   async avaiableCities(): Promise<any> {
     try {
       const response = await this.api.get<any>(`/avaiable-cities`);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao obter banners de eventos:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Retorna um token user_identifier para identificar impressões
+   * @returns {Promise<any>}
+   */
+  async userIdentifier(): Promise<any> {
+    try {
+      const response = await this.api.get<any>(`/user-identifier`);
       return response.data;
     } catch (error) {
       console.error('Erro ao obter banners de eventos:', error);

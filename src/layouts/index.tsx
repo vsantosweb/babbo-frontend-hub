@@ -2,13 +2,15 @@ import React from 'react';
 
 import ClientLayout from './ClientLayout';
 import AuthLayout from './AuthLayout';
+import ManagerLayout from './ManagerLayout';
 
 const layouts = {
   client: ClientLayout,
-  auth: AuthLayout
+  auth: AuthLayout,
+  manager: ManagerLayout
 };
 
-export type layout = 'client' | 'auth';
+export type layout = 'client' | 'auth' | 'manager';
 
 export interface LayoutProps {
   name: layout;
