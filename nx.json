@@ -17,9 +17,6 @@
     ],
     "sharedGlobals": []
   },
-  "hooks": {
-    "pre-commit": "lint-staged"
-  },
   "plugins": [
     {
       "plugin": "@nx/next/plugin",
@@ -55,5 +52,16 @@
         "unitTestRunner": "jest"
       }
     }
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "defaultIsVerbose": false
+      }
+    }
+  },
+  "hooks": {
+    "pre-commit": "lint-staged"
   }
 }
