@@ -47,6 +47,7 @@ export function GoogleAutoComplete({ captureAddress }: { captureAddress: (addres
     };
 
     const handleAddress = () => {
+        
         const places = searchBoxA!.getPlaces();
         
         if(places){
