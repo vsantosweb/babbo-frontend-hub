@@ -48,7 +48,7 @@ export function GoogleAutoComplete({ captureAddress }: { captureAddress: (addres
 
     const handleAddress = () => {
         const places = searchBoxA!.getPlaces();
-        if( places){
+        if(places){
             const address = places[0]?.address_components;
             captureAddress(address)
         }

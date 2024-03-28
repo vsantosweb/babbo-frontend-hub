@@ -17,6 +17,9 @@
     ],
     "sharedGlobals": []
   },
+  "hooks": {
+    "pre-commit": "lint-staged"
+  },
   "plugins": [
     {
       "plugin": "@nx/next/plugin",

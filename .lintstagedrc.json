@@ -1,0 +1,12 @@
+{
+  "apps/**/*.{ts,tsx}": [
+    "nx run-many --target=lint --all",
+    "nx run-many --target=type-check --all",
+    "nx run-many --target=build --all"
+  ],
+  "libs/**/*.{ts,tsx}": [
+    "nx run-many --target=lint --all",
+    "nx run-many --target=type-check --all",
+    "nx run-many --target=build --all"
+  ]
+}
