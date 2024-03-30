@@ -7,6 +7,7 @@ import { Stack } from '@chakra-ui/react';
 
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import Link from 'next/link';
+import { EventInterface } from '@/types';
 
 const mediaSizes = {
   320: { slidesPerView: 1.3, spaceBetween: 10 },
@@ -15,7 +16,7 @@ const mediaSizes = {
   1366: { slidesPerView: 4, spaceBetween: 20 },
 };
 
-export function HomeDiscovery(dataDiscovery) {
+export function HomeDiscovery(dataDiscovery: EventInterface[]) {
   return (
     <Stack spacing={8}>
       <Banner />

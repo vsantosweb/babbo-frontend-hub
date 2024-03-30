@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import { EventBanner, EventDisplayType, EventInterface } from '@/types';
+import { EventBanner, EventDisplayType, EventInterface, EventPayloadType } from '@/types';
 import container from 'src/repository/providers/container';
 import { EventRepositoryInterface } from '@/interfaces';
 import moment from 'moment';
@@ -19,6 +19,7 @@ export function useEvent() {
     fetchSearch,
     fetchCategories,
     fetchAvaiableCities,
+    createEvent
   } = useContext(EventContext);
 
   return {
@@ -33,6 +34,7 @@ export function useEvent() {
     fetchSearch,
     fetchCategories,
     fetchAvaiableCities,
+    createEvent
   };
 }
 
@@ -46,6 +48,8 @@ export function EventProvider({
   const [event, setEvent] = useState<EventInterface | null>(null);
 
   const eventService = container.get<EventRepositoryInterface>('public');
+
+  const eventServiceManager = container.get<EventRepositoryInterface>('manager-event');
 
   async function fetchEvents(params?: string): Promise<any> {
     setLoading(true);
@@ -110,6 +114,21 @@ export function EventProvider({
       setError(
         'Erro ao buscar categorias de eventos. Por favor, tente novamente mais tarde.'
       );
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function createEvent(payload: EventPayloadType): Promise<any> {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const event = await eventServiceManager.createEvent(payload);
+      return event;
+    } catch (error) {
+      setError('Erro ao criar evento. Por favor, tente novamente mais tarde.');
       throw error;
     } finally {
       setLoading(false);
@@ -188,13 +207,13 @@ export function EventProvider({
         fully: `${moment(event?.start_date)
           .format('DD MMM - YYYY, LT')
           .toUpperCase()} > ${moment(event?.end_date)
-          .format('DD MMM - YYYY, LT')
-          .toUpperCase()}`,
+            .format('DD MMM - YYYY, LT')
+            .toUpperCase()}`,
         partial: `${moment(event?.start_date)
           .format('DD MMM')
           .toUpperCase()} • ${moment(event?.end_date)
-          .format('DD MMM')
-          .toUpperCase()}`,
+            .format('DD MMM')
+            .toUpperCase()}`,
       };
 
     return {
@@ -220,6 +239,7 @@ export function EventProvider({
         fetchSearch,
         fetchCategories,
         fetchAvaiableCities,
+        createEvent
       }}
     >
       {children}

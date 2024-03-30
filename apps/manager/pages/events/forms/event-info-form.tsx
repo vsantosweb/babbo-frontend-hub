@@ -1,6 +1,6 @@
 
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
     Progress,
     Box,
@@ -19,6 +19,8 @@ import {
     FormHelperText,
     InputRightElement,
     Stack,
+    FormErrorMessage,
+    HStack,
 } from '@chakra-ui/react'
 import { EventImageUpload } from '@/components'
 import ReactQuill from 'react-quill';
@@ -30,38 +32,68 @@ import {
     CreatableSelect,
     Select,
 } from "chakra-react-select";
+import { Controller, UseFormReturn } from 'react-hook-form';
+import { EventInterface } from '@/types';
+import moment from 'moment';
+import { useEvent } from '@/hooks';
 
-export default function EventInfoForm() {
+export default function EventInfoForm({ hookForm }: { hookForm: UseFormReturn<any> }) {
 
     const [value, setValue] = useState('');
+    const [categories, setCategories] = useState([]);
+
+    const { fetchCategories } = useEvent();
+    
+    useEffect(() => {
+        fetchCategories().then((response: any) => {
+            setCategories(response.data.map((category:any) => ({
+                label: category.name,
+                value: category.id,
+            })))
+        })
+    }, [])
+    const { register, control, formState: { errors, isValid } } = hookForm;
 
     const ReactQuill = typeof window === 'object' ? require('react-quill') : () => false;
 
     return (
         <Stack spacing={4}>
-            <FormControl>
+            <FormControl isInvalid={!!errors?.name}>
                 <FormLabel>Nome o evento</FormLabel>
-                <Input type="text" />
+                <Input {...register('name')} type="text" />
+                <FormErrorMessage>{errors?.name?.message as string}</FormErrorMessage>
             </FormControl>
-            <FormControl>
+
+            <FormControl isInvalid={!!errors?.categories}>
                 <FormLabel>O que vai rolar?</FormLabel>
-                <Select
-                    placeholder='Escolha algumas categorias'
-                    isMulti
-                    options={[
-                        {
-                            label: "Sertanejo",
-                            value: "Sertanejo",
-                            colorScheme: "primary", // The option color scheme overrides the global
-                        },
-                        {
-                            label: "Funk",
-                            value: "Funk",
-                        },
-                    ]}
-                />
                 <FormHelperText>Selecione até 3 categorias</FormHelperText>
+                <Controller
+                    name='categories'
+                    control={control}
+                    render={({ field }) => (
+                        <Select
+                            {...field}
+                            placeholder='Escolha algumas categorias'
+                            isMulti
+                            options={categories}
+                        />
+                    )}
+                />
+                <FormErrorMessage>{errors?.categories?.message as string}</FormErrorMessage>
             </FormControl>
+
+            <HStack spacing={6}>
+                <FormControl isInvalid={!!errors?.start_date}>
+                    <FormLabel>Data de inicio</FormLabel>
+                    <Input {...register('start_date')} min={moment().format('YYYY-MM-DD 00:00:00')} type={'datetime-local'} />
+                    <FormErrorMessage>{errors?.start_date?.message as string}</FormErrorMessage>
+                </FormControl>
+                <FormControl isInvalid={!!errors?.end_date}>
+                    <FormLabel>Data de término</FormLabel>
+                    <Input {...register('end_date')} type={'datetime-local'} />
+                    <FormErrorMessage>{errors?.end_date?.message as string}</FormErrorMessage>
+                </FormControl>
+            </HStack>
 
             <FormControl>
                 <FormLabel>Descrição do evento</FormLabel>

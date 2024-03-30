@@ -21,6 +21,7 @@ export interface EventInterface  {
     city?: string;
     categories?: string[];
     impress?: number;
+    has_tickets?:boolean;
 }
 
 

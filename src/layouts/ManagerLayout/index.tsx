@@ -6,7 +6,9 @@ import { Footer, ManagerNavigation } from '@/components';
 import { theme } from '@/themes/default';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { Flex } from '@chakra-ui/react';
+import { Flex, IconButton } from '@chakra-ui/react';
+import { ArrowLeftIcon } from '@chakra-ui/icons';
+import { FaArrowLeft } from 'react-icons/fa';
 
 export default function ManagerLayout({
   children,
@@ -32,9 +34,9 @@ export default function ManagerLayout({
         minHeight: '100%',
       }}
     >
-     
+
       {/* <Header /> */}
-      <ManagerNavigation/>
+      <ManagerNavigation />
       <div
         style={{
           display: 'flex',
@@ -47,6 +49,12 @@ export default function ManagerLayout({
           padding: '0 1em',
         }}
       >
+        {
+          router.pathname !== '/' && <Flex alignItems={'center'}>
+          <IconButton onClick={() => router.back()} variant={'link'} icon={<FaArrowLeft />} aria-label='back-page' />
+          Voltar
+        </Flex>
+        }
         {children}
       </div>
       <Footer />

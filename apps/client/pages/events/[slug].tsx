@@ -60,10 +60,10 @@ function EventShow() {
                 base: 'none',
                 md: 'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px',
               }}
-              src={`${event?.event_image}.jpg`}
-              // srcSet={`${event?.event_image}-lg.jpg 1600w,${event?.event_image}-md.jpg 800w,${event?.event_image}-xs.jpg 400w`}
-              // sizes="(max-width: 767px) 95vw, (max-width: 991px) 90vw, 50vw"
-              // loading="lazy"
+              src={`${event?.event_image}-lg.jpg`}
+              srcSet={`${event?.event_image}-lg.jpg 1600w,${event?.event_image}-md.jpg 800w,${event?.event_image}-xs.jpg 400w`}
+              sizes="(max-width: 767px) 95vw, (max-width: 991px) 90vw, 50vw"
+              loading="lazy"
               className="event-banner-img"
               style={{
                 width: '100%',
@@ -146,21 +146,25 @@ function EventShow() {
                   </Flex>
                 </Link>
               </Flex>
-              <Flex gap={4} alignItems={'center'}>
-                <Box
-                  padding={4}
-                  fontSize={'1.4em'}
-                  borderRadius={theme.defaultRadius}
-                  background={`${theme.colors.primary}26`}
-                  color={theme.colors.primary}
-                >
-                  <FaTicketAlt />
-                </Box>
-                <Flex gap={1} direction={'column'}>
-                  <Heading size={'md'}>Ingressos</Heading>
-                  <Text>Ticket 360</Text>
+              {
+                event.has_tickets && <Flex gap={4} alignItems={'center'}>
+                  <Box
+                    padding={4}
+                    fontSize={'1.4em'}
+                    borderRadius={theme.defaultRadius}
+                    background={`${theme.colors.primary}26`}
+                    color={theme.colors.primary}
+                  >
+                    <FaTicketAlt />
+                  </Box>
+
+                  <Flex gap={1} direction={'column'}>
+                    <Heading size={'md'}>Ingressos</Heading>
+                    <Text>Ticket 360</Text>
+                  </Flex>
+
                 </Flex>
-              </Flex>
+              }
             </Stack>
           </Stack>
         </Flex>

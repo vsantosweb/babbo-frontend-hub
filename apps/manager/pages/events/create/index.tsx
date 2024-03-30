@@ -19,51 +19,102 @@ import {
     InputRightElement,
     Stack,
     HStack,
+    Divider,
+    Checkbox,
+    FormErrorMessage
 } from '@chakra-ui/react'
 
 import { FaRegEye, FaEyeSlash } from "react-icons/fa";
+import * as Yup from 'yup';
 
 import Layout from '@/layouts'
 import AddressForm from '../forms/address-form';
 import EventInfoForm from '../forms/event-info-form';
 import { EventImageUpload, GoogleAutoComplete } from '@/components';
+import { SessionHelper } from '@/helpers';
+import DateForm from '../forms/date-form';
+import SponsoredForm from '../forms/sponsored-form';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { eventValidatorSchema, addressValidatorSchema } from '../../../validators';
+import { EventInterface, EventPayloadType } from '@/types';
+import { EventProvider, useEvent } from '@/hooks';
+import { redirect } from 'next/dist/server/api-utils';
 
 export default function EventForm() {
     return (
         <Layout name='manager'>
-            <Form1 />
+            <EventProvider>
+                <Form />
+            </EventProvider>
         </Layout>
 
     )
 }
 
 
-const Form1 = () => {
+const Form = () => {
 
-    const [show, setShow] = useState(false)
+    const validationSchema = Yup.object().shape({ ...eventValidatorSchema });
 
-    const handleClick = () => setShow(!show)
+    const { createEvent } = useEvent();
+
+    const eventForm = useForm({ resolver: yupResolver(validationSchema), mode: 'all' });
+
+
+    const handleCreateEvent = async (formData: { [index: string]: any }) => {
+
+        const payload = {
+            name: formData.name,
+            place: formData.place,
+            start_date: formData.start_date,
+            end_date: formData.end_date,
+            categories: formData.categories.map((x: { value: string }) => x.value),
+            event_image: formData.event_image
+        }
+
+        await createEvent(payload).then((response: { value: string }) => {
+
+            console.log(response, 'response')
+            SessionHelper.redirectWith('/', 'eventCreated');
+
+        })
+
+    }
 
     return (
-        <Flex maxWidth={'1000px'} m={'auto'} gap={4} width={'100%'}>
-            <Stack spacing={4}>
-                <EventImageUpload />
 
+        <Flex as={'form'} m={'auto'} onSubmit={eventForm.handleSubmit(handleCreateEvent)} gap={4} width={'100%'}>
+            <Stack spacing={4}>
+                <FormControl isInvalid={!!eventForm?.formState?.errors?.event_image}>
+                    <EventImageUpload hookForm={eventForm} />
+                    <FormErrorMessage>{eventForm?.formState?.errors?.event_image?.message as string}</FormErrorMessage>
+                </FormControl>
             </Stack>
+
             <Stack flex={1} spacing={6}>
 
                 <Stack spacing={4}>
                     <Heading size={'md'}>Endereço</Heading>
-                    <AddressForm />
+                    <AddressForm hookForm={eventForm} />
                 </Stack>
-                <hr />
+
+                <Divider />
+
                 <Stack spacing={4}>
                     <Heading size={'md'}>Informações do evento</Heading>
-                    <EventInfoForm />
+                    <EventInfoForm hookForm={eventForm} />
                 </Stack>
+
+                <Stack spacing={4}>
+                    <Checkbox defaultChecked>Tornar esse evento destaque?</Checkbox>
+                    <Heading size={'md'}>Exposiçao</Heading>
+                    <SponsoredForm />
+                </Stack>
+
                 <HStack justifyContent={'flex-end'}>
-                    <Button variant={'outline'}>visualizar</Button>
-                    <Button>Criar evento</Button>
+                    {/* <Button variant={'outline'}>visualizar</Button> */}
+                    <Button isLoading={eventForm.formState.isSubmitting} type={'submit'}>Criar evento</Button>
                 </HStack>
             </Stack>
         </Flex>

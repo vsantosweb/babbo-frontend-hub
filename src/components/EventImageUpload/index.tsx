@@ -9,8 +9,9 @@ import {
 } from '@chakra-ui/react';
 import * as Styled from './styles';
 import { theme } from '@/themes/default';
+import { Controller, UseFormReturn } from 'react-hook-form';
 
-export function EventImageUpload() {
+export function EventImageUpload({ hookForm }: { hookForm: UseFormReturn<any> }) {
 
 
     const [loadFile, setLoadFile] = useState<boolean>(false)
@@ -28,9 +29,13 @@ export function EventImageUpload() {
 
         setLoadFile(true);
 
+        hookForm.setValue('image', acceptedFiles, { shouldValidate: true });
+
         base64Converter(acceptedFiles[0], function (base64Data: string) {
 
             setBase64File(base64Data)
+            
+            hookForm.setValue('event_image', base64Data, { shouldValidate: true });
 
             setLoadFile(false)
 
@@ -44,34 +49,42 @@ export function EventImageUpload() {
         accept: {
             'image/jpeg': [],
             'image/jpg': [],
+            'image/png': [],
             'multipart/png': []
         }
     });
 
 
-    const files = acceptedFiles.map((file: any) => {
-        console.log(file, 'file')
+    const files = acceptedFiles.map((file: any, index) => {
+
         return (
-            <Box overflow="hidden" borderRadius="md" width="100%" height="100%">
+            <Box key={index} overflow="hidden" borderRadius="md" width="100%" height="100%">
                 {
-                   base64File && <img
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    src={base64File}
-                    alt="Imagem"
-                />
+                    base64File && <img
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        src={base64File}
+                        alt="Imagem"
+                    />
                 }
-                
+
             </Box>
         )
     });
 
+    const props = { ...getInputProps(hookForm.register('event_image')), ...hookForm.register('event_image') }
     return (
         <Card boxShadow={'none'}>
             <CardBody>
                 <Flex>
                     <Styled.StyledDropZone reject={isDragReject.toString()} {...getRootProps()}>
 
-                        <input {...getInputProps()} />
+                        <Controller
+                            name='event_image'
+                            control={hookForm.control}
+                            render={({ field }) => (
+                                <input {...getInputProps()} />
+                            )}
+                        />
                         {isDragAccept && (<Heading color={'green'} size={'xl'}><i className={'las la-check'}></i></Heading>)}
                         {isDragReject && (
                             <Box color={'red.500'} textAlign={'center'}>

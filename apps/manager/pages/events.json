@@ -1,0 +1,106 @@
+{
+    "total": 7,
+    "data": [
+        {
+            "id": 1,
+            "uuid": "3e78c8ec-fb82-4158-b0a8-ee809a519136",
+            "name": "vitor.santos",
+            "slug": "vitorsantos",
+            "description": null,
+            "event_image": "http://api.rolezeiros.local/storage/managers/1/3e78c8ec-fb82-4158-b0a8-ee809a519136/images/6605c2682cd47",
+            "start_date": "2024-03-28 18:21:00",
+            "end_date": "2024-03-29 18:21:00",
+            "place_name": "Bar São Paulo",
+            "categories": [
+                "Funk"
+            ]
+        },
+        {
+            "id": 2,
+            "uuid": "a477bf68-3623-4ee3-a669-717027462fe7",
+            "name": "vitor.santos",
+            "slug": "vitorsantos",
+            "description": null,
+            "event_image": "http://api.rolezeiros.local/storage/managers/1/a477bf68-3623-4ee3-a669-717027462fe7/images/6605d878615fa",
+            "start_date": "2024-03-28 20:09:00",
+            "end_date": "2024-03-29 23:09:00",
+            "place_name": "Bar São Paulo",
+            "categories": [
+                "Funk"
+            ]
+        },
+        {
+            "id": 3,
+            "uuid": "6d5068e3-9dda-4abc-8cbb-6c5a5e40cece",
+            "name": "Mansão VIP",
+            "slug": "mansao-vip",
+            "description": null,
+            "event_image": "http://api.rolezeiros.local/storage/managers/1/6d5068e3-9dda-4abc-8cbb-6c5a5e40cece/images/660611f6855f3",
+            "start_date": "2024-03-30 00:57:00",
+            "end_date": "2024-03-31 00:57:00",
+            "place_name": "Raja Deck Lounge Bar",
+            "categories": [
+                "Pagode",
+                "Funk"
+            ]
+        },
+        {
+            "id": 4,
+            "uuid": "e296d723-50d4-45bb-9946-c9c87f896c0b",
+            "name": "Tardezinha",
+            "slug": "tardezinha",
+            "description": null,
+            "event_image": "http://api.rolezeiros.local/storage/managers/1/e296d723-50d4-45bb-9946-c9c87f896c0b/images/660612c02667e",
+            "start_date": "2024-04-06 01:00:00",
+            "end_date": "2024-04-06 07:00:00",
+            "place_name": "Bar São Paulo",
+            "categories": [
+                "Funk",
+                "Pagode",
+                "Samba"
+            ]
+        },
+        {
+            "id": 5,
+            "uuid": "ee4e09be-5277-4788-aad0-73c87dbfe08f",
+            "name": "B-day do andré maromba",
+            "slug": "b-day-do-andre-maromba",
+            "description": null,
+            "event_image": "http://api.rolezeiros.local/storage/managers/1/ee4e09be-5277-4788-aad0-73c87dbfe08f/images/6606c142657db",
+            "start_date": "2024-03-29 18:24:00",
+            "end_date": "2024-03-29 22:24:00",
+            "place_name": "Bar São Paulo",
+            "categories": [
+                "Samba Rock"
+            ]
+        },
+        {
+            "id": 6,
+            "uuid": "d3cd5d8c-504c-43e4-aebb-4af1c6e64ff3",
+            "name": "B-day do andré maromba",
+            "slug": "b-day-do-andre-maromba",
+            "description": null,
+            "event_image": "http://api.rolezeiros.local/storage/managers/1/d3cd5d8c-504c-43e4-aebb-4af1c6e64ff3/images/6606c29da9d21",
+            "start_date": "2024-03-29 13:30:00",
+            "end_date": "2024-03-30 13:30:00",
+            "place_name": "Bar São Paulo",
+            "categories": [
+                "Pagode"
+            ]
+        },
+        {
+            "id": 7,
+            "uuid": "c6b6fbba-f50f-46a9-8562-ad97c4e4979a",
+            "name": "B-day do andré maromba",
+            "slug": "b-day-do-andre-maromba",
+            "description": null,
+            "event_image": "http://api.rolezeiros.local/storage/managers/1/c6b6fbba-f50f-46a9-8562-ad97c4e4979a/images/6606c313f1ef8",
+            "start_date": "2024-03-29 13:33:00",
+            "end_date": "2024-03-30 13:33:00",
+            "place_name": "Bar São Paulo",
+            "categories": [
+                "Samba Rock"
+            ]
+        }
+    ]
+}

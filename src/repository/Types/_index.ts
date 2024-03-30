@@ -3,4 +3,5 @@ export * from './CredentialsType';
 export * from './ResetPasswordType';
 export * from './UserType';
 export * from './EventType';
+export * from './PayloadType';
 

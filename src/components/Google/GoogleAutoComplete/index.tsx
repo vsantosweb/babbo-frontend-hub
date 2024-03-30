@@ -8,9 +8,9 @@ import {
     DirectionsService,
     DirectionsRenderer,
 } from "@react-google-maps/api";
-import { useCallback, useMemo, useState } from "react";
+import { ReactNode, useCallback, useMemo, useState } from "react";
 
-export function GoogleAutoComplete({ captureAddress }: { captureAddress: (address:any) => void }) {
+export function GoogleAutoComplete({ children, captureAddress }: { children: ReactNode, captureAddress: (address: any) => void }) {
 
     const [map, setMap] = useState<google.maps.Map>();
     const [searchBoxA, setSearchBoxA] =
@@ -47,14 +47,15 @@ export function GoogleAutoComplete({ captureAddress }: { captureAddress: (addres
     };
 
     const handleAddress = () => {
-        
+
         const places = searchBoxA!.getPlaces();
-        
-        if(places){
+
+        console.log(places, 'placesplacesplaces')
+        if (places) {
             const address = places[0]?.address_components;
-            captureAddress(address)
+            captureAddress(places[0])
         }
-       
+
         // console.log(places);
         // const place = places![0];
         // const location = {
@@ -89,18 +90,7 @@ export function GoogleAutoComplete({ captureAddress }: { captureAddress: (addres
                         onLoad={onLoadA}
                         onPlacesChanged={handleAddress}
                     >
-                        <InputGroup>
-                            <InputLeftElement
-                                pointerEvents='none'
-                                color='gray.300'
-                                fontSize='1.2em'
-                            >
-                                <Search2Icon/>
-
-                            </InputLeftElement>
-                            <Input placeholder='Digite o endereço' />
-
-                        </InputGroup>
+                        {children}
                     </StandaloneSearchBox>
 
                 </div>

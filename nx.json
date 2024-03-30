@@ -4,7 +4,10 @@
     "defaultBase": "master"
   },
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
     "production": [
       "default",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
@@ -52,16 +55,5 @@
         "unitTestRunner": "jest"
       }
     }
-  },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": {
-        "defaultIsVerbose": false
-      }
-    }
-  },
-  "hooks": {
-    "pre-commit": "lint-staged"
   }
 }

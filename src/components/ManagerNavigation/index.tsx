@@ -18,6 +18,7 @@ import {
   Stack,
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
+import Link from 'next/link'
 
 interface Props {
   children: React.ReactNode
@@ -67,12 +68,14 @@ export function ManagerNavigation() {
           </HStack>
           <Flex alignItems={'center'}>
             <Button
+              as={Link}
+              href={'/events/create'}
               variant={'solid'}
               colorScheme={'teal'}
               size={'sm'}
               mr={4}
               leftIcon={<AddIcon />}>
-              Action
+              Criar evento
             </Button>
             <Menu>
               <MenuButton
