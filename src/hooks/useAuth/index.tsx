@@ -71,7 +71,7 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
   const [rendering, setRendering] = useState<boolean>(true);
   const router = useRouter();
 
-  const authService = container.get<AuthRepositoryInterface>('manager-auth');
+  const authService = container.get<AuthRepositoryInterface>('manager');
 
   useEffect(() => {
     // on initial load - run auth check 
