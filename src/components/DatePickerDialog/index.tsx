@@ -1,14 +1,6 @@
-import React, { ChangeEventHandler, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
-import {
-  differenceInDays,
-  format,
-  getDate,
-  isAfter,
-  isBefore,
-  isValid,
-  parse,
-} from 'date-fns';
+import { format } from 'date-fns';
 import { DateRange, SelectRangeEventHandler } from 'react-day-picker';
 import FocusTrap from 'focus-trap-react';
 import { usePopper } from 'react-popper';

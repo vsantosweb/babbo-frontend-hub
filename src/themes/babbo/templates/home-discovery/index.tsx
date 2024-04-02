@@ -48,9 +48,9 @@ export function HomeDiscovery({ dataDiscovery }: {
             {/* <AdsBody /> */}
           </Col>
           <Col md={12}>
-            <Box  textAlign={'center'} mb={6} width={'100%'}>
+            <Box textAlign={'center'} mb={6} width={'100%'}>
               <img src={'https://placehold.co/1280x120'} />
-              <Flex><Divider/><small>PUBLICIDADE</small><Divider/></Flex>
+              <Flex><Divider /><small>PUBLICIDADE</small><Divider /></Flex>
             </Box>
           </Col>
         </>
@@ -80,7 +80,7 @@ export function HomeDiscovery({ dataDiscovery }: {
     <div>
       <Container fluid>
         <Row>
-          <Heading mb={8}>Eventos em destaque</Heading>
+          <Heading size={'lg'} mb={6}>Eventos em destaque</Heading>
         </Row>
         <Row>
           {dataDiscovery?.map((event, index) =>

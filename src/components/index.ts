@@ -14,5 +14,6 @@ export * from './ResultMessage';
 export * from './ManagerNavigation';
 export * from './EventImageUpload';
 export * from './Google';
+export * from './CookiePolicy';
 
 

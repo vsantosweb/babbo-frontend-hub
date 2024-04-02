@@ -15,6 +15,7 @@ import moment from 'moment';
 import 'moment/locale/pt-br'; // without this line it didn't work
 import { useEffect } from 'react';
 import { PublicRepositoryInterface } from '@/interfaces';
+import { CookiePolicy } from '@/components';
 moment.defineLocale('pt-BR', null);
 
 SwiperCore.use([Navigation, Pagination]);
@@ -49,6 +50,7 @@ function App({ Component, pageProps }: AppProps) {
       </Head>
       <main className="app">
         <Component {...pageProps} />
+        <CookiePolicy />
       </main>
     </Theme>
   );

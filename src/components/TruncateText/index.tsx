@@ -14,7 +14,7 @@ export const TruncateText = ({ text, limit }: { text: string, limit: number }) =
           dangerouslySetInnerHTML={{ __html: `${text?.slice(0, limit)}....` }}
         />
       ) : (
-        <p>{text}</p>
+        <p dangerouslySetInnerHTML={{ __html: text }} />
       )}
       {text?.length > limit && (
         <button onClick={toggleTruncate}>
