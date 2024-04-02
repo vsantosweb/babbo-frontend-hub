@@ -1,0 +1,135 @@
+import {
+    Button,
+    Heading,
+    Flex,
+    FormControl,
+    Stack,
+    HStack,
+    Divider,
+    Checkbox,
+    FormErrorMessage
+} from '@chakra-ui/react'
+import * as Yup from 'yup';
+
+import AddressForm from '../forms/address-form';
+import EventInfoForm from '../forms/event-info-form';
+import { EventImageUpload } from '@/components';
+import { SessionHelper } from '@/helpers';
+import SponsoredForm from '../forms/sponsored-form';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { eventValidatorSchema } from '../../../validators';
+import { EventInterface, EventPayloadType } from '@/types';
+import { useEvent } from '@/hooks';
+import { useEffect } from 'react';
+import moment from 'moment';
+import container from '@/container';
+import { EventRepositoryInterface } from '@/interfaces';
+
+const eventManagerService = container.get<EventRepositoryInterface>('event-manager');
+
+const EventForm = ({ event }: { event?: Record<string, any> }) => {
+
+    const validationSchema = Yup.object().shape({ ...eventValidatorSchema });
+
+    const eventForm = useForm({ resolver: yupResolver(validationSchema), mode: 'all' });
+
+    useEffect(() => {
+
+        if (event) {
+
+            const startDate: any = moment(event.start_date).format("YYYY-MM-DD HH:mm");
+            const endDate: any = moment(event.end_date).format("YYYY-MM-DD HH:mm");
+
+            eventForm.setValue('name', event?.name, { shouldValidate: true });
+            eventForm.setValue('description', event.description, { shouldValidate: true });
+            eventForm.setValue('event_image', event.event_image, { shouldValidate: true });
+            eventForm.setValue('start_date', startDate, { shouldValidate: true });
+            eventForm.setValue('end_date', endDate, { shouldValidate: true });
+            eventForm.setValue('categories', event.categories.map((x: Record<string, any>) => ({ value: x.id, label: x.name })), { shouldValidate: true })
+            eventForm.setValue('place.full_address', event.place.formatted_address, { shouldValidate: true });
+            eventForm.setValue('place.name', event.place.name, { shouldValidate: true });
+            eventForm.setValue('place.address_1', event.place.address_1, { shouldValidate: true });
+            eventForm.setValue('place.address_2', event.place.address_2, { shouldValidate: true });
+            eventForm.setValue('place.zipcode', event.place.zipcode, { shouldValidate: true });
+            eventForm.setValue('place.city', event.place.city, { shouldValidate: true });
+            eventForm.setValue('place.state', event.place.state, { shouldValidate: true });
+            eventForm.setValue('place.address_number', event.place.address_number, { shouldValidate: true });
+        }
+
+    }, [event])
+
+    const handleCreateEvent = async (formData: Record<string, any>) => {
+
+        const payload: EventPayloadType = {
+            name: formData.name,
+            place: formData.place,
+            start_date: formData.start_date,
+            end_date: formData.end_date,
+            categories: formData.categories.map((x: { value: string }) => x.value),
+            description: formData.description,
+            event_image: formData.event_image
+        }
+
+        await eventManagerService.createEvent(payload).then((response: { value: string }) => {
+            SessionHelper.redirectWith('/', 'eventCreated');
+        })
+
+    }
+
+    const handleUpdateEvent = async (formData: Record<string, any>) => {
+
+        const payload: EventPayloadType = {
+            name: formData.name,
+            place: formData.place,
+            start_date: moment(formData.start_date).format('YYYY-MM-DD HH:mm'),
+            end_date: moment(formData.end_date).format('YYYY-MM-DD HH:mm'),
+            description: formData.description,
+            categories: formData.categories.map((x: { value: string }) => x.value),
+        }
+
+        if (formData.image) payload.event_image = formData.event_image;
+
+        await eventManagerService.updateEvent(payload, event?.id).then((response: { value: string }) => {
+            SessionHelper.redirectWith(`/events/${event?.uuid}/edit`, 'eventUpdated');
+        })
+    }
+
+    return (
+
+        <Flex as={'form'}
+            onSubmit={!event ? eventForm.handleSubmit(handleCreateEvent) : eventForm.handleSubmit(handleUpdateEvent)}
+            gap={4}
+            width={'100%'}
+        >
+            <Stack spacing={4}>
+                <FormControl isInvalid={!!eventForm?.formState?.errors?.event_image}>
+                    <EventImageUpload hookForm={eventForm} />
+                    <FormErrorMessage>{eventForm?.formState?.errors?.event_image?.message as string}</FormErrorMessage>
+                </FormControl>
+            </Stack>
+
+            <Stack flex={1} spacing={6}>
+
+                <Stack spacing={4}>
+                    <Heading size={'md'}>Endereço</Heading>
+                    <AddressForm hookForm={eventForm} />
+                </Stack>
+
+                <Divider />
+
+                <Stack spacing={4}>
+                    <Heading size={'md'}>Informações do evento</Heading>
+                    <EventInfoForm hookForm={eventForm} />
+                </Stack>
+
+                <HStack justifyContent={'flex-end'}>
+                    {/* <Button variant={'outline'}>visualizar</Button> */}
+                    <Button isLoading={eventForm.formState.isSubmitting} type={'submit'}>{!event ? 'Criar evento' : 'Atualizar'}</Button>
+                </HStack>
+            </Stack>
+        </Flex>
+    )
+}
+
+export default EventForm;

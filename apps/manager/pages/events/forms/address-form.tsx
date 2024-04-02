@@ -62,7 +62,7 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
         </FormControl>
       </GoogleAutoComplete>
 
-      {address?.length > 0 && (
+      { hookForm.getValues('place') && (
         <Stack>
           <FormControl isInvalid={!!errors?.place?.name}>
             <FormLabel>Local</FormLabel>
@@ -77,9 +77,8 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
           <FormControl isInvalid={!!errors?.place?.zipcode}>
             <FormLabel>CEP</FormLabel>
             <Input
-              {...register('address.zipcode')}
-              defaultValue={address[6]?.long_name}
-              disabled={!!address[6]?.long_name}
+              {...register('place.zipcode')}
+              disabled={!!hookForm.getValues('place.zipcode')}
               type="text"
             />
             <FormErrorMessage>{errors?.place?.zipcode?.message as string}</FormErrorMessage>
@@ -90,9 +89,8 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
           <FormControl isInvalid={!!errors?.place?.address_1}>
             <FormLabel>Endereço</FormLabel>
             <Input
-              {...register('address.address_1')}
-              defaultValue={address[1]?.long_name}
-              disabled={!!address[1]?.long_name}
+              {...register('place.address_1')}
+              disabled={!!hookForm.getValues('place.address_1')}
               type="text"
             />
             <FormErrorMessage>{errors?.place?.address_1?.message as string}</FormErrorMessage>
@@ -101,9 +99,8 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
           <FormControl isInvalid={!!errors?.place?.address_2}>
             <FormLabel>Bairro</FormLabel>
             <Input
-              {...register('address.address_2')}
-              defaultValue={address[2]?.long_name}
-              disabled={!!address[2]?.long_name}
+              {...register('place.address_2')}
+              disabled={!!hookForm.getValues('place.address_2')}
               type="text"
             />
             <FormErrorMessage>{errors?.place?.address_2?.message as string}</FormErrorMessage>
@@ -112,9 +109,8 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
           <FormControl>
             <FormLabel>Complemento</FormLabel>
             <Input
-              {...register('address.complement')}
-              defaultValue={address[6]?.long_name}
-              disabled={!!address[6]?.long_name}
+              {...register('place.complement')}
+              disabled={!!hookForm.getValues('place.complement')}
               type="text"
             />
           </FormControl>
@@ -122,9 +118,8 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
           <FormControl isInvalid={!!errors?.place?.city}>
             <FormLabel>Cidade</FormLabel>
             <Input
-              {...register('address.city')}
-              defaultValue={address[3]?.long_name}
-              disabled={!!address[3]?.long_name}
+              {...register('place.city')}
+              disabled={!!hookForm.getValues('place.city')}
               type="text"
             />
             <FormErrorMessage>{errors?.place?.city?.message as string}</FormErrorMessage>
@@ -133,9 +128,8 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
           <FormControl isInvalid={!!errors?.place?.state}>
             <FormLabel>Estado</FormLabel>
             <Input
-              {...register('address.state')}
-              defaultValue={address[4]?.short_name}
-              disabled={!!address[4]?.short_name}
+              {...register('place.state')}
+              disabled={!!hookForm.getValues('place.city')}
               type="text"
             />
             <FormErrorMessage>{errors?.place?.state?.message as string}</FormErrorMessage>
@@ -143,9 +137,8 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
           <FormControl isInvalid={!!errors?.place?.state}>
             <FormLabel>Nº</FormLabel>
             <Input
-              {...register('address.address_number')}
-              defaultValue={address[0]?.long_name}
-              disabled={!!address[0]?.long_name}
+              {...register('place.address_number')}
+              disabled={!!hookForm.getValues('place.address_number')}
               type="text"
             />
             <FormErrorMessage>{errors?.place?.address_number?.message as string}</FormErrorMessage>

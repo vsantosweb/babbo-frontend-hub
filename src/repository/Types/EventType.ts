@@ -17,11 +17,14 @@ export interface EventInterface  {
     end_date?: string;
     geolocation?: string;
     full_address?: string;
+    status:string;
     place_name?: string;
     city?: string;
     categories?: string[];
     impress?: number;
     has_tickets?:boolean;
+    impressions?:number
+    clicks?:number
 }
 
 

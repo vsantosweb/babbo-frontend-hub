@@ -43,10 +43,10 @@ export default function EventInfoForm({ hookForm }: { hookForm: UseFormReturn<an
     const [categories, setCategories] = useState([]);
 
     const { fetchCategories } = useEvent();
-    
+
     useEffect(() => {
         fetchCategories().then((response: any) => {
-            setCategories(response.data.map((category:any) => ({
+            setCategories(response.data.map((category: Record<string, string>) => ({
                 label: category.name,
                 value: category.id,
             })))
@@ -96,9 +96,17 @@ export default function EventInfoForm({ hookForm }: { hookForm: UseFormReturn<an
             </HStack>
 
             <FormControl>
-                <FormLabel>Descrição do evento</FormLabel>
-                <ReactQuill theme="snow" value={value} onChange={setValue} />
+                <FormLabel>Descrição</FormLabel>
+                <Controller
+                    name='description'
+                    control={control}
+                    render={({ field }) => (
+                        <ReactQuill {...field} theme="snow" value={field.value} onChange={(value:any) => field.onChange(value)} />
+                    )}
+                />
+                <FormErrorMessage>{errors?.categories?.message as string}</FormErrorMessage>
             </FormControl>
+
         </Stack>
     )
 }

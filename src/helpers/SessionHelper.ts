@@ -20,9 +20,9 @@ export const SessionHelper: SessionHelperInterface = {
 
     // Armazenar a mensagem no sessionStorage
     sessionStorage.setItem(key, JSON.stringify(data));
-    console.log(destination, 'destination')
+    
     // Redirecionar para outra página
-    location.replace(destination)
+    location.href = destination;
   },
 
   has: (key: string) => {

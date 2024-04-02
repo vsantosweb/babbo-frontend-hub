@@ -41,6 +41,10 @@ export function AlertProvider({ children }: { children: ReactNode }) {
         eventCreated: {
             title: 'Evento catadastro do sucesso.',
             feedback: 'Seu evento será analisado pela nossa equipe, assim que concluído, seu evento estará disponível no site, você será notificado.'
+        },
+        eventUpdated: {
+            title: 'Evento atualizado.',
+            feedback: 'Evento atualizado com sucesso.'
         }
     }
 

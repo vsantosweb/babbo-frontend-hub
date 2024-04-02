@@ -9,21 +9,27 @@ export interface EventRepositoryInterface {
    * Cria um novo evento básico.
    * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
    */
-   createEvent?(payload: EventPayloadType): Promise<any>;
+   createEvent(payload: EventPayloadType): Promise<any>;
+
+   /**
+   * Atualiza um evento.
+   * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
+   */
+   updateEvent(payload: EventPayloadType, eventId: number): Promise<any>;
 
   /**
    * Retorna uma lista de eventos com base nos parâmetros fornecidos.
    * @param {string} params - Parâmetros de filtro para a consulta de eventos.
    * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
    */
-  events?(params?: string): Promise<any>;
+  events(params?: Record<string, string>): Promise<any>;
 
   /**
    * Retorna os detalhes de um evento com base no ID fornecido.
    * @param {number|string} id - O ID do evento.
    * @returns {Promise<EventInterface>} Uma promessa que resolve com os detalhes do evento.
    */
-  event?(id: number | string): Promise<any>;
+  event(id: number | string): Promise<any>;
 
   /**
    * Retorna uma lista de eventos relacionados ao evento com o ID fornecido.

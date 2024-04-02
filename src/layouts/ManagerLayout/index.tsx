@@ -44,7 +44,7 @@ export default function ManagerLayout({
           flex: 1,
           height: 'auto',
           width: '100%',
-          maxWidth: theme.defaultContainer.width,
+          // maxWidth: theme.defaultContainer.width,
           margin: '0 auto',
           padding: '0 1em',
         }}

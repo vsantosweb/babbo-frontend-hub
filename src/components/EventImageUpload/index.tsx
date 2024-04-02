@@ -13,17 +13,9 @@ import { Controller, UseFormReturn } from 'react-hook-form';
 
 export function EventImageUpload({ hookForm }: { hookForm: UseFormReturn<any> }) {
 
-
     const [loadFile, setLoadFile] = useState<boolean>(false)
+
     const [base64File, setBase64File] = useState<string | null>(null)
-    const [loading, setLoading] = useState<boolean>(false);
-    const [status, setStatus] = useState<'wait' | 'complete' | 'loading'>('wait')
-
-    const handleSendFiles = () => {
-        setStatus('loading')
-
-    }
-
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
 
@@ -32,13 +24,9 @@ export function EventImageUpload({ hookForm }: { hookForm: UseFormReturn<any> })
         hookForm.setValue('image', acceptedFiles, { shouldValidate: true });
 
         base64Converter(acceptedFiles[0], function (base64Data: string) {
-
             setBase64File(base64Data)
-            
             hookForm.setValue('event_image', base64Data, { shouldValidate: true });
-
             setLoadFile(false)
-
         });
 
     }, []);
@@ -66,12 +54,11 @@ export function EventImageUpload({ hookForm }: { hookForm: UseFormReturn<any> })
                         alt="Imagem"
                     />
                 }
-
             </Box>
         )
     });
 
-    const props = { ...getInputProps(hookForm.register('event_image')), ...hookForm.register('event_image') }
+
     return (
         <Card boxShadow={'none'}>
             <CardBody>
@@ -85,14 +72,16 @@ export function EventImageUpload({ hookForm }: { hookForm: UseFormReturn<any> })
                                 <input {...getInputProps()} />
                             )}
                         />
+
                         {isDragAccept && (<Heading color={'green'} size={'xl'}><i className={'las la-check'}></i></Heading>)}
+
                         {isDragReject && (
                             <Box color={'red.500'} textAlign={'center'}>
                                 <Heading size='md'>Arquivo inválido!</Heading>
                                 <Text>O arquivo precisa estar no formato <strong>.zip</strong> a atender os padrões de uso.</Text>
                             </Box>
                         )}
-                        {!isDragActive && files.length === 0 && (
+                        {!isDragActive && files.length === 0 && (hookForm.getValues('event_image') === '') && (
                             <Flex alignItems={'center'}>
                                 <Stack p={2} textAlign={'center'}>
                                     <Heading size='md'>Imagem do evento</Heading>
@@ -101,7 +90,15 @@ export function EventImageUpload({ hookForm }: { hookForm: UseFormReturn<any> })
                                 </Stack>
                             </Flex>
                         )}
-                        {files}
+                        {files.length === 0 && hookForm.getValues('event_image') !== '' ? <Box overflow="hidden" borderRadius="md" width="100%" height="100%">
+                            {
+                                <img
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                    src={hookForm.getValues('event_image') + '.jpg'}
+                                    alt="Imagem"
+                                />
+                            }
+                        </Box> : files}
                     </Styled.StyledDropZone>
                 </Flex>
             </CardBody>

@@ -1,13 +1,12 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 
 // Cria uma instância do serviço de autenticação
-import container from '../../repository/providers/container';
 import { AuthRepositoryInterface } from '@/interfaces';
 import { ApiResponseType, CredentialsType, UserType } from '@/types';
 import { RouteProps, managerRoutes } from '@/routes';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
-
+import container from '@/container';
 
 const privatePaths = managerRoutes.filter((nav: RouteProps) => nav.private).map(x => x.path);
 
@@ -71,7 +70,7 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
   const [rendering, setRendering] = useState<boolean>(true);
   const router = useRouter();
 
-  const authService = container.get<AuthRepositoryInterface>('manager');
+  const authService = container.get<AuthRepositoryInterface>('auth-manager');
 
   useEffect(() => {
     // on initial load - run auth check 
@@ -90,7 +89,7 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.asPath]);
+  }, [router.pathname]);
 
 
   const session = async (url: string) => {

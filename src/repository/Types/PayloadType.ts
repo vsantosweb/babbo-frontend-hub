@@ -15,5 +15,6 @@ export type EventPayloadType = {
     end_date: string;
     categories: any ;
     name: string;
+    description: string;
     event_image?: string; // Assuming event_image is an optional field
 }

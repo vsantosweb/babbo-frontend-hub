@@ -22,8 +22,8 @@ export const eventValidatorSchema = {
         })
         .min(Yup.ref('start_date'), 'A data de término deve ser posterior à data de início'),
     event_image: Yup.string().required(),
+    description: Yup.string(),
     image: Yup.mixed()
-        .required('A imagem é obrigatória')
         .test('fileSize', 'A imagem deve ter no máximo 1MB', (value: any) => {
             if (!value) return true; // Retorna true se nenhum arquivo for fornecido
             // Verifica se o tamanho é menor ou igual a 1MB
