@@ -61,8 +61,8 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
         const payload: EventPayloadType = {
             name: formData.name,
             place: formData.place,
-            start_date: formData.start_date,
-            end_date: formData.end_date,
+            start_date: moment(formData.start_date).format('YYYY-MM-DD HH:mm'),
+            end_date: moment(formData.end_date).format('YYYY-MM-DD HH:mm'),
             categories: formData.categories.map((x: { value: string }) => x.value),
             description: formData.description,
             event_image: formData.event_image
