@@ -15,7 +15,7 @@ import moment from 'moment';
 import 'moment/locale/pt-br'; // without this line it didn't work
 import { useEffect } from 'react';
 import { PublicRepositoryInterface } from '@/interfaces';
-moment.locale('pt-BR');
+moment.defineLocale('pt-BR', null);
 
 SwiperCore.use([Navigation, Pagination]);
 

@@ -21,10 +21,9 @@ export class PublicEventService implements PublicRepositoryInterface {
 
   /**
    * Retorna uma lista de eventos com base nos parâmetros fornecidos.
-   * @param {string} params - Parâmetros de filtro para a consulta de eventos.
    * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
    */
-  async events(params?: string): Promise<any> {
+  async events(params?: Record<string, string>): Promise<any> {
     try {
       const response = await this.api.get<any>(`/events?${params}`);
       return response.data;

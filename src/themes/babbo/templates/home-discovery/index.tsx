@@ -80,6 +80,9 @@ export function HomeDiscovery({ dataDiscovery }: {
     <div>
       <Container fluid>
         <Row>
+          <Heading mb={8}>Eventos em destaque</Heading>
+        </Row>
+        <Row>
           {dataDiscovery?.map((event, index) =>
             renderWithAdSense(event, index)
           )}

@@ -6,7 +6,6 @@ import {
     Stack,
     HStack,
     Divider,
-    Checkbox,
     FormErrorMessage
 } from '@chakra-ui/react'
 import * as Yup from 'yup';
@@ -15,18 +14,16 @@ import AddressForm from '../forms/address-form';
 import EventInfoForm from '../forms/event-info-form';
 import { EventImageUpload } from '@/components';
 import { SessionHelper } from '@/helpers';
-import SponsoredForm from '../forms/sponsored-form';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { eventValidatorSchema } from '../../../validators';
-import { EventInterface, EventPayloadType } from '@/types';
-import { useEvent } from '@/hooks';
+import { eventValidatorSchema } from '../../validators';
+import { EventPayloadType } from '@/types';
 import { useEffect } from 'react';
 import moment from 'moment';
 import container from '@/container';
-import { EventRepositoryInterface } from '@/interfaces';
+import { MangerEventRepositoryInterface } from '@/interfaces';
 
-const eventManagerService = container.get<EventRepositoryInterface>('event-manager');
+const eventManagerService = container.get<MangerEventRepositoryInterface>('event-manager');
 
 const EventForm = ({ event }: { event?: Record<string, any> }) => {
 

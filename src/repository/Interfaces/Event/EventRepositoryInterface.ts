@@ -5,18 +5,6 @@ import { EventBanner, EventDisplayType, EventInterface, EventPayloadType } from 
  */
 export interface EventRepositoryInterface {
 
-   /**
-   * Cria um novo evento básico.
-   * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
-   */
-   createEvent(payload: EventPayloadType): Promise<any>;
-
-   /**
-   * Atualiza um evento.
-   * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
-   */
-   updateEvent(payload: EventPayloadType, eventId: number): Promise<any>;
-
   /**
    * Retorna uma lista de eventos com base nos parâmetros fornecidos.
    * @param {string} params - Parâmetros de filtro para a consulta de eventos.
@@ -36,35 +24,35 @@ export interface EventRepositoryInterface {
    * @param {number|string} id - O ID do evento.
    * @returns {Promise<EventInterface[]>} Uma promessa que resolve com uma lista de eventos relacionados.
    */
-  related?(id: number | string): Promise<any>;
+  related(id: number | string): Promise<any>;
 
   /**
    * Retorna uma lista de categorias de eventos disponíveis.
    * @returns {Promise<EventDisplayType[]>} Uma promessa que resolve com uma lista de categorias de eventos.
    */
-  displayTypes?(): Promise<EventDisplayType[]>;
+  displayTypes(): Promise<EventDisplayType[]>;
 
   /**
    * Retorna uma lista de banners de eventos para exibição.
    * @returns {Promise<any>} Uma promessa que resolve com uma lista de banners de eventos.
    */
-  banners?(): Promise<any>;
+  banners(): Promise<any>;
 
   /**
    * Retorna uma lista de eventos baseado no nome.
    * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
    */
-  search?(name: string): Promise<any>;
+  search(name: string): Promise<any>;
 
   /**
    * Retorna uma lista de categorias/tipos de eventos.
    * @returns {Promise<any>}
    */
-  categories?(): Promise<any>;
+  categories(): Promise<any>;
 
   /**
    * Retorna uma lista de cidades com eventos disponíveis
    * @returns {Promise<any>}
    */
-  avaiableCities?(): Promise<any>;
+  avaiableCities(): Promise<any>;
 }

@@ -8,10 +8,9 @@ import {
     Tab,
     TabPanel,
 } from '@chakra-ui/react';
-import EventDetails from './components/EventDetails';
-import ImpressionsChart from './components/ImpressionsChart';
+import EventDetails from '../../../components/EventDetails';
+import ImpressionsChart from '../../../components/ImpressionsChart';
 import Layout from '@/layouts';
-import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { EventInterface } from '@/types';
@@ -37,7 +36,7 @@ export default function Event() {
             });
         }
 
-    }, [router]);
+    }, [router.query]);
 
     return (
         <Layout name="manager">

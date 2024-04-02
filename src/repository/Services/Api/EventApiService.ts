@@ -4,7 +4,7 @@ import { inject, injectable, unmanaged } from "inversify";
 import { EventPayloadType } from "@/types";
 import { EventRepositoryInterface } from "@/interfaces";
 @injectable()
-export class EventApiService implements EventRepositoryInterface {
+export class EventApiService {
 
     protected api: AxiosInstance;
 

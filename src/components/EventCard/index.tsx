@@ -22,7 +22,7 @@ export const EventCard = (event: EventInterface) => {
       <Styled.CardEventImageContainer>
         <Styled.CardEventImage
           alt={event.name}
-          src={`${event.event_image}.jpg`}
+          src={`${event.event_image}-lg.jpg`}
         />
         event_date
       </Styled.CardEventImageContainer>

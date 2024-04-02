@@ -1,4 +1,4 @@
-import { EventRepositoryInterface, PublicRepositoryInterface } from '@/interfaces';
+import { EventRepositoryInterface, MangerEventRepositoryInterface, PublicRepositoryInterface } from '@/interfaces';
 import { EventBanner, EventDisplayType, EventInterface, EventPayloadType } from '@/types';
 import { AxiosInstance } from 'axios';
 import ApiService from '..';
@@ -9,14 +9,12 @@ import { EventApiService } from '../EventApiService';
  * Serviço responsável por recuperar informações sobre eventos do cliente.
  */
 @injectable()
-export class EventManagerApiService extends EventApiService implements EventRepositoryInterface {
+export class EventManagerApiService extends EventApiService implements MangerEventRepositoryInterface {
 
   /**
    * Cria uma nova instância do serviço de eventos do cliente.
    */
-
   constructor() {
     super('manager');
   }
-
 }

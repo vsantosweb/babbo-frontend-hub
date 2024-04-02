@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import { EventInterface } from '@/types';
 import moment from 'moment';
 import Link from 'next/link';
+import Image from 'next/image';
 
 function EventShow() {
   const { fetchEvent, fetchRelatedEvents, getFormattedDate } = useEvent();
@@ -53,17 +54,16 @@ function EventShow() {
           >
             {/* Imagem com resolução alta para telas grandes */}
             <Box
-              as="img"
+              as={'img'}
               borderRadius={{ base: '0', md: 'xl' }}
-              alt={event?.name}
+              alt={event?.name as string}
               boxShadow={{
                 base: 'none',
                 md: 'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px',
               }}
               src={`${event?.event_image}-lg.jpg`}
-              srcSet={`${event?.event_image}-lg.jpg 1600w,${event?.event_image}-md.jpg 800w,${event?.event_image}-xs.jpg 400w`}
-              sizes="(max-width: 767px) 95vw, (max-width: 991px) 90vw, 50vw"
-              loading="lazy"
+              // srcSet={`${event?.event_image}-lg.jpg 1600w,${event?.event_image}-md.jpg 800w,${event?.event_image}-xs.jpg 400w`}
+              // sizes="(max-width: 767px) 95vw, (max-width: 991px) 90vw, 50vw"
               className="event-banner-img"
               style={{
                 width: '100%',

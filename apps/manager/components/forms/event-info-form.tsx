@@ -2,38 +2,19 @@
 'use client'
 import { useEffect, useState } from 'react'
 import {
-    Progress,
-    Box,
-    ButtonGroup,
-    Button,
-    Heading,
-    Flex,
     FormControl,
-    GridItem,
     FormLabel,
     Input,
-    SimpleGrid,
-    InputLeftAddon,
-    InputGroup,
-    Textarea,
     FormHelperText,
-    InputRightElement,
     Stack,
     FormErrorMessage,
     HStack,
 } from '@chakra-ui/react'
-import { EventImageUpload } from '@/components'
-import ReactQuill from 'react-quill';
+
 import 'react-quill/dist/quill.snow.css';
 
-import {
-    AsyncCreatableSelect,
-    AsyncSelect,
-    CreatableSelect,
-    Select,
-} from "chakra-react-select";
+import { Select } from "chakra-react-select";
 import { Controller, UseFormReturn } from 'react-hook-form';
-import { EventInterface } from '@/types';
 import moment from 'moment';
 import { useEvent } from '@/hooks';
 

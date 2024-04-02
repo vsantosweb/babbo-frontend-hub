@@ -13,7 +13,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import moment from 'moment';
 import 'moment/locale/pt-br'; // without this line it didn't work
 import { AlertProvider, AuthProvider } from '@/hooks';
-moment.locale('pt-BR');
+moment.defineLocale('pt-BR', null);
 
 SwiperCore.use([Navigation, Pagination]);
 
@@ -31,9 +31,7 @@ function App({ Component, pageProps }: AppProps) {
           ></script>
         </Head>
         <main className="app">
-          <AlertProvider>
-            <Component {...pageProps} />
-          </AlertProvider>
+        <Component {...pageProps} />
         </main>
       </AuthProvider>
     </Theme>

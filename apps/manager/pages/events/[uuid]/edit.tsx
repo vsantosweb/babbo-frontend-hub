@@ -1,10 +1,9 @@
 
 import { EventProvider, useEvent } from '@/hooks';
-import EventForm from '../forms';
+import EventForm from '../../../components/forms';
 import Layout from '@/layouts';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
 import { EventRepositoryInterface } from '@/interfaces';
 
 import container from '@/container';
@@ -14,11 +13,8 @@ const eventServiceManager = container.get<EventRepositoryInterface>('event-manag
 
 export default function EditEvent() {
 
-    const eventForm = useForm();
-
     const router = useRouter();
     const [event, setEvent] = useState<EventInterface>();
-    const [relatedEvents, setRelatedEvents] = useState<EventInterface[]>();
 
     useEffect(() => {
 

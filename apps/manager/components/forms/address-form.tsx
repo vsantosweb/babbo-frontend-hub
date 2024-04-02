@@ -1,36 +1,22 @@
 import { useEffect, useState } from 'react';
 import {
-  Progress,
-  Box,
-  ButtonGroup,
-  Button,
-  Heading,
-  Flex,
   FormControl,
-  GridItem,
   FormLabel,
   Input,
-  Select,
-  SimpleGrid,
-  InputLeftAddon,
   InputGroup,
-  Textarea,
-  FormHelperText,
-  InputRightElement,
   Stack,
   InputLeftElement,
   FormErrorMessage,
 } from '@chakra-ui/react';
 import { GoogleAutoComplete } from '@/components';
 import { Search2Icon } from '@chakra-ui/icons';
-import { UseFormReturn } from 'react-hook-form';
 
 export default function AddressForm({ hookForm }: { hookForm: any }) {
   const {
     register,
     control,
     setValue,
-    formState: { errors, isValid },
+    formState: { errors },
   } = hookForm;
 
   const [place, setPlace] = useState<any>();

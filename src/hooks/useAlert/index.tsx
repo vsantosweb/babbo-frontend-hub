@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useContext, useEffect, useRef, useState } from "react"
+import { ReactNode, RefObject, createContext, useContext, useEffect, useRef, useState } from "react"
 import {
     AlertDialog,
     AlertDialogBody,
@@ -23,7 +23,7 @@ export function useAlert() {
     return context;
 }
 
-
+type AlertStates = { [key: string]: { title: string; feedback: string; } }
 
 
 export function AlertProvider({ children }: { children: ReactNode }) {
@@ -32,11 +32,11 @@ export function AlertProvider({ children }: { children: ReactNode }) {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const cancelRef = useRef();
+    const cancelRef: RefObject<any> = useRef();
 
     const router = useRouter();
 
-    const alertStates = {
+    const alertStates: AlertStates  = {
 
         eventCreated: {
             title: 'Evento catadastro do sucesso.',

@@ -7,6 +7,7 @@
   },
   "private": true,
   "dependencies": {
+    "@adobe/react-spectrum": "^3.34.1",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.1",
@@ -15,7 +16,6 @@
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
     "@hookform/resolvers": "^3.3.4",
-    "@nextui-org/react": "^2.2.10",
     "@popperjs/core": "^2.11.8",
     "@react-google-maps/api": "^2.19.3",
     "@tanstack/react-table": "^8.15.3",
