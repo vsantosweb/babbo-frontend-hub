@@ -1,5 +1,5 @@
 
-import { EventProvider, useEvent } from '@/hooks';
+import { EventProvider } from '@/hooks';
 import EventForm from '../../../components/forms';
 import Layout from '@/layouts';
 import { useEffect, useState } from 'react';

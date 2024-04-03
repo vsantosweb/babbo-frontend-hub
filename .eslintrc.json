@@ -5,14 +5,12 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/next", "../../.eslintrc.json"],
       "rules": {
-        "no-console": ["error", { "allow": ["warn", "error"] }],
         "@nx/enforce-module-boundaries": [
           "error",
           {
             "enforceBuildableLibDependency": true,
-            "allow": ["*"],
+            "allow": [],
             "depConstraints": [
               {
                 "sourceTag": "*",
