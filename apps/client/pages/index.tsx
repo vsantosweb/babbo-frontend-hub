@@ -61,7 +61,7 @@ export function Home() {
         <>
           <HomeDiscovery dataDiscovery={events} />
           {total !== events?.length && <Box pb={6} textAlign={'center'}>
-            <Button variant={'ghost'} isLoading={loading} onClick={loadMore}>Carregar mais</Button>
+            <Button variant={'link'} isLoading={loading} onClick={loadMore}>Carregar mais</Button>
           </Box>}
         </>
         {/* {loading ? (<Loader text={'Carregando...'} />) : (<HomeDiscovery loadMore={loadMore} dataDiscovery={events} />)} */}
