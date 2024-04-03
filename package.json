@@ -2,9 +2,7 @@
   "name": "@babbo/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {
-    "prepare": "husky"
-  },
+  "scripts": {},
   "private": true,
   "dependencies": {
     "@adobe/react-spectrum": "^3.34.1",
