@@ -16,7 +16,6 @@ import 'moment/locale/pt-br'; // without this line it didn't work
 import { useEffect } from 'react';
 import { PublicRepositoryInterface } from '@/interfaces';
 import { CookiePolicy } from '@/components';
-import Script from 'next/script';
 moment.defineLocale('pt-BR', null);
 
 SwiperCore.use([Navigation, Pagination]);
@@ -44,12 +43,11 @@ function App({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="google-adsense-account" content="ca-pub-8530046753205274" />
         <title>Babbo</title>
-        <Script
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8530046753205274"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+        ></script>
       </Head>
       <main className="app">
         <Component {...pageProps} />
