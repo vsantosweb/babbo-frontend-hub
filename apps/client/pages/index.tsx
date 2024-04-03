@@ -53,7 +53,7 @@ export function Home() {
     >
       <Box mt={8}>
         {/* <Banner /> */}
-        <Box pb={6}>
+        <Box minHeight={'90px'} height={'auto'} pb={6}>
           {/* <img src={'https://placehold.co/1280x120'} /> <hr /> */}
           <GoogleAdSense adClient='ca-pub-8530046753205274' adSlot={'2752189175'}/>
 
