@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef, Fragment, Suspense } from 'react';
 import * as Styles from './style';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Banner, EventCard, ResultMessage } from '@/components';
+import { Banner, EventCard, GoogleAdSense, ResultMessage } from '@/components';
 import { Box, Button, Divider, Flex, Heading, Stack, Text } from '@chakra-ui/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 
@@ -47,12 +47,13 @@ export function HomeDiscovery({ dataDiscovery }: {
 
             {/* <AdsBody /> */}
           </Col>
-          <Col md={12}>
+          {/* <Col md={12}>
             <Box textAlign={'center'} mb={6} width={'100%'}>
               <img src={'https://placehold.co/1280x120'} />
+              <GoogleAdSense adClient='ca-pub-8530046753205274' adSlot={'2752189175'}/>
               <Flex><Divider /><small>PUBLICIDADE</small><Divider /></Flex>
             </Box>
-          </Col>
+          </Col> */}
         </>
       );
     } else {

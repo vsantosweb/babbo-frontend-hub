@@ -7,6 +7,7 @@ import {
   EventCard,
   EventCardFeatured,
   EventSearch,
+  GoogleAdSense,
   Loader,
   Navigation,
 } from '@/components';
@@ -53,12 +54,14 @@ export function Home() {
       <Box mt={8}>
         {/* <Banner /> */}
         <Box pb={6}>
-          <img src={'https://placehold.co/1280x120'} /> <hr />
+          {/* <img src={'https://placehold.co/1280x120'} /> <hr /> */}
+          <GoogleAdSense adClient='ca-pub-8530046753205274' adSlot={'2752189175'}/>
+
         </Box>
         <>
           <HomeDiscovery dataDiscovery={events} />
           {total !== events?.length && <Box pb={6} textAlign={'center'}>
-            <Button isLoading={loading} onClick={loadMore}>Carregar mais</Button>
+            <Button variant={'ghost'} isLoading={loading} onClick={loadMore}>Carregar mais</Button>
           </Box>}
         </>
         {/* {loading ? (<Loader text={'Carregando...'} />) : (<HomeDiscovery loadMore={loadMore} dataDiscovery={events} />)} */}
