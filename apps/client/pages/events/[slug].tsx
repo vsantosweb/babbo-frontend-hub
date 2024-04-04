@@ -157,11 +157,17 @@ function EventShow() {
                   >
                     <FaTicketAlt />
                   </Box>
+                  <Link
+                    target="_blank"
+                    href={event?.ticket_redirect_url as string}
+                  >
+                    <Flex gap={1} direction={'column'}>
+                      <Heading size={'md'}>Ingressos</Heading>
+                      <Text>{event.ticket_redirect_name}</Text>
+                    </Flex>
 
-                  <Flex gap={1} direction={'column'}>
-                    <Heading size={'md'}>Ingressos</Heading>
-                    <Text>Ticket 360</Text>
-                  </Flex>
+                  </Link>
+
 
                 </Flex>
               }

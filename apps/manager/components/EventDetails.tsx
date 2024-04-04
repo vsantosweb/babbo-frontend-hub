@@ -24,15 +24,14 @@ const EventDetails = ({ event }: { event?: EventInterface }) => {
         <HStack spacing={6}>
           <Text>
             <HStack>
-              <HiLocationMarker /> <span>{event?.place_name}</span>
-            </HStack>
-          </Text>
-          <Text>
-            <HStack>
               <HiCalendar /> <span>{event && eventDateFormatter(event).fully}</span>
             </HStack>
           </Text>
         </HStack>
+        <HStack>
+          <HiLocationMarker /> <span>{event?.full_address}</span>
+        </HStack>
+
       </Stack>
       <Flex justifyContent={'flex-end'} flex={1}>
         <HStack spacing={3}>

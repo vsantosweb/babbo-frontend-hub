@@ -1,6 +1,14 @@
-import { Box, Flex, Heading, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
 
-export function ResultMessage() {
+export type ResultMessageType = {
+  title: string,
+  description: string,
+  action: {
+    callback?: () => any,
+    actionText: string | number | JSX.Element
+  }
+}
+export function ResultMessage({ title, description, action }: ResultMessageType) {
   return (
     <Box
       display={'flex'}
@@ -10,11 +18,10 @@ export function ResultMessage() {
       flex={1}
       height={'100%'}
     >
-      <Flex gap={2} direction={'column'} align={'center'}>
-        <Heading size={'lg'}>Nenhum evento encontrado</Heading>
-        <Text>
-          Não conseguimos localizar o evento que procurou, tente novamente.
-        </Text>
+      <Flex gap={6} direction={'column'} align={'center'}>
+        <Heading size={'lg'}>{title}</Heading>
+        <Text>{description}</Text>
+        {action.callback && <Button variant={'outline'} onClick={action.callback}>{action.actionText}</Button>}
       </Flex>
     </Box>
   );

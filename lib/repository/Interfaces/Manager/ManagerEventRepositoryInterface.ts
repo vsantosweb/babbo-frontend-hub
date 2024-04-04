@@ -16,4 +16,10 @@ export interface MangerEventRepositoryInterface extends EventRepositoryInterface
     * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
     */
     updateEvent(payload: EventPayloadType, eventId: number): Promise<any>;
+    
+    /**
+    * Relatorio de impressoes por data.
+    * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
+    */
+    impressionsByDate(eventId: number): Promise<any>;
 }

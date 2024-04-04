@@ -36,7 +36,7 @@ export function HomeDiscovery({ dataDiscovery }: {
             <Link
               // target={'_blank'}
               href={{
-                pathname: `evento/${event.slug}`,
+                pathname: `events/${event.slug}`,
                 query: { id: event.uuid },
               }}
             >
@@ -75,7 +75,10 @@ export function HomeDiscovery({ dataDiscovery }: {
 
   if (dataDiscovery === null) return <></>
 
-  if (dataDiscovery.length === 0) return <ResultMessage />;
+  if (dataDiscovery.length === 0) return <ResultMessage
+    title='Nenhum evento encontrado'
+    description='Não conseguimos localizar o evento que procurou, tente novamente.'
+  />;
 
   return (
     <div>

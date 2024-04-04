@@ -81,7 +81,7 @@ export function EventImageUpload({ hookForm }: { hookForm: UseFormReturn<any> })
                                 <Text>O arquivo precisa estar no formato <strong>.zip</strong> a atender os padrões de uso.</Text>
                             </Box>
                         )}
-                        {!isDragActive && files.length === 0 && (hookForm.getValues('event_image') === '') && (
+                        {!isDragActive && files.length === 0 && (hookForm.getValues('event_image') === undefined) && (
                             <Flex alignItems={'center'}>
                                 <Stack p={2} textAlign={'center'}>
                                     <Heading size='md'>Imagem do evento</Heading>
@@ -90,7 +90,8 @@ export function EventImageUpload({ hookForm }: { hookForm: UseFormReturn<any> })
                                 </Stack>
                             </Flex>
                         )}
-                        {files.length === 0 && hookForm.getValues('event_image') !== '' ? <Box overflow="hidden" borderRadius="md" width="100%" height="100%">
+                        
+                        {files.length === 0 && hookForm.getValues('event_image') !== undefined ? <Box overflow="hidden" borderRadius="md" width="100%" height="100%">
                             {
                                 <img
                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}

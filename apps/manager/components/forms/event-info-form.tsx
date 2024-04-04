@@ -9,6 +9,7 @@ import {
     Stack,
     FormErrorMessage,
     HStack,
+    Checkbox,
 } from '@chakra-ui/react'
 
 import 'react-quill/dist/quill.snow.css';
@@ -17,6 +18,7 @@ import { Select } from "chakra-react-select";
 import { Controller, UseFormReturn } from 'react-hook-form';
 import moment from 'moment';
 import { useEvent } from '@/hooks';
+import TicketForm from './ticket-form';
 
 export default function EventInfoForm({ hookForm }: { hookForm: UseFormReturn<any> }) {
 
@@ -38,7 +40,7 @@ export default function EventInfoForm({ hookForm }: { hookForm: UseFormReturn<an
     const ReactQuill = typeof window === 'object' ? require('react-quill') : () => false;
 
     return (
-        <Stack spacing={4}>
+        <Stack spacing={8}>
             <FormControl isInvalid={!!errors?.name}>
                 <FormLabel>Nome o evento</FormLabel>
                 <Input {...register('name')} type="text" />

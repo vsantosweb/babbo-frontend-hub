@@ -24,15 +24,13 @@ function App({ Component, pageProps }: AppProps) {
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <title>Babbo</title>
-          <script
-            async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8530046753205274"
-            crossOrigin="anonymous"
-          ></script>
+
         </Head>
-        <main className="app">
-        <Component {...pageProps} />
-        </main>
+        <AlertProvider>
+          <main className="app">
+            <Component {...pageProps} />
+          </main>
+        </AlertProvider>
       </AuthProvider>
     </Theme>
   );

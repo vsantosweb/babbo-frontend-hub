@@ -2,7 +2,7 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import './styles.css';
 import { Theme } from '@/themes/default';
-import { AuthProvider } from '@/hooks';
+import { AlertProvider, AuthProvider } from '@/hooks';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -24,9 +24,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>Welcome to manager!</title>
       </Head>
       <AuthProvider>
-        <main className="app">
-          <Component {...pageProps} />
-        </main>
+        <AlertProvider>
+          <main className="app">
+            <Component {...pageProps} />
+          </main>
+        </AlertProvider>
       </AuthProvider>
     </Theme>
   );

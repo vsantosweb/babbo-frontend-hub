@@ -25,6 +25,8 @@ export interface EventInterface  {
     has_tickets?:boolean;
     impressions?:number
     clicks?:number
+    ticket_redirect_name?: string,
+    ticket_redirect_url?:string
 }
 
 

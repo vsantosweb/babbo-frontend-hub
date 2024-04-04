@@ -19,6 +19,14 @@ import {
   Text,
   Button,
   Heading,
+  Spinner,
+  Input,
+  HStack,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+  IconButton,
+  Select,
 } from '@chakra-ui/react'
 
 import eventsMock from './events.json'
@@ -30,94 +38,131 @@ import { EventRepositoryInterface } from '@/interfaces';
 import { useEffect, useState } from 'react';
 import { EventInterface } from '@/types';
 import { eventDateFormatter } from '@/helpers';
+import { ResultMessage } from '@/components';
+import { Search2Icon } from '@chakra-ui/icons';
+import { EventProvider, useEvent } from '@/hooks';
+import { useForm } from 'react-hook-form';
 
 const eventService = container.get<EventRepositoryInterface>('event-manager')
 
 interface EventStatus {
-  [key: string]: {label: string; color: string;};
-  published: {label: string; color: string;};
-  rejected: {label: string; color: string;};
-  pending: {label: string; color: string;};
-  canceled: {label: string; color: string;};
+  [key: string]: { label: string; color: string; };
+  published: { label: string; color: string; };
+  rejected: { label: string; color: string; };
+  pending: { label: string; color: string; };
+  canceled: { label: string; color: string; };
 }
 
+export default function Index() {
+  return <EventProvider><Events /></EventProvider>
+}
 
-export function Index() {
+function Events() {
 
+  const PAGE_LIMIT = 10;
+
+  const { fetchSearch } = useEvent();
+  const [search, setSearch] = useState<Record<string, string | number>>()
+  const [loading, setLoading] = useState<boolean>(false)
   const [events, setEvents] = useState<EventInterface[]>();
   const router = useRouter();
+  const { register, handleSubmit, formState: { isSubmitting } } = useForm();
 
   const eventStatus: EventStatus = {
-    published: { label: 'Publicado', color: 'green.500' },
-    rejected: { label: 'Rejeitado', color: 'red.500' },
-    pending: { label: 'Publicado', color: 'yellow.500' },
-    canceled: { label: 'Cancelado', color: 'gray.300' },
+    published: { label: 'Publicado', color: 'gray.100' },
+    rejected: { label: 'Rejeitado', color: 'gray.100' },
+    pending: { label: 'Publicado', color: 'gray.100' },
+    canceled: { label: 'Cancelado', color: 'gray.100' },
   }
 
-
+  const handleSearch = async (formData: Record<string, any>) => {
+    console.log('merda')
+    setSearch(formData)
+  }
   useEffect(() => {
-    eventService.events({limit: '50'}).then(response => {
+    setLoading(true)
+    eventService.events({ limit: PAGE_LIMIT, ...search }).then(response => {
       setEvents(response.data);
+      setLoading(false)
+
     })
-  }, [])
+  }, [search])
+
+  if (events === null) return <></>
 
   return (
     <Layout name="manager">
-      <Stack spacing={8}>
-        <Heading size={'lg'}>Meus eventos</Heading>
-        <TableContainer>
-          <Table variant="simple" size={'sm'}>
-            <TableCaption>
-              <Button mr={2}>Preview</Button>
-              <Button>Next</Button>
-            </TableCaption>
-            <Thead>
-              <Tr p={3}>
-                <Th pr={0}>
-                  <Checkbox />
-                </Th>
-                <Th>Evento</Th>
-                <Th>Status</Th>
-                <Th>Impressões</Th>
-                <Th>Cliques</Th>
-                {/* <Th>Shakes 🔥</Th> */}
-                <Th>Data</Th>
-                <Th>criado em</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {events?.map((event: EventInterface) => (
-                <Tr p={4} key={event.id} _hover={{ background: 'gray.100' }} cursor={'pointer'}>
-                  <Td pr={0}>
-                    <Checkbox />
-                  </Td>
-                  <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>
-                    <Flex gap={3} alignItems="center">
-                      <Box borderRadius={'100%'} overflow={'hidden'}>
-                        <Image objectFit={'cover'} src={`${event.event_image}-md.jpg`} alt={event.name} boxSize="60px" />
-                      </Box>
-                      <Stack>
-                        <span>{event.name}</span>
-                        <Text color='gray.400'>{event.place_name}</Text>
-                      </Stack>
-                    </Flex>
-                  </Td>
-                  <Td onClick={() => router.push(`/events/${event.uuid}`)}>
-                    <Badge variant={'solid'} background={eventStatus[event.status as string].color}>{event.status}</Badge>
-                  </Td>
-                  <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{event.impressions}</Td>
-                  <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{event.clicks}</Td>
-                  {/* <Td onClick={() => router.push(`/events/${event.uuid}`)}>80</Td> */}
-                  <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{eventDateFormatter(event).fully}</Td>
-                  <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{moment(event.end_date).format('L')}</Td>
+      <Flex>
+        <Box flex={1}>
+          <Heading flex={1} mb={4} size={'lg'}>Meus eventos</Heading>
+        </Box>
+        <Flex gap={4}>
+          <Stack spacing={4}>
+            <form onSubmit={handleSubmit(handleSearch)}>
+              <InputGroup>
+                <InputRightElement>
+                  <IconButton type='submit' isLoading={loading} aria-label='event-search' variant={'none'} icon={<Search2Icon color='gray.300' />} />
+                </InputRightElement>
+                <Input {...register('name')} type='search' placeholder='Nome do evento...' />
+              </InputGroup>
+            </form>
+          </Stack>
+        </Flex>
+      </Flex>
+      {events?.length === 0 ? <ResultMessage
+        title={'Você ainda não possui eventos'}
+        description={'Comece a ciar seu primeiro evento e divulgue para todo seu público.'}
+        action={{ callback: () => router.push('/events/create'), actionText: 'Criar novo evento' }}
+      /> :
+        <Stack spacing={8} h={'100%'} flex={1} >
+          {events ? <TableContainer width={'100%'}>
+            <Table>
+              <TableCaption>
+                <Button mr={2}>Preview</Button>
+                <Button>Next</Button>
+              </TableCaption>
+              <Thead>
+                <Tr p={3}>
+
+                  <Th>Evento</Th>
+                  <Th>Status</Th>
+                  <Th>Impressões</Th>
+                  <Th>Cliques</Th>
+                  <Th>Data do evento</Th>
+                  <Th>criado em</Th>
                 </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
-      </Stack>
+              </Thead>
+              <Tbody>
+                {events?.map((event: EventInterface) => (
+                  <Tr key={event.id} _hover={{ background: 'gray.100' }} cursor={'pointer'}>
+                    <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>
+                      <Flex gap={3}>
+                        <Box borderRadius={'10px'} overflow={'hidden'}>
+                          <Image objectFit={'cover'} src={`${event.event_image}-md.jpg`} alt={event.name} boxSize="50px" />
+                        </Box>
+                        <Stack>
+                          <Heading color={'blue.700'} size={'xs'}>{event.name}</Heading>
+                          <Text color='gray.400'>{event.place_name}</Text>
+                        </Stack>
+                      </Flex>
+                    </Td>
+                    <Td onClick={() => router.push(`/events/${event.uuid}`)}>
+                      <Badge size={'sm'} background={eventStatus[event.status as string].color}>{eventStatus[event.status as string].label}</Badge>
+                    </Td>
+                    <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{event.impressions}</Td>
+                    <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{event.clicks}</Td>
+                    <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{eventDateFormatter(event).fully}</Td>
+                    <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{moment(event.end_date).format('L')}</Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer> : <Spinner />}
+
+
+        </Stack>
+      }
+
     </Layout>
   );
 }
-
-export default Index;

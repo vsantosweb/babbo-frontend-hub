@@ -17,4 +17,18 @@ export class EventManagerApiService extends EventApiService implements MangerEve
   constructor() {
     super('manager');
   }
+
+  /**
+    * Relatorio de impressoes por data.
+    * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
+    */
+  async impressionsByDate(eventId: number) {
+    try {
+      const response = await this.api.get<any>(`/events/${eventId}/reports/impressions-by-date`);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao obter eventos:', error);
+      throw error;
+    }
+  };
 }

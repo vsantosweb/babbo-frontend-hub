@@ -80,7 +80,7 @@ export const EventSearch = () => {
     if (value.length > 0) {
       openDisplayResult(true);
 
-      if (value.length % 2 === 0) {
+      if (value.length % 2 === 0) {// a cada 3 digitos faz uma busca
         setIsfetching(true);
 
         searchInterval = setTimeout(() => {

@@ -6,7 +6,8 @@ import {
     Stack,
     HStack,
     Divider,
-    FormErrorMessage
+    FormErrorMessage,
+    Checkbox
 } from '@chakra-ui/react'
 import * as Yup from 'yup';
 
@@ -14,7 +15,7 @@ import AddressForm from '../forms/address-form';
 import EventInfoForm from '../forms/event-info-form';
 import { EventImageUpload } from '@/components';
 import { SessionHelper } from '@/helpers';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { eventValidatorSchema } from '../../validators';
 import { EventPayloadType } from '@/types';
@@ -22,6 +23,8 @@ import { useEffect } from 'react';
 import moment from 'moment';
 import container from '@/container';
 import { MangerEventRepositoryInterface } from '@/interfaces';
+import SponsoredForm from './sponsored-form';
+import TicketForm from './ticket-form';
 
 const eventManagerService = container.get<MangerEventRepositoryInterface>('event-manager');
 
@@ -58,6 +61,7 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
 
     const handleCreateEvent = async (formData: Record<string, any>) => {
 
+        return console.log(formData, 'formDataformData')
         const payload: EventPayloadType = {
             name: formData.name,
             place: formData.place,
@@ -68,8 +72,8 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
             event_image: formData.event_image
         }
 
-        await eventManagerService.createEvent(payload).then((response: { value: string }) => {
-            SessionHelper.redirectWith('/', 'eventCreated');
+        await eventManagerService.createEvent(payload).then((response: Record<string, any>) => {
+            SessionHelper.redirectWith('/', 'eventCreated', response.data);
         })
 
     }
@@ -94,38 +98,42 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
 
     return (
 
-        <Flex as={'form'}
-            onSubmit={!event ? eventForm.handleSubmit(handleCreateEvent) : eventForm.handleSubmit(handleUpdateEvent)}
-            gap={4}
-            width={'100%'}
-        >
-            <Stack spacing={4}>
-                <FormControl isInvalid={!!eventForm?.formState?.errors?.event_image}>
-                    <EventImageUpload hookForm={eventForm} />
-                    <FormErrorMessage>{eventForm?.formState?.errors?.event_image?.message as string}</FormErrorMessage>
-                </FormControl>
-            </Stack>
-
-            <Stack flex={1} spacing={6}>
-
+        <FormProvider {...eventForm}>
+            <Flex as={'form'}
+                onSubmit={!event ? eventForm.handleSubmit(handleCreateEvent) : eventForm.handleSubmit(handleUpdateEvent)}
+                gap={4}
+                width={'100%'}
+            >
                 <Stack spacing={4}>
-                    <Heading size={'md'}>Endereço</Heading>
-                    <AddressForm hookForm={eventForm} />
+                    <FormControl isInvalid={!!eventForm?.formState?.errors?.event_image}>
+                        <EventImageUpload hookForm={eventForm} />
+                        <FormErrorMessage>{eventForm?.formState?.errors?.event_image?.message as string}</FormErrorMessage>
+                    </FormControl>
                 </Stack>
 
-                <Divider />
+                <Stack flex={1} spacing={8}>
 
-                <Stack spacing={4}>
-                    <Heading size={'md'}>Informações do evento</Heading>
-                    <EventInfoForm hookForm={eventForm} />
+                    <Stack spacing={4}>
+                        <Heading size={'lg'}>Endereço</Heading>
+                        <AddressForm hookForm={eventForm} />
+                    </Stack>
+
+
+                    <Stack spacing={4}>
+                        <Heading size={'lg'}>Informações do evento</Heading>
+                        <EventInfoForm hookForm={eventForm} />
+                    </Stack>
+
+                    <Stack>
+                        <TicketForm />
+                    </Stack>
+                    <HStack justifyContent={'flex-end'}>
+                        {/* <Button variant={'outline'}>visualizar</Button> */}
+                        <Button isLoading={eventForm.formState.isSubmitting} type={'submit'}>{!event ? 'Criar evento' : 'Atualizar'}</Button>
+                    </HStack>
                 </Stack>
-
-                <HStack justifyContent={'flex-end'}>
-                    {/* <Button variant={'outline'}>visualizar</Button> */}
-                    <Button isLoading={eventForm.formState.isSubmitting} type={'submit'}>{!event ? 'Criar evento' : 'Atualizar'}</Button>
-                </HStack>
-            </Stack>
-        </Flex>
+            </Flex>
+        </FormProvider>
     )
 }
 

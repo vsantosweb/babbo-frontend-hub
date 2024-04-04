@@ -50,10 +50,10 @@ export default function ManagerLayout({
         }}
       >
         {
-          router.pathname !== '/' && <Flex alignItems={'center'}>
-          <IconButton onClick={() => router.back()} variant={'link'} icon={<FaArrowLeft />} aria-label='back-page' />
-          Voltar
-        </Flex>
+          router.pathname !== '/' && <Flex mb={8} alignItems={'center'}>
+            <IconButton onClick={() => router.back()} variant={'link'} icon={<FaArrowLeft />} aria-label='back-page' />
+            Voltar
+          </Flex>
         }
         {children}
       </div>

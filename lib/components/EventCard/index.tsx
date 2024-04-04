@@ -24,7 +24,6 @@ export const EventCard = (event: EventInterface) => {
           alt={event.name}
           src={`${event.event_image}-lg.jpg`}
         />
-        event_date
       </Styled.CardEventImageContainer>
       <Styled.CardEventBody>
         <Styled.CardEventDetails>

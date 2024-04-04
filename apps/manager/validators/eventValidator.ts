@@ -23,6 +23,13 @@ export const eventValidatorSchema = {
         .min(Yup.ref('start_date'), 'A data de término deve ser posterior à data de início'),
     event_image: Yup.string().required(),
     description: Yup.string(),
+    has_tickets: Yup.boolean(),
+    ticket_redirect_url: Yup.string().when('has_tickets', (hasTickets, schema) => {
+        return hasTickets && schema.required()
+    }),
+    ticket_redirect_name: Yup.string().when('has_tickets', (hasTickets, schema) => {
+        return hasTickets && schema.required()
+    }),
     image: Yup.mixed()
         .test('fileSize', 'A imagem deve ter no máximo 1MB', (value: any) => {
             if (!value) return true; // Retorna true se nenhum arquivo for fornecido
@@ -34,7 +41,7 @@ export const eventValidatorSchema = {
             const supportedFormats = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'];
             return supportedFormats.includes(value[0]?.type);
         }),
-    place: Yup.object().shape({ name: Yup.string().required(), ...addressValidatorSchema })
+    place: Yup.object().shape({ name: Yup.string().required('Campo obrigatório'), ...addressValidatorSchema })
 }
 
 const eventValidator = Yup.object().shape(eventValidatorSchema);

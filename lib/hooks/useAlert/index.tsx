@@ -52,6 +52,7 @@ export function AlertProvider({ children }: { children: ReactNode }) {
 
         Object.keys(alertStates).forEach((state, x) => {
 
+            console.log(state, 'asfsa')
             if (SessionHelper.has(state)) {
                 setAlertState(alertStates[state])
                 onOpen()
@@ -76,7 +77,7 @@ export function AlertProvider({ children }: { children: ReactNode }) {
                     <AlertDialogCloseButton />
                     <AlertDialogBody> {alertState?.feedback} </AlertDialogBody>
                     <AlertDialogFooter>
-                        <Button>Entendi</Button>
+                        <Button onClick={onClose}>Entendi</Button>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
