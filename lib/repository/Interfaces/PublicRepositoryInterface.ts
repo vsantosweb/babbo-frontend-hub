@@ -7,4 +7,17 @@ export interface PublicRepositoryInterface extends EventRepositoryInterface {
    * @returns {Promise<any>}
    */
     userIdentifier(): Promise<any>
+
+    /**
+    * Envia um tipo de interação do evento
+    * @returns {Promise<any>}
+    */
+    eventInteraction(interaction: 'share' | 'click' | 'shake' | 'impression', id: number | string): Promise<any>;
+
+    /**
+    * Captura um novo lead
+    * @returns {Promise<any>}
+    */
+    createLead(formData: Record<string, any>): Promise<any>;
+
 }

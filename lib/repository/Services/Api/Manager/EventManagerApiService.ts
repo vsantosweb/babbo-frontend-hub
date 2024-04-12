@@ -19,9 +19,9 @@ export class EventManagerApiService extends EventApiService implements MangerEve
   }
 
   /**
-    * Relatorio de impressoes por data.
-    * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
-    */
+  * Relatorio de impressoes por data.
+  * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
+  */
   async impressionsByDate(eventId: number) {
     try {
       const response = await this.api.get<any>(`/events/${eventId}/reports/impressions-by-date`);
@@ -31,4 +31,19 @@ export class EventManagerApiService extends EventApiService implements MangerEve
       throw error;
     }
   };
+
+  /**
+  * Relatorio de impressoes por data.
+  * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
+  */
+  async deleteEvent(eventId: number) {
+    try {
+      const response = await this.api.delete<any>(`/events/${eventId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao deletar eventos:', error);
+      throw error;
+    }
+  };
+
 }

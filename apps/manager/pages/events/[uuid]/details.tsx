@@ -13,6 +13,15 @@ import {
     StatLabel,
     StatNumber,
     StatHelpText,
+    Spinner,
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogContent,
+    AlertDialogOverlay,
+    AlertDialogCloseButton,
+    useDisclosure
 } from '@chakra-ui/react';
 import EventDetails from '../../../components/EventDetails';
 import Layout from '@/layouts';
@@ -22,6 +31,7 @@ import { EventInterface } from '@/types';
 import { EventRepositoryInterface, MangerEventRepositoryInterface } from '@/interfaces';
 import container from '@/container';
 import ImpressionGraph from 'apps/manager/components/graphs/ImpressionGraph';
+import { SessionHelper } from '@/helpers';
 // import SharesChart from './SharesChart';
 
 const eventServiceManager = container.get<MangerEventRepositoryInterface>('event-manager');
@@ -56,9 +66,14 @@ export default function Event() {
 
     }, [router.query]);
 
+    const handleDeleteEvent = async (id: number) => {
+       await eventServiceManager.deleteEvent(id).then(response => {
+            SessionHelper.redirectWith('/', 'eventDeleted', `O evento ${event?.name} foi excluído.`)
+        })
+    }
     return (
         <Layout name="manager">
-            <Flex gap={8} width={'100%'}>
+            {event ? <Flex gap={8} width={'100%'}>
                 <Stack spacing={4}>
                     <Box boxShadow={{
                         base: 'none',
@@ -70,7 +85,7 @@ export default function Event() {
                 <Stack flex={1} spacing={6}>
                     <Stack>
                         <Box mb={8}>
-                            <EventDetails event={event} />
+                            <EventDetails handleDelete={handleDeleteEvent} event={event} />
                         </Box>
                         <Box as="section" >
                             <SimpleGrid columns={{ base: 1, md: 4 }} gap={{ base: '5', md: '6' }}>
@@ -95,7 +110,7 @@ export default function Event() {
                         </Box>
                     </Stack>
                 </Stack>
-            </Flex>
+            </Flex> : <Spinner />}
         </Layout>
     );
 }

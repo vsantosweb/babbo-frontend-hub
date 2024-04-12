@@ -25,6 +25,7 @@ import container from '@/container';
 import { MangerEventRepositoryInterface } from '@/interfaces';
 import SponsoredForm from './sponsored-form';
 import TicketForm from './ticket-form';
+import Link from 'next/link';
 
 const eventManagerService = container.get<MangerEventRepositoryInterface>('event-manager');
 
@@ -44,6 +45,9 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
             eventForm.setValue('name', event?.name, { shouldValidate: true });
             eventForm.setValue('description', event.description, { shouldValidate: true });
             eventForm.setValue('event_image', event.event_image, { shouldValidate: true });
+            eventForm.setValue('has_external_ticket', event.has_external_ticket, { shouldValidate: true });
+            eventForm.setValue('ticket_partner_name', event.ticket_partner_name, { shouldValidate: true });
+            eventForm.setValue('ticket_partner_url', event.ticket_partner_url, { shouldValidate: true });
             eventForm.setValue('start_date', startDate, { shouldValidate: true });
             eventForm.setValue('end_date', endDate, { shouldValidate: true });
             eventForm.setValue('categories', event.categories.map((x: Record<string, any>) => ({ value: x.id, label: x.name })), { shouldValidate: true })
@@ -61,28 +65,24 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
 
     const handleCreateEvent = async (formData: Record<string, any>) => {
 
-        return console.log(formData, 'formDataformData')
-        const payload: EventPayloadType = {
-            name: formData.name,
-            place: formData.place,
-            start_date: moment(formData.start_date).format('YYYY-MM-DD HH:mm'),
-            end_date: moment(formData.end_date).format('YYYY-MM-DD HH:mm'),
-            categories: formData.categories.map((x: { value: string }) => x.value),
-            description: formData.description,
-            event_image: formData.event_image
-        }
+        const payload = getPayload(formData);
 
         await eventManagerService.createEvent(payload).then((response: Record<string, any>) => {
-            SessionHelper.redirectWith('/', 'eventCreated', response.data);
+            SessionHelper.redirectWith('/', 'eventCreated',
+            `O evento  <a href="/events/${response.data.uuid}/details">${response.data.name}</a> foi criado com sucesso. Vamos fazer uma análise e disponibiliza-lo na plataforma em até 24h.`
+            );
         })
 
     }
 
-    const handleUpdateEvent = async (formData: Record<string, any>) => {
+    const getPayload = (formData: Record<string, any>) => {
 
         const payload: EventPayloadType = {
             name: formData.name,
             place: formData.place,
+            has_external_ticket: formData.has_external_ticket,
+            ticket_partner_name: formData.ticket_partner_name,
+            ticket_partner_url: formData.ticket_partner_url,
             start_date: moment(formData.start_date).format('YYYY-MM-DD HH:mm'),
             end_date: moment(formData.end_date).format('YYYY-MM-DD HH:mm'),
             description: formData.description,
@@ -91,8 +91,21 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
 
         if (formData.image) payload.event_image = formData.event_image;
 
-        await eventManagerService.updateEvent(payload, event?.id).then((response: { value: string }) => {
-            SessionHelper.redirectWith(`/events/${event?.uuid}/edit`, 'eventUpdated');
+        return payload;
+    }
+
+    const handleUpdateEvent = async (formData: Record<string, any>) => {
+
+        const payload = getPayload(formData);
+
+        console.log(formData, 'formData')
+        await eventManagerService.updateEvent(payload, event?.id).then((response: Record<string, any>) => {
+            // SessionHelper.redirectWith(`/events/${event?.uuid}/details`, 'eventUpdated');
+
+            SessionHelper.redirectWith('/', 'eventUpdated', 
+            `O evento  <a href="/events/${response.data.uuid}/details">${response.data.name}</a> foi atualizado.`
+            );
+
         })
     }
 

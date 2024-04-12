@@ -10,13 +10,13 @@ export type RedirectWithSessionType = {
 
 interface SessionHelperInterface {
 
-  redirectWith: (destination: string, key: string, data?: RedirectWithSessionType) => void
+  redirectWith: (destination: string, key: string, data?: string | Record<string, any>) => void
   has: (key: string) => boolean | any
 }
 
 export const SessionHelper: SessionHelperInterface = {
 
-  redirectWith: (destination: string, key: string, data?: RedirectWithSessionType) => {
+  redirectWith: (destination: string, key: string, data?: string | Record<string, any>) => {
 
     // Armazenar a mensagem no sessionStorage
     sessionStorage.setItem(key, JSON.stringify(data));

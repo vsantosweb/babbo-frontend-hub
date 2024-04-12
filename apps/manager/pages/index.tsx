@@ -27,6 +27,10 @@ import {
   InputRightElement,
   IconButton,
   Select,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from '@chakra-ui/react'
 
 import eventsMock from './events.json'
@@ -40,7 +44,7 @@ import { EventInterface } from '@/types';
 import { eventDateFormatter } from '@/helpers';
 import { ResultMessage } from '@/components';
 import { Search2Icon } from '@chakra-ui/icons';
-import { EventProvider, useEvent } from '@/hooks';
+import { EventProvider, useAlert, useEvent } from '@/hooks';
 import { useForm } from 'react-hook-form';
 
 const eventService = container.get<EventRepositoryInterface>('event-manager')
@@ -68,6 +72,8 @@ function Events() {
   const router = useRouter();
   const { register, handleSubmit, formState: { isSubmitting } } = useForm();
 
+  const { AlertMessage } = useAlert();
+
   const eventStatus: EventStatus = {
     published: { label: 'Publicado', color: 'gray.100' },
     rejected: { label: 'Rejeitado', color: 'gray.100' },
@@ -92,76 +98,80 @@ function Events() {
 
   return (
     <Layout name="manager">
-      <Flex>
-        <Box flex={1}>
-          <Heading flex={1} mb={4} size={'lg'}>Meus eventos</Heading>
-        </Box>
-        <Flex gap={4}>
-          <Stack spacing={4}>
-            <form onSubmit={handleSubmit(handleSearch)}>
-              <InputGroup>
-                <InputRightElement>
-                  <IconButton type='submit' isLoading={loading} aria-label='event-search' variant={'none'} icon={<Search2Icon color='gray.300' />} />
-                </InputRightElement>
-                <Input {...register('name')} type='search' placeholder='Nome do evento...' />
-              </InputGroup>
-            </form>
-          </Stack>
+
+      <Stack>
+        <Flex>
+          <Box flex={1}>
+            <Heading flex={1} mb={4} size={'lg'}>Meus eventos</Heading>
+          </Box>
+          <Flex gap={4}>
+            <Stack spacing={4}>
+              <form onSubmit={handleSubmit(handleSearch)}>
+                <InputGroup>
+                  <InputRightElement>
+                    <IconButton type='submit' isLoading={loading} aria-label='event-search' variant={'none'} icon={<Search2Icon color='gray.300' />} />
+                  </InputRightElement>
+                  <Input {...register('name')} type='search' placeholder='Nome do evento...' />
+                </InputGroup>
+              </form>
+            </Stack>
+          </Flex>
         </Flex>
-      </Flex>
-      {events?.length === 0 ? <ResultMessage
-        title={'Você ainda não possui eventos'}
-        description={'Comece a ciar seu primeiro evento e divulgue para todo seu público.'}
-        action={{ callback: () => router.push('/events/create'), actionText: 'Criar novo evento' }}
-      /> :
-        <Stack spacing={8} h={'100%'} flex={1} >
-          {events ? <TableContainer width={'100%'}>
-            <Table>
-              <TableCaption>
-                <Button mr={2}>Preview</Button>
-                <Button>Next</Button>
-              </TableCaption>
-              <Thead>
-                <Tr p={3}>
+        <AlertMessage />
+        {events?.length === 0 ? <ResultMessage
+          title={'Você ainda não possui eventos'}
+          description={'Comece a ciar seu primeiro evento e divulgue para todo seu público.'}
+          action={{ callback: () => router.push('/events/create'), actionText: 'Criar novo evento' }}
+        /> :
+          <Stack spacing={8} h={'100%'} flex={1} >
+            {events ? <TableContainer width={'100%'}>
+              <Table>
+                <TableCaption>
+                  <Button mr={2}>Preview</Button>
+                  <Button>Next</Button>
+                </TableCaption>
+                <Thead>
+                  <Tr p={3}>
 
-                  <Th>Evento</Th>
-                  <Th>Status</Th>
-                  <Th>Impressões</Th>
-                  <Th>Cliques</Th>
-                  <Th>Data do evento</Th>
-                  <Th>criado em</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {events?.map((event: EventInterface) => (
-                  <Tr key={event.id} _hover={{ background: 'gray.100' }} cursor={'pointer'}>
-                    <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>
-                      <Flex gap={3}>
-                        <Box borderRadius={'10px'} overflow={'hidden'}>
-                          <Image objectFit={'cover'} src={`${event.event_image}-md.jpg`} alt={event.name} boxSize="50px" />
-                        </Box>
-                        <Stack>
-                          <Heading color={'blue.700'} size={'xs'}>{event.name}</Heading>
-                          <Text color='gray.400'>{event.place_name}</Text>
-                        </Stack>
-                      </Flex>
-                    </Td>
-                    <Td onClick={() => router.push(`/events/${event.uuid}`)}>
-                      <Badge size={'sm'} background={eventStatus[event.status as string].color}>{eventStatus[event.status as string].label}</Badge>
-                    </Td>
-                    <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{event.impressions}</Td>
-                    <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{event.clicks}</Td>
-                    <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{eventDateFormatter(event).fully}</Td>
-                    <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{moment(event.end_date).format('L')}</Td>
+                    <Th>Evento</Th>
+                    <Th>Status</Th>
+                    <Th>Impressões</Th>
+                    <Th>Cliques</Th>
+                    <Th>Data do evento</Th>
+                    <Th>criado em</Th>
                   </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer> : <Spinner />}
+                </Thead>
+                <Tbody>
+                  {events?.map((event: EventInterface) => (
+                    <Tr key={event.id} _hover={{ background: 'gray.100' }} cursor={'pointer'}>
+                      <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>
+                        <Flex gap={3}>
+                          <Box borderRadius={'10px'} overflow={'hidden'}>
+                            <Image objectFit={'cover'} src={`${event.event_image}-md.jpg`} alt={event.name} boxSize="50px" />
+                          </Box>
+                          <Stack>
+                            <Heading color={'blue.700'} size={'xs'}>{event.name}</Heading>
+                            <Text color='gray.400'>{event.place_name}</Text>
+                          </Stack>
+                        </Flex>
+                      </Td>
+                      <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>
+                        <Badge size={'sm'} background={eventStatus[event.status as string].color}>{eventStatus[event.status as string].label}</Badge>
+                      </Td>
+                      <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{event.impressions}</Td>
+                      <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{event.clicks}</Td>
+                      <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{eventDateFormatter(event).fully}</Td>
+                      <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{moment(event.end_date).format('L')}</Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </TableContainer> : <Spinner />}
 
 
-        </Stack>
-      }
+          </Stack>
+        }
+      </Stack>
 
     </Layout>
   );

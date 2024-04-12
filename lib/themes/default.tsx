@@ -23,7 +23,7 @@ export const theme: ThemeProps = {
     spacing: '.9em',
   },
   colors: {
-    primary: '#6f2cf6',
+    primary: '#9546fc',
     // primary: '#ea1e63',
     secondary: '#15FF83',
     text: '#333',

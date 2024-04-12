@@ -64,6 +64,7 @@ export const EventSearch = () => {
 
     if (open) document.body.style.overflow = 'hidden';
     else {
+      console.log('AUTOOOOOOOOOOOO')
       document.body.style.overflow = 'auto';
     }
   };
@@ -110,8 +111,8 @@ export const EventSearch = () => {
   };
 
   return (
-    <Flex flex={1} flexDirection="column" alignItems="center">
-      <Box position={'relative'} width="100%" maxW="600px">
+    <Flex width="100%"  flexDirection="column">
+      <Box position={'relative'}  width="100%" maxW="600px">
         <form>
           <FormControl>
             <Input
@@ -164,9 +165,10 @@ export const EventSearch = () => {
                   <Stack width={'100%'} height={'100%'} spacing={4}>
                     <Heading size={'md'}>Resultados</Heading>
                     <Styled.SuggestedList>
-                      {suggestedList?.map((suggest) => (
-                        <Styled.SuggestedListItem>
+                      {suggestedList?.map((suggest, index) => (
+                        <Styled.SuggestedListItem key={index}>
                           <Link
+                            onClick={() => openDisplayResult(false)}
                             href={`/events/${suggest.slug}?id=${suggest.uuid}`}
                           >
                             <Flex

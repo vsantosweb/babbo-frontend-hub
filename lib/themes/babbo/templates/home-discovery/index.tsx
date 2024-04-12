@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, Fragment, Suspense } from 'react';
 import * as Styles from './style';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Banner, EventCard, GoogleAdSense, ResultMessage } from '@/components';
-import { Box, Button, Divider, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Divider, Flex, Grid, GridItem, Heading, Stack, Text } from '@chakra-ui/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
@@ -32,21 +32,13 @@ export function HomeDiscovery({ dataDiscovery }: {
     if ((index + 1) % 8 === 0) {
       return (
         <>
-          <Col key={index} xl={3}>
-            <Link
-              // target={'_blank'}
-              href={{
-                pathname: `events/${event.slug}`,
-                query: { id: event.uuid },
-              }}
-            >
-              <EventCard {...event} />
-            </Link>
+          <GridItem key={index}>
+            <EventCard {...event} />
 
             {/* <GoogleAdSense adClient='ca-pub-8530046753205274' adSlot={'2752189175'}/> */}
 
             {/* <AdsBody /> */}
-          </Col>
+          </GridItem>
           {/* <Col md={12}>
             <Box textAlign={'center'} mb={6} width={'100%'}>
               <img src={'https://placehold.co/1280x120'} />
@@ -58,41 +50,28 @@ export function HomeDiscovery({ dataDiscovery }: {
       );
     } else {
       return (
-        <Col key={index} xl={3}>
-          <Link
-            // target={'_blank'}
-            href={{
-              pathname: `events/${event.slug}`,
-              query: { id: event.uuid },
-            }}
-          >
-            <EventCard {...event} />
-          </Link>
-        </Col>
+        <GridItem overflow={'hidden'} key={index}>
+          <EventCard {...event} />
+        </GridItem>
       );
     }
   };
 
-  if (dataDiscovery === null) return <></>
+  // if (dataDiscovery === null) return <></>
 
-  if (dataDiscovery.length === 0) return <ResultMessage
+  if (dataDiscovery?.length === 0) return <ResultMessage
     title='Nenhum evento encontrado'
     description='Não conseguimos localizar o evento que procurou, tente novamente.'
   />;
 
   return (
-    <div>
-      <Container fluid>
-        <Row>
-          <Heading size={'lg'} mb={6}>Eventos em destaque</Heading>
-        </Row>
-        <Row>
-          {dataDiscovery?.map((event, index) =>
-            renderWithAdSense(event, index)
-          )}
-        </Row>
-
-      </Container>
-    </div>
+    <Grid templateColumns={{
+      lg: 'repeat(4, minmax(0, 1fr))',
+      md: 'repeat(2, minmax(0, 1fr))',
+      sm: 'repeat(1, minmax(0, 1fr))',
+    }}
+      gap={4}>
+      {dataDiscovery?.map((event, index) => renderWithAdSense(event, index))}
+    </Grid>
   );
 }

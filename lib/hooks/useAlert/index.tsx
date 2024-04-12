@@ -9,26 +9,31 @@ import {
     AlertDialogCloseButton,
     Button,
     useDisclosure,
+    Alert,
+    AlertIcon,
+    AlertTitle,
+    AlertDescription,
+    Link
 } from '@chakra-ui/react'
 import { useRouter } from "next/router";
 import _ from "lodash";
 import { SessionHelper } from "@/helpers";
 
-const AlertContext = createContext({});
+const AlertContext = createContext<any>({});
 
 export function useAlert() {
 
     const context = useContext(AlertContext);
 
-    return context;
+    return { ...context };
 }
 
-type AlertStates = { [key: string]: { title: string; feedback: string; } }
+type AlertStates = { [key: string]: { title: string; feedback: string; status?: string } }
 
 
 export function AlertProvider({ children }: { children: ReactNode }) {
 
-    const [alertState, setAlertState] = useState<{ [index: string]: any }>({});
+    const [alertState, setAlertState] = useState<{ [index: string]: any } | null>(null);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -36,35 +41,61 @@ export function AlertProvider({ children }: { children: ReactNode }) {
 
     const router = useRouter();
 
-    const alertStates: AlertStates  = {
+    const alertStates: AlertStates = {
 
         eventCreated: {
-            title: 'Evento catadastro do sucesso.',
-            feedback: 'Seu evento será analisado pela nossa equipe, assim que concluído, seu evento estará disponível no site, você será notificado.'
+            status: 'success',
+            title: 'Evento ',
+            feedback: 'foi criado com sucesso. Vamos fazer uma análise e disponibiliza-lo na plataforma em até 24h.'
         },
         eventUpdated: {
-            title: 'Evento atualizado.',
-            feedback: 'Evento atualizado com sucesso.'
+            status: 'info',
+            title: 'Evento ',
+            feedback: 'foi atualizado.'
+        },
+        eventDeleted: {
+            status: 'error',
+            title: 'Evento',
+            feedback: 'excluído.'
         }
     }
 
     useEffect(() => {
 
-        Object.keys(alertStates).forEach((state, x) => {
-
-            console.log(state, 'asfsa')
-            if (SessionHelper.has(state)) {
-                setAlertState(alertStates[state])
-                onOpen()
-            }
-        });
+        getAlertMessage();
 
     }, []);
 
+    const getAlertMessage = () => {
+
+        let session;
+
+        Object.keys(alertStates).forEach((state, x) => {
+
+            session = SessionHelper.has(state);
+
+            if (session) {
+                setAlertState({ ...alertStates[state], data: JSON.parse(session) });
+                return;
+            }
+        });
+
+    }
+
+    const AlertMessage = () => {
+        console.log(alertState, 'alertState')
+        return alertState && (
+            <Alert status={alertState.status}>
+                <AlertIcon />
+                <AlertTitle>{alertState?.title}</AlertTitle>
+                <AlertDescription dangerouslySetInnerHTML={{ __html: alertState.data }} />
+            </Alert>
+        )
+    }
     return (
 
-        <AlertContext.Provider value={{}}>
-            <AlertDialog
+        <AlertContext.Provider value={{ AlertMessage }}>
+            {/* <AlertDialog
                 motionPreset='none'
                 leastDestructiveRef={cancelRef}
                 onClose={onClose}
@@ -80,7 +111,7 @@ export function AlertProvider({ children }: { children: ReactNode }) {
                         <Button onClick={onClose}>Entendi</Button>
                     </AlertDialogFooter>
                 </AlertDialogContent>
-            </AlertDialog>
+            </AlertDialog> */}
             {children}
         </AlertContext.Provider>
     )

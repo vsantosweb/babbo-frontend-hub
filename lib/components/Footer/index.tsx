@@ -4,6 +4,7 @@ import moment from 'moment';
 export function Footer() {
   return (
     <Box
+      mt={10}
       bg={useColorModeValue('gray.50', 'gray.900')}
       color={useColorModeValue('gray.700', 'gray.200')}>
       <Container
@@ -12,7 +13,7 @@ export function Footer() {
         py={4}
         direction={{ base: 'column', md: 'row' }}
         spacing={4}
-        justify={{ base: 'center', md: 'space-between' }}
+        justify={{ base: 'center',  }}
         align={{ base: 'center', md: 'center' }}>
         {/* <Stack direction={'row'} spacing={6}>
           <Box as="a" href={'#'}>Home</Box>

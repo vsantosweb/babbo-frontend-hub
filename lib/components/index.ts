@@ -1,3 +1,4 @@
+export * from './Logo';
 export * from './EventCard';
 export * from './EventCardFeatured';
 export * from './Navigation';
@@ -15,5 +16,6 @@ export * from './ManagerNavigation';
 export * from './EventImageUpload';
 export * from './Google';
 export * from './CookiePolicy';
+export * from './OrganizerLeadForm';
 
 

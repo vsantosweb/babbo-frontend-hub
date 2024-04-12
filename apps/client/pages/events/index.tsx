@@ -7,6 +7,7 @@ import {
   EventCard,
   EventCardFeatured,
   EventFilter,
+  GoogleAdSense,
   Loader,
   Navigation,
 } from '@/components';
@@ -44,10 +45,12 @@ function Search() {
       {/* <EventSearch/> */}
       {/* <Stack spacing={8}> */}
       {/* <Banner /> */}
-      <Box mt={8}>
+      <Box mt={8} className='app-wrapper'>
         <img src={'https://placehold.co/1280x120'} /> <hr />
+
+        {/* <GoogleAdSense adClient='ca-pub-8530046753205274' adSlot={'2752189175'} /> */}
       </Box>
-      <QueryStringProvider>
+      <QueryStringProvider >
         <EventFilter />
       </QueryStringProvider>
       {loading ? (

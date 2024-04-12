@@ -18,6 +18,12 @@ export interface MangerEventRepositoryInterface extends EventRepositoryInterface
     updateEvent(payload: EventPayloadType, eventId: number): Promise<any>;
     
     /**
+    * Atualiza um evento.
+    * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
+    */
+    deleteEvent(id: number): Promise<any>;
+
+    /**
     * Relatorio de impressoes por data.
     * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
     */

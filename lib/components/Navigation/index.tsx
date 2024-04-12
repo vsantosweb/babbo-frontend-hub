@@ -1,4 +1,3 @@
-'use client';
 
 import {
   Box,
@@ -15,6 +14,14 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
@@ -25,6 +32,11 @@ import {
 import { theme } from '@/themes/default';
 import { EventSearch } from '../EventSearch';
 import Link from 'next/link';
+import { FaLocationPin } from 'react-icons/fa6';
+import { CiLocationOn } from "react-icons/ci";
+import { AvaiableCitiesDesktop } from '../AvaiableCities';
+import { FaMapLocation } from "react-icons/fa6";
+import { Logo } from '../Logo';
 
 export function Navigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -49,57 +61,60 @@ export function Navigation() {
           margin={'auto'}
           alignItems={'center'}
         >
-          <Flex ml={{ base: -2 }} display={{ base: 'flex', md: 'none' }}>
-            <IconButton
-              onClick={onToggle}
-              icon={
-                isOpen ? (
-                  <CloseIcon w={3} h={3} />
-                ) : (
-                  <HamburgerIcon w={5} h={5} />
-                )
-              }
-              variant={'primary'}
-              aria-label={'Toggle Navigation'}
-            />
-          </Flex>
           <Flex
+          width={'100%'}
             gap={5}
-            flex={{ base: 1 }}
             justify={{ base: 'center', md: 'start' }}
-            alignItems={'center'}
-          >
-            <Text
+            alignItems={'center'}>
+            <Flex ml={{ base: -2 }} display={{ base: 'flex', md: 'none' }}>
+              <IconButton
+                onClick={onToggle}
+                icon={
+                  isOpen ? (
+                    <CloseIcon w={3} h={3} />
+                  ) : (
+                    <HamburgerIcon w={5} h={5} />
+                  )
+                }
+                variant={'primary'}
+                aria-label={'Toggle Navigation'}
+              />
+            </Flex>
+            
+            <Box
               as={Link}
               href={'/'}
               fontWeight={'bold'}
               fontSize={'2em'}
               textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
               fontFamily={'heading'}
+              width={'110px'}
               color={theme.colors.primary}
             >
-              Babbo
-            </Text>
-
+              <Logo />
+            </Box>
+            
             <EventSearch />
           </Flex>
-
-          <Stack justify={'flex-end'} direction={'row'} spacing={6}>
+{/* 
+          <Stack  justify={'flex-end'} direction={'row'} spacing={6}>
             <Button
-              as={'a'}
+              as={Link}
               display={{ base: 'none', md: 'inline-flex' }}
               fontSize={'sm'}
               fontWeight={600}
               color={'white'}
               bg={'pink.400'}
-              href={'#'}
+              rightIcon={<FaMapLocation style={{ fontSize: '1.3em' }} />}
+              href={'/event-explore'}
               _hover={{
                 bg: 'pink.300',
               }}
             >
-              Anuncie seu evento
+              Explorar
             </Button>
-          </Stack>
+          </Stack> */}
+          
         </Flex>
       </Flex>
 

@@ -147,4 +147,33 @@ export class PublicEventService implements PublicRepositoryInterface {
       throw error;
     }
   }
+
+  /**
+  * Envia um tipo de interação do evento
+  * @returns {Promise<any>}
+  */
+  async eventInteraction(interaction: 'share' | 'click' | 'shake' | 'impression', id: number | string): Promise<any> {
+    try {
+      const response = await this.api.put<any>(`/events/${id}/interaction`, { interaction: interaction });
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao obter banners de eventos:', error);
+      throw error;
+    }
+  }
+
+  /**
+  * Envia um tipo de interação do evento
+  * @returns {Promise<any>}
+  */
+  async createLead(formData: Record<string, any>): Promise<any> {
+    try {
+      const response = await this.api.post<any>(`/customers/leads`, formData);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao obter banners de eventos:', error);
+      throw error;
+    }
+  }
+
 }

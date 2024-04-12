@@ -23,12 +23,16 @@ export const eventValidatorSchema = {
         .min(Yup.ref('start_date'), 'A data de término deve ser posterior à data de início'),
     event_image: Yup.string().required(),
     description: Yup.string(),
-    has_tickets: Yup.boolean(),
-    ticket_redirect_url: Yup.string().when('has_tickets', (hasTickets, schema) => {
-        return hasTickets && schema.required()
+    has_external_ticket: Yup.boolean(),
+    ticket_partner_url: Yup.string().when('has_external_ticket', (hasTickets, schema) => {
+        if (hasTickets[0]) return schema.required();
+
+        return schema
     }),
-    ticket_redirect_name: Yup.string().when('has_tickets', (hasTickets, schema) => {
-        return hasTickets && schema.required()
+    ticket_partner_name: Yup.string().when('has_external_ticket', (hasTickets, schema) => {
+        if (hasTickets[0]) return schema.required();
+
+        return schema
     }),
     image: Yup.mixed()
         .test('fileSize', 'A imagem deve ter no máximo 1MB', (value: any) => {

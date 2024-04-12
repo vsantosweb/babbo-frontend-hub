@@ -48,6 +48,9 @@ function App({ Component, pageProps }: AppProps) {
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8530046753205274"
           crossOrigin="anonymous"
         ></script>
+          <script src="https://www.google.com/recaptcha/enterprise.js?render=6Lea77gpAAAAAFEWb0e-B2iY6X5VYMSBBwZZtQcS"></script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA5aHbpVrnwcd0Gr0Z9dq_GK8Mm-3cR1E"></script>
       </Head>
       <main className="app">
         <Component {...pageProps} />

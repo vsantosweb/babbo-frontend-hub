@@ -1,24 +1,28 @@
-import { useEvent } from '@/hooks';
 import { EventInterface } from '@/types';
-import { Box, Button, Flex, FormControl, FormLabel, HStack, Heading, Stack, Switch, Text } from '@chakra-ui/react';
-import { FaMarker } from 'react-icons/fa';
+import {
+  Button, Flex,  HStack, Heading, Stack, Text,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  useDisclosure,
+  Spinner
+} from '@chakra-ui/react';
 import { HiLocationMarker, HiCalendar } from "react-icons/hi";
 import { eventDateFormatter } from '@/helpers';
 import Link from 'next/link';
+import { useRef, useState } from 'react';
 
-const EventDetails = ({ event }: { event?: EventInterface }) => {
+const EventDetails = ({ event, handleDelete }: { event?: EventInterface, handleDelete: (id: number) => any }) => {
 
-
-  // Supondo que você tenha os detalhes do evento disponíveis, como nome, data, local, etc.
-  const eventDetails = {
-    name: 'Nome do Evento',
-    date: '28 de Março de 2024',
-    location: 'Bar São Paulo, São Paulo'
-    // Adicione mais detalhes do evento conforme necessário
-  };
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [isDeleting, setIsdeleting] = useState(false);
+  const cancelRef = useRef<any>()
 
   return (
-    <HStack>
+    event ? <HStack>
       <Stack spacing={3}>
         <Heading size={'lg'} >{event?.name}</Heading>
         <HStack spacing={6}>
@@ -36,10 +40,34 @@ const EventDetails = ({ event }: { event?: EventInterface }) => {
       <Flex justifyContent={'flex-end'} flex={1}>
         <HStack spacing={3}>
           <Button as={Link} variant={'outline'} href={`/events/${event?.uuid}/edit`} size={'sm'}>Editar</Button>
-          <Button colorScheme='red' size={'sm'}>Excluir</Button>
+          <Button onClick={onOpen} colorScheme='red' size={'sm'}>Excluir</Button>
         </HStack>
       </Flex>
-    </HStack>
+
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+        isCentered
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>Deseja excluir o evento <span style={{ color: 'red' }}>{event?.name}</span>?
+            </AlertDialogHeader>
+
+            <AlertDialogBody>Essa ação será irreversível, tem certeza?</AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} variant={'outline'} onClick={onClose}>Cancel</Button>
+              <Button colorScheme='red' onClick={() => {
+                event.id && handleDelete(event.id);
+                setIsdeleting(true);
+              }} isLoading={isDeleting} ml={3}>Delete</Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
+    </HStack> : <Spinner />
   );
 };
 

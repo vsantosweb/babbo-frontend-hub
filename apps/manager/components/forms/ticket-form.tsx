@@ -8,16 +8,16 @@ export default function TicketForm() {
 
     return (
         <Stack>
-            <Checkbox {...register('has_tickets')} colorScheme='primary'>O evento será realizado com uso de ingressos?</Checkbox>
+            <Checkbox {...register('has_external_ticket')} isChecked={watch('has_external_ticket')} colorScheme='primary'>O evento será realizado com uso de ingressos?</Checkbox>
             {
-                watch('has_tickets') && <Stack spacing={4}>
+                watch('has_external_ticket') && <Stack spacing={4}>
 
                     <FormControl isInvalid={!!errors?.ticket_redirect_name}>
                         <InputGroup>
                             <InputLeftElement color='gray.300' pointerEvents='none'>
                                 <FaTicketSimple />
                             </InputLeftElement>
-                            <Input {...register('ticket_redirect_name')} placeholder='Nome da empresa fornecedora' />
+                            <Input {...register('ticket_partner_name')} placeholder='Nome da empresa fornecedora' />
                         </InputGroup>
                         <FormErrorMessage>{errors?.ticket_redirect_name?.message as string}</FormErrorMessage>
                     </FormControl>
@@ -27,7 +27,7 @@ export default function TicketForm() {
                             <InputLeftElement color='gray.300' pointerEvents='none'>
                                 <ExternalLinkIcon />
                             </InputLeftElement>
-                            <Input {...register('ticket_redirect_name')} placeholder='Endereço para compra do ingresso' />
+                            <Input {...register('ticket_partner_url')} placeholder='Endereço para compra do ingresso' />
                         </InputGroup>
                         <FormErrorMessage>{errors?.ticket_redirect_name?.message as string}</FormErrorMessage>
                     </FormControl>

@@ -13,8 +13,11 @@ export type EventPayloadType = {
     place: PlaceType
     start_date: string;
     end_date: string;
-    categories: any ;
+    categories: any;
     name: string;
     description: string;
-    event_image?: string; // Assuming event_image is an optional field
+    event_image?: string;
+    has_external_ticket: string;
+    ticket_partner_name: string;
+    ticket_partner_url: string;
 }

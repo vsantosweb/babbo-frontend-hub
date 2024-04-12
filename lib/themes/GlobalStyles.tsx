@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { theme } from './default';
 
 const GlobalStyles = css`
   @import '~line-awesome/dist/line-awesome/css/line-awesome.css';
@@ -13,13 +14,19 @@ const GlobalStyles = css`
   .app {
     height: 100%;
   }
-  body {
-    font-family: 'Inter', sans-serif;
+  body, h1, h2, h3 {
+    font-family: 'Inter', sans-serif !important;
     font-optical-sizing: auto;
     font-style: normal;
     font-variation-settings: 'slnt' 0;
   }
-
+  .app-wrapper{
+    max-width: 1280px;
+    width: 100%;
+    margin: auto;
+    height: auto;
+    box-sizing: border-box;
+  }
   *:focus {
     outline: none !important;
   }

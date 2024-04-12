@@ -19,14 +19,15 @@ export interface EventInterface  {
     full_address?: string;
     status:string;
     place_name?: string;
+    place_geolocation:string;
     city?: string;
     categories?: string[];
     impress?: number;
-    has_tickets?:boolean;
     impressions?:number
     clicks?:number
-    ticket_redirect_name?: string,
-    ticket_redirect_url?:string
+    has_external_ticket?:boolean;
+    ticket_partner_name?: string,
+    ticket_partner_url?:string
 }
 
 

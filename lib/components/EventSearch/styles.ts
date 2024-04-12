@@ -23,7 +23,8 @@ export const ResultBox = styled.div`
   display: flex;
   justify-content: center;
   z-index: 3;
-  top: 50px;
+  top: 48px;
+  border-top: solid 1px #ddd;
   padding: 1em;
   /* border: solid 1px; */
   min-height: 300px;
@@ -41,6 +42,7 @@ export const ResultBox = styled.div`
     border-radius: 0;
     right: 0;
     height: 100%;
+    top: 60px;
   }
 `;
 

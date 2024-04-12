@@ -34,6 +34,7 @@ export const CardEventImageContainer = styled.div`
   max-height: 380px;
   height: 400px;
   overflow: hidden;
+  position: relative;
 `;
 export const CardEventImage = styled.img`
   border-top-left-radius: ${({ theme }: any) => theme.defaultRadius};
@@ -96,7 +97,7 @@ export const CardEventMutedText = styled.span`
   gap: 6px;
   font-size: 0.9rem;
   align-items: center;
-  font-weight: 500;
+  font-weight: 700;
   color: #818181;
 `;
 export const CardEventTitle = styled.h1`

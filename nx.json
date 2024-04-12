@@ -1,6 +1,27 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "defaultBase": "master",
+  "options": {
+    "buildTarget": "<string>",
+    "parallel": true,
+    "maxParallel": 28,
+    "port": 18,
+    "host": "<string>",
+    "ssl": true,
+    "sslKey": "<string>",
+    "sslCert": "<string>",
+    "proxyUrl": "<string>",
+    "proxyOptions": {
+      "secure": false
+    },
+    "watch": true,
+    "spa": false,
+    "staticFilePath": "<string>",
+    "cors": true,
+    "gzip": false,
+    "brotli": false,
+    "cacheSeconds": 119
+  },
   "namedInputs": {
     "default": [
       "{projectRoot}/**/*",

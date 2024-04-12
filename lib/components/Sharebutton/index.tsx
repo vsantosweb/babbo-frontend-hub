@@ -24,7 +24,7 @@ export function Sharebutton({ info }: { info: ShareButtonType }) {
   };
 
   return (
-    <Button rightIcon={<FaShareAlt />} onClick={handleShareClick} size={'sm'}>
+    <Button rightIcon={<FaShareAlt />} onClick={handleShareClick}>
       Compartilhar
     </Button>
   );

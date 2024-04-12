@@ -37,6 +37,7 @@ export function EventFilter() {
       border={'solid 1px #f1f1f1'}
       direction={{ base: 'column', md: 'row' }}
       zIndex={2}
+      className='app-wrapper'
     >
       <Box width={'100%'}>
         <DatePickerDialog />
