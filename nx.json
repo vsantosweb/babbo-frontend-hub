@@ -69,5 +69,13 @@
         "linter": "eslint"
       }
     }
+  },
+  "targetDefaults": {
+    "build": {
+      "inputs": [
+        "production",
+        "^production"
+      ]
+    }
   }
 }
