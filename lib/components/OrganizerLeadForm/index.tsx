@@ -16,6 +16,7 @@ import {
     Stack,
     UseDisclosureProps,
     Box,
+    Text,
 } from '@chakra-ui/react'
 import { useRef } from 'react'
 import ReCAPTCHA from "react-google-recaptcha";
@@ -42,6 +43,7 @@ export function OrganizerLeadForm({ useDisclosure }: { useDisclosure: UseDisclos
             console.log(response)
         })
     }
+
     return (
         <Modal
             initialFocusRef={initialRef}
@@ -55,7 +57,8 @@ export function OrganizerLeadForm({ useDisclosure }: { useDisclosure: UseDisclos
             <ModalContent borderRadius={'3xl'}>
                 {!formState.isSubmitSuccessful ?
                     <>
-                        <ModalHeader textAlign={'center'}>Preencha o formulário, nós entraremos em contato com você</ModalHeader>
+                        <ModalHeader>Preencha o formulário, nós entraremos em contato com você</ModalHeader>
+
                         <form onSubmit={handleSubmit(handleSubmitLead)}>
                             <ModalCloseButton />
                             <ModalBody pb={6}>
@@ -74,18 +77,18 @@ export function OrganizerLeadForm({ useDisclosure }: { useDisclosure: UseDisclos
                                         <Input as={InputMask}
                                             alwaysShowMask={false}
                                             maskChar={null}
+                                            placeholder='(99) 99999-9999'
                                             mask={'(99) 99999-9999'}
-
                                             // onChange={e => e.target.value.replace(/[^\d]/g, '')}
                                             {...register('phone', {
                                                 required: true,
-                                                onChange: e => setValue('phone', e.target.value.replace(/[^\d]/g, ''))
+                                                onBlur: e => setValue('phone', e.target.value.replace(/[^\d]/g, ''))
                                             })}
                                         />
                                     </FormControl>
                                     <FormControl>
                                         <FormLabel>Perfil do instagram (opcional)</FormLabel>
-                                        <Input {...register('social_link')} placeholder='https://...' />
+                                        <Input {...register('social_link')} placeholder='https://instagram.com' />
                                     </FormControl>
                                     <Flex justifyContent={'center'} width={'100%'} >
                                         <Controller
@@ -93,14 +96,17 @@ export function OrganizerLeadForm({ useDisclosure }: { useDisclosure: UseDisclos
                                             name='recaptcha'
                                             control={control}
                                             render={({ field }) => (
-                                                <ReCAPTCHA {...field} sitekey={process.env.NEXT_GOOGLE_RECAPTCHA_KEY} />
+                                                <ReCAPTCHA {...field} sitekey={process.env.NEXT_PUBLIC_GOOGLE_RECAPTCHA_KEY as string} />
 
                                             )}
                                         />
                                     </Flex>
                                 </Stack>
                             </ModalBody>
-
+                            <Text fontSize={'sm'} px={6}>
+                                O cadastro para organizadores ainda está limitado! Faça seu cadastro agora mesmo e seja um
+                                dos primeiros a promover seus eventos no Babbo.
+                            </Text>
                             <ModalFooter>
                                 <Button type='submit' isLoading={formState.isSubmitted} isDisabled={!formState.isValid} colorScheme='blue'>Concluir cadastro</Button>
                             </ModalFooter>

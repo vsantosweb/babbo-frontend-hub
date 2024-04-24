@@ -47,7 +47,7 @@ import { Search2Icon } from '@chakra-ui/icons';
 import { EventProvider, useAlert, useEvent } from '@/hooks';
 import { useForm } from 'react-hook-form';
 
-const eventService = container.get<EventRepositoryInterface>('event-manager')
+const eventService = container.get<EventRepositoryInterface>('customer-event')
 
 interface EventStatus {
   [key: string]: { label: string; color: string; };
@@ -82,7 +82,6 @@ function Events() {
   }
 
   const handleSearch = async (formData: Record<string, any>) => {
-    console.log('merda')
     setSearch(formData)
   }
   useEffect(() => {

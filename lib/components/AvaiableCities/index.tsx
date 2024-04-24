@@ -30,7 +30,7 @@ import { CiLocationOn } from 'react-icons/ci';
 export function AvaiableCitiesDesktop() {
     return (
         <Menu >
-            <MenuButton as={Button} variant={'muted'} rightIcon={<ChevronDownIcon />}> São Paulo, SP </MenuButton>
+            <MenuButton p={0} as={Button} variant={'muted'} rightIcon={<ChevronDownIcon />}> São Paulo, SP </MenuButton>
             <MenuList transition="all ease" as={'div'} scale={1} opacity={1}>
                 <MenuItem icon={<CiLocationOn />}>Rio de Janeiro, RJ</MenuItem>
                 <MenuItem icon={<CiLocationOn />}>Santa Catarina, SC</MenuItem>

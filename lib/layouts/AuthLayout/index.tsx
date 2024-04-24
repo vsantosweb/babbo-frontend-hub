@@ -1,6 +1,7 @@
 import React from 'react'
 import * as Styled from './styles';
-import { Heading, Link } from '@chakra-ui/react';
+import { Box, Heading, Link } from '@chakra-ui/react';
+import { Logo } from '@/components';
 
 export default function AuthLayout({
     children,
@@ -18,7 +19,7 @@ export default function AuthLayout({
     return (
         <React.Fragment>
             <Styled.AuthContainer>
-                <Styled.AuthHeader><Heading>Babbo</Heading></Styled.AuthHeader>
+                <Styled.AuthHeader><Heading><Box width={'120px'}><Logo/></Box></Heading></Styled.AuthHeader>
                 <Styled.AuthWrapper>
                     {children}
                     <Styled.AuthFooter>

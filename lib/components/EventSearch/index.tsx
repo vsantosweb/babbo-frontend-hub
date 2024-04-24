@@ -64,7 +64,6 @@ export const EventSearch = () => {
 
     if (open) document.body.style.overflow = 'hidden';
     else {
-      console.log('AUTOOOOOOOOOOOO')
       document.body.style.overflow = 'auto';
     }
   };
@@ -78,7 +77,7 @@ export const EventSearch = () => {
 
     let searchInterval: NodeJS.Timeout;
 
-    if (value.length > 0) {
+    if (value.length > 3) {
       openDisplayResult(true);
 
       if (value.length % 2 === 0) {// a cada 3 digitos faz uma busca
@@ -111,8 +110,8 @@ export const EventSearch = () => {
   };
 
   return (
-    <Flex width="100%"  flexDirection="column">
-      <Box position={'relative'}  width="100%" maxW="600px">
+    <Flex width="100%" maxW="600px" flexDirection="column">
+      <Box position={'relative'}>
         <form>
           <FormControl>
             <Input
@@ -122,7 +121,7 @@ export const EventSearch = () => {
               // onClick={() => openDisplayResult(true)}
               onChange={handleSearchDiscovery}
               pr={12}
-              placeholder="Pesquisar bares, shows, eventos..."
+              placeholder="Qual a boa pae?"
               value={query}
             />
             <Flex

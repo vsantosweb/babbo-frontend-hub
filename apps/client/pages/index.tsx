@@ -2,7 +2,7 @@ import Layout from '@/layouts';
 import { EventProvider, useEvent } from '@/hooks';
 import { Suspense, useEffect, useState } from 'react';
 import { Container } from 'react-grid-system';
-import { HomeDiscovery } from '@/themes/babbo/templates';
+import { HomeDiscovery } from '@/themes/babbo';
 import { EventInterface } from '@/types';
 import {
   Box, Button,
@@ -35,9 +35,7 @@ export function Home() {
   useEffect(() => {
     fetchEvents({ skip: skip, limit: limit }).then((response: any) => {
       setTotal(response.total);
-
       events ? setEvents([...events, ...response.data]) : setEvents(response.data);
-
     });
   }, [skip]);
 
@@ -51,8 +49,6 @@ export function Home() {
    *
    * Note: The corresponding styles are in the ./index.none file.
    */
-
-
   return (
     <Layout
       title={'Babbo - Encontre bares, baladas, shows e muito mais aqui.'}
@@ -60,10 +56,10 @@ export function Home() {
       description={'Babbo encontre baladas, barzinhos, shows, roles, e muito mais.'}
       keywords={'guia,baladas,shows,roles,festas,party,bares'}
     >
-      <Stack spacing={6} mt={8} className='app-wrapper'>
+      <Stack spacing={6} mt={8}>
         {/* <Banner /> */}
-        <Box minHeight={'90px'} height={'auto'} pb={6}>
-          {/* <img src={'https://placehold.co/1280x120?text=.'} /> <hr /> */}
+        <Box className='app-wrapper' minHeight={'90px'} height={'auto'} pb={6}>
+          <img src={'https://placehold.co/1280x120?text=Adsense'} /> <hr />
           {/* <GoogleAdSense adClient='ca-pub-8530046753205274' adSlot={'2752189175'}/> */}
 
         </Box>
@@ -74,11 +70,11 @@ export function Home() {
           </Box>
         }
 
-        <Stack m={'auto'} spacing={{ base: 0, md: 6 }} maxW='52rem'>
-          <Heading textAlign={{ md: 'center' }} size={{ base: 'xl', md: '2xl' }} mb={4}>Uma nova ferramenta gratuita para<br /> divulgar <Text as={'span'} color={'primary.500'}>seus eventos</Text></Heading>
+        <Stack m={'auto'} spacing={{ base: 0, md: 4 }} maxW='52rem'>
+          <Heading textAlign={{ md: 'center' }} size={{ base: 'lg', md: 'xl' }} mb={4}>Uma nova ferramenta gratuita para<br /> divulgar <Text as={'span'} color={'primary.500'}>seus eventos</Text></Heading>
           <Flex gap={8} direction={{ md: 'column' }} alignItems={'center'}>
             <Stack alignItems={{ md: 'center' }} spacing={6}>
-              <Text fontSize={{ base: 'lg', md: '2xl' }} textAlign={{ md: 'center' }} fontWeight={'600'}>
+              <Text fontSize={{ base: 'md', md: 'lg' }} textAlign={{ md: 'center' }} fontWeight={'600'}>
                 O Babbo é a plataforma perfeita para divulgar e promover seu evento. Comece agora e alcance mais pessoas!
               </Text>
               <Box>
@@ -101,25 +97,8 @@ export function Home() {
           </Flex>
         </Stack>
       </Stack>
-        <OrganizerLeadForm useDisclosure={useDisclosureorganizerLeadForm} />
+      <OrganizerLeadForm useDisclosure={useDisclosureorganizerLeadForm} />
 
-      {/* <Drawer
-        isFullHeight={true}
-        isOpen={isOpen}
-        placement='bottom'
-        onClose={onClose}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Create your account</DrawerHeader>
-
-          <DrawerBody p={0}>
-          </DrawerBody>
-
-
-        </DrawerContent>
-      </Drawer> */}
 
     </Layout>
   );

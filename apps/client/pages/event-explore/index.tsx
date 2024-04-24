@@ -11,7 +11,7 @@ import {
   Loader,
   Navigation,
 } from '@/components';
-import { HomeDiscovery } from '@/themes/babbo/templates';
+import { HomeDiscovery } from '@/themes/babbo';
 import { EventInterface } from '@/types';
 import { Box, Flex, Spinner, Stack, Text, useQuery } from '@chakra-ui/react';
 import { useRouter } from 'next/router';

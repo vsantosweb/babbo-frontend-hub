@@ -37,6 +37,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { AvaiableCitiesDesktop } from '../AvaiableCities';
 import { FaMapLocation } from "react-icons/fa6";
 import { Logo } from '../Logo';
+import { NavigationDesktop } from './navigation-desktop';
 
 export function Navigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -55,71 +56,10 @@ export function Navigation() {
         borderColor={useColorModeValue('gray.200', 'gray.900')}
         align={'center'}
       >
-        <Flex
-          gap={4}
-          width={theme.defaultContainer.width}
-          margin={'auto'}
-          alignItems={'center'}
-        >
-          <Flex
-          width={'100%'}
-            gap={5}
-            justify={{ base: 'center', md: 'start' }}
-            alignItems={'center'}>
-            <Flex ml={{ base: -2 }} display={{ base: 'flex', md: 'none' }}>
-              <IconButton
-                onClick={onToggle}
-                icon={
-                  isOpen ? (
-                    <CloseIcon w={3} h={3} />
-                  ) : (
-                    <HamburgerIcon w={5} h={5} />
-                  )
-                }
-                variant={'primary'}
-                aria-label={'Toggle Navigation'}
-              />
-            </Flex>
-            
-            <Box
-              as={Link}
-              href={'/'}
-              fontWeight={'bold'}
-              fontSize={'2em'}
-              textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-              fontFamily={'heading'}
-              width={'110px'}
-              color={theme.colors.primary}
-            >
-              <Logo />
-            </Box>
-            
-            <EventSearch />
-          </Flex>
-{/* 
-          <Stack  justify={'flex-end'} direction={'row'} spacing={6}>
-            <Button
-              as={Link}
-              display={{ base: 'none', md: 'inline-flex' }}
-              fontSize={'sm'}
-              fontWeight={600}
-              color={'white'}
-              bg={'pink.400'}
-              rightIcon={<FaMapLocation style={{ fontSize: '1.3em' }} />}
-              href={'/event-explore'}
-              _hover={{
-                bg: 'pink.300',
-              }}
-            >
-              Explorar
-            </Button>
-          </Stack> */}
-          
-        </Flex>
+        <NavigationDesktop />
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
       </Collapse>
     </Box>
   );
@@ -213,32 +153,6 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   );
 };
 
-const MobileNav = () => {
-  return (
-    <Stack
-      bg={useColorModeValue('white', 'gray.800')}
-      p={4}
-      display={{ md: 'none' }}
-    >
-      <Button
-        as={'a'}
-        fontSize={'sm'}
-        fontWeight={600}
-        color={'white'}
-        bg={'pink.400'}
-        href={'#'}
-        _hover={{
-          bg: 'pink.300',
-        }}
-      >
-        Anuncie seu evento
-      </Button>
-      {/* {NAV_ITEMS.map((navItem) => (
-        <MobileNavItem key={navItem.label} {...navItem} />
-      ))} */}
-    </Stack>
-  );
-};
 
 const MobileNavItem = ({ label, children, href }: NavItem) => {
   const { isOpen, onToggle } = useDisclosure();

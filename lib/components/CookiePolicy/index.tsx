@@ -29,7 +29,7 @@ export const CookiePolicy = () => {
     
     return (
         !acceptedCookies && <div style={{zIndex: 3, position: 'fixed', bottom: '0', width: '100%', background: '#000', color: '#fff' }}>
-            <div style={{ display: 'flex', maxWidth: theme.defaultContainer.width, margin: 'auto', padding: '1.5em' }}>
+            <div style={{ display: 'flex', maxWidth: theme.defaultContainer.width, margin: 'auto', padding: '1.5em', alignItems: 'center' }}>
                 <p style={{ flex: '1' }}>Este site usa cookies para garantir a melhor experiência possível para você.</p>
                 <div><Button onClick={handleAcceptCookies}>Entendido</Button></div>
             </div>

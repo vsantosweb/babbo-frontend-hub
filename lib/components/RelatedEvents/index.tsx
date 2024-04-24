@@ -47,14 +47,7 @@ export function RelatedEvents({
         >
           {relatedEvents?.map((event, key) => (
             <SwiperSlide key={key}>
-              <Link
-                href={{
-                  pathname: `/events/${event.slug}`,
-                  query: { id: event.uuid },
-                }}
-              >
-                <EventCard {...event} />
-              </Link>
+              <EventCard {...event} />
             </SwiperSlide>
           ))}
         </Swiper>

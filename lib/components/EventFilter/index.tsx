@@ -6,6 +6,8 @@ import { theme } from '@/themes/default';
 import { useEvent, useQueryString } from '@/hooks';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import _ from 'lodash';
 
 type MixedObjectType = { [index: string]: any };
 
@@ -15,9 +17,10 @@ export function EventFilter() {
   const [avaiableCities, setAvaiableCities] = useState([]);
 
   const { fetchEvents, fetchCategories, fetchAvaiableCities } = useEvent();
-  const { query, setQuery, parsed } = useQueryString();
+  const { query, setQuery, parsed, clearQueryString } = useQueryString();
   const router = useRouter();
 
+  const { reset, register } = useForm();
   useEffect(() => {
     // router.push(parsed)
   }, [query]);
@@ -32,33 +35,40 @@ export function EventFilter() {
   return (
     <Stack
       my={{ base: 4 }}
-      p={`4`}
       borderRadius={theme.defaultRadius}
-      border={'solid 1px #f1f1f1'}
       direction={{ base: 'column', md: 'row' }}
       zIndex={2}
+      justifyContent={'center'}
       className='app-wrapper'
     >
-      <Box width={'100%'}>
-        <DatePickerDialog />
-      </Box>
-      <Select
-        placeholder="Categoria"
-        onChange={(e) => setQuery({ ...query, category: e.target.value })}
-      >
-        {categories?.map((category: MixedObjectType) => (
-          <option value={category?.name}>{category?.name}</option>
-        ))}
-      </Select>
-      <Select
-        placeholder="Onde?"
-        onChange={(e) => setQuery({ ...query, region: e.target.value })}
-      >
-        {' '}
-        {avaiableCities?.map((city) => (
-          <option value={city}>{city}</option>
-        ))}
-      </Select>
+      <Stack flexDirection={{base: 'column', md: 'row'}} as={'form'}>
+        <Box width={'100%'}>
+          {/* <DatePickerDialog /> */}
+          <Input {...register('date')} onChange={e => setQuery({ ...query, region: e.target.value })} type='date' />
+        </Box>
+        <Select
+          placeholder="Categoria"
+          {...register('category')}
+          onChange={(e) => setQuery({ ...query, category: e.target.value })}
+        >
+          {categories?.map((category: MixedObjectType) => (
+            <option value={category?.name}>{category?.name}</option>
+          ))}
+        </Select>
+        <Select
+          {...register('region')}
+          placeholder="Onde?"
+          onChange={(e) => setQuery({ ...query, region: e.target.value })}
+        >
+          {' '}
+          {avaiableCities?.map((city) => (
+            <option value={city}>{city}</option>
+          ))}
+        </Select>
+        <Box >
+          {!_.isEmpty(router.query) && <Button w={'100%'} onClick={() => { clearQueryString(), reset() }} variant={'outline'}>Limpar filtros</Button>}
+        </Box>
+      </Stack>
     </Stack>
   );
 }

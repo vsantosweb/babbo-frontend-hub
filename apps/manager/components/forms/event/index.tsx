@@ -11,23 +11,23 @@ import {
 } from '@chakra-ui/react'
 import * as Yup from 'yup';
 
-import AddressForm from '../forms/address-form';
-import EventInfoForm from '../forms/event-info-form';
+import AddressForm from './address-form';
+import EventInfoForm from './event-info-form';
 import { EventImageUpload } from '@/components';
 import { SessionHelper } from '@/helpers';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { eventValidatorSchema } from '../../validators';
+import { eventValidatorSchema } from '../../../validators';
 import { EventPayloadType } from '@/types';
 import { useEffect } from 'react';
 import moment from 'moment';
 import container from '@/container';
-import { MangerEventRepositoryInterface } from '@/interfaces';
+import { CustomerEventRepositoryInterface } from '@/interfaces';
 import SponsoredForm from './sponsored-form';
 import TicketForm from './ticket-form';
 import Link from 'next/link';
 
-const eventManagerService = container.get<MangerEventRepositoryInterface>('event-manager');
+const eventCustomerService = container.get<CustomerEventRepositoryInterface>('customer-event');
 
 const EventForm = ({ event }: { event?: Record<string, any> }) => {
 
@@ -67,9 +67,9 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
 
         const payload = getPayload(formData);
 
-        await eventManagerService.createEvent(payload).then((response: Record<string, any>) => {
+        await eventCustomerService.createEvent(payload).then((response: Record<string, any>) => {
             SessionHelper.redirectWith('/', 'eventCreated',
-            `O evento  <a href="/events/${response.data.uuid}/details">${response.data.name}</a> foi criado com sucesso. Vamos fazer uma análise e disponibiliza-lo na plataforma em até 24h.`
+                `O evento  <a href="/events/${response.data.uuid}/details">${response.data.name}</a> foi criado com sucesso. Vamos fazer uma análise e disponibiliza-lo na plataforma em até 24h.`
             );
         })
 
@@ -99,11 +99,11 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
         const payload = getPayload(formData);
 
         console.log(formData, 'formData')
-        await eventManagerService.updateEvent(payload, event?.id).then((response: Record<string, any>) => {
+        await eventCustomerService.updateEvent(payload, event?.id).then((response: Record<string, any>) => {
             // SessionHelper.redirectWith(`/events/${event?.uuid}/details`, 'eventUpdated');
 
-            SessionHelper.redirectWith('/', 'eventUpdated', 
-            `O evento  <a href="/events/${response.data.uuid}/details">${response.data.name}</a> foi atualizado.`
+            SessionHelper.redirectWith('/', 'eventUpdated',
+                `O evento  <a href="/events/${response.data.uuid}/details">${response.data.name}</a> foi atualizado.`
             );
 
         })

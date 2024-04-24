@@ -10,13 +10,14 @@ import { LuSend } from "react-icons/lu";
 import { Box, Flex, IconButton, Skeleton } from '@chakra-ui/react';
 import { EventRepositoryInterface, PublicRepositoryInterface } from '@/interfaces';
 import container from '@/container';
+import { eventDateFormatter } from '@/helpers';
 const eventService = container.get<PublicRepositoryInterface>('public');
 
 export const EventCard = (event: EventInterface) => {
   
   const { getFormattedDate } = useEvent();
   const { handleShareClick } = useEventShare();
-  const event_date = getFormattedDate(event);
+  const event_date = eventDateFormatter(event);
 
   const handleShareInteraction = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 
@@ -40,7 +41,7 @@ export const EventCard = (event: EventInterface) => {
     event ? <Link
       onClick={handleClickInteraction}
       href={{
-        pathname: `events/${event.slug}`,
+        pathname: `/events/${event.slug}`,
         query: { id: event.uuid },
       }}
     >
@@ -80,8 +81,6 @@ export const EventCard = (event: EventInterface) => {
       </Styled.CardEvent>
     </Link>
       : <CardSkeleton />
-
-
   );
 };
 

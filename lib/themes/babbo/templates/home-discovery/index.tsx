@@ -29,28 +29,22 @@ export function HomeDiscovery({ dataDiscovery }: {
   const { loading } = useEvent();
 
   const renderWithAdSense = (event: EventInterface, index: number) => {
-    if ((index + 1) % 8 === 0) {
+    if (index > 0 && index % 8 === 0) {
       return (
-        <>
-          <GridItem key={index}>
+        <Fragment key={`${index}-${event.uuid}`}>
+          {/* <GridItem gridColumn={'1 / span 4'} >
+            <img src={'https://placehold.co/1280x120?text=Adsense'} />
+            <GoogleAdSense adClient='ca-pub-8530046753205274' adSlot={'2752189175'}/>
+          </GridItem> */}
+          <GridItem  >
             <EventCard {...event} />
-
-            {/* <GoogleAdSense adClient='ca-pub-8530046753205274' adSlot={'2752189175'}/> */}
-
-            {/* <AdsBody /> */}
           </GridItem>
-          {/* <Col md={12}>
-            <Box textAlign={'center'} mb={6} width={'100%'}>
-              <img src={'https://placehold.co/1280x120'} />
-              <GoogleAdSense adClient='ca-pub-8530046753205274' adSlot={'2752189175'}/>
-              <Flex><Divider /><small>PUBLICIDADE</small><Divider /></Flex>
-            </Box>
-          </Col> */}
-        </>
+        </Fragment>
+
       );
     } else {
       return (
-        <GridItem overflow={'hidden'} key={index}>
+        <GridItem overflow={'hidden'} key={`${index}-${event.uuid}`}>
           <EventCard {...event} />
         </GridItem>
       );
@@ -65,7 +59,7 @@ export function HomeDiscovery({ dataDiscovery }: {
   />;
 
   return (
-    <Grid templateColumns={{
+    <Grid  className='app-wrapper' templateColumns={{
       lg: 'repeat(4, minmax(0, 1fr))',
       md: 'repeat(2, minmax(0, 1fr))',
       sm: 'repeat(1, minmax(0, 1fr))',

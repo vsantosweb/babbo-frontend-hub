@@ -1,6 +1,6 @@
 
 import { EventProvider } from '@/hooks';
-import EventForm from '../../../components/forms';
+import EventForm from '../../../components/forms/event';
 import Layout from '@/layouts';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -9,7 +9,7 @@ import { EventRepositoryInterface } from '@/interfaces';
 import container from '@/container';
 import { EventInterface } from '@/types';
 
-const eventServiceManager = container.get<EventRepositoryInterface>('event-manager');
+const eventServiceManager = container.get<EventRepositoryInterface>('customer-event');
 
 export default function EditEvent() {
 

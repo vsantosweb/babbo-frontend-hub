@@ -18,7 +18,7 @@ export interface UseAuthProps {
 }
 
 //Define o tipo para o objecto AuthState
-interface AuthState {
+interface AuthStateInterface {
   user: UserType | null;
   loading: boolean;
   isAuthenticated: boolean;
@@ -29,7 +29,8 @@ export interface AuthProviderInterface {
   logout: () => Promise<ApiResponseType | null>
   loading?: boolean,
   authState?: any,
-  socialLogin: (credentials: any) => void
+  socialLogin: (credentials: any) => void,
+  user: Record<string, any> | null
 }
 
 const AuthContext = createContext<AuthProviderInterface | undefined>(undefined)
@@ -57,7 +58,7 @@ export const useAuth = () => {
  */
 export function AuthProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
 
-  const [authState, setAuthState] = useState<AuthState>({
+  const [authState, setAuthState] = useState<AuthStateInterface>({
     user: null,
     loading: true,
     isAuthenticated: false,
@@ -66,8 +67,9 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
   const [loading, setLoading] = useState<boolean>(true);
 
   const [authorized, setAuthorized] = useState<boolean>(false);
-  const [user, setUser] = useState<any>(false);
+  const [user, setUser] = useState<Record<string, any> | null>(null);
   const [rendering, setRendering] = useState<boolean>(true);
+  const [checkingPermissions, setCheckingPermissions] = useState<boolean>(true);
   const router = useRouter();
 
   const authService = container.get<AuthRepositoryInterface>('auth-manager');
@@ -94,10 +96,10 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
 
   const session = async (url: string) => {
 
-
     return await authService.session().then((response) => {
 
       let user = response?.data?.data;
+
 
       if (user && router.pathname === '/account/login') router.push(`/`)
 
@@ -106,9 +108,11 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
         setAuthorized(false);
         setUser({})
 
-      } else { setAuthorized(true); setUser(user.data) }
+      } else { setAuthorized(true); setUser(user) }
 
-      setRendering(false)
+      checkOrganizerPermission(user);
+
+      setRendering(false);
 
     }).catch(() => {
 
@@ -118,6 +122,18 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
       setRendering(false);
     })
 
+  }
+
+  const checkOrganizerPermission = async (user: Record<string ,any>) => {
+
+    // Verifica se a rota atual corresponde ao padrão '/events/**/**'
+    const isEventRoute = router.pathname.startsWith('/events');
+
+    if (isEventRoute && !user.is_organizer) {
+      await router.push('/403').then(() => setCheckingPermissions(false))
+    };
+
+    await setCheckingPermissions(false)
   }
 
   /**
@@ -192,11 +208,10 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
 
   }
 
-  if (rendering || (!authorized && window.location.pathname !== '/account/login')) return null
-
+  if (rendering || checkingPermissions || (!authorized && window.location.pathname !== '/account/login')) return null
 
   return (
-    <AuthContext.Provider value={{ authState, loading, login, logout, socialLogin }}>
+    <AuthContext.Provider value={{ authState, loading, login, logout, socialLogin, user }}>
       {children}
     </AuthContext.Provider>
   )

@@ -19,6 +19,12 @@ import {
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
 import Link from 'next/link'
+import { Logo } from '../Logo'
+import { FaTicket } from 'react-icons/fa6'
+import { IoMdExit } from "react-icons/io";
+import { IoLogOutOutline, IoPersonOutline, IoTicketOutline } from "react-icons/io5";
+import { useAuth, useOrganizer } from '@/hooks'
+import { useRouter } from 'next/router'
 
 interface Props {
   children: React.ReactNode
@@ -47,9 +53,12 @@ const NavLink = (props: Props) => {
 export function ManagerNavigation() {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
+  const { user } = useAuth();
+  const { checkCustomerIsOrganizer } = useOrganizer();
+
   return (
-    <Box mb={8}>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+    <Box mb={8} color={'#fff'} bg={'#000'}>
+      <Box px={3}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}
@@ -59,7 +68,7 @@ export function ManagerNavigation() {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Box>Babbo</Box>
+            <Box width={'120px'}><Logo /></Box>
             <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
               {Links.map((link) => (
                 <NavLink key={link}>{link}</NavLink>
@@ -69,9 +78,11 @@ export function ManagerNavigation() {
           <Flex alignItems={'center'}>
             <Button
               as={Link}
+              onClick={(e) => {
+                e.preventDefault()
+                user?.is_organizer && checkCustomerIsOrganizer(user.is_organizer)
+              }}
               href={'/events/create'}
-              variant={'solid'}
-              colorScheme={'teal'}
               size={'sm'}
               mr={4}
               leftIcon={<AddIcon />}>
@@ -82,20 +93,17 @@ export function ManagerNavigation() {
                 as={Button}
                 rounded={'full'}
                 variant={'link'}
-                cursor={'pointer'}
-                minW={0}>
+                cursor={'pointer'}>
                 <Avatar
-                  size={'sm'}
-                  src={
-                    'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                  }
+                  name={user?.name}
+                  src={user?.photo_profile}
                 />
               </MenuButton>
-              <MenuList>
-                <MenuItem>Link 1</MenuItem>
-                <MenuItem>Link 2</MenuItem>
-                <MenuDivider />
-                <MenuItem>Link 3</MenuItem>
+              <MenuList color={'#000'}>
+                <MenuItem as={Link} href={'/account/profile'} icon={<IoPersonOutline />}>Minha conta</MenuItem>
+                {/* <MenuItem icon={<IoTicketOutline />}>Meus ingressos</MenuItem> */}
+                <MenuDivider m={0} />
+                <MenuItem icon={<IoLogOutOutline />}>Sair</MenuItem>
               </MenuList>
             </Menu>
           </Flex>

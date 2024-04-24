@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import { EventBanner, EventDisplayType, EventInterface, EventPayloadType } from '@/types';
-import { EventRepositoryInterface, MangerEventRepositoryInterface } from '@/interfaces';
+import { EventRepositoryInterface, CustomerEventRepositoryInterface } from '@/interfaces';
 import moment from 'moment';
 import container from '@/container';
 import { ServiceContainerType } from 'lib/repository/Services/Api';
@@ -49,7 +49,7 @@ export function EventProvider({ children, }: { children: JSX.Element | JSX.Eleme
 
   const eventService = container.get<EventRepositoryInterface>('public');
 
-  const eventServiceManager = container.get<MangerEventRepositoryInterface>('event-manager');
+  const eventServiceManager = container.get<CustomerEventRepositoryInterface>('customer-event');
 
   async function fetchEvents(params?: Record<string, string>): Promise<any> {
     setLoading(true);

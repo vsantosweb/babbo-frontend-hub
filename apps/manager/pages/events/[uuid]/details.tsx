@@ -28,13 +28,13 @@ import Layout from '@/layouts';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { EventInterface } from '@/types';
-import { EventRepositoryInterface, MangerEventRepositoryInterface } from '@/interfaces';
+import { EventRepositoryInterface, CustomerEventRepositoryInterface } from '@/interfaces';
 import container from '@/container';
 import ImpressionGraph from 'apps/manager/components/graphs/ImpressionGraph';
 import { SessionHelper } from '@/helpers';
 // import SharesChart from './SharesChart';
 
-const eventServiceManager = container.get<MangerEventRepositoryInterface>('event-manager');
+const eventServiceCustomer = container.get<CustomerEventRepositoryInterface>('customer-event');
 
 const stats = [
     { label: 'Total Interações', value: '86.000' },
@@ -55,10 +55,9 @@ export default function Event() {
 
         if (id) {
 
-            eventServiceManager.event(id as string).then((response: any) => {
+            eventServiceCustomer.event(id as string).then((response: any) => {
                 setEvent(response.data);
-
-                eventServiceManager.impressionsByDate(response.data.id).then(response => {
+                eventServiceCustomer.impressionsByDate(response.data.id).then(response => {
                     setImpressions(response.data);
                 })
             });
@@ -67,10 +66,11 @@ export default function Event() {
     }, [router.query]);
 
     const handleDeleteEvent = async (id: number) => {
-       await eventServiceManager.deleteEvent(id).then(response => {
+        await eventServiceCustomer.deleteEvent(id).then(response => {
             SessionHelper.redirectWith('/', 'eventDeleted', `O evento ${event?.name} foi excluído.`)
         })
     }
+
     return (
         <Layout name="manager">
             {event ? <Flex gap={8} width={'100%'}>

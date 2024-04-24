@@ -26,7 +26,7 @@
       "@/repository": ["lib/repository/Interfaces/index.ts"],
       "@/templates/forms": ["lib/templates/Forms/index.ts"],
       "@/teste": ["lib/teste/lib/index.ts"],
-      "@/themes/babbo/templates": ["lib/themes/babbo/templates/index.ts"],
+      "@/themes/babbo": ["lib/themes/babbo/index.ts"],
       "@/themes/default": ["lib/themes/default.tsx"],
       "@/types": ["lib/repository/Types/_index.ts"]
     }

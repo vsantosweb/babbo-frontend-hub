@@ -25,7 +25,7 @@ export class PublicEventService implements PublicRepositoryInterface {
    */
   async events(params?: Record<string, string>): Promise<any> {
     try {
-      const response = await this.api.get<any>(`/events?${params}`);
+      const response = await this.api.get<any>(`/events?${new URLSearchParams(params)}`);
       return response.data;
     } catch (error) {
       console.error('Erro ao obter eventos:', error);

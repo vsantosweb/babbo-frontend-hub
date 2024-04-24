@@ -16,6 +16,15 @@ import 'moment/locale/pt-br'; // without this line it didn't work
 import { useEffect } from 'react';
 import { PublicRepositoryInterface } from '@/interfaces';
 import { CookiePolicy } from '@/components';
+import TagManager from 'react-gtm-module';
+
+
+
+if (typeof document !== 'undefined') {
+  TagManager.initialize({ gtmId: process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_KEY as string });
+
+}
+
 moment.defineLocale('pt-BR', null);
 
 SwiperCore.use([Navigation, Pagination]);
@@ -24,12 +33,12 @@ const publicService = container.get<PublicRepositoryInterface>('public');
 
 function App({ Component, pageProps }: AppProps) {
 
-  
+
   useEffect(() => {
 
     const userIdentifier = localStorage.getItem('user_identifier');
 
-    if(!userIdentifier){
+    if (!userIdentifier) {
 
       publicService.userIdentifier().then(response => localStorage.setItem('user_identifier', response.user_identifier))
 
@@ -45,12 +54,14 @@ function App({ Component, pageProps }: AppProps) {
         <title>Babbo</title>
         <script
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8530046753205274"
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_KEY}`}
           crossOrigin="anonymous"
         ></script>
-          <script src="https://www.google.com/recaptcha/enterprise.js?render=6Lea77gpAAAAAFEWb0e-B2iY6X5VYMSBBwZZtQcS"></script>
+        {/* <script src="https://www.google.com/recaptcha/enterprise.js?render=6Lea77gpAAAAAFEWb0e-B2iY6X5VYMSBBwZZtQcS"></script> */}
 
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA5aHbpVrnwcd0Gr0Z9dq_GK8Mm-3cR1E"></script>
+        <script src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}`}></script>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_KEY}`}></script>
+
       </Head>
       <main className="app">
         <Component {...pageProps} />

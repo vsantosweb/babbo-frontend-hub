@@ -48,11 +48,12 @@ const activeLabelStyles = {
 const variantOutlined = () => ({
   field: {
     _focus: {
-      borderColor: theme.colors.primary,
+      borderColor: '#000 !important',
       // boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px;',
+      outline: 'none',
       boxShadow: 'none',
     },
-    borderRadius: '20px',
+    borderRadius: '30px',
   },
 });
 
@@ -74,9 +75,8 @@ const variantFlushed = () => ({
 });
 
 // Chakra theme extension
-// Chakra theme extension
 const charkaExtendThemeConfig = {
-  fonts:{
+  fonts: {
     sizes: {
       sm: "12px", // Exemplo de tamanho de fonte pequeno
       md: "14px", // Tamanho de fonte médio (padrão)
@@ -103,7 +103,6 @@ const charkaExtendThemeConfig = {
   },
 
   components: {
-    // Steps,
     Alert: {
       baseStyle: {
         container: {
@@ -167,6 +166,22 @@ const charkaExtendThemeConfig = {
         size: 'md',
       },
     },
+    Textarea: {
+      baseStyle: {
+        borderRadius: theme.defaultRadius,
+        _focusVisible: {
+          borderColor: '#000', // Alterado para a cor roxa do tema
+          boxShadow: 'none', // Sombra de foco em roxo claro
+        },
+        _focus: {
+          borderColor: '#000', // Alterado para a cor roxa do tema
+          boxShadow:'none', // Sombra de foco em roxo claro
+        },
+      },
+      defaultProps: {
+        size: 'md',
+      },
+    },
     Select: {
       sizes: {
         lg: {
@@ -186,7 +201,7 @@ const charkaExtendThemeConfig = {
     },
     FormLabel: {
       baseStyle: {
-        margin: 1,
+        margin: 2,
       },
     },
   },
@@ -197,8 +212,8 @@ export const chakraTheme = extendTheme(
     defaultProps: {
       variant: 'outline',
     },
- 
-    components: ['Input', 'NumberInput', 'PinInput', 'Select'],
+
+    components: ['Input', 'NumberInput', 'PinInput', 'Select', 'Textarea'],
   }),
   charkaExtendThemeConfig
 );
@@ -206,7 +221,7 @@ export const chakraTheme = extendTheme(
 export const Theme = ({ children }: any) => {
   return (
     <ChakraProvider theme={chakraTheme}>
-      <ThemeProvider theme={{...theme, ...chakraTheme}}>
+      <ThemeProvider theme={{ ...theme, ...chakraTheme }}>
         <Global styles={GlobalStyles} />
         {children}
       </ThemeProvider>

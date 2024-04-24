@@ -1,9 +1,10 @@
 import { Sharebutton } from "@/components";
 import { useEventShare } from "@/hooks";
 import { EventInterface } from "@/types";
-import { Box, Button } from "@chakra-ui/react";
+import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
+import { Box, Button, IconButton } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { FaShareAlt } from "react-icons/fa";
+import { FaArrowLeft, FaShareAlt } from "react-icons/fa";
 
 export default function EventPoster({ event }: { event: EventInterface }) {
 
@@ -36,6 +37,8 @@ export default function EventPoster({ event }: { event: EventInterface }) {
                     display: 'block',
                 }}
             />
+            <IconButton top={0} variant={'oultine'} transform={'translateX(-60px)'} position={'absolute'} aria-label='back' icon={<FaArrowLeft />
+} />
             <Box
                 position={'absolute'}
                 right={0}

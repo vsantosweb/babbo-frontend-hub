@@ -8,6 +8,7 @@ export * from './Banner';
 export * from './Sharebutton';
 export * from './RelatedEvents';
 export * from './TruncateText';
+export * from './InputPassword';
 export * from './EventFilter';
 export * from './DatePickerDialog';
 export * from './Loader';
@@ -17,5 +18,6 @@ export * from './EventImageUpload';
 export * from './Google';
 export * from './CookiePolicy';
 export * from './OrganizerLeadForm';
+export * from './AvatarImageUpload';
 
 

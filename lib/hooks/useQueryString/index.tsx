@@ -10,16 +10,20 @@ type QueryProps = {
 const QueryStringContext = createContext<any>({});
 
 export function useQueryString() {
-  const { toString, parsed, parseQueryString, query, setQuery, router } =
-    useContext(QueryStringContext);
+  const context = useContext(QueryStringContext);
 
-  return { toString, parsed, parseQueryString, query, setQuery, router };
+  return context;
 }
 
 export function QueryStringProvider({ children }: { children: JSX.Element }) {
   const [parsed, setParsed] = useState<string>();
 
   const [query, setQuery] = useState<Record<string, any>>();
+
+  const clearQueryString = () => {
+    router.replace(router.pathname); 
+  };
+
 
   const router = useRouter();
 
@@ -46,7 +50,7 @@ export function QueryStringProvider({ children }: { children: JSX.Element }) {
   }, [query]);
 
   return (
-    <QueryStringContext.Provider value={{ parsed, query, setQuery, router }}>
+    <QueryStringContext.Provider value={{ parsed, query, setQuery, router, clearQueryString }}>
       {children}
     </QueryStringContext.Provider>
   );

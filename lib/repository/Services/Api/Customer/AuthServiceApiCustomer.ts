@@ -5,11 +5,11 @@ import ApiService from '..';
 import { injectable } from 'inversify';
 
 @injectable()
-export class AuthSerivceApiManager implements AuthRepositoryInterface {
+export class AuthServiceApiCustomer implements AuthRepositoryInterface {
   protected api: AxiosInstance;
 
   constructor() {
-    this.api = ApiService.configure('manager');
+    this.api = ApiService.configure('customer');
   }
 
   /**

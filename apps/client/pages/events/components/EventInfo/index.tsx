@@ -3,8 +3,9 @@ import { theme } from "@/themes/default";
 import { EventInterface } from "@/types";
 import { Box, Flex, Heading, Stack, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import { FaTicketAlt } from "react-icons/fa";
+import { CiRoute } from "react-icons/ci";
 import { HiLocationMarker } from "react-icons/hi";
+import { FaDirections, FaTicketAlt } from "react-icons/fa";
 import { IoCalendar } from "react-icons/io5";
 
 export default function EventInfo({ event }: { event: EventInterface }) {
@@ -41,7 +42,7 @@ export default function EventInfo({ event }: { event: EventInterface }) {
                     href={`https://google.com/maps/dir/${event?.full_address}`}
                   >
                     <Flex gap={1} direction={'column'}>
-                      <Heading size={'md'}>{event?.place_name}</Heading>
+                      <Heading size={'md'}><Flex alignItems={'center'} gap={2}>{event?.place_name}<FaDirections  /></Flex></Heading>
                       <Text>{event?.full_address}</Text>
                     </Flex>
                   </Link>

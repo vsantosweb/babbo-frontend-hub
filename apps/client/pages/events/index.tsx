@@ -11,7 +11,7 @@ import {
   Loader,
   Navigation,
 } from '@/components';
-import { HomeDiscovery } from '@/themes/babbo/templates';
+import { HomeDiscovery } from '@/themes/babbo';
 import { EventInterface } from '@/types';
 import { Box, Flex, Spinner, Stack, Text, useQuery } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
@@ -27,10 +27,13 @@ function Search() {
   const router = useRouter();
 
   useEffect(() => {
-    !_.isEmpty(router.query) &&
+    !_.isEmpty(router.query) ?
       fetchEvents(queryString.stringify(router.query)).then((response: any) =>
         setEvents(response.data)
-      );
+      ) : fetchEvents().then((response: any) =>
+        setEvents(response.data)
+      );;
+
   }, [router.query]);
 
   return (
@@ -42,24 +45,16 @@ function Search() {
       }
       keywords={'guia,baladas,shows,roles,festas,party,bares'}
     >
-      {/* <EventSearch/> */}
-      {/* <Stack spacing={8}> */}
-      {/* <Banner /> */}
-      <Box mt={8} className='app-wrapper'>
-        <img src={'https://placehold.co/1280x120'} /> <hr />
-
-        {/* <GoogleAdSense adClient='ca-pub-8530046753205274' adSlot={'2752189175'} /> */}
-      </Box>
-      <QueryStringProvider >
-        <EventFilter />
-      </QueryStringProvider>
-      {loading ? (
-        <Loader text={'Carregando...'} />
-      ) : (
-        <HomeDiscovery dataDiscovery={events} />
-      )}
-
-      {/* </Stack> */}
+      <Stack spacing={4}>
+        <QueryStringProvider >
+          <EventFilter />
+        </QueryStringProvider>
+        {loading ? (
+          <Loader text={'Carregando...'} />
+        ) : (
+          <HomeDiscovery dataDiscovery={events} />
+        )}
+      </Stack>
     </Layout>
   );
 }

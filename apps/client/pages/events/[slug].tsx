@@ -1,6 +1,6 @@
 import Layout from '@/layouts';
 import { theme } from '@/themes/default';
-import { Box, Flex, Heading, Stack, Text, Button } from '@chakra-ui/react';
+import { Box, Flex, Heading, Stack, Text, Button, Link } from '@chakra-ui/react';
 import { IoCalendar } from 'react-icons/io5';
 import { HiLocationMarker } from 'react-icons/hi';
 import { FaShareAlt } from 'react-icons/fa';
@@ -12,11 +12,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { EventInterface } from '@/types';
 import moment from 'moment';
-import Link from 'next/link';
 import Image from 'next/image';
 import EventPoster from './components/EventPoster';
 import EventInfo from './components/EventInfo';
 import EventDetails from './components/EventDetails';
+import TicketSaleComponent from './ticket';
 
 function EventShow() {
   const { fetchEvent, fetchRelatedEvents, getFormattedDate } = useEvent();
@@ -74,14 +74,18 @@ function EventShow() {
             </Stack>
           </Flex>
         </Flex>
-        <Box m={'auto'} width={'100%'} maxWidth={theme.defaultContainer.width}>
+        <Stack spacing={12} m={'auto'} width={'100%'} maxWidth={theme.defaultContainer.width}>
           <Stack spacing={6}>
             <Heading size={'md'}>Detalhes</Heading>
             {/* <TruncateText text={event.description || ''} limit={50} /> */}
             <Box dangerouslySetInnerHTML={{ __html: event.description as string }}></Box>
+            <TicketSaleComponent />
+            <Box>
+              <strong>Organizador:</strong> <Link href={`/organizer?trackid=${event.organizer.organizer_id}`}>{event.organizer.organizer_name}</Link>
+            </Box>
           </Stack>
           {relatedEvents === null || relatedEvents.length > 0 && <RelatedEvents relatedEvents={relatedEvents} />}
-        </Box>
+        </Stack>
       </Stack>}
     </Layout>
   );

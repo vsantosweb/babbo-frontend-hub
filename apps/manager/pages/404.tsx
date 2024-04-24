@@ -10,14 +10,15 @@ export default function NotFound() {
                 <Heading
                     display="inline-block"
                     as="h2"
-                    size="3xl"
+                    size="4xl"
+                    fontWeight={'900'}
                     background="primary.500"
                     backgroundClip="text">
                     404
                 </Heading>
-                <Text fontSize="18px" mt={3} mb={2}>Página não encontrada
+                <Text fontSize="xl" >Página não encontrada
                 </Text>
-                <Text color={'gray.500'} mb={6}>A página que você está procurando não existe</Text>
+                <Text color={'gray.500'} mb={2}>A página que você está procurando não existe</Text>
 
                 <Box>
                     <Button
@@ -26,7 +27,7 @@ export default function NotFound() {
                         colorScheme="primary"
                         color="white"
                         variant="solid">
-                        Go to Home
+                        Voltar para o início
                     </Button>
                 </Box>
             </Stack>

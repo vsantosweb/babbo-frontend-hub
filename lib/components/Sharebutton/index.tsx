@@ -14,7 +14,6 @@ export function Sharebutton({ info }: { info: ShareButtonType }) {
       // Verifica se o navegador suporta a API Web Share
       if (navigator.share) {
         await navigator.share(info);
-        console.log('Conteúdo compartilhado com sucesso');
       } else {
         throw new Error('API Web Share não suportada');
       }

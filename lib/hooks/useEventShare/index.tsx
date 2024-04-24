@@ -22,7 +22,6 @@ export function useEventShare(): UseEventInterface {
             if (navigator.share) {
                 await navigator.share(info);
                 await eventService.eventInteraction('share', info.id as string);
-                console.log('Conteúdo compartilhado com sucesso');
             } else {
                 throw new Error('API Web Share não suportada');
             }
