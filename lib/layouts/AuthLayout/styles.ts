@@ -15,7 +15,10 @@ export const AuthWrapper = styled.div`
   width: 380px;
   display: flex;
   flex-direction: column;
-  padding: ${({ theme }: any) => theme.defaultContainer.spacing};
+  @media (min-width: 768px){
+    padding: ${({ theme }: any) => theme.defaultContainer.spacing};
+
+  }
   background-color: #fff;
   border-radius: 10px;
 

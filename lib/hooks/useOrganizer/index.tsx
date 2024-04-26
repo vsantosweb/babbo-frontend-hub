@@ -35,7 +35,7 @@ export function OrganizerProvider({ children }: { children: ReactNode }) {
     const router = useRouter();
 
     const checkCustomerIsOrganizer = (isOrganizer: boolean) => {
-
+        
         if (!isOrganizer) {
             disclosure.onOpen()
             return;

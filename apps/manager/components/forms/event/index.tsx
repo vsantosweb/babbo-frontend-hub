@@ -98,7 +98,6 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
 
         const payload = getPayload(formData);
 
-        console.log(formData, 'formData')
         await eventCustomerService.updateEvent(payload, event?.id).then((response: Record<string, any>) => {
             // SessionHelper.redirectWith(`/events/${event?.uuid}/details`, 'eventUpdated');
 
@@ -116,6 +115,7 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
                 onSubmit={!event ? eventForm.handleSubmit(handleCreateEvent) : eventForm.handleSubmit(handleUpdateEvent)}
                 gap={4}
                 width={'100%'}
+                flexDirection={{base: 'column', md: 'row'}}
             >
                 <Stack spacing={4}>
                     <FormControl isInvalid={!!eventForm?.formState?.errors?.event_image}>

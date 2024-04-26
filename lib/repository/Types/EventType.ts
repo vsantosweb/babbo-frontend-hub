@@ -19,6 +19,7 @@ export interface EventInterface  {
     full_address?: string;
     status:string;
     place_name?: string;
+    place_city?: string;
     place_geolocation:string;
     city?: string;
     categories?: string[];

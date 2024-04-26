@@ -69,7 +69,7 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
   const [authorized, setAuthorized] = useState<boolean>(false);
   const [user, setUser] = useState<Record<string, any> | null>(null);
   const [rendering, setRendering] = useState<boolean>(true);
-  const [checkingPermissions, setCheckingPermissions] = useState<boolean>(true);
+  const [checkingPermissions, setCheckingPermissions] = useState<boolean>(false);
   const router = useRouter();
 
   const authService = container.get<AuthRepositoryInterface>('auth-manager');
@@ -100,17 +100,22 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
 
       let user = response?.data?.data;
 
-
       if (user && router.pathname === '/account/login') router.push(`/`)
 
-      if (!user && privatePaths.includes(window.location.pathname)) {
+      const isPrivatePath = privatePaths.some(path => window.location.pathname.startsWith(path));
+
+      if (!user && isPrivatePath) {
         router.push('/account/login');
         setAuthorized(false);
         setUser({})
+        setRendering(false);
 
-      } else { setAuthorized(true); setUser(user) }
+      } else {
+        setAuthorized(true);
+        setUser(user);
+        checkOrganizerPermission(user);
 
-      checkOrganizerPermission(user);
+      }
 
       setRendering(false);
 
@@ -124,7 +129,9 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
 
   }
 
-  const checkOrganizerPermission = async (user: Record<string ,any>) => {
+  const checkOrganizerPermission = async (user: Record<string, any>) => {
+
+    setCheckingPermissions(true);
 
     // Verifica se a rota atual corresponde ao padrão '/events/**/**'
     const isEventRoute = router.pathname.startsWith('/events');
@@ -133,7 +140,8 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
       await router.push('/403').then(() => setCheckingPermissions(false))
     };
 
-    await setCheckingPermissions(false)
+    await setCheckingPermissions(false);
+
   }
 
   /**
@@ -146,8 +154,8 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
       // Chama a função de login do serviço de autenticação
       const response: ApiResponseType | null = await authService.login(credentials);
       // Se a resposta for bem-sucedida e contiver dados do usuário, atualiza o estado do usuário
-      if (response && response.data) {
 
+      if (response?.data?.success) {
         const expiresAt = new Date(response.data.data.expires_in * 1000);
 
         Cookies.set('token', response?.data.data.token, { expires: expiresAt })
@@ -173,9 +181,11 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
   const logout = async (): Promise<ApiResponseType | null> => {
     try {
       // Chama a função de logout do serviço de autenticação
-      await authService.logout();
+      await authService.logout().then(response => {
+        window.location.href = '/account/login'
+      });
       // Limpa o estado do usuário
-      setUser(null);
+
       return null;
     } catch (error) {
       console.error('Erro ao realizar o logout:', error);
@@ -208,8 +218,9 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
 
   }
 
-  if (rendering || checkingPermissions || (!authorized && window.location.pathname !== '/account/login')) return null
+  if (rendering || (!authorized && window.location.pathname !== '/account/login')) return null
 
+  if (checkingPermissions) return null
   return (
     <AuthContext.Provider value={{ authState, loading, login, logout, socialLogin, user }}>
       {children}

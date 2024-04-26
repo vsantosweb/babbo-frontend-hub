@@ -33,7 +33,8 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
       setValue('place.address_number', address[0]?.long_name || '', { shouldValidate: true });
     }
   }, [address, setValue]);
-
+  
+  console.log(hookForm.getValues('place'), 'PLACEEE')
   return (
     <Stack>
       <GoogleAutoComplete captureAddress={setPlace}>
@@ -48,7 +49,7 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
         </FormControl>
       </GoogleAutoComplete>
 
-      { hookForm.getValues('place') && (
+      { hookForm.getValues('place.full_address') && (
         <Stack>
           <FormControl isInvalid={!!errors?.place?.name}>
             <FormLabel>Local</FormLabel>
@@ -64,7 +65,6 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
             <FormLabel>CEP</FormLabel>
             <Input
               {...register('place.zipcode')}
-              disabled={!!hookForm.getValues('place.zipcode')}
               type="text"
             />
             <FormErrorMessage>{errors?.place?.zipcode?.message as string}</FormErrorMessage>

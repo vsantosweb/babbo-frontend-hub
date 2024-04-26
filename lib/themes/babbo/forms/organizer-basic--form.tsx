@@ -48,7 +48,7 @@ export const OrganizerBasicForm = ({ disclosure }: { disclosure?: UseDisclosureP
         mode: 'all'
     });
 
-    const onSubmit: SubmitHandler<FormValues>  = async (data) => {
+    const onSubmit: SubmitHandler<FormValues> = async (data) => {
 
         await customerRegisterService.basicOrganizerRegister(data).then(response => {
             toast({
@@ -71,11 +71,10 @@ export const OrganizerBasicForm = ({ disclosure }: { disclosure?: UseDisclosureP
 
     return (
         <Stack spacing={4}>
-            <Heading size={'lg'}>Configurar perfil de organizador</Heading>
+            <Heading size={'lg'}>Configure seu perfil de organizador</Heading>
             <Text>
-                Vamos configurar sua página de organizador. Para prosseguir,
-                é necessário ativar seu perfil de organizador.
-                Preencha as informações básicas para começar a criar seus eventos.
+                É necessário configurar sua página de organizador. Preencha as informações
+                básicas para começar a criar seus eventos.
             </Text>
             <Stack as={'form'} onSubmit={handleSubmit(onSubmit)}>
                 <FormControl isRequired isInvalid={!!errors.organizer_name}>

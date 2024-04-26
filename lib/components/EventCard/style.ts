@@ -31,8 +31,8 @@ export const CardEvent = styled.div`
   }
 `;
 export const CardEventImageContainer = styled.div`
-  max-height: 380px;
-  height: 400px;
+  max-height: 430px;
+  height: 430px;
   overflow: hidden;
   position: relative;
 `;

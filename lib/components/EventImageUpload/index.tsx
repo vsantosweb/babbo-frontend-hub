@@ -61,7 +61,7 @@ export function EventImageUpload({ hookForm }: { hookForm: UseFormReturn<any> })
 
     return (
         <Card boxShadow={'none'}>
-            <CardBody>
+            <CardBody p={0}>
                 <Flex>
                     <Styled.StyledDropZone reject={isDragReject.toString()} {...getRootProps()}>
 

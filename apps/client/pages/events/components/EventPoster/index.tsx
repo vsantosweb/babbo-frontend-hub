@@ -37,8 +37,15 @@ export default function EventPoster({ event }: { event: EventInterface }) {
                     display: 'block',
                 }}
             />
-            <IconButton top={0} variant={'oultine'} transform={'translateX(-60px)'} position={'absolute'} aria-label='back' icon={<FaArrowLeft />
-} />
+            <IconButton
+                top={0}
+                onClick={router.back}
+                variant={'oultine'}
+                transform={'translateX(-60px)'}
+                position={'absolute'}
+                aria-label='back'
+                icon={<FaArrowLeft />}
+            />
             <Box
                 position={'absolute'}
                 right={0}
@@ -48,6 +55,7 @@ export default function EventPoster({ event }: { event: EventInterface }) {
             >
                 <Button rightIcon={<FaShareAlt />}
                     onClick={() => handleShareClick({
+                        id: event?.uuid,
                         title: event?.name,
                         text: event?.description,
                         url: router.asPath,

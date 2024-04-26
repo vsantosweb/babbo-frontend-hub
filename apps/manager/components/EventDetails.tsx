@@ -22,8 +22,8 @@ const EventDetails = ({ event, handleDelete }: { event?: EventInterface, handleD
   const cancelRef = useRef<any>()
 
   return (
-    event ? <HStack>
-      <Stack spacing={3}>
+    event ? <Stack>
+      <Stack spacing={3} flex={1} height={'100%'}>
         <Heading size={'lg'} >{event?.name}</Heading>
         <HStack spacing={6}>
           <Text>
@@ -58,16 +58,16 @@ const EventDetails = ({ event, handleDelete }: { event?: EventInterface, handleD
             <AlertDialogBody>Essa ação será irreversível, tem certeza?</AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} variant={'outline'} onClick={onClose}>Cancel</Button>
+              <Button ref={cancelRef} variant={'outline'} onClick={onClose}>Cancelar</Button>
               <Button colorScheme='red' onClick={() => {
                 event.id && handleDelete(event.id);
                 setIsdeleting(true);
-              }} isLoading={isDeleting} ml={3}>Delete</Button>
+              }} isLoading={isDeleting} ml={3}>Sim, excluir</Button>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
-    </HStack> : <Spinner />
+    </Stack> : <Spinner />
   );
 };
 

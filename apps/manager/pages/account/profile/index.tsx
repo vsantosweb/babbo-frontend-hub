@@ -29,7 +29,7 @@ export default function Profile() {
                 </Stack>
                 <Divider />
 
-                <Stack>
+                {/* <Stack>
                     <Heading fontWeight={'300'} color={'primary.500'}>Dados da conta</Heading>
                     <Tabs>
                         <TabList>
@@ -50,7 +50,7 @@ export default function Profile() {
                             </TabPanel>
                         </TabPanels>
                     </Tabs>
-                </Stack>
+                </Stack> */}
             </Stack>
         </Layout>
     )

@@ -3,7 +3,7 @@ import { EventProvider, useEvent } from '@/hooks';
 import { Suspense, useEffect, useState } from 'react';
 import { Container } from 'react-grid-system';
 import { HomeDiscovery } from '@/themes/babbo';
-import { EventInterface } from '@/types';
+import { EventInterface, OrganizerType } from '@/types';
 import {
   Box, Button,
   Drawer,
@@ -16,6 +16,12 @@ import {
 } from '@chakra-ui/react';
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import { OrganizerLeadForm } from '@/components';
+import container from '@/container';
+import { PublicOrganizerRepositoryInterface } from '@/interfaces';
+import { AxiosResponse } from 'axios';
+import Link from 'next/link';
+
+const publicOrganizerContainer = container.get<PublicOrganizerRepositoryInterface>('public-organizer');
 
 
 type GeoLocation = {
@@ -30,6 +36,9 @@ export function Home() {
   const [limit, setLimit] = useState(8); // Número de eventos a serem buscados por requisição
   const [skip, setSkip] = useState(0); // Número de eventos a serem ignorados (para paginação)
   const [total, setTotal] = useState(0);
+
+  const [organizerShowcase, setOrganizerShowcase] = useState<OrganizerType[] | null>();
+
   const useDisclosureorganizerLeadForm = useDisclosure();
 
   useEffect(() => {
@@ -39,6 +48,14 @@ export function Home() {
     });
   }, [skip]);
 
+  useEffect(() => {
+
+    publicOrganizerContainer.organizerShowcase().then((response: AxiosResponse) => {
+
+      setOrganizerShowcase(response.data.data)
+    })
+
+  }, [])
   const loadMore = () => {
     if (events) setSkip(events.length);
   };
@@ -49,6 +66,8 @@ export function Home() {
    *
    * Note: The corresponding styles are in the ./index.none file.
    */
+
+  console.log(organizerShowcase, 'organizerShowcaseorganizerShowcase')
   return (
     <Layout
       title={'Babbo - Encontre bares, baladas, shows e muito mais aqui.'}
@@ -78,17 +97,20 @@ export function Home() {
                 O Babbo é a plataforma perfeita para divulgar e promover seu evento. Comece agora e alcance mais pessoas!
               </Text>
               <Box>
-                <Button size={{ base: 'md', md: 'lg' }} onClick={useDisclosureorganizerLeadForm.onOpen} colorScheme='green'>Comece agora - É grátis</Button>
+                <Button id="start" size={{ base: 'md', md: 'lg' }} onClick={useDisclosureorganizerLeadForm.onOpen} colorScheme='green'>Comece agora - É grátis</Button>
               </Box>
               <Stack>
                 <AvatarGroup size='md' max={5}>
-                  <Avatar name='Ryan Florence' src='https://yt3.googleusercontent.com/ytc/AIdro_nfvheXiqZBRe-oq_6pkqbpQYuycBqMqQn5MMTD=s900-c-k-c0x00ffffff-no-rj' />
-                  <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
-                  <Avatar name='Kent Dodds' src='https://bit.ly/kent-c-dodds' />
-                  <Avatar name='Prosper Otemuyiwa' src='https://bit.ly/prosper-baba' />
-                  <Avatar name='Christian Nwamba' src='https://bit.ly/code-beast' />
-                  <Avatar name='Christian Nwamba' src='https://bit.ly/code-beast' />
-                  <Avatar name='Christian Nwamba' src='https://bit.ly/code-beast' />
+                  {organizerShowcase && organizerShowcase.map(organizer =>
+                    <Avatar
+                      as={Link}
+                      href={`/organizer?trackid=${organizer.uuid}`}
+                      target='_blank'
+                      name={organizer.organizer_name}
+                      src={organizer.organizer_avatar}
+                    />
+                  )}
+
                 </AvatarGroup>
                 <Text fontSize={'sm'}>Junte-se a comunidade de organizadores</Text>
               </Stack>
@@ -98,7 +120,6 @@ export function Home() {
         </Stack>
       </Stack>
       <OrganizerLeadForm useDisclosure={useDisclosureorganizerLeadForm} />
-
 
     </Layout>
   );

@@ -25,7 +25,10 @@ import { IoMdExit } from "react-icons/io";
 import { IoLogOutOutline, IoPersonOutline, IoTicketOutline } from "react-icons/io5";
 import { useAuth, useOrganizer } from '@/hooks'
 import { useRouter } from 'next/router'
+import container from '@/container'
+import { AuthRepositoryInterface } from '@/interfaces'
 
+const customerAuthContainer = container.get<AuthRepositoryInterface>('auth-manager');
 interface Props {
   children: React.ReactNode
 }
@@ -53,11 +56,11 @@ const NavLink = (props: Props) => {
 export function ManagerNavigation() {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const { checkCustomerIsOrganizer } = useOrganizer();
 
   return (
-    <Box mb={8} color={'#fff'} bg={'#000'}>
+    <Box mb={8} color={'#fff'} borderBottom={'solid 1px #f1f1f1'}>
       <Box px={3}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
@@ -80,7 +83,7 @@ export function ManagerNavigation() {
               as={Link}
               onClick={(e) => {
                 e.preventDefault()
-                user?.is_organizer && checkCustomerIsOrganizer(user.is_organizer)
+                checkCustomerIsOrganizer(user?.is_organizer)
               }}
               href={'/events/create'}
               size={'sm'}
@@ -103,7 +106,7 @@ export function ManagerNavigation() {
                 <MenuItem as={Link} href={'/account/profile'} icon={<IoPersonOutline />}>Minha conta</MenuItem>
                 {/* <MenuItem icon={<IoTicketOutline />}>Meus ingressos</MenuItem> */}
                 <MenuDivider m={0} />
-                <MenuItem icon={<IoLogOutOutline />}>Sair</MenuItem>
+                <MenuItem onClick={logout} icon={<IoLogOutOutline />}>Sair</MenuItem>
               </MenuList>
             </Menu>
           </Flex>

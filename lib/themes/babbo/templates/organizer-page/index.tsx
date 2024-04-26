@@ -33,7 +33,7 @@ export function OrganizerPage({ events, organizerProfile }: { events?: EventInte
                                 icon={<FaEnvelope />}
                             />
                         </Flex>
-                        <Text>@MA,400 seguidores • {eventCountText}</Text>
+                        <Text>{eventCountText}</Text>
                         <Text as={Link} target={'_parent'} href={organizerProfile.organizer_instagram}>{organizerProfile.organizer_instagram}</Text>
                         {/* <Box><Button>Seguir +</Button></Box> */}
                     </Stack>

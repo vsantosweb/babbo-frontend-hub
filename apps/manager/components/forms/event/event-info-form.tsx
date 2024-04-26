@@ -59,13 +59,14 @@ export default function EventInfoForm({ hookForm }: { hookForm: UseFormReturn<an
                             placeholder='Escolha algumas categorias'
                             isMulti
                             options={categories}
-                        />
+                            isOptionDisabled={() => hookForm.getValues('categories') &&  hookForm.getValues('categories').length >= 3}
+                            />
                     )}
                 />
                 <FormErrorMessage>{errors?.categories?.message as string}</FormErrorMessage>
             </FormControl>
 
-            <HStack spacing={6}>
+            <Stack flexDirection={{base: 'column', md: 'row'}} spacing={6}>
                 <FormControl isInvalid={!!errors?.start_date}>
                     <FormLabel>Data de inicio</FormLabel>
                     <Input {...register('start_date')} min={moment().format('YYYY-MM-DD 00:00:00')} type={'datetime-local'} />
@@ -73,10 +74,10 @@ export default function EventInfoForm({ hookForm }: { hookForm: UseFormReturn<an
                 </FormControl>
                 <FormControl isInvalid={!!errors?.end_date}>
                     <FormLabel>Data de término</FormLabel>
-                    <Input {...register('end_date')} type={'datetime-local'} />
+                    <Input {...register('end_date')} min={moment(hookForm.watch('start_date')).format('YYYY-MM-DD 00:00:00')} type={'datetime-local'} />
                     <FormErrorMessage>{errors?.end_date?.message as string}</FormErrorMessage>
                 </FormControl>
-            </HStack>
+            </Stack>
 
             <FormControl>
                 <FormLabel>Descrição</FormLabel>

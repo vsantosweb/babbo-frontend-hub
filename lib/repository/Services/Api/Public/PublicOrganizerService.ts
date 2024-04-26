@@ -1,4 +1,8 @@
-import { EventRepositoryInterface, PublicOrganizerRepositoryInterface, PublicRepositoryInterface } from '@/interfaces';
+import {
+  EventRepositoryInterface,
+  PublicOrganizerRepositoryInterface,
+  PublicRepositoryInterface,
+} from '@/interfaces';
 import { EventBanner, EventDisplayType, EventInterface } from '@/types';
 import { AxiosInstance } from 'axios';
 import ApiService from '..';
@@ -24,7 +28,7 @@ export class PublicOrganizerService implements PublicOrganizerRepositoryInterfac
    * @returns {Promise<any>}.
    */
   async organizerProfile(id: number | string): Promise<any> {
-    return await this.api.get<any>(`/organizer/${id}`);
+    return await this.api.get<any>(`/organizers/${id}`);
   }
 
   /**
@@ -34,7 +38,9 @@ export class PublicOrganizerService implements PublicOrganizerRepositoryInterfac
    */
   async organizerEvents(id?: number | string, params?: Record<string, string>): Promise<any> {
     try {
-      const response = await this.api.get<any>(`/organizer/${id}/events?${new URLSearchParams(params)}`);
+      const response = await this.api.get<any>(
+        `/organizers/${id}/events?${new URLSearchParams(params)}`,
+      );
       return response.data;
     } catch (error) {
       console.error('Request error:', error);
@@ -42,4 +48,11 @@ export class PublicOrganizerService implements PublicOrganizerRepositoryInterfac
     }
   }
 
+  /**
+   * Retorna a vitrine de orgaizadores.
+   * @returns {Promise<any>}.
+   */
+  async organizerShowcase(): Promise<any> {
+    return await this.api.get<any>(`/organizers/showcase`);
+  }
 }

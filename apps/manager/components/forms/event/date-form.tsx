@@ -1,8 +1,8 @@
-import { FormControl, FormLabel, HStack, Input } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Stack } from "@chakra-ui/react";
 
 export default function DateForm() {
     return (
-        <HStack>
+        <Stack flexDirection={{ base: 'row', md: 'column'}}>
             <FormControl>
                 <FormLabel>Data de inicio</FormLabel>
                 <Input type={'datetime-local'} />
@@ -11,6 +11,6 @@ export default function DateForm() {
                 <FormLabel>Data de término</FormLabel>
                 <Input type={'datetime-local'} />
             </FormControl>
-        </HStack>
+        </Stack>
     )
 }

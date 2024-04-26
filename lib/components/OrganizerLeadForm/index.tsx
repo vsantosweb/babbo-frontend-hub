@@ -36,10 +36,9 @@ export function OrganizerLeadForm({ useDisclosure }: { useDisclosure: UseDisclos
     const finalRef = useRef(null);
     // console.log(v.replace(/[^\d]/g, ''))
 
-    const handleSubmitLead = (formData: Record<string, any>) => {
-        console.log(formData)
+    const handleSubmitLead = async (formData: Record<string, any>) => {
 
-        publicService.createLead(formData).then(response => {
+        await publicService.createLead(formData).then(response => {
             console.log(response)
         })
     }
@@ -64,7 +63,7 @@ export function OrganizerLeadForm({ useDisclosure }: { useDisclosure: UseDisclos
                             <ModalBody pb={6}>
                                 <Stack spacing={4}>
                                     <FormControl>
-                                        <FormLabel>Nome da produtora</FormLabel>
+                                        <FormLabel>Seu nome ou produtora</FormLabel>
                                         <Input {...register('name', { required: true })} placeholder='Ex: John Eventos, Jonh Doe' />
                                     </FormControl>
 
@@ -108,7 +107,7 @@ export function OrganizerLeadForm({ useDisclosure }: { useDisclosure: UseDisclos
                                 dos primeiros a promover seus eventos no Babbo.
                             </Text>
                             <ModalFooter>
-                                <Button type='submit' isLoading={formState.isSubmitted} isDisabled={!formState.isValid} colorScheme='blue'>Concluir cadastro</Button>
+                                <Button type='submit' isLoading={formState.isSubmitting} isDisabled={!formState.isValid} colorScheme='blue'>Concluir cadastro</Button>
                             </ModalFooter>
                         </form>
                     </> : <ModalBody>

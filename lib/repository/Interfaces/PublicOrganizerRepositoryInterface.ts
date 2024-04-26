@@ -13,4 +13,10 @@ export interface PublicOrganizerRepositoryInterface {
    * @returns {Promise<any>}
    */
     organizerEvents(id?: number | string, params?: Record<string, string>): Promise<any>
+
+    /**
+  * Retorna a vitrine de orgaizadores.
+  * @returns {Promise<any>}.
+  */
+    organizerShowcase(): Promise<any>
 }

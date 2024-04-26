@@ -1,0 +1,13 @@
+  RewriteEngine On
+    RewriteBase /
+
+    # Verifica se o arquivo requisitado existe como um arquivo ou diretório
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Tenta encontrar o arquivo sem a extensão .html e com uma barra no final
+    RewriteRule ^([^\.]+)$ $1.html [NC,L]
+    RewriteRule ^(.*[^/])$ /$1/ [L,R=301]
+
+    # Se não encontrar, redireciona para o index.html
+    RewriteRule . /index.html [L]

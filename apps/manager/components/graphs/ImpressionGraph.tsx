@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import moment from "moment";
 
 
-export default function ImpressionGraph({ data }: { data?: Record<string, string | number | undefined> }) {
+export default function InteractionGraph({ data, interaction }: { data?: Record<string, string | number | undefined>, interaction: string }) {
 
     const [options, setOptions] = useState<Record<string, any>>();
 
@@ -12,7 +12,6 @@ export default function ImpressionGraph({ data }: { data?: Record<string, string
 
         if (data) {
 
-            console.log(Object.keys(data).map(x => moment(x).format('ll')),  Object.values(data))
             const option = {
                 
                 tooltip: {
@@ -40,7 +39,7 @@ export default function ImpressionGraph({ data }: { data?: Record<string, string
                 },
                 series: [
                     {
-                        name: "Impressões",
+                        name: interaction,
                         barGap: 1,
 
                         data: Object.values(data),
@@ -61,7 +60,7 @@ export default function ImpressionGraph({ data }: { data?: Record<string, string
 
     }, [data])
 
-
+    if(data === null) return `Sem resultados de ${interaction} no momento`
     return (
         <div style={{ height: '400px' }}>
             {options && <ReactEcharts style={{ width: '100%', height: '100%' }} theme={graphTheme} option={options} />}
