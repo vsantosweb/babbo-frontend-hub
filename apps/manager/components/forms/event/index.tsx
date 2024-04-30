@@ -115,7 +115,7 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
                 onSubmit={!event ? eventForm.handleSubmit(handleCreateEvent) : eventForm.handleSubmit(handleUpdateEvent)}
                 gap={4}
                 width={'100%'}
-                flexDirection={{base: 'column', md: 'row'}}
+                flexDirection={{ base: 'column', md: 'row' }}
             >
                 <Stack spacing={4}>
                     <FormControl isInvalid={!!eventForm?.formState?.errors?.event_image}>
@@ -136,8 +136,9 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
                         <Heading size={'lg'}>Informações do evento</Heading>
                         <EventInfoForm hookForm={eventForm} />
                     </Stack>
-
+                    <Divider />
                     <Stack>
+                        <Heading size={'lg'}>Ingressos</Heading>
                         <TicketForm />
                     </Stack>
                     <HStack justifyContent={'flex-end'}>

@@ -1,6 +1,6 @@
 import { EventInterface } from '@/types';
 import {
-  Button, Flex,  HStack, Heading, Stack, Text,
+  Button, Flex, HStack, Heading, Stack, Text,
   AlertDialog,
   AlertDialogBody,
   AlertDialogFooter,
@@ -8,12 +8,14 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   useDisclosure,
-  Spinner
+  Spinner,
+  Box
 } from '@chakra-ui/react';
-import { HiLocationMarker, HiCalendar } from "react-icons/hi";
+import { HiLocationMarker, HiCalendar, HiTicket } from "react-icons/hi";
 import { eventDateFormatter } from '@/helpers';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
+import { IoTicket } from 'react-icons/io5';
 
 const EventDetails = ({ event, handleDelete }: { event?: EventInterface, handleDelete: (id: number) => any }) => {
 
@@ -35,7 +37,14 @@ const EventDetails = ({ event, handleDelete }: { event?: EventInterface, handleD
         <HStack>
           <HiLocationMarker /> <span>{event?.full_address}</span>
         </HStack>
-
+        <Box>
+          <Button 
+          leftIcon={<IoTicket />} 
+          as={Link}
+          href={`/events/${event.uuid}/tickets`}
+          colorScheme='red' 
+          size={'sm'}>Venda de ingressos</Button>
+        </Box>
       </Stack>
       <Flex justifyContent={'flex-end'} flex={1}>
         <HStack spacing={3}>

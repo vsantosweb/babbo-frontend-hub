@@ -1,5 +1,6 @@
 import { ExternalLinkIcon } from "@chakra-ui/icons";
-import { Checkbox, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftElement, Stack } from "@chakra-ui/react";
+import { Checkbox, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftElement, Radio, RadioGroup, Stack } from "@chakra-ui/react";
+import Ticket from "apps/manager/pages/events/ticket";
 import { useFormContext } from "react-hook-form";
 import { FaTicketSimple } from "react-icons/fa6";
 
@@ -8,7 +9,10 @@ export default function TicketForm() {
 
     return (
         <Stack>
-            <Checkbox {...register('has_external_ticket')} isChecked={watch('has_external_ticket')} colorScheme='primary'>O evento será realizado com uso de ingressos?</Checkbox>
+            <Checkbox {...register('tickets_for_sale')} isChecked={watch('tickets_for_sale')} colorScheme='primary'>Vender ingressos no Babbo</Checkbox>
+            {watch('tickets_for_sale') && <Ticket />}
+
+            <Checkbox {...register('has_external_ticket')} isChecked={watch('has_external_ticket')} colorScheme='primary'>Vendas de ingressos com site parceiro</Checkbox>
             {
                 watch('has_external_ticket') && <Stack spacing={4}>
 
@@ -33,6 +37,8 @@ export default function TicketForm() {
                     </FormControl>
                 </Stack>
             }
+
+
         </Stack>
     )
 }

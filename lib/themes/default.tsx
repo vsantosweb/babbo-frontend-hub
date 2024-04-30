@@ -1,10 +1,6 @@
 import React from 'react';
 import { Global, ThemeProvider } from '@emotion/react';
-import {
-  extendTheme,
-  withDefaultProps,
-  ChakraProvider,
-} from '@chakra-ui/react';
+import { extendTheme, withDefaultProps, ChakraProvider } from '@chakra-ui/react';
 import GlobalStyles, { ViewPort } from './GlobalStyles';
 
 export type ThemeProps = {
@@ -78,9 +74,9 @@ const variantFlushed = () => ({
 const charkaExtendThemeConfig = {
   fonts: {
     sizes: {
-      sm: "12px", // Exemplo de tamanho de fonte pequeno
-      md: "14px", // Tamanho de fonte médio (padrão)
-      lg: "20px", // Exemplo de tamanho de fonte grande
+      sm: '12px', // Exemplo de tamanho de fonte pequeno
+      md: '14px', // Tamanho de fonte médio (padrão)
+      lg: '20px', // Exemplo de tamanho de fonte grande
     },
   },
   config: {
@@ -103,6 +99,13 @@ const charkaExtendThemeConfig = {
   },
 
   components: {
+    Modal: {
+      baseStyle: {
+        container: {
+          borderRadius: "3xl",
+        },
+      },
+    },
     Alert: {
       baseStyle: {
         container: {
@@ -175,7 +178,7 @@ const charkaExtendThemeConfig = {
         },
         _focus: {
           borderColor: '#000', // Alterado para a cor roxa do tema
-          boxShadow:'none', // Sombra de foco em roxo claro
+          boxShadow: 'none', // Sombra de foco em roxo claro
         },
       },
       defaultProps: {
@@ -213,9 +216,9 @@ export const chakraTheme = extendTheme(
       variant: 'outline',
     },
 
-    components: ['Input', 'NumberInput', 'PinInput', 'Select', 'Textarea'],
+    components: ['Input', 'NumberInput', 'PinInput', 'Select', 'Textarea', 'Modal', 'ModalContent'],
   }),
-  charkaExtendThemeConfig
+  charkaExtendThemeConfig,
 );
 
 export const Theme = ({ children }: any) => {

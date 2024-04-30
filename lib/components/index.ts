@@ -19,5 +19,8 @@ export * from './Google';
 export * from './CookiePolicy';
 export * from './OrganizerLeadForm';
 export * from './AvatarImageUpload';
+export * from './DateLabel';
+export * from './DateLabelButton';
+
 
 

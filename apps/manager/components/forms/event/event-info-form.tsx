@@ -10,6 +10,7 @@ import {
     FormErrorMessage,
     HStack,
     Checkbox,
+    Button,
 } from '@chakra-ui/react'
 
 import 'react-quill/dist/quill.snow.css';
@@ -19,6 +20,9 @@ import { Controller, UseFormReturn } from 'react-hook-form';
 import moment from 'moment';
 import { useEvent } from '@/hooks';
 import TicketForm from './ticket-form';
+import { FaTicketAlt } from 'react-icons/fa';
+import { IoTicket } from 'react-icons/io5';
+import Ticket from 'apps/manager/pages/events/ticket';
 
 export default function EventInfoForm({ hookForm }: { hookForm: UseFormReturn<any> }) {
 
@@ -59,14 +63,14 @@ export default function EventInfoForm({ hookForm }: { hookForm: UseFormReturn<an
                             placeholder='Escolha algumas categorias'
                             isMulti
                             options={categories}
-                            isOptionDisabled={() => hookForm.getValues('categories') &&  hookForm.getValues('categories').length >= 3}
-                            />
+                            isOptionDisabled={() => hookForm.getValues('categories') && hookForm.getValues('categories').length >= 3}
+                        />
                     )}
                 />
                 <FormErrorMessage>{errors?.categories?.message as string}</FormErrorMessage>
             </FormControl>
 
-            <Stack flexDirection={{base: 'column', md: 'row'}} spacing={6}>
+            <Stack flexDirection={{ base: 'column', md: 'row' }} spacing={6}>
                 <FormControl isInvalid={!!errors?.start_date}>
                     <FormLabel>Data de inicio</FormLabel>
                     <Input {...register('start_date')} min={moment().format('YYYY-MM-DD 00:00:00')} type={'datetime-local'} />
@@ -78,14 +82,14 @@ export default function EventInfoForm({ hookForm }: { hookForm: UseFormReturn<an
                     <FormErrorMessage>{errors?.end_date?.message as string}</FormErrorMessage>
                 </FormControl>
             </Stack>
-
+f 
             <FormControl>
                 <FormLabel>Descrição</FormLabel>
                 <Controller
                     name='description'
                     control={control}
                     render={({ field }) => (
-                        <ReactQuill {...field} theme="snow" value={field.value} onChange={(value:any) => field.onChange(value)} />
+                        <ReactQuill {...field} theme="snow" value={field.value} onChange={(value: any) => field.onChange(value)} />
                     )}
                 />
                 <FormErrorMessage>{errors?.categories?.message as string}</FormErrorMessage>
