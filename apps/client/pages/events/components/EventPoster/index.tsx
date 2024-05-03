@@ -24,7 +24,9 @@ export default function EventPoster({ event }: { event: EventInterface }) {
                     base: 'none',
                     md: 'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px',
                 }}
-                src={`${event?.event_image}-lg.jpg`}
+                
+                src={`https://event-kraken.s3.amazonaws.com/event/posters/71344/large.jpg`}
+                // src={`${event?.event_image}-lg.jpg`}
                 // srcSet={`${event?.event_image}-lg.jpg 1600w,${event?.event_image}-md.jpg 800w,${event?.event_image}-xs.jpg 400w`}
                 // sizes="(max-width: 767px) 95vw, (max-width: 991px) 90vw, 50vw"
                 className="event-banner-img"
@@ -53,7 +55,7 @@ export default function EventPoster({ event }: { event: EventInterface }) {
                 mt={-15}
                 left={0}
             >
-                <Button rightIcon={<FaShareAlt />}
+                <Button boxShadow={'xl'} rightIcon={<FaShareAlt />}
                     onClick={() => handleShareClick({
                         id: event?.uuid,
                         title: event?.name,
