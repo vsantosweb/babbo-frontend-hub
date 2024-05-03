@@ -35,7 +35,7 @@ function EventShow() {
       });
     }
   }, [router]);
-
+  
   return (
     <Layout
       title={event?.name}

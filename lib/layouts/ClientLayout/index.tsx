@@ -33,7 +33,6 @@ export default function ClientLayout({
     }
   }, []);
 
-
   return (
 
     <div
@@ -48,11 +47,13 @@ export default function ClientLayout({
       <Head>
         <meta name="description" content={description?.substring(0, 50) + "..."} />
         <title>{title}</title>
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description?.substring(0, 50) + "..." } />
-        <meta property="og:image" content={image} />
+        <meta property="og:title" />
+        <meta property="og:description" content={"Plataforma de ingressos"} />
+        <meta property="og:image" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:secure_url"/>
         <meta property="og:url" content={urlAtual} />
-        <meta property="og:site_name" content={'Babbo'} />
+        <meta property="og:site_name" content={'babbo.social'} />
         <meta property="og:type" content="website" />
       </Head>
       {/* <Header /> */}

@@ -67,7 +67,6 @@ export function Home() {
    * Note: The corresponding styles are in the ./index.none file.
    */
 
-  console.log(organizerShowcase, 'organizerShowcaseorganizerShowcase')
   return (
     <Layout
       title={'Babbo - Encontre bares, baladas, shows e muito mais aqui.'}
