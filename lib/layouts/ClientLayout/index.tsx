@@ -9,19 +9,15 @@ import { useRouter } from 'next/router';
 import { Flex } from '@chakra-ui/react';
 import { usePathname } from 'next/navigation'
 
-export default function ClientLayout({
-  children,
-  title,
-  description,
-  image,
-  keywords,
-}: {
+type LayoutProps = {
   children?: JSX.Element[] | JSX.Element;
   title?: string;
   description?: string;
   image?: string;
   keywords?: string;
-}) {
+
+}
+export default function ClientLayout({ ...rest }: LayoutProps) {
   const router = useRouter();
 
   const [urlAtual, setUrlAtual] = useState('');
@@ -44,18 +40,18 @@ export default function ClientLayout({
         minHeight: '100%',
       }}
     >
-      <Head>
-        <meta name="description" content={description?.substring(0, 50) + "..."} />
-        <title>{title}</title>
-        <meta property="og:title" />
-        <meta property="og:description" content={"Plataforma de ingressos"} />
-        <meta property="og:image" />
-        <meta property="og:image:type" content="image/jpeg" />
-        <meta property="og:image:secure_url"/>
-        <meta property="og:url" content={urlAtual} />
-        <meta property="og:site_name" content={'babbo.social'} />
-        <meta property="og:type" content="website" />
-      </Head>
+      {
+        rest && <Head>
+          <title>{rest.title}</title>
+          <meta property="og:title" content={rest.title} />
+          <meta property="og:description" content={rest.description?.substring(0, 50) + "..."} />
+          <meta property="og:image" content={rest.image}/>
+          <meta property="og:url" content={urlAtual} />
+          <meta property="og:site_name" content={'babbo.social'} />
+          <meta property="og:type" content="website" />
+        </Head>
+      }
+
       {/* <Header /> */}
       <Navigation />
       <div
@@ -70,7 +66,7 @@ export default function ClientLayout({
           padding: '0 1em',
         }}
       >
-        {children}
+        {rest.children}
       </div>
       <Footer />
     </div>
