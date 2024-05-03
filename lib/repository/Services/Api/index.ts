@@ -15,8 +15,16 @@ export default class ApiService {
       baseURL: `${this.baseURL}/${serviceContainer}`,
     });
 
-    api.interceptors.request.use(function (config) {
-      const userIdentifier = localStorage.getItem('user_identifier');
+    api.interceptors.request.use(async  function (config) {
+      // Acessando localStorage de forma assíncrona
+      const userIdentifier = await new Promise<string | null>((resolve) => {
+        try {
+          const userIdentifier = localStorage.getItem('user_identifier');
+          resolve(userIdentifier);
+        } catch (error) {
+          resolve(null);
+        }
+      });
 
       if (Cookie.get('token')) {
         config.headers.Authorization = `Bearer ${Cookie.get('token')}`;

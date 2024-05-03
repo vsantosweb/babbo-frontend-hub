@@ -17,25 +17,44 @@ import EventPoster from './components/EventPoster';
 import EventInfo from './components/EventInfo';
 import EventDetails from './components/EventDetails';
 import TicketSaleComponent from './ticket';
+import container from '@/container';
+import { EventRepositoryInterface } from '@/interfaces';
+import { GetServerSidePropsContext } from 'next';
 
-function EventShow() {
+const eventService = container.get<EventRepositoryInterface>('public');
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+
+  const { query } = context; // Obtém os parâmetros da rota
+
+  const id: string = query?.id as string
+
+  const rest = await eventService.event(id);
+
+  return { props: { rest } };
+
+}
+
+function EventShow({ eventData }: any) {
+
+
   const { fetchEvent, fetchRelatedEvents, getFormattedDate } = useEvent();
   const router = useRouter();
-  const [event, setEvent] = useState<EventInterface | null>(null);
+  const [event, setEvent] = useState<EventInterface | null>(eventData.data);
   const [relatedEvents, setRelatedEvents] = useState<EventInterface[] | null>(null);
 
-  useEffect(() => {
-    const id = router.query.id;
-    if (id) {
-      fetchEvent(id as string).then((response: any) => {
-        setEvent(response.data);
-        fetchRelatedEvents(response.data?.id).then((response: any) =>
-          setRelatedEvents(response.data)
-        );
-      });
-    }
-  }, [router]);
-  
+  // useEffect(() => {
+  //   const id = router.query.id;
+  //   if (id) {
+  //     fetchEvent(id as string).then((response: any) => {
+  //       setEvent(response.data);
+  //       fetchRelatedEvents(response.data?.id).then((response: any) =>
+  //         setRelatedEvents(response.data)
+  //       );
+  //     });
+  //   }
+  // }, [router]);
+
   return (
     <Layout
       title={event?.name}
@@ -91,10 +110,10 @@ function EventShow() {
   );
 }
 
-export default function Event() {
+export default function Event({ rest }: any) {
   return (
     <EventProvider>
-      <EventShow />
+      <EventShow eventData={rest} />
     </EventProvider>
   );
 }
