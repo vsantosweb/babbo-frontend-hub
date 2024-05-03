@@ -82,6 +82,9 @@ export function Home() {
           {/* <GoogleAdSense adClient='ca-pub-8530046753205274' adSlot={'2752189175'}/> */}
 
         </Box>
+        <div className='app-wrapper'>
+        <Heading size={'lg'}>Os melhores eventos da sua região em um só lugar</Heading>
+        </div>
         <HomeDiscovery dataDiscovery={events} />
         {total !== events?.length &&
           <Box textAlign={'center'}>

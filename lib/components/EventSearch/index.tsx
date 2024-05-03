@@ -121,7 +121,7 @@ export const EventSearch = () => {
               // onClick={() => openDisplayResult(true)}
               onChange={handleSearchDiscovery}
               pr={12}
-              placeholder="Qual a boa pae?"
+              placeholder="Pesquise seu evento..."
               value={query}
             />
             <Flex

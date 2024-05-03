@@ -3,7 +3,7 @@ import { HTMLAttributes } from 'react';
 
 interface ResultMessageType extends HTMLAttributes<HTMLDivElement> {
   title: string;
-  description: string;
+  description?: string;
   action?: {
     callback: () => void;
     actionText: string;

@@ -48,7 +48,7 @@ export default function Ticket() {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const ticketDisclosure = useDisclosure()
-    const [tickets, setTickets] = useState([]);
+    const [tickets, setTickets] = useState<any>([]);
 
     const router = useRouter();
 
@@ -58,7 +58,7 @@ export default function Ticket() {
 
         const ticket = getValues('ticket');
 
-        setTickets([...tickets, ticket]);
+        // setTickets([...tickets, ticket]);
 
         onClose();
         reset();
@@ -125,20 +125,22 @@ export default function Ticket() {
             </Text>
 
             <Flex w={'100%'} maxWidth={'600px'} gap={4} gridColumn={'3'} overflowX={'auto'}>
-                {/* <DateLabelButton date={'2024-04-20'} /> */}
+                <DateLabelButton date={'2024-04-01'} />
+                <DateLabelButton date={'2024-04-20'} />
+                <DateLabelButton date={'2024-05-10'} />
                 <Flex minWidth={'120px'} onClick={onOpen} as={'button'} borderRadius={'xl'} border={'dashed 1px'} height={'100%'} justifyContent={'center'} alignItems={'center'}>
                     <Flex height={'130px'} direction={'column'} alignItems={'center'} justifyContent={'center'} textAlign={'center'}>
                         <FaPlus />
-                        <Text fontSize={'xs'}>Adicionar sessão</Text>
+                        <Text fontSize={'xs'}>Adicionar</Text>
                     </Flex>
                 </Flex>
             </Flex>
-
+            <Text>Se o seu evento tiver mais de uma sessão, os lotes ficarão agrupados nas suas respectivas datas</Text>
             <Button onClick={ticketDisclosure.onOpen} variant={'outline'} leftIcon={<FaTicket />}>Adicionar Ingresso</Button>
 
-            <Stack borderRadius={'lg'} minHeight={'100px'}  >
+            {/* <Stack borderRadius={'lg'} minHeight={'100px'}  >
                 {tickets.length > 0 ? <>
-                    {tickets.map((ticket, index) => (
+                    {tickets.map((ticket:any, index:any) => (
                         <Flex p={2} key={index} alignItems={'center'} gap={3} borderRadius={'lg'} border={'dashed 1px'} >
                             <Flex gap={2} flex={1}> <Text size={'sm'}>{ticket.name}</Text></Flex>
                             <Flex gap={2} alignItems={'center'}>
@@ -161,7 +163,7 @@ export default function Ticket() {
                 }
 
 
-            </Stack>
+            </Stack> */}
 
             <Button isDisabled={true} onClick={onOpen}>Concluir</Button>
 

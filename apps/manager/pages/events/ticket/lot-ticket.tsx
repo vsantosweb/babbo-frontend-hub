@@ -46,7 +46,7 @@ export default function TicketLot() {
 
         const ticket = getValues('ticket');
 
-        setTickets([...tickets, ticket]);
+        // setTickets([...tickets, ticket]);
 
         onClose();
         reset();
@@ -59,7 +59,7 @@ export default function TicketLot() {
                 <DateLabel />
                 <DateLabel />
             </Flex> */}
-            <Stack  m={'auto'} spacing={4} w={'100%'} maxWidth={'600px'}>
+            <Stack m={'auto'} spacing={4} w={'100%'} maxWidth={'600px'}>
                 <Heading size={'md'}>Configuração do lote</Heading>
 
 
@@ -71,12 +71,12 @@ export default function TicketLot() {
 
                 {/* <Heading size={'md'}>{watch('sales_type') === 'lot' ? ` Configuração do lote` : 'Configuração do ingresso'}</Heading> */}
 
-               
+
 
 
                 <Button onClick={onOpen} variant={'outline'} leftIcon={<FaTicket />}>Adicionar Ingresso</Button>
 
-                <Stack borderRadius={'lg'} minHeight={'100px'}  >
+                {/* <Stack borderRadius={'lg'} minHeight={'100px'}  >
                     {tickets.length > 0 ? <>
                         {tickets.map((ticket, index) => (
                             <Flex p={2} key={index} alignItems={'center'} gap={3} borderRadius={'lg'} border={'dashed 1px'} >
@@ -101,7 +101,7 @@ export default function TicketLot() {
                     }
 
 
-                </Stack>
+                </Stack> */}
 
                 <Button isDisabled={true} onClick={onOpen}>Concluir</Button>
 

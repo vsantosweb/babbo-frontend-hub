@@ -5,7 +5,7 @@ import moment from "moment";
 export function DateLabelButton({ date }: { date: string }) {
 
     // Defina a data inicial
-    const data = moment('2024-04-20');
+    const data = moment(date);
 
     // Extraia os componentes da data
     const weekDay = data.format('ddd'); // Dia da semana abreviado (ex: sab)

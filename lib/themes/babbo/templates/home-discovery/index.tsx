@@ -55,7 +55,6 @@ export function HomeDiscovery({ dataDiscovery }: {
 
   if (dataDiscovery?.length === 0) return <ResultMessage
     title='Nenhum evento encontrado'
-    description='Não conseguimos localizar o evento que procurou, tente novamente.'
   />;
 
   return (
