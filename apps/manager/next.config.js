@@ -12,7 +12,7 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
-  output: 'export',
+  // output: 'export',
   pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx'],
 };
 
