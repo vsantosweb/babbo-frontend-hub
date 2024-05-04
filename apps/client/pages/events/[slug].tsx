@@ -35,25 +35,28 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 }
 
-function EventShow({ eventData }: any) {
+function EventShow({ eventData }: Record<string, any>) {
 
 
-  const { fetchEvent, fetchRelatedEvents, getFormattedDate } = useEvent();
-  const router = useRouter();
   const [event, setEvent] = useState<EventInterface | null>(eventData.data);
   const [relatedEvents, setRelatedEvents] = useState<EventInterface[] | null>(null);
 
   // useEffect(() => {
-  //   const id = router.query.id;
-  //   if (id) {
-  //     fetchEvent(id as string).then((response: any) => {
-  //       setEvent(response.data);
-  //       fetchRelatedEvents(response.data?.id).then((response: any) =>
-  //         setRelatedEvents(response.data)
-  //       );
-  //     });
+  //   async function redirect() {
+
+  //     console.log('de ucertoooo', eventData)
+  //     const response = await fetch(`/api/urlShort?shortID=${event.uuid}`);
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       const originalURL = data.originalURL; // Supondo que a API retorne a URL original
+  //       window.location.href = originalURL;
+  //     } else {
+  //       console.error('URL not found');
+  //     }
   //   }
-  // }, [router]);
+    
+  //   redirect();
+  // }, [eventData.uuid]);
 
   return (
     <Layout
@@ -110,7 +113,7 @@ function EventShow({ eventData }: any) {
   );
 }
 
-export default function Event({ rest }: any) {
+export default function Event({ rest }: Record<string, any>) {
   return (
     <EventProvider>
       <EventShow eventData={rest} />

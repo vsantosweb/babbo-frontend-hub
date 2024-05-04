@@ -28,7 +28,7 @@ export default function ClientLayout({ ...rest }: LayoutProps) {
       setUrlAtual(url);
     }
   }, []);
-
+  
   return (
 
     <div
@@ -44,16 +44,24 @@ export default function ClientLayout({ ...rest }: LayoutProps) {
         rest && <Head>
           <title>{rest.title}</title>
           <meta property="og:title" content={rest.title} />
-          <meta property="og:description" content={rest.description?.substring(0, 50) + "..."} />
+          <meta property="og:description" content={rest.description?.substring(0, 50).replace(/<[^>]*>/g, '') + "..."} />
           <meta property="og:image" content={rest.image}/>
           <meta property="og:url" content={urlAtual} />
           <meta property="og:site_name" content={'babbo.social'} />
-          <meta property="og:type" content="website" />
+
+          {/* <meta property="og:type" content="website" /> */}
+          <meta property="og:type" content="article"/>
+          {/* <meta property="og:type" content="book"/> */}
+          {/* <meta property="og:type" content="article"/> */}
+          {/* <meta property="og:type" content="profile"/> */}
+
+
+
         </Head>
       }
-
       {/* <Header /> */}
       <Navigation />
+      
       <div
         style={{
           display: 'flex',
