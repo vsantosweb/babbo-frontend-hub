@@ -3,47 +3,53 @@ import { PublicOrganizerRepositoryInterface } from "@/interfaces";
 import Layout from "@/layouts";
 import { OrganizerPage } from "@/themes/babbo";
 import { EventInterface, OrganizerType } from "@/types";
-import { AxiosResponse } from "axios";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-
+import { GetServerSidePropsContext } from "next";
 
 const publicOrganizerContainer = container.get<PublicOrganizerRepositoryInterface>('public-organizer');
 
-export default function Organizer() {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
 
-    const [events, setEvents] = useState<EventInterface[]>();
-    const [organizerProfile, setOrganizerProfile] = useState<OrganizerType>();
+    const { query } = context;
 
-    const router = useRouter();
+    const trackid: string = query?.trackid as string
 
-    useEffect(() => {
+    try {
 
-        if (router.query.trackid) {
+        const organizerFetchData = await publicOrganizerContainer.organizerProfile(trackid);
+        const organizerEventsFetchData = await publicOrganizerContainer.organizerEvents(trackid)
 
-            publicOrganizerContainer.organizerProfile(router.query.trackid as string).then((response: AxiosResponse) => {
+        const organizerData = organizerFetchData.data.data;
+        const organizerEventsData = organizerEventsFetchData.data;
 
-                setOrganizerProfile(response.data.data)
+        return { props: { organizerData, organizerEventsData } };
 
-                publicOrganizerContainer.organizerEvents(router.query.trackid as string)
-                    .then((response: AxiosResponse) => {
-                        setEvents(response.data)
-                        console.log(response)
-                    })
-            }).catch(error => {
-                if (error.response.status === 404) router.push('404')
-            })
+    } catch (error: any) {
 
+        if (error?.response.status === 404) {
+            context.res.writeHead(302, { Location: '/404' });
+            context.res.end();
         }
-    }, [router.query])
+
+    }
+
+    return { props: { data: null } };
+
+}
+
+type OrganizerProps = {
+    organizerData: OrganizerType,
+    organizerEventsData: EventInterface[]
+}
+
+export default function Organizer({ organizerData, organizerEventsData }: OrganizerProps) {
 
     return (
         <Layout
             name='client'
-            image={organizerProfile?.organizer_avatar}
-            title={organizerProfile?.organizer_name}
-            description={organizerProfile?.organizer_description}>
-            <OrganizerPage events={events} organizerProfile={organizerProfile} />
+            image={organizerData?.organizer_avatar}
+            title={organizerData?.organizer_name}
+            description={organizerData?.organizer_description}>
+            <OrganizerPage events={organizerEventsData} organizerProfile={organizerData} />
         </Layout>
     )
 }

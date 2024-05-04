@@ -25,7 +25,7 @@ const eventService = container.get<EventRepositoryInterface>('public');
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
 
-  const { query } = context; // Obtém os parâmetros da rota
+  const { query } = context;
 
   const id: string = query?.id as string
 
