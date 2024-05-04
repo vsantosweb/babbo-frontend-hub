@@ -18,11 +18,8 @@ import { PublicRepositoryInterface } from '@/interfaces';
 import { CookiePolicy } from '@/components';
 import TagManager from 'react-gtm-module';
 
-
-
 if (typeof document !== 'undefined') {
   TagManager.initialize({ gtmId: process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_KEY as string });
-
 }
 
 moment.defineLocale('pt-BR', null);

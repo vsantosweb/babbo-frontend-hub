@@ -47,7 +47,7 @@ export default function Organizer({ organizerData, organizerEventsData }: Organi
         <Layout
             name='client'
             image={organizerData?.organizer_avatar}
-            title={organizerData?.organizer_name}
+            title={`${organizerData?.organizer_name} :: Babbo`}
             description={organizerData?.organizer_description}>
             <OrganizerPage events={organizerEventsData} organizerProfile={organizerData} />
         </Layout>

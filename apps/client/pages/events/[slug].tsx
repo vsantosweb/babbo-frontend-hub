@@ -29,17 +29,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const id: string = query?.id as string
 
-  const rest = await eventService.event(id);
+  const fetchEventData = await eventService.event(id);
+  const eventData = fetchEventData.data;
 
-  return { props: { rest } };
+  const fetchRelatedEventsData = await eventService.related(eventData.id);
+  const relatedEvents = fetchRelatedEventsData.data;
+  // const relatedEvents = {};
+  
+  return { props: { eventData, relatedEvents } };
 
 }
 
-function EventShow({ eventData }: Record<string, any>) {
-
-
-  const [event, setEvent] = useState<EventInterface | null>(eventData.data);
-  const [relatedEvents, setRelatedEvents] = useState<EventInterface[] | null>(null);
+function EventShow({ eventData, relatedEvents }: Record<string, any>) {
 
   // useEffect(() => {
   //   async function redirect() {
@@ -54,22 +55,22 @@ function EventShow({ eventData }: Record<string, any>) {
   //       console.error('URL not found');
   //     }
   //   }
-    
+
   //   redirect();
   // }, [eventData.uuid]);
 
   return (
     <Layout
-      title={event?.name}
+      title={eventData?.name}
       name={'client'}
-      description={event?.description}
-      image={`${event?.event_image}-md.jpg`}
+      description={eventData?.description}
+      image={`${eventData?.event_image}-md.jpg`}
 
     >
-      {!event ? <Loader /> : <Stack spacing={10}>
+      {!eventData ? <Loader /> : <Stack spacing={10}>
         <Flex
           mx={{ base: '-1em' }}
-          backgroundImage={{ base: 'none', md: `linear-gradient(#350053, rgba(0, 0, 0, 0.8)) ,url(${event?.event_image}-lg.jpg)` }}
+          backgroundImage={{ base: 'none', md: `linear-gradient(#350053, rgba(0, 0, 0, 0.8)) ,url(${eventData?.event_image}-lg.jpg)` }}
           backgroundSize={'cover'}
           backgroundPosition={'center center'}
           blur={'4px'}
@@ -83,7 +84,7 @@ function EventShow({ eventData }: Record<string, any>) {
             maxWidth={theme.defaultContainer.width}
             width={'100%'}
           >
-            <EventPoster event={event} />
+            <EventPoster event={eventData} />
             <Stack
               spacing={6}
               p={{ base: '1em', md: '1em' }}
@@ -91,8 +92,8 @@ function EventShow({ eventData }: Record<string, any>) {
               flex={1}
               width={'100%'}
             >
-              <EventDetails event={event} />
-              <EventInfo event={event} />
+              <EventDetails event={eventData} />
+              <EventInfo event={eventData} />
             </Stack>
           </Flex>
         </Flex>
@@ -100,10 +101,10 @@ function EventShow({ eventData }: Record<string, any>) {
           <Stack spacing={6}>
             <Heading size={'md'}>Detalhes</Heading>
             {/* <TruncateText text={event.description || ''} limit={50} /> */}
-            <Box dangerouslySetInnerHTML={{ __html: event.description as string }}></Box>
+            <Box dangerouslySetInnerHTML={{ __html: eventData.description as string }}></Box>
             <TicketSaleComponent />
             <Box>
-              <strong>Organizador:</strong> <Link href={`/organizer?trackid=${event.organizer.organizer_id}`}>{event.organizer.organizer_name}</Link>
+              <strong>Organizador:</strong> <Link href={`/organizer?trackid=${eventData.organizer.organizer_id}`}>{eventData.organizer.organizer_name}</Link>
             </Box>
           </Stack>
           {relatedEvents === null || relatedEvents.length > 0 && <RelatedEvents relatedEvents={relatedEvents} />}
@@ -113,10 +114,10 @@ function EventShow({ eventData }: Record<string, any>) {
   );
 }
 
-export default function Event({ rest }: Record<string, any>) {
+export default function Event({ eventData, relatedEvents }: Record<string, any>) {
   return (
     <EventProvider>
-      <EventShow eventData={rest} />
+      <EventShow eventData={eventData} relatedEvents={relatedEvents} />
     </EventProvider>
   );
 }
