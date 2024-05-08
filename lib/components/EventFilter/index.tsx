@@ -44,15 +44,15 @@ export function EventFilter() {
       <Stack flexDirection={{base: 'column', md: 'row'}} as={'form'}>
         <Box width={'100%'}>
           {/* <DatePickerDialog /> */}
-          <Input {...register('date')} onChange={e => setQuery({ ...query, region: e.target.value })} type='date' />
+          <Input {...register('date')} onChange={e => setQuery({ ...query, date_range: e.target.value })} type='date' />
         </Box>
         <Select
           placeholder="Categoria"
-          {...register('category')}
-          onChange={(e) => setQuery({ ...query, category: e.target.value })}
+          {...register('event_category_id')}
+          onChange={(e) => setQuery({ ...query, event_category_id: e.target.value })}
         >
           {categories?.map((category: MixedObjectType) => (
-            <option value={category?.name}>{category?.name}</option>
+            <option value={category?.id}>{category?.name}</option>
           ))}
         </Select>
         <Select

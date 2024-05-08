@@ -29,7 +29,7 @@ export function GoogleAutoComplete({ children, captureAddress }: { children: Rea
     return (
         <div>
             <LoadScript
-                googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}
+                googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY as string}
                 libraries={["places"]}
             >
                 <div className="address">

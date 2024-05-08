@@ -28,7 +28,7 @@ export function NavigationDesktop() {
                 <Logo />
             </Box>
             <EventSearch />
-            {/* <AvaiableCitiesDesktop /> */}
+            <AvaiableCitiesDesktop />
         </Flex>
 
     );

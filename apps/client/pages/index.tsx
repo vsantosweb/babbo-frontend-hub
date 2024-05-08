@@ -69,7 +69,7 @@ export function Home() {
 
   return (
     <Layout
-      title={'Babbo Eventos'}
+      title={'Babbo - Encontre bares, baladas, shows e muito mais aqui'}
       name={'client'}
       description={'Babbo Eventos'}
       keywords={'guia,baladas,shows,roles,festas,party,bares'}
