@@ -67,7 +67,7 @@ function EventShow({ eventData, relatedEvents }: Record<string, any>) {
       image={`${eventData?.event_image}-md.jpg`}
 
     >
-      {!eventData ? <Loader /> : <Stack spacing={10}>
+      {!eventData ? <Loader /> : <Stack spacing={{base: 6, md: 10}}>
         <Flex
           mx={{ base: '-1em' }}
           backgroundImage={{ base: 'none', md: `linear-gradient(#350053, rgba(0, 0, 0, 0.8)) ,url(${eventData?.event_image}-lg.jpg)` }}
@@ -80,7 +80,7 @@ function EventShow({ eventData, relatedEvents }: Record<string, any>) {
             mx={'auto'}
             flexDirection={{ base: 'column', md: 'row' }}
             gap={3}
-            py={{ base: 0, md: 12 }}
+            py={{ base: 0, md: 8 }}
             maxWidth={theme.defaultContainer.width}
             width={'100%'}
           >
@@ -97,7 +97,7 @@ function EventShow({ eventData, relatedEvents }: Record<string, any>) {
             </Stack>
           </Flex>
         </Flex>
-        <Stack spacing={12} m={'auto'} width={'100%'} maxWidth={theme.defaultContainer.width}>
+        <Stack spacing={8} m={'auto'} width={'100%'} maxWidth={theme.defaultContainer.width}>
           <Stack spacing={6}>
             <Heading size={'md'}>Detalhes</Heading>
             {/* <TruncateText text={event.description || ''} limit={50} /> */}

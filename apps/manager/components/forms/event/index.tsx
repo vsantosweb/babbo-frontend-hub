@@ -29,9 +29,9 @@ import Link from 'next/link';
 
 const eventCustomerService = container.get<CustomerEventRepositoryInterface>('customer-event');
 
-const EventForm = ({ event }: { event?: Record<string, any> }) => {
+const validationSchema = Yup.object().shape({ ...eventValidatorSchema });
 
-    const validationSchema = Yup.object().shape({ ...eventValidatorSchema });
+const EventForm = ({ event }: { event?: Record<string, any> }) => {
 
     const eventForm = useForm({ resolver: yupResolver(validationSchema), mode: 'all' });
 
@@ -97,9 +97,7 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
     const handleUpdateEvent = async (formData: Record<string, any>) => {
 
         const payload = getPayload(formData);
-
         await eventCustomerService.updateEvent(payload, event?.id).then((response: Record<string, any>) => {
-            // SessionHelper.redirectWith(`/events/${event?.uuid}/details`, 'eventUpdated');
 
             SessionHelper.redirectWith('/', 'eventUpdated',
                 `O evento  <a href="/events/${response.data.uuid}/details">${response.data.name}</a> foi atualizado.`
@@ -142,8 +140,9 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
                         <TicketForm />
                     </Stack>
                     <HStack justifyContent={'flex-end'}>
-                        {/* <Button variant={'outline'}>visualizar</Button> */}
-                        <Button isLoading={eventForm.formState.isSubmitting} type={'submit'}>{!event ? 'Criar evento' : 'Atualizar'}</Button>
+                        <Button
+                            isLoading={eventForm.formState.isSubmitting}
+                            type={'submit'}>{!event ? 'Criar evento' : 'Atualizar'}</Button>
                     </HStack>
                 </Stack>
             </Flex>

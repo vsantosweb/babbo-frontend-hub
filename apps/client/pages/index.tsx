@@ -15,7 +15,7 @@ import {
   DrawerCloseButton, useDisclosure, Input, Heading, Text, Stack, Flex, AvatarGroup, Avatar, UseDisclosureProps
 } from '@chakra-ui/react';
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
-import { OrganizerLeadForm } from '@/components';
+import { GoogleAdSense, OrganizerLeadForm } from '@/components';
 import container from '@/container';
 import { PublicOrganizerRepositoryInterface } from '@/interfaces';
 import { AxiosResponse } from 'axios';
@@ -69,20 +69,19 @@ export function Home() {
 
   return (
     <Layout
-      title={'Babbo - Encontre bares, baladas, shows e muito mais aqui.'}
+      title={'Babbo Eventos'}
       name={'client'}
-      description={'Babbo encontre baladas, barzinhos, shows, roles, e muito mais.'}
+      description={'Babbo Eventos'}
       keywords={'guia,baladas,shows,roles,festas,party,bares'}
     >
       <Stack spacing={6} mt={8}>
         {/* <Banner /> */}
-        <Box className='app-wrapper' minHeight={'90px'} height={'auto'} pb={6}>
-          <img src={'https://placehold.co/1280x120?text=Adsense'} /> <hr />
-          {/* <GoogleAdSense adClient='ca-pub-8530046753205274' adSlot={'2752189175'}/> */}
-
+        <Box className='app-wrapper' height={'auto'}>
+          {/* <img src={'https://placehold.co/1280x120?text=Adsense'} /> <hr /> */}
+          <GoogleAdSense adClient={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_KEY as string} adSlot={'2752189175'} />
         </Box>
         <div className='app-wrapper'>
-        <Heading size={'lg'}>Os melhores eventos da sua região em um só lugar</Heading>
+          <Heading size={'lg'}>Os melhores eventos da sua região em um só lugar</Heading>
         </div>
         <HomeDiscovery dataDiscovery={events} />
         {total !== events?.length &&
@@ -92,14 +91,14 @@ export function Home() {
         }
 
         <Stack m={'auto'} spacing={{ base: 0, md: 4 }} maxW='52rem'>
-          <Heading textAlign={{ md: 'center' }} size={{ base: 'lg', md: 'xl' }} mb={4}>Uma nova ferramenta gratuita para<br /> divulgar <Text as={'span'} color={'primary.500'}>seus eventos</Text></Heading>
+          <Heading textAlign={{ md: 'center' }} size={{ base: 'md', md: 'lg' }} mb={2}>Uma nova ferramenta gratuita para<br /> divulgar <Text as={'span'} color={'primary.500'}>seus eventos</Text></Heading>
           <Flex gap={8} direction={{ md: 'column' }} alignItems={'center'}>
             <Stack alignItems={{ md: 'center' }} spacing={6}>
               <Text fontSize={{ base: 'md', md: 'lg' }} textAlign={{ md: 'center' }} fontWeight={'600'}>
                 O Babbo é a plataforma perfeita para divulgar e promover seu evento. Comece agora e alcance mais pessoas!
               </Text>
-              <Box>
-                <Button id="start" size={{ base: 'md', md: 'lg' }} onClick={useDisclosureorganizerLeadForm.onOpen} colorScheme='green'>Comece agora - É grátis</Button>
+              <Box textAlign={{base: 'center'}}>
+                <Button id="start" size={{ base: 'md', md: 'lg' }} onClick={useDisclosureorganizerLeadForm.onOpen} colorScheme='green'>Comece agora</Button>
               </Box>
               <Stack>
                 <AvatarGroup size='md' max={5}>

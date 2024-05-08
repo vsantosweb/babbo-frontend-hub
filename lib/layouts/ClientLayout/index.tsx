@@ -67,11 +67,13 @@ export default function ClientLayout({ ...rest }: LayoutProps) {
           display: 'flex',
           flexDirection: 'column',
           flex: 1,
+          paddingTop:'62px',
           height: 'auto',
           width: '100%',
           // maxWidth: theme.defaultContainer.width,
           margin: '0 auto',
-          padding: '0 1em',
+          paddingLeft: '1em',
+          paddingRight: '1em',
         }}
       >
         {rest.children}

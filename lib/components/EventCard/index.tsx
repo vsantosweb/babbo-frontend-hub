@@ -14,7 +14,7 @@ import { eventDateFormatter } from '@/helpers';
 const eventService = container.get<PublicRepositoryInterface>('public');
 
 export const EventCard = (event: EventInterface) => {
-  
+
   const { getFormattedDate } = useEvent();
   const { handleShareClick } = useEventShare();
   const event_date = eventDateFormatter(event);
@@ -71,7 +71,8 @@ export const EventCard = (event: EventInterface) => {
                 {event_date.partial}
               </Styled.CardEventMutedText>
             </Styled.CardEventDateInfo>
-            <Styled.CardEventTitle>{event.name}</Styled.CardEventTitle>
+            {/* <span>{event.name}</span> */}
+            <Styled.CardEventTitle>{`${event.name?.slice(0, 50)}...`}</Styled.CardEventTitle>
             <Styled.CardEventMutedText>
               <CiLocationOn /> {event.place_name} - {event.place_city}
             </Styled.CardEventMutedText>

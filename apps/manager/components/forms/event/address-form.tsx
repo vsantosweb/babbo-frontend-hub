@@ -34,7 +34,6 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
     }
   }, [address, setValue]);
   
-  console.log(hookForm.getValues('place'), 'PLACEEE')
   return (
     <Stack>
       <GoogleAutoComplete captureAddress={setPlace}>

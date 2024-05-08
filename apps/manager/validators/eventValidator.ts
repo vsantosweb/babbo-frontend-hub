@@ -24,15 +24,13 @@ export const eventValidatorSchema = {
     event_image: Yup.string().required(),
     description: Yup.string(),
     has_external_ticket: Yup.boolean(),
-    ticket_partner_url: Yup.string().when('has_external_ticket', (hasTickets, schema) => {
-        if (hasTickets[0]) return schema.required();
+    ticket_partner_url: Yup.string().nullable().when('has_external_ticket', (hasTickets, schema) => {
+        return hasTickets[0] ? schema.required('A url do parceiro é obrigatória') : schema;
 
-        return schema
     }),
-    ticket_partner_name: Yup.string().when('has_external_ticket', (hasTickets, schema) => {
-        if (hasTickets[0]) return schema.required();
+    ticket_partner_name: Yup.string().nullable().when('has_external_ticket', (hasTickets, schema) => {
+        return hasTickets[0] ? schema.required('O nome do parceiro é obrigatório') : schema;
 
-        return schema
     }),
     image: Yup.mixed()
         .test('fileSize', 'A imagem deve ter no máximo 1MB', (value: any) => {

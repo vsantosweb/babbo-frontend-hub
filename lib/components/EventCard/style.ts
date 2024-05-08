@@ -33,6 +33,7 @@ export const CardEvent = styled.div`
 export const CardEventImageContainer = styled.div`
   max-height: 430px;
   height: 430px;
+  width: 100%;
   overflow: hidden;
   position: relative;
 `;
@@ -87,6 +88,8 @@ export const CategoryTag = styled.div`
 export const CardEventDetails = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
+  gap: 6px;
 `;
 export const CardEventDateInfo = styled.span`
   display: flex;
@@ -97,17 +100,18 @@ export const CardEventMutedText = styled.span`
   gap: 6px;
   font-size: 0.9rem;
   align-items: center;
-  font-weight: 700;
+  font-weight: 600;
   color: #818181;
 `;
-export const CardEventTitle = styled.h1`
-  font-size: 1rem;
-  display: box;
-  line-clamp: 2;
+export const CardEventTitle = styled.h2`
+  /* font-size: 1rem;
+  font-weight: 500;
+  display: inline-block;
   overflow: hidden;
-  white-space: nowrap;
+  position: relative;
+  display: inline-block;
   text-overflow: ellipsis;
-  font-weight: 600;
+  white-space: nowrap; */
 `;
 
 export const CardEventInfo = styled.div`

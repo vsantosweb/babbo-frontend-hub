@@ -64,7 +64,7 @@ const GlobalStyles = css`
     border-radius: 100%;
     background: none;
     /* background: #000; */
-    color: #ea1e63;
+    color: #9546fc;
     /* border: solid 1px; */
     outline: none;
     font-size: 24px;

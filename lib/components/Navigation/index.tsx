@@ -29,14 +29,7 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
-import { theme } from '@/themes/default';
-import { EventSearch } from '../EventSearch';
-import Link from 'next/link';
-import { FaLocationPin } from 'react-icons/fa6';
-import { CiLocationOn } from "react-icons/ci";
-import { AvaiableCitiesDesktop } from '../AvaiableCities';
-import { FaMapLocation } from "react-icons/fa6";
-import { Logo } from '../Logo';
+
 import { NavigationDesktop } from './navigation-desktop';
 
 export function Navigation() {
@@ -48,6 +41,10 @@ export function Navigation() {
         bg={useColorModeValue('white', 'gray.800')}
         color={useColorModeValue('gray.600', 'white')}
         minH={'60px'}
+        position={'fixed'}
+        zIndex={9999}
+        width={'100%'}
+        boxShadow={'sm'}
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}

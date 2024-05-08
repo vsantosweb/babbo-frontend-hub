@@ -31,15 +31,10 @@ export function HomeDiscovery({ dataDiscovery }: {
   const renderWithAdSense = (event: EventInterface, index: number) => {
     if (index > 0 && index % 8 === 0) {
       return (
-        <Fragment key={`${index}-${event.uuid}`}>
-          {/* <GridItem gridColumn={'1 / span 4'} >
-            <img src={'https://placehold.co/1280x120?text=Adsense'} />
-            <GoogleAdSense adClient='ca-pub-8530046753205274' adSlot={'2752189175'}/>
-          </GridItem> */}
+      
           <GridItem  >
             <EventCard {...event} />
           </GridItem>
-        </Fragment>
 
       );
     } else {

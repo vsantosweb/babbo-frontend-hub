@@ -21,7 +21,7 @@ export default function EventInfo({ event }: { event: EventInterface }) {
                     <IoCalendar />
                   </Box>
                   <Flex gap={1} direction={'column'}>
-                    <Heading size={'md'}>
+                    <Heading size={'sm'}>
                       {eventDateFormatter(event).partial}
                     </Heading>
                     <Text>{eventDateFormatter(event).fully}</Text>
@@ -42,7 +42,7 @@ export default function EventInfo({ event }: { event: EventInterface }) {
                     href={`https://google.com/maps/dir/${event?.full_address}`}
                   >
                     <Flex gap={1} direction={'column'}>
-                      <Heading size={'md'}><Flex alignItems={'center'} gap={2}>{event?.place_name}<FaDirections  /></Flex></Heading>
+                      <Heading size={'sm'}><Flex alignItems={'center'} gap={2}>{event?.place_name}<FaDirections  /></Flex></Heading>
                       <Text>{event?.full_address}</Text>
                     </Flex>
                   </Link>
@@ -62,7 +62,7 @@ export default function EventInfo({ event }: { event: EventInterface }) {
                       href={event?.ticket_partner_url as string}
                     >
                       <Flex gap={1} direction={'column'}>
-                        <Heading size={'md'}>Ingressos</Heading>
+                        <Heading size={'sm'}>Ingressos</Heading>
                         <Text>{event.ticket_partner_name}</Text>
                       </Flex>
                     </Link>

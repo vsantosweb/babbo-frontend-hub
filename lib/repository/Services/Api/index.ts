@@ -16,6 +16,11 @@ export default class ApiService {
     });
 
     api.interceptors.request.use(async function (config) {
+
+      if (Cookie.get('token')) {
+        config.headers.Authorization = `Bearer ${Cookie.get('token')}`;
+      }
+
       // Verifica se está no lado do cliente
       if (typeof window !== 'undefined') {
         // Se estiver no lado do cliente, acessa o localStorage normalmente
@@ -24,10 +29,6 @@ export default class ApiService {
           config.headers['X-User-Identifier'] = userIdentifier;
         }
       } else {
-        // Se estiver no lado do servidor, você precisa lidar com o cookie ou outra forma de identificar o usuário
-        if (Cookie.get('token')) {
-          config.headers.Authorization = `Bearer ${Cookie.get('token')}`;
-        }
         // Aqui você pode implementar a lógica para acessar o identificador do usuário no lado do servidor
         // Por exemplo, acessar cookies HTTP ou passar o identificador do usuário como um parâmetro de função
         const userIdentifier = (await fetch(ApiService.baseURL + '/public/user-identifier')).json(); // Substitua por sua lógica real para obter o identificador do usuário no servidor

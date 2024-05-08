@@ -148,15 +148,6 @@ export const EventSearch = () => {
         {displayResult && (
           <Box>
             <Styled.ResultBox ref={ref}>
-              {/* <Stack spacing={4}>
-                <Heading size={'md'}>Resultados</Heading>
-                <Styled.SuggestedList>
-                  <Styled.SuggestedListItem>Pagode</Styled.SuggestedListItem>
-                  <Styled.SuggestedListItem>Funk</Styled.SuggestedListItem>
-                  <Styled.SuggestedListItem>Sertanejo</Styled.SuggestedListItem>
-                </Styled.SuggestedList>
-              </Stack> */}
-
               {isFetching ? (
                 <Spinner />
               ) : (

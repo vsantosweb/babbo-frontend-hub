@@ -16,24 +16,24 @@ export default function TicketForm() {
             {
                 watch('has_external_ticket') && <Stack spacing={4}>
 
-                    <FormControl isInvalid={!!errors?.ticket_redirect_name}>
+                    <FormControl isInvalid={!!errors?.ticket_partner_name}>
                         <InputGroup>
                             <InputLeftElement color='gray.300' pointerEvents='none'>
                                 <FaTicketSimple />
                             </InputLeftElement>
                             <Input {...register('ticket_partner_name')} placeholder='Nome da empresa fornecedora' />
                         </InputGroup>
-                        <FormErrorMessage>{errors?.ticket_redirect_name?.message as string}</FormErrorMessage>
+                        <FormErrorMessage>{errors?.ticket_partner_name?.message as string}</FormErrorMessage>
                     </FormControl>
 
-                    <FormControl isInvalid={!!errors?.ticket_redirect_name}>
+                    <FormControl isInvalid={!!errors?.ticket_partner_url}>
                         <InputGroup>
                             <InputLeftElement color='gray.300' pointerEvents='none'>
                                 <ExternalLinkIcon />
                             </InputLeftElement>
                             <Input {...register('ticket_partner_url')} placeholder='Endereço para compra do ingresso' />
                         </InputGroup>
-                        <FormErrorMessage>{errors?.ticket_redirect_name?.message as string}</FormErrorMessage>
+                        <FormErrorMessage>{errors?.ticket_partner_url?.message as string}</FormErrorMessage>
                     </FormControl>
                 </Stack>
             }

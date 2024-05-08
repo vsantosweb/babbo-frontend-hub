@@ -38,11 +38,8 @@ function Search() {
 
   return (
     <Layout
-      title={'Babbo - Encontre bares, baladas, shows e muito mais aqui.'}
+      title={'Babbo Eventos'}
       name={'client'}
-      description={
-        'Babbo encontre baladas, barzinhos, shows, roles, e muito mais.'
-      }
       keywords={'guia,baladas,shows,roles,festas,party,bares'}
     >
       <Stack spacing={4}>
