@@ -1,9 +1,10 @@
 
 import { theme } from "@/themes/default";
-import { Box, Button, Flex, Link, Stack, useColorModeValue } from "@chakra-ui/react";
+import { Box, Button, Flex, IconButton, Link, Stack, useColorModeValue } from "@chakra-ui/react";
 import { EventSearch } from "../EventSearch";
-import { AvaiableCitiesDesktop } from "../AvaiableCities";
+import { AvaiableCities } from "../AvaiableCities";
 import { Logo } from "../Logo";
+import { SearchIcon } from "@chakra-ui/icons";
 
 export function NavigationDesktop() {
     return (
@@ -16,7 +17,6 @@ export function NavigationDesktop() {
             alignItems={'center'}
         >
             <Box
-
                 as={Link}
                 href={'/'}
                 fontWeight={'bold'}
@@ -28,7 +28,7 @@ export function NavigationDesktop() {
                 <Logo />
             </Box>
             <EventSearch />
-            <AvaiableCitiesDesktop />
+            <AvaiableCities />
         </Flex>
 
     );

@@ -61,8 +61,8 @@ export function EventFilter() {
           onChange={(e) => setQuery({ ...query, region: e.target.value })}
         >
           {' '}
-          {avaiableCities?.map((city) => (
-            <option value={city}>{city}</option>
+          {avaiableCities?.map((city: Record<string, any>) => (
+            <option value={city.city}>{city.city}</option>
           ))}
         </Select>
         <Box >

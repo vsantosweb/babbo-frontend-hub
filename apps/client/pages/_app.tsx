@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 import { PublicRepositoryInterface } from '@/interfaces';
 import { CookiePolicy } from '@/components';
 import TagManager from 'react-gtm-module';
+import { UserLocationProvider } from '@/hooks';
 
 if (typeof document !== 'undefined') {
   TagManager.initialize({ gtmId: process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_KEY as string });
@@ -61,7 +62,9 @@ function App({ Component, pageProps }: AppProps) {
 
       </Head>
       <main className="app">
-        <Component {...pageProps} />
+        <UserLocationProvider>
+          <Component {...pageProps} />
+        </UserLocationProvider>
         <CookiePolicy />
       </main>
     </Theme>

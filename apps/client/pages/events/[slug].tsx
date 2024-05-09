@@ -100,7 +100,6 @@ function EventShow({ eventData, relatedEvents }: Record<string, any>) {
         <Stack spacing={8} m={'auto'} width={'100%'} maxWidth={theme.defaultContainer.width}>
           <Stack spacing={6}>
             <Heading size={'md'}>Detalhes</Heading>
-            {/* <TruncateText text={event.description || ''} limit={50} /> */}
             <Box dangerouslySetInnerHTML={{ __html: eventData.description as string }}></Box>
             <TicketSaleComponent />
             <Box>

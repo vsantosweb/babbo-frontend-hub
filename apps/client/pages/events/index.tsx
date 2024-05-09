@@ -40,7 +40,6 @@ function Search() {
     <Layout
       title={'Babbo Eventos'}
       name={'client'}
-      keywords={'guia,baladas,shows,roles,festas,party,bares'}
     >
       <Stack spacing={4}>
         <QueryStringProvider >

@@ -1,32 +1,16 @@
 
 
 import container from '@/container';
+import { useUserLocation } from '@/hooks';
 import { EventRepositoryInterface } from '@/interfaces';
 import { theme } from '@/themes/default';
 import { ChevronDownIcon, SearchIcon } from '@chakra-ui/icons';
 import {
     Box,
     Flex,
-    Text,
-    IconButton,
     Button,
     Stack,
-    Collapse,
-    Icon,
-    Popover,
-    PopoverTrigger,
-    PopoverContent,
-    useColorModeValue,
-    useBreakpointValue,
     useDisclosure,
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem,
-    MenuItemOption,
-    MenuGroup,
-    MenuOptionGroup,
-    MenuDivider,
     Modal,
     ModalOverlay,
     ModalContent,
@@ -43,6 +27,7 @@ import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import { CiLocationOn } from 'react-icons/ci';
 import { IoMdLocate } from "react-icons/io";
+import { TruncateText } from '../TruncateText';
 
 const cities = [
     'São Paulo, SP',
@@ -65,45 +50,44 @@ const cities = [
 const eventService = container.get<EventRepositoryInterface>('public');
 
 
-export function AvaiableCitiesDesktop() {
+export function AvaiableCities({ callback }: { callback?: () => any }) {
 
+    const { getUserLocation, userLocation, defineUserCity } = useUserLocation();
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [selectedCity, setSelectedCity] = useState<string | null>('Selecione sua cidade');
+    const [selectedRegion, setSelectedRegion] = useState<string | null>();
     const [avaiableCities, setAvaiableCities] = useState<string[]>([]);
-    const [location, setLocation] = useState(null);
+
+
 
     useEffect(() => {
+
+
         eventService.avaiableCities().then((response: AxiosResponse) => {
             setAvaiableCities(response.data)
         })
-    }, [])
+    }, [userLocation])
 
 
     const handleLocationClick = () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    // console.log(position, 'position')
-                    // const { latitude, longitude }: = position.coords;
-                    // setLocation({ latitude, longitude });
-                },
-                (error) => {
-                    console.error('Error getting location:', error);
-                }
-            );
-        } else {
-            console.error('Geolocation is not supported by this browser.');
-        }
+        getUserLocation();
+        onClose();
+        callback && callback();
     };
 
     return (
         <>
-            <Box p={0} as={Button} onClick={onOpen} variant={'muted'} rightIcon={<ChevronDownIcon />}>{selectedCity}</Box>
+            <Box p={0} as={Button}
+                onClick={onOpen}
+                variant={'muted'}
+                leftIcon={<CiLocationOn />}
+                rightIcon={<ChevronDownIcon />}>
+                {userLocation?.region ? <TruncateText text={userLocation?.label} limit={20} /> : (userLocation?.geolocation ? 'Perto de mim' : 'Qualquer lugar')}
+            </Box>
             <Modal scrollBehavior='inside' isCentered isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent borderRadius={'2xl'} maxHeight={'calc(100% - 12.5rem)'}>
                     <ModalHeader textAlign={'center'}>
-                        <Stack spacing={4}>
+                        {/* <Stack spacing={4}>
                             <Heading size={'md'}>Escolha sua cidade</Heading>
                             <InputGroup>
                                 <InputLeftElement pointerEvents='none' color='gray.300' fontSize='1.2em'>
@@ -111,7 +95,7 @@ export function AvaiableCitiesDesktop() {
                                 </InputLeftElement>
                                 <Input placeholder='Pesquisar cidade...' />
                             </InputGroup>
-                        </Stack>
+                        </Stack> */}
                     </ModalHeader>
 
                     <ModalCloseButton />
@@ -120,7 +104,7 @@ export function AvaiableCitiesDesktop() {
 
                             <Flex
                                 gap={3}
-                                background={`${theme.colors.primary}26`}
+                                _hover={{ background: `${theme.colors.primary}26` }}
                                 p={2}
                                 onClick={handleLocationClick}
                                 borderRadius={'lg'}
@@ -129,15 +113,15 @@ export function AvaiableCitiesDesktop() {
                             <Stack spacing={2}>
                                 <strong>Cidades sugeridas</strong>
                                 {
-                                    avaiableCities.map((city, index) => <Flex key={index}
+                                    avaiableCities.map((city: any, index) => <Flex key={index}
                                         p={2}
-                                        onClick={() => [setSelectedCity(city), onClose()]}
-                                        _hover={{ background: '#f1f1f1' }}
+                                        onClick={() => [defineUserCity(`${city.city}, ${city.state}`), onClose(), callback && callback()]}
+                                        _hover={{ background: `${theme.colors.primary}26` }}
                                         alignItems={'center'}
                                         borderRadius={'lg'}
                                         as={'button'}
                                         gap={3}>
-                                        <CiLocationOn /> {city}
+                                        <CiLocationOn /> {`${city.city}, ${city.state}`}
                                     </Flex>
                                     )
                                 }

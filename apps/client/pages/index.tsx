@@ -1,5 +1,5 @@
 import Layout from '@/layouts';
-import { EventProvider, useEvent } from '@/hooks';
+import { EventProvider, useEvent, useUserLocation } from '@/hooks';
 import { Suspense, useEffect, useState } from 'react';
 import { Container } from 'react-grid-system';
 import { HomeDiscovery } from '@/themes/babbo';
@@ -36,18 +36,32 @@ export function Home() {
   const [limit, setLimit] = useState(8); // Número de eventos a serem buscados por requisição
   const [skip, setSkip] = useState(0); // Número de eventos a serem ignorados (para paginação)
   const [total, setTotal] = useState(0);
+  const [currentLocation, setCurrentLocation] = useState<Record<string, any>>();
+
+  const { userRegion, userCoordinates, userLocation } = useUserLocation();
 
   const [organizerShowcase, setOrganizerShowcase] = useState<OrganizerType[] | null>();
 
   const useDisclosureorganizerLeadForm = useDisclosure();
 
   useEffect(() => {
-    fetchEvents({ skip: skip, limit: limit }).then((response: any) => {
-      setTotal(response.total);
-      events ? setEvents([...events, ...response.data]) : setEvents(response.data);
-    });
-  }, [skip]);
 
+    
+    if(currentLocation !== userLocation) setSkip(0);
+
+    fetchEvents({ skip: skip, limit: limit, ...userLocation }).then((response: any) => {
+      setTotal(response.total);
+      setEvents(response.data);
+      setCurrentLocation(userLocation);
+    });
+
+  }, [userLocation, currentLocation]);
+
+  // useEffect(() => {
+  //   setSkip(0)
+  // },[userLocation])
+
+  // setEvents([...events, ...response.data])
   useEffect(() => {
 
     publicOrganizerContainer.organizerShowcase().then((response: AxiosResponse) => {
@@ -56,8 +70,15 @@ export function Home() {
     })
 
   }, [])
+
   const loadMore = () => {
-    if (events) setSkip(events.length);
+    if (events) {
+      setSkip(events.length)
+      fetchEvents({ skip: events.length, limit: limit, ...userLocation }).then((response: any) => {
+        setTotal(response.total);
+        setEvents([...events, ...response.data]);
+      });
+    };
   };
 
   // console.log(events, 'eventseventsevents')
@@ -74,15 +95,13 @@ export function Home() {
       description={'Babbo Eventos'}
       keywords={'guia,baladas,shows,roles,festas,party,bares'}
     >
-      <Stack spacing={6} mt={8}>
+      <Stack spacing={6} mt={8} flex={1}>
         {/* <Banner /> */}
         <Box className='app-wrapper' height={'auto'}>
           {/* <img src={'https://placehold.co/1280x120?text=Adsense'} /> <hr /> */}
           <GoogleAdSense adClient={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_KEY as string} adSlot={'2752189175'} />
         </Box>
-        <div className='app-wrapper'>
-          <Heading size={'lg'}>Os melhores eventos da sua região em um só lugar</Heading>
-        </div>
+     
         <HomeDiscovery dataDiscovery={events} />
         {total !== events?.length &&
           <Box textAlign={'center'}>
@@ -97,7 +116,7 @@ export function Home() {
               <Text fontSize={{ base: 'md', md: 'lg' }} textAlign={{ md: 'center' }} fontWeight={'600'}>
                 O Babbo é a plataforma perfeita para divulgar e promover seu evento. Comece agora e alcance mais pessoas!
               </Text>
-              <Box textAlign={{base: 'center'}}>
+              <Box textAlign={{ base: 'center' }}>
                 <Button id="start" size={{ base: 'md', md: 'lg' }} onClick={useDisclosureorganizerLeadForm.onOpen} colorScheme='green'>Comece agora</Button>
               </Box>
               <Stack>

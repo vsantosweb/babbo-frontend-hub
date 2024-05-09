@@ -11,6 +11,7 @@ import { Box, Flex, IconButton, Skeleton } from '@chakra-ui/react';
 import { EventRepositoryInterface, PublicRepositoryInterface } from '@/interfaces';
 import container from '@/container';
 import { eventDateFormatter } from '@/helpers';
+import { TruncateText } from '../TruncateText';
 const eventService = container.get<PublicRepositoryInterface>('public');
 
 export const EventCard = (event: EventInterface) => {
@@ -72,7 +73,7 @@ export const EventCard = (event: EventInterface) => {
               </Styled.CardEventMutedText>
             </Styled.CardEventDateInfo>
             {/* <span>{event.name}</span> */}
-            <Styled.CardEventTitle>{`${event.name?.slice(0, 50)}...`}</Styled.CardEventTitle>
+            <Styled.CardEventTitle><TruncateText text={event?.name} limit={33} /></Styled.CardEventTitle>
             <Styled.CardEventMutedText>
               <CiLocationOn /> {event.place_name} - {event.place_city}
             </Styled.CardEventMutedText>

@@ -31,10 +31,10 @@ export function HomeDiscovery({ dataDiscovery }: {
   const renderWithAdSense = (event: EventInterface, index: number) => {
     if (index > 0 && index % 8 === 0) {
       return (
-      
-          <GridItem  >
-            <EventCard {...event} />
-          </GridItem>
+
+        <GridItem key={`${index}-${event.uuid}`} >
+          <EventCard {...event} />
+        </GridItem>
 
       );
     } else {
@@ -53,13 +53,18 @@ export function HomeDiscovery({ dataDiscovery }: {
   />;
 
   return (
-    <Grid  className='app-wrapper' templateColumns={{
-      lg: 'repeat(4, minmax(0, 1fr))',
-      md: 'repeat(2, minmax(0, 1fr))',
-      sm: 'repeat(1, minmax(0, 1fr))',
-    }}
-      gap={4}>
-      {dataDiscovery?.map((event, index) => renderWithAdSense(event, index))}
-    </Grid>
+    <>
+      <div className='app-wrapper'>
+        <Heading fontWeight={'300'} size={'lg'}>Os melhores eventos da sua região em um só lugar</Heading>
+      </div>
+      <Grid className='app-wrapper' templateColumns={{
+        lg: 'repeat(4, minmax(0, 1fr))',
+        md: 'repeat(2, minmax(0, 1fr))',
+        sm: 'repeat(1, minmax(0, 1fr))',
+      }}
+        gap={4}>
+        {dataDiscovery?.map((event, index) => renderWithAdSense(event, index))}
+      </Grid>
+    </>
   );
 }
