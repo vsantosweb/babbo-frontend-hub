@@ -33,7 +33,7 @@ export function Home() {
 
   const { fetchEvents, loading } = useEvent();
   const [events, setEvents] = useState<EventInterface[] | null>(null);
-  const [limit, setLimit] = useState(8); // Número de eventos a serem buscados por requisição
+  const [limit, setLimit] = useState(10); // Número de eventos a serem buscados por requisição
   const [skip, setSkip] = useState(0); // Número de eventos a serem ignorados (para paginação)
   const [total, setTotal] = useState(0);
   const [currentLocation, setCurrentLocation] = useState<Record<string, any>>();
@@ -46,8 +46,8 @@ export function Home() {
 
   useEffect(() => {
 
-    
-    if(currentLocation !== userLocation) setSkip(0);
+
+    if (currentLocation !== userLocation) setSkip(0);
 
     fetchEvents({ skip: skip, limit: limit, ...userLocation }).then((response: any) => {
       setTotal(response.total);
@@ -101,7 +101,7 @@ export function Home() {
           {/* <img src={'https://placehold.co/1280x120?text=Adsense'} /> <hr /> */}
           <GoogleAdSense adClient={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_KEY as string} adSlot={'2752189175'} />
         </Box>
-     
+
         <HomeDiscovery dataDiscovery={events} />
         {total !== events?.length &&
           <Box textAlign={'center'}>

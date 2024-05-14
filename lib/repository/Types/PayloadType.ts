@@ -13,7 +13,7 @@ export type EventPayloadType = {
     place: PlaceType
     start_date: string;
     end_date: string;
-    categories: any;
+    category: any;
     name: string;
     description: string;
     event_image?: string;

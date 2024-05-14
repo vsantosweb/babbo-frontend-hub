@@ -10,10 +10,10 @@ import Link from 'next/link';
 import { EventInterface } from '@/types';
 
 const mediaSizes = {
-  320: { slidesPerView: 1.3, spaceBetween: 10 },
-  480: { slidesPerView: 1.3, spaceBetween: 5 },
+  320: { slidesPerView: 1.5, spaceBetween: 10 },
+  480: { slidesPerView: 2, spaceBetween: 5 },
   640: { slidesPerView: 5, spaceBetween: 30 },
-  1366: { slidesPerView: 4, spaceBetween: 20 },
+  1366: { slidesPerView: 5, spaceBetween: 20 },
 };
 
 export function RelatedEvents({

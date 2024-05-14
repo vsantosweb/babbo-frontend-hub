@@ -46,6 +46,7 @@ import { ResultMessage } from '@/components';
 import { Search2Icon } from '@chakra-ui/icons';
 import { EventProvider, useAlert, useEvent } from '@/hooks';
 import { useForm } from 'react-hook-form';
+import { theme } from '@/themes/default';
 
 const eventService = container.get<EventRepositoryInterface>('customer-event')
 
@@ -131,22 +132,25 @@ function Events() {
                 </TableCaption>
                 <Thead>
                   <Tr p={3}>
-
+                  <Th></Th>
                     <Th>Evento</Th>
                     <Th>Status</Th>
-                    <Th>Impressões</Th>
-                    <Th>Cliques</Th>
-                    <Th>Data do evento</Th>
                     <Th>criado em</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
                   {events?.map((event: EventInterface) => (
                     <Tr key={event.id} _hover={{ background: 'gray.100' }} cursor={'pointer'}>
+                      <Td px={0} onClick={() => router.push(`/events/${event.uuid}/details`)}>
+                        <Flex gap={1} alignItems={'center'} flexDirection={'column'}>
+                          <Text fontWeight={'600'} color={'red.300'}>{moment(event.end_date).format('MMMM').toUpperCase()}</Text>
+                          <Text>{moment(event.end_date).format('DD')}</Text>
+                        </Flex>
+                      </Td>
                       <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>
                         <Flex gap={3}>
                           <Box borderRadius={'10px'} overflow={'hidden'}>
-                            <Image objectFit={'cover'} src={`${event.event_image}-md.jpg`} alt={event.name} boxSize="50px" />
+                            <Image objectFit={'cover'} src={`${event.event_image}-md.jpg`} alt={event.name} boxSize="70px" />
                           </Box>
                           <Stack>
                             <Heading color={'blue.700'} size={'xs'}>{event.name}</Heading>
@@ -157,10 +161,6 @@ function Events() {
                       <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>
                         <Badge size={'sm'} background={eventStatus[event.status as string].color}>{eventStatus[event.status as string].label}</Badge>
                       </Td>
-                      <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{event.impressions}</Td>
-                      <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{event.clicks}</Td>
-                      <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{eventDateFormatter(event).fully}</Td>
-                      <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>{moment(event.end_date).format('L')}</Td>
                     </Tr>
                   ))}
                 </Tbody>

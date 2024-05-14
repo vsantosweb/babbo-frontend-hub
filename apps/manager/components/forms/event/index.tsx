@@ -25,7 +25,6 @@ import container from '@/container';
 import { CustomerEventRepositoryInterface } from '@/interfaces';
 import SponsoredForm from './sponsored-form';
 import TicketForm from './ticket-form';
-import Link from 'next/link';
 
 const eventCustomerService = container.get<CustomerEventRepositoryInterface>('customer-event');
 
@@ -50,7 +49,7 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
             eventForm.setValue('ticket_partner_url', event.ticket_partner_url, { shouldValidate: true });
             eventForm.setValue('start_date', startDate, { shouldValidate: true });
             eventForm.setValue('end_date', endDate, { shouldValidate: true });
-            eventForm.setValue('categories', event.categories.map((x: Record<string, any>) => ({ value: x.id, label: x.name })), { shouldValidate: true })
+            eventForm.setValue('category', {value: event.category, label: event.category}, { shouldValidate: true })
             eventForm.setValue('place.full_address', event.place.formatted_address, { shouldValidate: true });
             eventForm.setValue('place.name', event.place.name, { shouldValidate: true });
             eventForm.setValue('place.address_1', event.place.address_1, { shouldValidate: true });
@@ -86,7 +85,7 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
             start_date: moment(formData.start_date).format('YYYY-MM-DD HH:mm'),
             end_date: moment(formData.end_date).format('YYYY-MM-DD HH:mm'),
             description: formData.description,
-            categories: formData.categories.map((x: { value: string }) => x.value),
+            category: formData.category.value,
         }
 
         if (formData.image) payload.event_image = formData.event_image;
@@ -97,6 +96,7 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
     const handleUpdateEvent = async (formData: Record<string, any>) => {
 
         const payload = getPayload(formData);
+
         await eventCustomerService.updateEvent(payload, event?.id).then((response: Record<string, any>) => {
 
             SessionHelper.redirectWith('/', 'eventUpdated',
@@ -112,7 +112,8 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
             <Flex as={'form'}
                 onSubmit={!event ? eventForm.handleSubmit(handleCreateEvent) : eventForm.handleSubmit(handleUpdateEvent)}
                 gap={4}
-                width={'100%'}
+                width={'930px'}
+                margin={'auto'}
                 flexDirection={{ base: 'column', md: 'row' }}
             >
                 <Stack spacing={4}>

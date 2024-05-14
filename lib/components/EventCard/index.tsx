@@ -73,7 +73,7 @@ export const EventCard = (event: EventInterface) => {
               </Styled.CardEventMutedText>
             </Styled.CardEventDateInfo>
             {/* <span>{event.name}</span> */}
-            <Styled.CardEventTitle><TruncateText text={event?.name} limit={33} /></Styled.CardEventTitle>
+            <Styled.CardEventTitle><TruncateText text={event?.name} limit={26} /></Styled.CardEventTitle>
             <Styled.CardEventMutedText>
               <CiLocationOn /> {event.place_name} - {event.place_city}
             </Styled.CardEventMutedText>

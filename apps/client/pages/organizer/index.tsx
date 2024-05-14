@@ -1,4 +1,5 @@
 import container from "@/container";
+import { EventProvider } from "@/hooks";
 import { PublicOrganizerRepositoryInterface } from "@/interfaces";
 import Layout from "@/layouts";
 import { OrganizerPage } from "@/themes/babbo";
@@ -44,12 +45,14 @@ type OrganizerProps = {
 export default function Organizer({ organizerData, organizerEventsData }: OrganizerProps) {
 
     return (
-        <Layout
-            name='client'
-            image={organizerData?.organizer_avatar}
-            title={`${organizerData?.organizer_name} :: Babbo`}
-            description={organizerData?.organizer_description}>
-            <OrganizerPage events={organizerEventsData} organizerProfile={organizerData} />
-        </Layout>
+        <EventProvider>
+            <Layout
+                name='client'
+                image={organizerData?.organizer_avatar}
+                title={`${organizerData?.organizer_name} :: Babbo`}
+                description={organizerData?.organizer_description}>
+                <OrganizerPage events={organizerEventsData} organizerProfile={organizerData} />
+            </Layout>
+        </EventProvider>
     )
 }

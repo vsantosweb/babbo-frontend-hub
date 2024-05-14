@@ -9,7 +9,10 @@ export const CardEvent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
+  @media(max-width: 768px){
+    margin-bottom: 2em;
+  }
   -khtml-user-select: none !important;
   -o-user-select: none !important;
   -moz-user-select: none !important;
@@ -32,7 +35,7 @@ export const CardEvent = styled.div`
 `;
 export const CardEventImageContainer = styled.div`
   max-height: 430px;
-  height: 430px;
+  height: 330px;
   width: 100%;
   overflow: hidden;
   position: relative;

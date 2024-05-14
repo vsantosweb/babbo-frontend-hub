@@ -27,7 +27,7 @@ import Ticket from 'apps/manager/pages/events/ticket';
 export default function EventInfoForm({ hookForm }: { hookForm: UseFormReturn<any> }) {
 
     const [value, setValue] = useState('');
-    const [categories, setCategories] = useState([]);
+    const [category, setCategories] = useState([]);
 
     const { fetchCategories } = useEvent();
 
@@ -35,7 +35,7 @@ export default function EventInfoForm({ hookForm }: { hookForm: UseFormReturn<an
         fetchCategories().then((response: any) => {
             setCategories(response.data.map((category: Record<string, string>) => ({
                 label: category.name,
-                value: category.id,
+                value: category.name,
             })))
         })
     }, [])
@@ -51,23 +51,20 @@ export default function EventInfoForm({ hookForm }: { hookForm: UseFormReturn<an
                 <FormErrorMessage>{errors?.name?.message as string}</FormErrorMessage>
             </FormControl>
 
-            <FormControl isInvalid={!!errors?.categories}>
-                <FormLabel>O que vai rolar?</FormLabel>
-                <FormHelperText>Selecione até 3 categorias</FormHelperText>
+            <FormControl isInvalid={!!errors?.category}>
+                <FormLabel>Selecione uma categoria</FormLabel>
                 <Controller
-                    name='categories'
+                    name='category'
                     control={control}
                     render={({ field }) => (
                         <Select
                             {...field}
-                            placeholder='Escolha algumas categorias'
-                            isMulti
-                            options={categories}
-                            isOptionDisabled={() => hookForm.getValues('categories') && hookForm.getValues('categories').length >= 3}
+                            placeholder='Categoria do evento'
+                            options={category}
                         />
                     )}
                 />
-                <FormErrorMessage>{errors?.categories?.message as string}</FormErrorMessage>
+                <FormErrorMessage>{errors?.category?.message as string}</FormErrorMessage>
             </FormControl>
 
             <Stack flexDirection={{ base: 'column', md: 'row' }} spacing={6}>
@@ -92,7 +89,7 @@ f
                         <ReactQuill {...field} theme="snow" value={field.value} onChange={(value: any) => field.onChange(value)} />
                     )}
                 />
-                <FormErrorMessage>{errors?.categories?.message as string}</FormErrorMessage>
+                <FormErrorMessage>{errors?.category?.message as string}</FormErrorMessage>
             </FormControl>
 
         </Stack>

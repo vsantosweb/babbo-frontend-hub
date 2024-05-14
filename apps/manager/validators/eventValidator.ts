@@ -5,7 +5,7 @@ Yup.setLocale(pt);
 
 export const eventValidatorSchema = {
     name: Yup.string().required('O nome do evento é obrigatório'),
-    categories: Yup.array().min(1, 'Selecione pelo menos uma categoria').required('Campo obrigatório'),
+    category: Yup.object().required('Campo obrigatório'),
     start_date: Yup.date()
         .nullable()
         .typeError('Data de início é obrigatória')

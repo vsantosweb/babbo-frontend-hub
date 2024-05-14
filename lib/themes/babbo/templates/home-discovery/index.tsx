@@ -29,7 +29,7 @@ export function HomeDiscovery({ dataDiscovery }: {
   const { loading } = useEvent();
 
   const renderWithAdSense = (event: EventInterface, index: number) => {
-    if (index > 0 && index % 8 === 0) {
+    if (index > 0 && index % 10 === 0) {
       return (
 
         <GridItem key={`${index}-${event.uuid}`} >
@@ -58,7 +58,7 @@ export function HomeDiscovery({ dataDiscovery }: {
         <Heading fontWeight={'300'} size={'lg'}>Os melhores eventos da sua região em um só lugar</Heading>
       </div>
       <Grid className='app-wrapper' templateColumns={{
-        lg: 'repeat(4, minmax(0, 1fr))',
+        lg: 'repeat(5, minmax(0, 1fr))',
         md: 'repeat(2, minmax(0, 1fr))',
         sm: 'repeat(1, minmax(0, 1fr))',
       }}
