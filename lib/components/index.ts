@@ -21,6 +21,9 @@ export * from './OrganizerLeadForm';
 export * from './AvatarImageUpload';
 export * from './DateLabel';
 export * from './DateLabelButton';
+export * from './SliderEvents';
+
+
 
 
 

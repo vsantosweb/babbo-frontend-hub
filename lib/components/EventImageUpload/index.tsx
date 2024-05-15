@@ -86,7 +86,7 @@ export function EventImageUpload({ hookForm }: { hookForm: UseFormReturn<any> })
                                 <Stack p={2} textAlign={'center'}>
                                     <Heading size='md'>Imagem do evento</Heading>
                                     <Text size={'xs'}>Arraste sua imagem aqui, ou clique para selecionar os arquivos.</Text>
-                                    <Text><small>A dimensão recomendada é de <strong>500 x 750</strong> ou tamanhos similares nas postagens de status.</small></Text>
+                                    <Text><small>A dimensão recomendada é de <strong>500 x 750</strong> ou tamanhos similares nas postagens de instagram ou facebook.</small></Text>
                                 </Stack>
                             </Flex>
                         )}

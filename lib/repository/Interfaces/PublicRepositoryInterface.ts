@@ -20,4 +20,10 @@ export interface PublicRepositoryInterface extends EventRepositoryInterface {
     */
     createLead(formData: Record<string, any>): Promise<any>;
 
+    /**
+    * Vitrine de eventos
+    * @returns {Promise<any>}
+    */
+    showcase(params?: Record<string, string>): Promise<any>
+
 }

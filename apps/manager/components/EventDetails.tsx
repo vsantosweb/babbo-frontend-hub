@@ -37,14 +37,14 @@ const EventDetails = ({ event, handleDelete }: { event?: EventInterface, handleD
         <HStack>
           <HiLocationMarker /> <span>{event?.full_address}</span>
         </HStack>
-        <Box>
+        {/* <Box>
           <Button 
           leftIcon={<IoTicket />} 
           as={Link}
           href={`/events/${event.uuid}/tickets`}
           colorScheme='red' 
           size={'sm'}>Venda de ingressos</Button>
-        </Box>
+        </Box> */}
       </Stack>
       <Flex justifyContent={'flex-end'} flex={1}>
         <HStack spacing={3}>

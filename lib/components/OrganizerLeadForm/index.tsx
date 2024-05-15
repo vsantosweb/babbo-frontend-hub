@@ -17,12 +17,14 @@ import {
     UseDisclosureProps,
     Box,
     Text,
+    FormHelperText,
 } from '@chakra-ui/react'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import ReCAPTCHA from "react-google-recaptcha";
 import { Controller, useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 import { ResultMessage } from '../ResultMessage';
+import { useRouter } from 'next/router';
 
 
 const publicService = container.get<PublicRepositoryInterface>('public');
@@ -31,16 +33,25 @@ export function OrganizerLeadForm({ useDisclosure }: { useDisclosure: UseDisclos
 
     const { handleSubmit, reset, setValue, register, control, formState } = useForm({ mode: 'onChange' });
 
-    const { isOpen, onClose } = useDisclosure
+    const router = useRouter();
+
+    const { isOpen, onClose, onOpen } = useDisclosure
     const initialRef = useRef(null);
     const finalRef = useRef(null);
     // console.log(v.replace(/[^\d]/g, ''))
 
+    useEffect(() => {
+
+        if (router.query?.preRegister) {
+
+            onOpen && onOpen();
+        }
+
+    }, [router])
+
     const handleSubmitLead = async (formData: Record<string, any>) => {
 
-        await publicService.createLead(formData).then(response => {
-            console.log(response)
-        })
+        await publicService.createLead(formData)
     }
 
     return (
@@ -57,21 +68,26 @@ export function OrganizerLeadForm({ useDisclosure }: { useDisclosure: UseDisclos
                 {!formState.isSubmitSuccessful ?
                     <>
                         <ModalHeader>Preencha o formulário, nós entraremos em contato com você</ModalHeader>
+                        <ModalCloseButton />
 
                         <form onSubmit={handleSubmit(handleSubmitLead)}>
-                            <ModalCloseButton />
                             <ModalBody pb={6}>
                                 <Stack spacing={4}>
-                                    <FormControl>
-                                        <FormLabel>Seu nome ou produtora</FormLabel>
-                                        <Input {...register('name', { required: true })} placeholder='Ex: John Eventos, Jonh Doe' />
+                                    <FormControl isRequired={true}>
+                                        <FormLabel>Seu nome</FormLabel>
+                                        <Input maxLength={50} {...register('name', { required: true })} placeholder='Digite seu nome' />
                                     </FormControl>
 
                                     <FormControl>
-                                        <FormLabel>Email</FormLabel>
-                                        <Input {...register('email', { required: true })} type={'email'} placeholder='Digite seu email' />
+                                        <FormLabel>Nome da produtora (Opcional)</FormLabel>
+                                        <Input maxLength={50} {...register('organizer_name')} placeholder='Ex: Patrick Eventos, Maria Produções' />
                                     </FormControl>
-                                    <FormControl>
+
+                                    <FormControl isRequired={true}>
+                                        <FormLabel>Email</FormLabel>
+                                        <Input maxLength={50} {...register('email', { required: true })} type={'email'} placeholder='Digite seu email' />
+                                    </FormControl>
+                                    <FormControl isRequired={true}>
                                         <FormLabel>Celular/WhatsApp</FormLabel>
                                         <Input as={InputMask}
                                             alwaysShowMask={false}
@@ -87,7 +103,8 @@ export function OrganizerLeadForm({ useDisclosure }: { useDisclosure: UseDisclos
                                     </FormControl>
                                     <FormControl>
                                         <FormLabel>Perfil do instagram (opcional)</FormLabel>
-                                        <Input {...register('social_link')} placeholder='https://instagram.com' />
+                                        <FormHelperText mb={4}>Importante para deixar seu perfil mais completo</FormHelperText>
+                                        <Input maxLength={50} {...register('social_link')} placeholder='https://instagram.com' />
                                     </FormControl>
                                     <Flex justifyContent={'center'} width={'100%'} >
                                         <Controller

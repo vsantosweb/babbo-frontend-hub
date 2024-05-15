@@ -2,7 +2,7 @@ import Layout from '@/layouts';
 import { EventProvider, useEvent, useUserLocation } from '@/hooks';
 import { Suspense, useEffect, useState } from 'react';
 import { Container } from 'react-grid-system';
-import { HomeDiscovery } from '@/themes/babbo';
+import { HomeDiscovery, HomeSegmented } from '@/themes/babbo';
 import { EventInterface, OrganizerType } from '@/types';
 import {
   Box, Button,
@@ -17,11 +17,12 @@ import {
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import { GoogleAdSense, OrganizerLeadForm } from '@/components';
 import container from '@/container';
-import { PublicOrganizerRepositoryInterface } from '@/interfaces';
+import { PublicOrganizerRepositoryInterface, PublicRepositoryInterface } from '@/interfaces';
 import { AxiosResponse } from 'axios';
 import Link from 'next/link';
 
 const publicOrganizerContainer = container.get<PublicOrganizerRepositoryInterface>('public-organizer');
+const eventService = container.get<PublicRepositoryInterface>('public');
 
 
 type GeoLocation = {
@@ -37,6 +38,7 @@ export function Home() {
   const [skip, setSkip] = useState(0); // Número de eventos a serem ignorados (para paginação)
   const [total, setTotal] = useState(0);
   const [currentLocation, setCurrentLocation] = useState<Record<string, any>>();
+  const [eventShowcase, setEventShowcase] = useState<Record<string, any>>();
 
   const { userRegion, userCoordinates, userLocation } = useUserLocation();
 
@@ -45,7 +47,6 @@ export function Home() {
   const useDisclosureorganizerLeadForm = useDisclosure();
 
   useEffect(() => {
-
 
     if (currentLocation !== userLocation) setSkip(0);
 
@@ -58,14 +59,14 @@ export function Home() {
   }, [userLocation, currentLocation]);
 
   // useEffect(() => {
-  //   setSkip(0)
-  // },[userLocation])
-
-  // setEvents([...events, ...response.data])
+  //   eventService.showcase().then((response: AxiosResponse) => {
+  //     setEventShowcase(response.data);
+  //   })
+  // }, [])
+  
   useEffect(() => {
 
     publicOrganizerContainer.organizerShowcase().then((response: AxiosResponse) => {
-
       setOrganizerShowcase(response.data.data)
     })
 
@@ -90,7 +91,7 @@ export function Home() {
 
   return (
     <Layout
-      title={'Babbo - Encontre bares, baladas, shows e muito mais aqui'}
+      title={'Babbo :: Encontre bares, baladas, shows e muito mais aqui'}
       name={'client'}
       description={'Babbo Eventos'}
       keywords={'guia,baladas,shows,roles,festas,party,bares'}
@@ -102,22 +103,24 @@ export function Home() {
           <GoogleAdSense adClient={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_KEY as string} adSlot={'2752189175'} />
         </Box>
 
+        {/* <HomeSegmented showcase={eventShowcase} /> */}
         <HomeDiscovery dataDiscovery={events} />
         {total !== events?.length &&
-          <Box textAlign={'center'}>
-            <Button variant={'ghost'} isLoading={loading} onClick={loadMore}>Carregar mais</Button>
-          </Box>
+          <Stack spacing={4} textAlign={'center'}>
+            <Heading fontWeight={'500'} size={'md'}> Continue explorando nossos eventos</Heading>
+            <Box><Button variant={'outline'} isLoading={loading} onClick={loadMore}>Carregar mais eventos</Button></Box>
+          </Stack>
         }
 
-        <Stack m={'auto'} spacing={{ base: 0, md: 4 }} maxW='52rem'>
-          <Heading textAlign={{ md: 'center' }} size={{ base: 'md', md: 'lg' }} mb={2}>Uma nova ferramenta gratuita para<br /> divulgar <Text as={'span'} color={'primary.500'}>seus eventos</Text></Heading>
+        <Stack m={'auto'} mt={10} spacing={{ base: 0, md: 4 }} maxW='52rem'>
+          <Heading textAlign={{ md: 'center' }} size={{ base: 'md', md: 'lg' }} fontWeight={'500'} mb={2}>Uma nova ferramenta gratuita para<br /> divulgar <Text as={'span'} color={'primary.500'}>seus eventos</Text></Heading>
           <Flex gap={8} direction={{ md: 'column' }} alignItems={'center'}>
             <Stack alignItems={{ md: 'center' }} spacing={6}>
               <Text fontSize={{ base: 'md', md: 'lg' }} textAlign={{ md: 'center' }} fontWeight={'600'}>
                 O Babbo é a plataforma perfeita para divulgar e promover seu evento. Comece agora e alcance mais pessoas!
               </Text>
               <Box textAlign={{ base: 'center' }}>
-                <Button id="start" size={{ base: 'md', md: 'lg' }} onClick={useDisclosureorganizerLeadForm.onOpen} colorScheme='green'>Comece agora</Button>
+                <Button id="start" size={{ base: 'md', md: 'md' }} onClick={useDisclosureorganizerLeadForm.onOpen} colorScheme='green'>Comece agora</Button>
               </Box>
               <Stack>
                 <AvatarGroup size='md' max={5}>

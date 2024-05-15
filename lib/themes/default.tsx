@@ -204,7 +204,7 @@ const charkaExtendThemeConfig = {
     },
     FormLabel: {
       baseStyle: {
-        margin: 2,
+        marginBottom: 2,
       },
     },
   },

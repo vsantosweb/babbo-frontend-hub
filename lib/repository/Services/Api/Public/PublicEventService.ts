@@ -9,6 +9,7 @@ import { injectable } from 'inversify';
  */
 @injectable()
 export class PublicEventService implements PublicRepositoryInterface {
+
   protected api: AxiosInstance;
 
   /**
@@ -113,6 +114,20 @@ export class PublicEventService implements PublicRepositoryInterface {
   async categories(): Promise<any> {
     try {
       const response = await this.api.get<any>(`/event-categories`);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao obter banners de eventos:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Retorna uma lista de categorias/tipos de eventos.
+   * @returns {Promise<any>}
+   */
+  async showcase(params?: Record<string, string>): Promise<any> {
+    try {
+      const response = await this.api.get<any>(`/showcase/${new URLSearchParams(params)}`);
       return response.data;
     } catch (error) {
       console.error('Erro ao obter banners de eventos:', error);

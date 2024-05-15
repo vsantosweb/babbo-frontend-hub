@@ -46,8 +46,9 @@ export default function EventInfoForm({ hookForm }: { hookForm: UseFormReturn<an
     return (
         <Stack spacing={8}>
             <FormControl isInvalid={!!errors?.name}>
-                <FormLabel>Nome o evento</FormLabel>
-                <Input {...register('name')} type="text" />
+                <FormLabel m={0}>Qual o nome do evento?</FormLabel>
+                <FormHelperText mb={6}>Este será o título do seu evento. Seu título será usado para ajudar nas buscas do site, seja especifico e criativo!</FormHelperText>
+                <Input maxLength={70} {...register('name')} type="text" />
                 <FormErrorMessage>{errors?.name?.message as string}</FormErrorMessage>
             </FormControl>
 
@@ -79,7 +80,7 @@ export default function EventInfoForm({ hookForm }: { hookForm: UseFormReturn<an
                     <FormErrorMessage>{errors?.end_date?.message as string}</FormErrorMessage>
                 </FormControl>
             </Stack>
-f 
+            f
             <FormControl>
                 <FormLabel>Descrição</FormLabel>
                 <Controller

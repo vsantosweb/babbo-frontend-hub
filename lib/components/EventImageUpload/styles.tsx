@@ -10,10 +10,9 @@ export const StyledDropZone = styled(Flex)`
   justify-content: center;
   height: 416px;
   width: 300px;
-  border:solid 1px;
+  border:dashed 1px #ddd;
   border-radius: ${({ theme }: {theme:any}) => theme.defaultRadius};
   border-color: ${({ reject, theme }: any) => reject === 'true' ? 'red' : theme.colors.primary};
-  border-style: dashed;
   background-color: #fafafa;
   outline: none;
   transition: border .24s ease-in-out;

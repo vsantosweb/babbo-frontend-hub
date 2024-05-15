@@ -9,7 +9,7 @@ export default function TicketForm() {
 
     return (
         <Stack>
-            <Checkbox {...register('tickets_for_sale')} isChecked={watch('tickets_for_sale')} colorScheme='primary'>Vender ingressos no Babbo</Checkbox>
+            {/* <Checkbox {...register('tickets_for_sale')} isChecked={watch('tickets_for_sale')} colorScheme='primary'>Vender ingressos no Babbo</Checkbox> */}
             {watch('tickets_for_sale') && <Ticket />}
 
             <Checkbox {...register('has_external_ticket')} isChecked={watch('has_external_ticket')} colorScheme='primary'>Vendas de ingressos com site parceiro</Checkbox>
@@ -31,7 +31,7 @@ export default function TicketForm() {
                             <InputLeftElement color='gray.300' pointerEvents='none'>
                                 <ExternalLinkIcon />
                             </InputLeftElement>
-                            <Input {...register('ticket_partner_url')} placeholder='Endereço para compra do ingresso' />
+                            <Input {...register('ticket_partner_url')} placeholder='Link para compra do ingresso' />
                         </InputGroup>
                         <FormErrorMessage>{errors?.ticket_partner_url?.message as string}</FormErrorMessage>
                     </FormControl>

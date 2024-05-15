@@ -113,6 +113,7 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
                 onSubmit={!event ? eventForm.handleSubmit(handleCreateEvent) : eventForm.handleSubmit(handleUpdateEvent)}
                 gap={4}
                 width={'930px'}
+                maxWidth={'100%'}
                 margin={'auto'}
                 flexDirection={{ base: 'column', md: 'row' }}
             >
@@ -126,13 +127,12 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
                 <Stack flex={1} spacing={8}>
 
                     <Stack spacing={4}>
-                        <Heading size={'lg'}>Endereço</Heading>
+                        <Heading size={'md'}>Endereço</Heading>
                         <AddressForm hookForm={eventForm} />
                     </Stack>
 
 
                     <Stack spacing={4}>
-                        <Heading size={'lg'}>Informações do evento</Heading>
                         <EventInfoForm hookForm={eventForm} />
                     </Stack>
                     <Divider />
