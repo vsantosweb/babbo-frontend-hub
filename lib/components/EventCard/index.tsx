@@ -37,7 +37,7 @@ export const EventCard = (event: EventInterface) => {
 
     eventService.eventInteraction('click', event.uuid as string)
   }
-
+  
   return (
     event ? <Link
       onClick={handleClickInteraction}
@@ -75,7 +75,7 @@ export const EventCard = (event: EventInterface) => {
             {/* <span>{event.name}</span> */}
             <Styled.CardEventTitle><TruncateText text={event?.name} limit={26} /></Styled.CardEventTitle>
             <Styled.CardEventMutedText>
-              <CiLocationOn /> {event.place_name} - {event.place_city}
+              <CiLocationOn /> <TruncateText text={`${event.place_name} - ${event.place_city}`} limit={27} /> 
             </Styled.CardEventMutedText>
           </Styled.CardEventDetails>
           <Styled.CardEventInfo></Styled.CardEventInfo>

@@ -23,7 +23,7 @@ export interface LayoutProps {
 
 const Layout = ({ children, name, title, description, image,keywords }: LayoutProps) => {
   const Component = layouts[name];
-  return <Component title={title} description={description} image={image} keywords={keywords}>{children}</Component>;
+  return <Component title={title} description={description || ''} image={image} keywords={keywords}>{children}</Component>;
 };
 
 export default Layout;

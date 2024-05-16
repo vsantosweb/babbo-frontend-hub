@@ -58,7 +58,7 @@ function EventShow({ eventData, relatedEvents }: Record<string, any>) {
 
   //   redirect();
   // }, [eventData.uuid]);
-
+  
   return (
     <Layout
       title={eventData?.name}

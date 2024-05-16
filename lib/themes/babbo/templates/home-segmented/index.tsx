@@ -18,11 +18,10 @@ const mediaSizes = {
 
 export function HomeSegmented({ showcase }: { showcase: any }) {
 
-  console.log(showcase, 'showcase')
   return (
     <div className='app-wrapper'>
       <SliderEvents title={'Eventos em alta 🔥'} events={showcase?.hot_events} />
-      <SliderEvents title={'Eventos em destaque 💎'} events={showcase?.featured_events} />
+      {/* <SliderEvents title={'Eventos em destaque 💎'} events={showcase?.featured_events} /> */}
       <SliderEvents title={'Eventos da semana'} events={showcase?.week_events} />
     </div>
   );

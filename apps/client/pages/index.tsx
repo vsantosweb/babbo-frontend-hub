@@ -46,24 +46,24 @@ export function Home() {
 
   const useDisclosureorganizerLeadForm = useDisclosure();
 
-  useEffect(() => {
-
-    if (currentLocation !== userLocation) setSkip(0);
-
-    fetchEvents({ skip: skip, limit: limit, ...userLocation }).then((response: any) => {
-      setTotal(response.total);
-      setEvents(response.data);
-      setCurrentLocation(userLocation);
-    });
-
-  }, [userLocation, currentLocation]);
-
   // useEffect(() => {
-  //   eventService.showcase().then((response: AxiosResponse) => {
-  //     setEventShowcase(response.data);
-  //   })
-  // }, [])
-  
+
+  //   if (currentLocation !== userLocation) setSkip(0);
+
+  //   fetchEvents({ skip: skip, limit: limit, ...userLocation }).then((response: any) => {
+  //     setTotal(response.total);
+  //     setEvents(response.data);
+  //     setCurrentLocation(userLocation);
+  //   });
+
+  // }, [userLocation, currentLocation]);
+
+  useEffect(() => {
+    eventService.showcase({...userLocation}).then((response: AxiosResponse) => {
+      setEventShowcase(response.data);
+    })
+  }, [userLocation])
+
   useEffect(() => {
 
     publicOrganizerContainer.organizerShowcase().then((response: AxiosResponse) => {
@@ -103,14 +103,14 @@ export function Home() {
           <GoogleAdSense adClient={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_KEY as string} adSlot={'2752189175'} />
         </Box>
 
-        {/* <HomeSegmented showcase={eventShowcase} /> */}
-        <HomeDiscovery dataDiscovery={events} />
-        {total !== events?.length &&
+        <HomeSegmented showcase={eventShowcase} />
+        {/* <HomeDiscovery dataDiscovery={events} /> */}
+        {/* {total !== events?.length &&
           <Stack spacing={4} textAlign={'center'}>
             <Heading fontWeight={'500'} size={'md'}> Continue explorando nossos eventos</Heading>
             <Box><Button variant={'outline'} isLoading={loading} onClick={loadMore}>Carregar mais eventos</Button></Box>
           </Stack>
-        }
+        } */}
 
         <Stack m={'auto'} mt={10} spacing={{ base: 0, md: 4 }} maxW='52rem'>
           <Heading textAlign={{ md: 'center' }} size={{ base: 'md', md: 'lg' }} fontWeight={'500'} mb={2}>Uma nova ferramenta gratuita para<br /> divulgar <Text as={'span'} color={'primary.500'}>seus eventos</Text></Heading>
@@ -124,8 +124,9 @@ export function Home() {
               </Box>
               <Stack>
                 <AvatarGroup size='md' max={5}>
-                  {organizerShowcase && organizerShowcase.map(organizer =>
+                  {organizerShowcase && organizerShowcase?.map((organizer, index) =>
                     <Avatar
+                      key={index}
                       as={Link}
                       href={`/organizer?trackid=${organizer.uuid}`}
                       target='_blank'

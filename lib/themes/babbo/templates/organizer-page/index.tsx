@@ -1,4 +1,4 @@
-import { EventCard, ResultMessage } from "@/components";
+import { CopyLinkButton, EventCard, ResultMessage } from "@/components";
 import { theme } from "@/themes/default";
 import { EventInterface } from "@/types";
 import { Avatar, Box, Button, Flex, Heading, IconButton, Stack, Text, Tabs, TabList, TabPanels, Tab, TabPanel, Grid, GridItem, Link } from "@chakra-ui/react";
@@ -26,12 +26,9 @@ export function OrganizerPage({ events, organizerProfile }: { events?: EventInte
                     <Stack flex={1} spacing={2}>
                         <Flex justifyContent={{ base: 'center', md: 'flex-start' }} alignItems={'center'} gap={3}>
                             <Heading size={'lg'}>{organizerProfile.organizer_name}</Heading>
-                            <IconButton
-                                as={Link}
-                                href={`mailto:${organizerProfile.organizer_email}`}
-                                aria-label='organizer-contact'
-                                icon={<FaEnvelope />}
-                            />
+
+                            <CopyLinkButton link={`${process.env.NEXT_PUBLIC_URL}/organizer?trackid=${organizerProfile.uuid}`} />
+
                         </Flex>
                         <Text>{eventCountText}</Text>
                         <Text as={Link} target={'_parent'} href={organizerProfile.organizer_instagram}>{organizerProfile.organizer_instagram}</Text>

@@ -127,7 +127,7 @@ export class PublicEventService implements PublicRepositoryInterface {
    */
   async showcase(params?: Record<string, string>): Promise<any> {
     try {
-      const response = await this.api.get<any>(`/showcase/${new URLSearchParams(params)}`);
+      const response = await this.api.get<any>(`/showcase?${new URLSearchParams(params)}`);
       return response.data;
     } catch (error) {
       console.error('Erro ao obter banners de eventos:', error);

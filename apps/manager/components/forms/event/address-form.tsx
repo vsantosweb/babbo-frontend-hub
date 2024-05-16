@@ -14,7 +14,6 @@ import { Search2Icon } from '@chakra-ui/icons';
 export default function AddressForm({ hookForm }: { hookForm: any }) {
   const {
     register,
-    control,
     setValue,
     formState: { errors },
   } = hookForm;
@@ -29,8 +28,10 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
       setValue('place.address_1', address[1]?.long_name || '', { shouldValidate: true });
       setValue('place.address_2', address[2]?.long_name || '', { shouldValidate: true });
       setValue('place.city', address[3]?.long_name || '', { shouldValidate: true });
+      setValue('place.name', place.name || '', { shouldValidate: true });
       setValue('place.state', address[4]?.short_name || '', { shouldValidate: true });
       setValue('place.address_number', address[0]?.long_name || '', { shouldValidate: true });
+      setValue('place.geolocation', `${place?.geometry?.location?.lat()}, ${place?.geometry?.location?.lng()}`)
     }
   }, [address, setValue]);
   
@@ -59,6 +60,8 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
             />
             <FormErrorMessage>{errors?.place?.name?.message as string}</FormErrorMessage>
           </FormControl>
+
+          <input type={'hidden'} {...register('place.geolocation')} />
 
           <FormControl isInvalid={!!errors?.place?.zipcode}>
             <FormLabel>CEP</FormLabel>
