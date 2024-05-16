@@ -36,6 +36,7 @@ export default function EventPoster({ event }: { event: EventInterface }) {
                 as={'img'}
                 borderRadius={{ base: '0', md: 'xl' }}
                 alt={event?.name as string}
+                width={{base: '100%', lg: '320px'}}
                 boxShadow={{
                     base: 'none',
                     md: 'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px',
@@ -45,7 +46,6 @@ export default function EventPoster({ event }: { event: EventInterface }) {
                 // sizes="(max-width: 767px) 95vw, (max-width: 991px) 90vw, 50vw"
                 className="event-banner-img"
                 style={{
-                    width: '100%',
                     maxWidth: '100%',
                     height: '480px',
                     objectFit: 'cover',
