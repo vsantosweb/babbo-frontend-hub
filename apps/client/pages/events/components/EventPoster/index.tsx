@@ -1,4 +1,4 @@
-import { Sharebutton } from "@/components";
+import { CopyLinkButton, Sharebutton } from "@/components";
 import { useEventShare } from "@/hooks";
 import { EventInterface } from "@/types";
 import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
@@ -53,14 +53,7 @@ export default function EventPoster({ event }: { event: EventInterface }) {
                 mt={-15}
                 left={0}
             >
-                <Button rightIcon={<FaShareAlt />}
-                    onClick={() => handleShareClick({
-                        id: event?.uuid,
-                        title: event?.name,
-                        text: event?.description,
-                        url: router.asPath,
-                    })}
-                >Compartilhar</Button>
+                <CopyLinkButton mode='button' link={process.env.NEXT_PUBLIC_URL + router.asPath as string} />
 
             </Box>
         </Box>

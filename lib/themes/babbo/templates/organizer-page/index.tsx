@@ -27,7 +27,7 @@ export function OrganizerPage({ events, organizerProfile }: { events?: EventInte
                         <Flex justifyContent={{ base: 'center', md: 'flex-start' }} alignItems={'center'} gap={3}>
                             <Heading size={'lg'}>{organizerProfile.organizer_name}</Heading>
 
-                            <CopyLinkButton link={`${process.env.NEXT_PUBLIC_URL}/organizer?trackid=${organizerProfile.uuid}`} />
+                            <CopyLinkButton mode={'icon-button'} link={`${process.env.NEXT_PUBLIC_URL}/organizer?trackid=${organizerProfile.uuid}`} />
 
                         </Flex>
                         <Text>{eventCountText}</Text>
