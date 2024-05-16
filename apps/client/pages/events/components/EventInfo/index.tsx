@@ -36,10 +36,10 @@ export default function EventInfo({ event }: { event: EventInterface }) {
                   >
                     <HiLocationMarker />
                   </Box>
-
+                  
                   <Link
                     target="_blank"
-                    href={`https://google.com/maps/dir/${event?.full_address}`}
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${event?.full_address}`}
                   >
                     <Flex gap={1} direction={'column'}>
                       <Heading size={'sm'}><Flex alignItems={'center'} gap={2}>{event?.place_name}<FaDirections  /></Flex></Heading>

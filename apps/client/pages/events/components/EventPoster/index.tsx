@@ -1,20 +1,36 @@
-import { CopyLinkButton, Sharebutton } from "@/components";
-import { useEventShare } from "@/hooks";
+import { CopyLinkButton } from "@/components";
 import { EventInterface } from "@/types";
-import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
-import { Box, Button, IconButton } from "@chakra-ui/react";
+import { Box, IconButton, useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { FaArrowLeft, FaShareAlt } from "react-icons/fa";
+import { FaArrowLeft, FaExpand } from "react-icons/fa";
+import { Lightbox } from "react-modal-image";
+declare module 'react-modal-image' {
+    export interface ModalImageProps {
+        onClose?: () => void;
+    }
+}
 
 export default function EventPoster({ event }: { event: EventInterface }) {
 
+    const { onOpen, isOpen, onClose } = useDisclosure();
+
     const router = useRouter();
-    const { handleShareClick } = useEventShare();
+    
     return (
         <Box
             borderRadius={{ base: '0', md: 'xl' }}
             position={'relative'}
         >
+            {isOpen && <Lightbox
+                medium={`${event?.event_image}-md.jpg`}
+                large={`${event?.event_image}-lg.jpg`}
+                small={`${event?.event_image}-sm.jpg`}
+                alt={event?.name}
+                onClose={onClose}
+                hideZoom={true}
+                hideDownload={true}
+            />}
+
             {/* Imagem com resolução alta para telas grandes */}
             <Box
                 as={'img'}
@@ -46,6 +62,26 @@ export default function EventPoster({ event }: { event: EventInterface }) {
                 aria-label='back'
                 icon={<FaArrowLeft />}
             />
+            <Box
+                position={'absolute'}
+                right={0}
+                top={0}
+                m={3}
+                textAlign={'center'}
+            >
+
+                <IconButton
+                    size={'sm'}
+                    onClick={onOpen}
+                    boxShadow={'md'}
+                    variant={'solid'}
+                    background="white"
+                    color='black'
+                    aria-label='expand-image'
+                    icon={<FaExpand />} />
+
+            </Box>
+
             <Box
                 position={'absolute'}
                 right={0}
