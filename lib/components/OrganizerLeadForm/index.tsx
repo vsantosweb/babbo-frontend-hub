@@ -131,8 +131,8 @@ export function OrganizerLeadForm({ useDisclosure }: { useDisclosure: UseDisclos
 
                         <Stack spacing={8} p={4}>
                             <ResultMessage
-                                title={'Seu cadastro foi enviado!'}
-                                description={'Em breve entraremos em contato para continuar com o cadastro.'}
+                                title={'Seu cadastro foi enviado para a nossa equipe'}
+                                description={'Obrigado por dar esse passo! 🌟 Em breve, estaremos em contato para dar continuidade ao seu cadastro. Estamos ansiosos para divulgar seus eventos! 😊'}
                             />
                             <Button onClick={() => onClose && [onClose(), reset()]}>Fechar</Button>
                         </Stack>

@@ -1,18 +1,8 @@
 import Layout from '@/layouts';
 import { theme } from '@/themes/default';
-import { Box, Flex, Heading, Stack, Text, Button, Link } from '@chakra-ui/react';
-import { IoCalendar } from 'react-icons/io5';
-import { HiLocationMarker } from 'react-icons/hi';
-import { FaShareAlt } from 'react-icons/fa';
-import { FaTicketAlt } from 'react-icons/fa';
-import { Loader, RelatedEvents, Sharebutton, TruncateText } from '@/components';
-import * as Styled from './styles';
-import { EventProvider, useEvent } from '@/hooks';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { EventInterface } from '@/types';
-import moment from 'moment';
-import Image from 'next/image';
+import { Box, Flex, Heading, Stack, Link } from '@chakra-ui/react';
+import { Loader, RelatedEvents } from '@/components';
+import { EventProvider } from '@/hooks';
 import EventPoster from './components/EventPoster';
 import EventInfo from './components/EventInfo';
 import EventDetails from './components/EventDetails';
@@ -106,7 +96,7 @@ function EventShow({ eventData, relatedEvents }: Record<string, any>) {
               <strong>Organizador:</strong> <Link href={`/organizer?trackid=${eventData.organizer.organizer_id}`}>{eventData.organizer.organizer_name}</Link>
             </Box>
           </Stack>
-          {relatedEvents === null || relatedEvents.length > 0 && <RelatedEvents relatedEvents={relatedEvents} />}
+          {relatedEvents === null || relatedEvents.length > 0 && <RelatedEvents title={`Eventos relacionados`} relatedEvents={relatedEvents} />}
         </Stack>
       </Stack>}
     </Layout>

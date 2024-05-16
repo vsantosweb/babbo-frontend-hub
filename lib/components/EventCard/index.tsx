@@ -27,7 +27,7 @@ export const EventCard = (event: EventInterface) => {
 
     handleShareClick({
       title: event?.name,
-      text: event?.description,
+      // text: event?.description,
       url: `${process.env.NEXT_CLIENT_URL}/events/${event.slug}?id=${event.uuid}`,
       id: event.uuid
     })

@@ -1,18 +1,10 @@
 import Layout from '@/layouts';
 import { EventProvider, useEvent, useUserLocation } from '@/hooks';
-import { Suspense, useEffect, useState } from 'react';
-import { Container } from 'react-grid-system';
-import { HomeDiscovery, HomeSegmented } from '@/themes/babbo';
+import { useEffect, useState } from 'react';
+import { HomeSegmented } from '@/themes/babbo';
 import { EventInterface, OrganizerType } from '@/types';
 import {
-  Box, Button,
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton, useDisclosure, Input, Heading, Text, Stack, Flex, AvatarGroup, Avatar, UseDisclosureProps
+  Box, Button, useDisclosure, Heading, Text, Stack, Flex, AvatarGroup, Avatar, UseDisclosureProps
 } from '@chakra-ui/react';
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import { GoogleAdSense, OrganizerLeadForm } from '@/components';
@@ -20,6 +12,7 @@ import container from '@/container';
 import { PublicOrganizerRepositoryInterface, PublicRepositoryInterface } from '@/interfaces';
 import { AxiosResponse } from 'axios';
 import Link from 'next/link';
+import { GetServerSidePropsContext } from 'next';
 
 const publicOrganizerContainer = container.get<PublicOrganizerRepositoryInterface>('public-organizer');
 const eventService = container.get<PublicRepositoryInterface>('public');
@@ -29,20 +22,37 @@ type GeoLocation = {
   lat: number | undefined;
   lng: number | undefined
 }
-export function Home() {
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+
+  const { query } = context;
 
 
-  const { fetchEvents, loading } = useEvent();
+  const showcase = await eventService.showcase();
+
+  const organizerShowcase = await publicOrganizerContainer.organizerShowcase();
+  console.log(showcase.data, 'showcase');
+
+
+  return {
+    props: {
+      showcase: showcase.data,
+      organizerShowcase: organizerShowcase.data.data
+    }
+  };
+
+}
+export default function Index({ showcase, organizerShowcase }: {showcase: any, organizerShowcase: any}) {
+
   const [events, setEvents] = useState<EventInterface[] | null>(null);
   const [limit, setLimit] = useState(10); // Número de eventos a serem buscados por requisição
   const [skip, setSkip] = useState(0); // Número de eventos a serem ignorados (para paginação)
   const [total, setTotal] = useState(0);
   const [currentLocation, setCurrentLocation] = useState<Record<string, any>>();
-  const [eventShowcase, setEventShowcase] = useState<Record<string, any>>();
+  const [eventShowcase, setEventShowcase] = useState<Record<string, any>>(showcase);
 
   const { userRegion, userCoordinates, userLocation } = useUserLocation();
 
-  const [organizerShowcase, setOrganizerShowcase] = useState<OrganizerType[] | null>();
 
   const useDisclosureorganizerLeadForm = useDisclosure();
 
@@ -64,23 +74,15 @@ export function Home() {
     })
   }, [userLocation])
 
-  useEffect(() => {
-
-    publicOrganizerContainer.organizerShowcase().then((response: AxiosResponse) => {
-      setOrganizerShowcase(response.data.data)
-    })
-
-  }, [])
-
-  const loadMore = () => {
-    if (events) {
-      setSkip(events.length)
-      fetchEvents({ skip: events.length, limit: limit, ...userLocation }).then((response: any) => {
-        setTotal(response.total);
-        setEvents([...events, ...response.data]);
-      });
-    };
-  };
+  // const loadMore = () => {
+  //   if (events) {
+  //     setSkip(events.length)
+  //     fetchEvents({ skip: events.length, limit: limit, ...userLocation }).then((response: any) => {
+  //       setTotal(response.total);
+  //       setEvents([...events, ...response.data]);
+  //     });
+  //   };
+  // };
 
   // console.log(events, 'eventseventsevents')
   /*
@@ -113,18 +115,18 @@ export function Home() {
         } */}
 
         <Stack m={'auto'} mt={10} spacing={{ base: 0, md: 4 }} maxW='52rem'>
-          <Heading textAlign={{ md: 'center' }} size={{ base: 'md', md: 'lg' }} fontWeight={'500'} mb={2}>Uma nova ferramenta gratuita para<br /> divulgar <Text as={'span'} color={'primary.500'}>seus eventos</Text></Heading>
+          <Heading textAlign={{ md: 'center' }} size={{ base: 'md', md: 'lg' }} fontWeight={'500'} mb={2}>Uma nova ferramenta para<br /> divulgar <Text as={'span'} color={'primary.500'}>seus eventos</Text></Heading>
           <Flex gap={8} direction={{ md: 'column' }} alignItems={'center'}>
             <Stack alignItems={{ md: 'center' }} spacing={6}>
               <Text fontSize={{ base: 'md', md: 'lg' }} textAlign={{ md: 'center' }} fontWeight={'600'}>
-                O Babbo é a plataforma perfeita para divulgar e promover seu evento. Comece agora e alcance mais pessoas!
+                Potencialize o seu evento com o Babbo! Destaque-se de maneira autêntica na comunidade. Comece agora mesmo!
               </Text>
               <Box textAlign={{ base: 'center' }}>
                 <Button id="start" size={{ base: 'md', md: 'md' }} onClick={useDisclosureorganizerLeadForm.onOpen} colorScheme='green'>Comece agora</Button>
               </Box>
               <Stack>
                 <AvatarGroup size='md' max={5}>
-                  {organizerShowcase && organizerShowcase?.map((organizer, index) =>
+                  {organizerShowcase && organizerShowcase?.map((organizer: Record<string, any>, index: number) =>
                     <Avatar
                       key={index}
                       as={Link}
@@ -222,11 +224,3 @@ export function Home() {
 //   );
 // };
 
-
-export default function Index() {
-  return (
-    <EventProvider>
-      <Home />
-    </EventProvider>
-  );
-}

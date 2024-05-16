@@ -42,7 +42,7 @@ export const CardEventImage = styled.img`
   border-bottom-left-radius: ${({ theme }: any) => theme.defaultRadius};
   border-bottom-right-radius: ${({ theme }: any) => theme.defaultRadius};
   width: 100%;
-  height: 100%;
+  height: 360px;
   object-fit: cover;
   overflow: none;
   -khtml-user-select: none !important;

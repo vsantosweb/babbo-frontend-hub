@@ -18,14 +18,16 @@ const mediaSizes = {
 
 export function RelatedEvents({
   relatedEvents,
+  title
 }: {
+  title?:string
   relatedEvents: EventInterface[];
 }) {
   return (
     <Stack spacing={8}>
       <Styles.Container>
         <Styles.Header>
-          <Styles.Title> Relacionados </Styles.Title>
+          <Styles.Title> {title} </Styles.Title>
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <button className={`slideNav el--prev`}>
               <FaAngleLeft />

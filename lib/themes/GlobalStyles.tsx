@@ -156,9 +156,15 @@ const GlobalStyles = css`
     }
   }
 
-  /* .swiper-container{
-    padding: 0px 1em;
-  } */
+  .swiper-container{
+    width: 100%;
+  max-width: 100%;
+  // CSS Grid/Flexbox bug size workaround
+  // @see https://github.com/kenwheeler/slick/issues/982
+  // @see https://github.com/nolimits4web/swiper/issues/3599
+  min-height: 0;
+  min-width: 0;
+  }
 `;
 export const ViewPort = styled.main`
   margin: auto;

@@ -12,7 +12,6 @@ interface ResultMessageType extends HTMLAttributes<HTMLDivElement> {
 
 export function ResultMessage({ title, description, action, ...props }: ResultMessageType) {
 
-  console.log(props, 'propspropsprops')
   return (
     <Box
       display={'flex'}
@@ -23,8 +22,8 @@ export function ResultMessage({ title, description, action, ...props }: ResultMe
       minHeight={'100%'}
       
     >
-      <Flex {...props}   gap={6} direction={'column'} justifyContent={'center'} align={'center'}>
-        <Heading size={'lg'}>{title}</Heading>
+      <Flex {...props} gap={4} direction={'column'} justifyContent={'center'} align={'center'}>
+        <Heading fontSize={'24px'}>{title}</Heading>
         <Text>{description}</Text>
         {action && <Button variant={'outline'} onClick={action.callback}>{action.actionText}</Button>}
       </Flex>

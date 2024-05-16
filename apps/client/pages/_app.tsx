@@ -20,7 +20,7 @@ import TagManager from 'react-gtm-module';
 import { UserLocationProvider } from '@/hooks';
 
 if (typeof document !== 'undefined') {
-  TagManager.initialize({ gtmId: process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_KEY as string });
+  TagManager.initialize({ gtmId: process.env.NEXT_PUBLIC_GOOGLE_GTM_KEY as string });
 }
 
 moment.defineLocale('pt-BR', null);

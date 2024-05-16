@@ -17,12 +17,21 @@ const mediaSizes = {
 };
 
 export function HomeSegmented({ showcase }: { showcase: any }) {
-
   return (
     <div className='app-wrapper'>
-      <SliderEvents title={'Eventos em alta 🔥'} events={showcase?.hot_events} />
+
+      {
+        showcase?.hot_events.length > 0 ?
+          <SliderEvents title={'Eventos em alta 🔥'} events={showcase?.hot_events} /> :
+          <Heading textAlign={'center'} size={'md'}>Sem eventos para exibir </Heading>
+      }
+
       {/* <SliderEvents title={'Eventos em destaque 💎'} events={showcase?.featured_events} /> */}
-      <SliderEvents title={'Eventos da semana'} events={showcase?.week_events} />
+      {
+        showcase?.week_events.length > 0 ?
+          <SliderEvents title={'Eventos da semana'} events={showcase?.week_events} /> :
+          <Heading textAlign={'center'} size={'md'}>Sem eventos para exibir </Heading>
+      }
     </div>
   );
 }

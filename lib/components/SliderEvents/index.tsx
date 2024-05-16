@@ -16,17 +16,20 @@ const mediaSizes = {
     1366: { slidesPerView: 5, spaceBetween: 20 },
 };
 
-export function SliderEvents({ events, title }: { events: EventInterface[], title?: string | ReactNode }) {
+export function SliderEvents({ events, title }: { events: EventInterface[], title?: string }) {
+
+    const slug = title.replace(/\s/g, '')
+    
     return (
         <Stack spacing={8}>
             <Styles.Container>
                 <Styles.Header>
                     <Heading fontWeight={'300'} size={'lg'}>{title}</Heading>
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <button className={`slideNav el--prev`}>
+                        <button className={`slideNav el--prev-${slug}`}>
                             <FaAngleLeft />
                         </button>
-                        <button className={`slideNav el--next`}>
+                        <button className={`slideNav el--next-${slug}`}>
                             <FaAngleRight />
                         </button>
                     </div>
@@ -34,7 +37,7 @@ export function SliderEvents({ events, title }: { events: EventInterface[], titl
 
                 <Swiper
                     className="swiper-container"
-                    navigation={{ nextEl: `.el--next`, prevEl: `.el--prev` }}
+                    navigation={{ nextEl: `.el--next-${slug}`, prevEl: `.el--prev-${slug}` }}
                     direction="horizontal"
                     spaceBetween={10}
                     slidesPerView={2.3}
