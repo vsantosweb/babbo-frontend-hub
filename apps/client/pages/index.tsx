@@ -88,10 +88,10 @@ export default function Index({ showcase, organizerShowcase }: {showcase: any, o
 
   return (
     <Layout
-      title={'Babbo :: Encontre bares, baladas, shows e muito mais aqui'}
+      title={'Babbo - Encontre e Divulgue os Melhores Eventos e Artistas da Sua Região!'}
       name={'client'}
-      description={'Babbo Eventos'}
-      keywords={'guia,baladas,shows,roles,festas,party,bares'}
+      description={'Aqui você encontra os melhores eventos da sua região, desde barzinhos aconchegantes, baldas, shows e muito mais!'}
+      keywords={'baladas,shows,roles,festas,party,bares,barzinho,bares, lounge, bar e lounge'}
     >
       <Stack spacing={6} mt={8} flex={1}>
         {/* <Banner /> */}
