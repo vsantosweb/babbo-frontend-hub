@@ -24,11 +24,11 @@ export const EventCard = (event: EventInterface) => {
 
     e.preventDefault();
     e.stopPropagation();
-
+    console.log(event, 'eventeventeventeventevent')
     handleShareClick({
       title: event?.name,
       // text: event?.description,
-      url: `${process.env.NEXT_CLIENT_URL}/events/${event.slug}?id=${event.uuid}`,
+      url: `/events/${event.slug}?id=${event.uuid}`,
       id: event.uuid
     })
   }
