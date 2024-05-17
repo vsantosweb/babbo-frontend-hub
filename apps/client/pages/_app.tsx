@@ -54,7 +54,7 @@ function App({ Component, pageProps }: AppProps) {
   }, [])
 
   return (
-    !loading && <Theme>
+    <Theme>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="google-adsense-account" content="ca-pub-8530046753205274" />
