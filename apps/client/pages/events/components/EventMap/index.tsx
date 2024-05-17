@@ -10,11 +10,11 @@ export default function EventMap({ event }: { event: EventInterface }) {
         borderRadius: theme.defaultRadius
     };
     
-    const eventGeolocation: string[] | undefined = event.geolocation.split(',')
+    const eventGeolocation: string[] | undefined = event?.geolocation?.split(',')
 
     const center = {
-        lat: parseFloat(eventGeolocation[0]),
-        lng: parseFloat(eventGeolocation[1])
+        lat: eventGeolocation && parseFloat(eventGeolocation[0]),
+        lng: eventGeolocation && parseFloat(eventGeolocation[1])
     };  
 
     const mapOptions: google.maps.MapOptions | undefined = {
