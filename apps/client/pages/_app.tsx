@@ -66,7 +66,7 @@ function App({ Component, pageProps }: AppProps) {
         ></script>
         {/* <script src="https://www.google.com/recaptcha/enterprise.js?render=6Lea77gpAAAAAFEWb0e-B2iY6X5VYMSBBwZZtQcS"></script> */}
 
-        <script src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}`}></script>
+        {/* <script src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}`}></script> */}
         <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_KEY}`}></script>
 
       </Head>

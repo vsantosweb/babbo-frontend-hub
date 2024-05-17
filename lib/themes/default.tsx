@@ -99,6 +99,11 @@ const charkaExtendThemeConfig = {
   },
 
   components: {
+    Heading: {
+      baseStyle: {
+        fontWeight: 400, // Define o fontWeight padrão como 500
+      },
+    },
     Modal: {
       baseStyle: {
         container: {

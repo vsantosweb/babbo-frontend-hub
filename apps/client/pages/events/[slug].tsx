@@ -10,6 +10,12 @@ import TicketSaleComponent from './ticket';
 import container from '@/container';
 import { EventRepositoryInterface } from '@/interfaces';
 import { GetServerSidePropsContext } from 'next';
+import dynamic from 'next/dynamic';
+
+const EventMap = dynamic(() => import('./components/EventMap'), {
+  ssr: true
+});
+
 
 const eventService = container.get<EventRepositoryInterface>('public');
 
@@ -25,7 +31,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const fetchRelatedEventsData = await eventService.related(eventData.id);
   const relatedEvents = fetchRelatedEventsData.data;
   // const relatedEvents = {};
-  
+
   return { props: { eventData, relatedEvents } };
 
 }
@@ -48,7 +54,7 @@ function EventShow({ eventData, relatedEvents }: Record<string, any>) {
 
   //   redirect();
   // }, [eventData.uuid]);
-  
+
   return (
     <Layout
       title={eventData?.name}
@@ -57,7 +63,7 @@ function EventShow({ eventData, relatedEvents }: Record<string, any>) {
       image={`${eventData?.event_image}-md.jpg`}
 
     >
-      {!eventData ? <Loader /> : <Stack spacing={{base: 6, md: 10}}>
+      {!eventData ? <Loader /> : <Stack spacing={{ base: 6, md: 10 }}>
         <Flex
           mx={{ base: '-1em' }}
           backgroundImage={{ base: 'none', md: `linear-gradient(#350053, rgba(0, 0, 0, 0.8)) ,url(${eventData?.event_image}-lg.jpg)` }}
@@ -95,6 +101,10 @@ function EventShow({ eventData, relatedEvents }: Record<string, any>) {
             <Box>
               <strong>Organizador:</strong> <Link href={`/organizer?trackid=${eventData.organizer.organizer_id}`}>{eventData.organizer.organizer_name}</Link>
             </Box>
+            <Stack width={'100%'}>
+              <Heading size={'lg'}>Local do evento</Heading>
+              <EventMap event={eventData} />
+            </Stack>
           </Stack>
           {relatedEvents === null || relatedEvents.length > 0 && <RelatedEvents title={`Eventos relacionados`} relatedEvents={relatedEvents} />}
         </Stack>

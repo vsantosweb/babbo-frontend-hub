@@ -15,14 +15,14 @@ export interface EventInterface  {
     tags?: string;
     start_date?: string;
     end_date?: string;
-    geolocation?: string;
+    geolocation: string;
     full_address?: string;
     status:string;
     place_name?: string;
     place_city?: string;
     place_geolocation:string;
     city?: string;
-    categories?: string[];
+    category?: string;
     impress?: number;
     impressions?:number
     clicks?:number

@@ -18,7 +18,6 @@ type LayoutProps = {
 
 }
 export default function ClientLayout({ ...rest }: LayoutProps) {
-  const router = useRouter();
 
   const [urlAtual, setUrlAtual] = useState('');
 
