@@ -44,7 +44,7 @@ export default function ClientLayout({ ...rest }: LayoutProps) {
           <title>{rest.title}</title>
           <meta property="og:title" content={rest.title} />
           <meta property="og:description" content={rest.description?.substring(0, 50).replace(/<[^>]*>/g, '') + "..."} />
-          <meta property="og:image" content={rest.image}/>
+          <meta property="og:image" content={rest.image || '/icon.png'}/>
           <meta property="og:url" content={urlAtual} />
           <meta property="og:site_name" content={'babbo.social'} />
 

@@ -18,10 +18,20 @@ const mediaSizes = {
 
 export function SliderEvents({ events, title }: { events: EventInterface[], title?: string }) {
 
+
+    const [loading, setLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setLoading(false)
+        }
+    }, [])
+
+
     const slug = title && title.replace(/\s/g, '')
 
     return (
-        <Stack spacing={8}>
+        !loading && <Stack spacing={8}>
             <Styles.Container>
                 <Styles.Header>
                     <Heading fontWeight={'300'} size={'lg'}>{title}</Heading>

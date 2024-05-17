@@ -31,16 +31,6 @@ const publicService = container.get<PublicRepositoryInterface>('public');
 
 function App({ Component, pageProps }: AppProps) {
 
-
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setLoading(false)
-    }
-  }, [])
-
-
   useEffect(() => {
 
     const userIdentifier = localStorage.getItem('user_identifier');
