@@ -9,13 +9,13 @@ export default function EventMap({ event }: { event: EventInterface }) {
         width: "100%",
         borderRadius: theme.defaultRadius
     };
+    
     const eventGeolocation: string[] | undefined = event.geolocation.split(',')
 
     const center = {
         lat: parseFloat(eventGeolocation[0]),
         lng: parseFloat(eventGeolocation[1])
     };  
-    console.log(center, 'centercenter')
 
     const mapOptions: google.maps.MapOptions | undefined = {
         disableDefaultUI: true, // Desabilita os controles padrão do Google Maps

@@ -25,14 +25,14 @@ export function SliderEvents({ events, title }: { events: EventInterface[], titl
             <Styles.Container>
                 <Styles.Header>
                     <Heading fontWeight={'300'} size={'lg'}>{title}</Heading>
-                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    {events.length > 5 && <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <button className={`slideNav el--prev-${slug}`}>
                             <FaAngleLeft />
                         </button>
                         <button className={`slideNav el--next-${slug}`}>
                             <FaAngleRight />
                         </button>
-                    </div>
+                    </div>}
                 </Styles.Header>
 
                 <Swiper
