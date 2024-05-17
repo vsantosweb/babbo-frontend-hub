@@ -49,6 +49,7 @@ export const EventCard = (event: EventInterface) => {
       <Styled.CardEvent title={event.name}>
         <Styled.CardEventImageContainer>
           <Styled.CardEventImage
+          height={'360px'}
             alt={event.name}
             src={`${event.event_image}-lg.jpg`}
           />

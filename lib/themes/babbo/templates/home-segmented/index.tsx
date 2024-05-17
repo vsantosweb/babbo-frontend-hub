@@ -17,6 +17,7 @@ const mediaSizes = {
 };
 
 export function HomeSegmented({ showcase }: { showcase: any }) {
+  
   return (
     <div className='app-wrapper'>
 

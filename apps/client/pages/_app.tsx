@@ -13,7 +13,7 @@ import container from '@/container';
 
 import moment from 'moment';
 import 'moment/locale/pt-br'; // without this line it didn't work
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { PublicRepositoryInterface } from '@/interfaces';
 import { CookiePolicy } from '@/components';
 import TagManager from 'react-gtm-module';
@@ -32,6 +32,15 @@ const publicService = container.get<PublicRepositoryInterface>('public');
 function App({ Component, pageProps }: AppProps) {
 
 
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setLoading(false)
+    }
+  }, [])
+
+
   useEffect(() => {
 
     const userIdentifier = localStorage.getItem('user_identifier');
@@ -45,7 +54,7 @@ function App({ Component, pageProps }: AppProps) {
   }, [])
 
   return (
-    <Theme>
+    !loading && <Theme>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="google-adsense-account" content="ca-pub-8530046753205274" />

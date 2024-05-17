@@ -24,15 +24,10 @@ type GeoLocation = {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-
-  const { query } = context;
-
-
+  
   const showcase = await eventService.showcase();
 
   const organizerShowcase = await publicOrganizerContainer.organizerShowcase();
-  console.log(showcase.data, 'showcase');
-
 
   return {
     props: {

@@ -18,8 +18,8 @@ const mediaSizes = {
 
 export function SliderEvents({ events, title }: { events: EventInterface[], title?: string }) {
 
-    const slug = title.replace(/\s/g, '')
-    
+    const slug = title && title.replace(/\s/g, '')
+
     return (
         <Stack spacing={8}>
             <Styles.Container>
