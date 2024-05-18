@@ -48,6 +48,10 @@ export function HomeSegmented({ showcase }: { showcase: any }) {
         showcase?.week_events.length > 0 ?
           <SliderEvents title={'Eventos da semana'} events={showcase?.week_events} /> : null
       }
+      {
+        showcase?.next_events.length > 0 ?
+          <SliderEvents title={'Próximos eventos'} events={showcase?.next_events} /> : null
+      }
     </div>
   );
 }
