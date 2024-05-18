@@ -37,7 +37,7 @@ export function OrganizerPage({ events, organizerProfile }: { events?: EventInte
                 </Flex>
                 <Tabs width={'100%'} colorScheme={'primary.500'}>
                     <TabList>
-                        <Tab _active={{ fontWeight: 'bold' }}>Eventos ativo</Tab>
+                        <Tab _active={{ fontWeight: 'bold' }}>Eventos ativos</Tab>
                         {/* <Tab>Encerrados</Tab> */}
                     </TabList>
 

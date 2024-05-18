@@ -25,9 +25,9 @@ export default function EventInfo({ event }: { event: EventInterface }) {
         </Box>
         <Flex gap={1} direction={'column'}>
           <Heading size={'sm'}>
-            {eventDateFormatter(event).partial}
+            {eventDateFormatter(event).fully}
           </Heading>
-          <Text>{eventDateFormatter(event).fully}</Text>
+          
         </Flex>
       </Flex>
       <Flex gap={4} alignItems={'center'}>

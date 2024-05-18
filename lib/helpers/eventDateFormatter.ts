@@ -9,23 +9,23 @@ export const eventDateFormatter = (
     if (diffDate > 0)
       return {
         fully: `${moment(event?.start_date)
-          .format('DD MMM - YYYY, LT')
+          .format('DD MMMM - YYYY • HH:mm')
           .toUpperCase()} > ${moment(event?.end_date)
-            .format('DD MMM - YYYY, LT')
+            .format('DD MMMM - YYYY • HH:mm')
             .toUpperCase()}`,
         partial: `${moment(event?.start_date)
-          .format('DD MMM')
+          .format('DD MMMM')
           .toUpperCase()} • ${moment(event?.end_date)
-            .format('DD MMM')
+            .format('DD MMMM')
             .toUpperCase()}`,
       };
 
     return {
       fully: `${moment(event?.start_date)
-        .format('DD MMM - YYYY, LT')
+        .format('DD MMM - YYYY • HH:mm')
         .toUpperCase()}`,
       partial: `${moment(event?.start_date)
-        .format('DD MMM [-] HH a')
+        .format('DD MMM - HH:mm')
         .toUpperCase()}`,
     };
   };
