@@ -1,0 +1,34 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "types": ["jest", "node"],
+    "paths": {
+      "@/components": ["../../lib/components/index.ts"],
+      "@/container": ["../../lib/repository/Services/container.ts"],
+      "@/helpers": ["../../lib/helpers/index.ts"],
+      "@/hooks": ["../../lib/hooks/index.ts"],
+      "@/interfaces": ["../../lib/repository/Interfaces/index.ts"],
+      "@/layouts": ["../../lib/layouts/index.tsx"],
+      "@/repository": ["../../lib/repository/Interfaces/index.ts"],
+      "@/routes": ["../../lib/routes/index.ts"],
+      "@/templates/forms": ["../../lib/templates/Forms/index.ts"],
+      "@/teste": ["../../lib/teste/../../lib/index.ts"],
+      "@/themes/babbo": ["../../lib/themes/babbo/index.ts"],
+      "@/themes/default": ["../../lib/themes/default.tsx"],
+      "@/tools": ["../../lib/tools/index.ts"],
+      "@/types": ["../../lib/repository/Types/_index.ts"],
+      "@/validators": ["../../lib/validators/index.ts"],
+    },
+    "allowJs": true,
+    "strict": false,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "next-env.d.ts"],
+  "exclude": ["node_modules", "jest.config.ts", "**/*.spec.ts", "**/*.test.ts"]
+}

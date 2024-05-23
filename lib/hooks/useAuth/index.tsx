@@ -104,6 +104,7 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
 
       const isPrivatePath = privatePaths.some(path => window.location.pathname.startsWith(path));
 
+      console.log(privatePaths, 'privatePathsprivatePaths')
       if (!user && isPrivatePath) {
         router.push('/account/login');
         setAuthorized(false);
@@ -119,7 +120,8 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
 
       setRendering(false);
 
-    }).catch(() => {
+    })
+    .catch(() => {
 
       setAuthorized(false);
       router.push('/account/login');

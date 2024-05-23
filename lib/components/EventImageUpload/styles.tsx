@@ -11,10 +11,11 @@ export const StyledDropZone = styled(Flex)`
   height: 416px;
   width: 300px;
   border:dashed 1px #ddd;
-  border-radius: ${({ theme }: {theme:any}) => theme.defaultRadius};
-  border-color: ${({ reject, theme }: any) => reject === 'true' ? 'red' : theme.colors.primary};
+  border-radius: 22px;
+  border-color: #ddd;
   background-color: #fafafa;
   outline: none;
+  overflow: hidden;
   transition: border .24s ease-in-out;
   &:hover{
     background: #bcd9ff83;

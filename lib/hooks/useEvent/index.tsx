@@ -3,7 +3,6 @@ import { EventBanner, EventDisplayType, EventInterface, EventPayloadType } from 
 import { EventRepositoryInterface, CustomerEventRepositoryInterface } from '@/interfaces';
 import moment from 'moment';
 import container from '@/container';
-import { ServiceContainerType } from 'lib/repository/Services/Api';
 
 const EventContext = createContext<any>({});
 

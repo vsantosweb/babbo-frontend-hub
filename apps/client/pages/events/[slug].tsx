@@ -11,11 +11,11 @@ import container from '@/container';
 import { EventRepositoryInterface } from '@/interfaces';
 import { GetServerSidePropsContext } from 'next';
 import dynamic from 'next/dynamic';
+import moment from 'moment';
 
 const EventMap = dynamic(() => import('./components/EventMap'), {
   ssr: true
 });
-
 
 const eventService = container.get<EventRepositoryInterface>('public');
 
@@ -27,6 +27,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const fetchEventData = await eventService.event(id);
   const eventData = fetchEventData.data;
+
+  if (moment() > moment(eventData.end_date)) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
 
   const fetchRelatedEventsData = await eventService.related(eventData.id);
   const relatedEvents = fetchRelatedEventsData.data;

@@ -2,6 +2,7 @@ import { AxiosInstance } from "axios";
 import ApiService, { type ServiceContainerType } from ".";
 import { inject, injectable, unmanaged } from "inversify";
 import { EventPayloadType } from "@/types";
+import moment from 'moment';
 import { EventRepositoryInterface } from "@/interfaces";
 @injectable()
 export class EventApiService {
@@ -32,7 +33,7 @@ export class EventApiService {
     /**
    * Atualiza um  evento
    */
-    async updateEvent(payload: EventPayloadType, eventId:number): Promise<any> {
+    async updateEvent(payload: EventPayloadType, eventId: number): Promise<any> {
         try {
             const response = await this.api.patch<any>(`/events/${eventId}`, payload);
             return response.data;
