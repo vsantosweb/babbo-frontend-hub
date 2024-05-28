@@ -3,13 +3,13 @@ import { ApiResponseType, CredentialsType, ResetPasswordType } from '@/types';
 import { AxiosInstance } from 'axios';
 import ApiService from '..';
 import { injectable } from 'inversify';
+import { AuthServiceBase } from '../AuthServiceBase';
 
 @injectable()
-export class AuthServiceApiCustomer implements AuthRepositoryInterface {
-  protected api: AxiosInstance;
+export class AuthServiceApiCustomer extends AuthServiceBase implements AuthRepositoryInterface {
 
   constructor() {
-    this.api = ApiService.configure('customer');
+    super('customer');
   }
 
   /**
@@ -86,7 +86,7 @@ export class AuthServiceApiCustomer implements AuthRepositoryInterface {
   ): Promise<ApiResponseType | null> {
     try {
       // Lógica para solicitar a recuperação de senha
-      const response = await this.api.post('/auth/password/recovery',email);
+      const response = await this.api.post('/auth/password/recovery', email);
       return response;
     } catch (error) {
       console.error('Erro ao solicitar a recuperação de senha:', error);

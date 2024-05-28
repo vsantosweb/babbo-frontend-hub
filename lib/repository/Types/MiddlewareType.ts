@@ -1,0 +1,1 @@
+export type MiddlewareType = 'auth:manager' | 'auth:admin'

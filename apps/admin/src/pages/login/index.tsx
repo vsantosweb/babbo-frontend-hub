@@ -4,7 +4,7 @@ import { ChangeEvent, MouseEvent, ReactNode, useState } from 'react'
 // ** Next Imports
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-
+import { Logo } from '@/components';
 // ** MUI Components
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -21,7 +21,6 @@ import { styled, useTheme } from '@mui/material/styles'
 import MuiCard, { CardProps } from '@mui/material/Card'
 import InputAdornment from '@mui/material/InputAdornment'
 import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
-import { Logo } from '@/components';
 // ** Icons Imports
 import Google from 'mdi-material-ui/Google'
 import Github from 'mdi-material-ui/Github'
@@ -38,8 +37,12 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 // ** Demo Imports
 import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
-import { Stack } from '@mui/material'
+import { useForm } from 'react-hook-form';
+import { FormHelperText, Stack } from '@mui/material';
 
+import { CredentialsType } from '@/types';
+import { useAuth } from '@/hooks';
+import { FormErrorMessage } from '@chakra-ui/react';
 interface State {
   password: string
   showPassword: boolean
@@ -50,7 +53,7 @@ const Card = styled(MuiCard)<CardProps>(({ theme }) => ({
   [theme.breakpoints.up('sm')]: { width: '28rem' }
 }))
 
-const LinkStyled = styled('span')(({ theme }) => ({
+const LinkStyled = styled('a')(({ theme }) => ({
   fontSize: '0.875rem',
   textDecoration: 'none',
   color: theme.palette.primary.main
@@ -69,11 +72,13 @@ const LoginPage = () => {
     password: '',
     showPassword: false
   })
+  const [errorMessage, setErrorMessage] = useState(null);
 
   // ** Hook
   const theme = useTheme()
   const router = useRouter()
-
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
+  const { login } = useAuth()
   const handleChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [prop]: event.target.value })
   }
@@ -86,59 +91,69 @@ const LoginPage = () => {
     event.preventDefault()
   }
 
+  const submitCredentials = async (credentials: CredentialsType) => {
+
+    await login(credentials).then((response: any) => {
+
+      if (!response.success) {
+        return setErrorMessage(response.message)
+      }
+
+    })
+
+  }
+
   return (
     <Box className='content-center'>
-      <Card sx={{ zIndex: 1 }}>
-        <CardContent sx={{ padding: theme => `${theme.spacing(12, 9, 7)} !important` }}>
+      <Card sx={{ border: 'none' }}>
+        <CardContent sx={{ padding: theme => `${theme.spacing(12, 9, 7)}` }}>
           <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Logo style={{width: '120px'}} />
+            <Logo style={{ width: '160px' }} />
           </Box>
           <Box sx={{ mb: 6 }}>
             <Typography variant='h5' sx={{ fontWeight: 600, marginBottom: 1.5 }}>
-              Bem-vindo {themeConfig.templateName}! 👋🏻
+              Bem-vindo ao {themeConfig.templateName}! 👋🏻
             </Typography>
+            <Typography variant='body2'>Utilize o usário e senha fornecido pelo admin para acessar esta área</Typography>
           </Box>
-          <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-            <Stack spacing={6}>
-              <TextField autoFocus fullWidth id='email' label='Email' sx={{ marginBottom: 4 }} />
-              <FormControl fullWidth>
-                <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
-                <OutlinedInput
-                  label='Password'
-                  value={values.password}
-                  id='auth-login-password'
-                  onChange={handleChange('password')}
-                  type={values.showPassword ? 'text' : 'password'}
-                  endAdornment={
-                    <InputAdornment position='end'>
-                      <IconButton
-                        edge='end'
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        aria-label='toggle password visibility'
-                      >
-                        {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
+          <Stack spacing={6} component={'form'} onSubmit={handleSubmit(submitCredentials)} autoComplete='off'>
+            <TextField {...register('email')} autoFocus fullWidth id='email' label='Email' sx={{ marginBottom: 4 }} />
 
-              <Button
-                fullWidth
-                size='large'
-                variant='contained'
-                sx={{ marginBottom: 7 }}
-                onClick={() => router.push('/')}
-              >
-                Login
-              </Button>
+            <TextField
+              type={values.showPassword ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: <InputAdornment position="end">
+                  <IconButton
+                    edge='end'
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    aria-label='toggle password visibility'
+                  >
+                    {values.showPassword ? <EyeOutline /> : <EyeOffOutline />}
+                  </IconButton>
+                </InputAdornment>,
+              }}
+              {...register('password')}
+              fullWidth
+              label="Empresa fornecedora"
+              error={!!errors.ticket_partner_name}
+            />
+            {errorMessage && <FormHelperText style={{ color: 'red' }}>{errorMessage}</FormHelperText>}
+            <Button
+              disabled={isSubmitting}
+              fullWidth
+              type={'submit'}
+              size='large'
+              variant='contained'
+              sx={{ marginBottom: 7 }}
+            >
+              Acessar
+            </Button>
 
-            </Stack>
-          </form>
+
+          </Stack>
         </CardContent>
       </Card>
-      <FooterIllustrationsV1 />
     </Box>
   )
 }

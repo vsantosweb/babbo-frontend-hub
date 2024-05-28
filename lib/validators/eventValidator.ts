@@ -21,7 +21,7 @@ export const eventValidatorSchema = {
             return new Date(value).toString() !== 'Invalid Date';
         })
         .min(Yup.ref('start_date'), 'A data de término deve ser posterior à data de início'),
-    event_image: Yup.string().required(),
+    event_image: Yup.string().required('A imagem do evento é obrigatória'),
     description: Yup.string().nullable(),
     has_external_ticket: Yup.boolean(),
     ticket_partner_url: Yup.string().nullable().when('has_external_ticket', (hasTickets, schema) => {

@@ -12,7 +12,7 @@ export function eventPayloadResolver(formData: Record<string, any>) {
         start_date: moment(formData?.start_date).format('YYYY-MM-DD HH:mm'),
         end_date: moment(formData?.end_date).format('YYYY-MM-DD HH:mm'),
         description: formData?.description,
-        category: formData?.category.value,
+        category: formData?.category,
     }
 
     if (formData.image) payload.event_image = formData.event_image;

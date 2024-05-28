@@ -10,10 +10,8 @@ export const StyledDropZone = styled(Flex)`
   justify-content: center;
   height: 416px;
   width: 300px;
-  border:dashed 1px #ddd;
+  border:solid 1px #e6e6e6;
   border-radius: 22px;
-  border-color: #ddd;
-  background-color: #fafafa;
   outline: none;
   overflow: hidden;
   transition: border .24s ease-in-out;

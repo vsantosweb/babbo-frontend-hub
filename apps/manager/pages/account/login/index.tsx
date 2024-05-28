@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import * as Styled from '../styles';
 import Link from "next/link";
 import { CredentialsType } from "@/types";
-import { useAuth, AuthProviderInterface } from "@/hooks";
+import { useAuth } from "@/hooks";
 import Layout from '@/layouts';
 import { FaArrowRightLong } from "react-icons/fa6";
 
@@ -30,7 +30,6 @@ const Login: NextPage = ({ layout }: any) => {
 
     login(credentials).then((response: any) => {
 
-      console.log(response, 'response')
       if (!response.success) {
         setButonState({ disabled: false, isLoading: false });
         return setErrorMessage(response.message)

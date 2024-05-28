@@ -2,13 +2,12 @@ import { useState, useEffect, createContext, useContext } from 'react';
 
 // Cria uma instância do serviço de autenticação
 import { AuthRepositoryInterface } from '@/interfaces';
-import { ApiResponseType, CredentialsType, UserType } from '@/types';
-import { RouteProps, managerRoutes } from '@/routes';
+import { ApiResponseType, CredentialsType, MiddlewareType, UserType } from '@/types';
+import { RouteProps, getMiddlewareRoutes, managerRoutes } from '@/routes';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import container from '@/container';
 
-const privatePaths = managerRoutes.filter((nav: RouteProps) => nav.private).map(x => x.path);
 
 // Define o tipo para o objeto do usuário
 export interface UseAuthProps {
@@ -51,46 +50,44 @@ export const useAuth = () => {
   return context;
 };
 
+type AuthProviderConfigProps = {
+  loginRoute: string,
+  startPage: string
+}
+
+type AuthProviderProps = {
+  children: JSX.Element | JSX.Element[],
+  middleware: MiddlewareType
+  config: AuthProviderConfigProps
+}
+
 
 /**
  * Provider que gerencia toda parte de autenticação do usuário.
  * @returns {Object} Um objeto contendo informações e funções relacionadas à autenticação do usuário.
  */
-export function AuthProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
+export function AuthProvider({ children, middleware, config }: AuthProviderProps) {
 
+  const privatePaths = getMiddlewareRoutes(middleware).filter((nav: RouteProps) => nav.private).map(x => x.path);
+
+  // ** States
+  const [loading, setLoading] = useState<boolean>(true);
+  const [authorized, setAuthorized] = useState<boolean>(false);
+  const [user, setUser] = useState<Record<string, any> | null>(null);
+  const [rendering, setRendering] = useState<boolean>(true);
+  const [checkingPermissions, setCheckingPermissions] = useState<boolean>(false);
+  const router = useRouter();
   const [authState, setAuthState] = useState<AuthStateInterface>({
     user: null,
     loading: true,
     isAuthenticated: false,
   });
 
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const [authorized, setAuthorized] = useState<boolean>(false);
-  const [user, setUser] = useState<Record<string, any> | null>(null);
-  const [rendering, setRendering] = useState<boolean>(true);
-  const [checkingPermissions, setCheckingPermissions] = useState<boolean>(false);
-  const router = useRouter();
-
-  const authService = container.get<AuthRepositoryInterface>('auth-manager');
+  // ** Repository
+  const authService = container.get<AuthRepositoryInterface>(middleware);
 
   useEffect(() => {
-    // on initial load - run auth check 
     session(router.asPath)
-
-    // // on route change start - hide page content by setting authorized to false  
-    // const hideContent = () => setRendering(true)
-
-    // // // on route change complete - run auth check 
-    // router.events.on('routeChangeComplete', authCheck)
-
-    // // // unsubscribe from events in useEffect return function
-    return () => {
-      // router.events.off('routeChangeStart', hideContent);
-      // router.events.off('routeChangeComplete', authCheck);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.pathname]);
 
 
@@ -100,13 +97,11 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
 
       let user = response?.data?.data;
 
-      if (user && router.pathname === '/account/login') router.push(`/`)
+      if (user && router.pathname === config.loginRoute) router.push(config.startPage)
 
       const isPrivatePath = privatePaths.some(path => window.location.pathname.startsWith(path));
-
-      console.log(privatePaths, 'privatePathsprivatePaths')
       if (!user && isPrivatePath) {
-        router.push('/account/login');
+        router.push(config.loginRoute);
         setAuthorized(false);
         setUser({})
         setRendering(false);
@@ -114,20 +109,21 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
       } else {
         setAuthorized(true);
         setUser(user);
-        checkOrganizerPermission(user);
+        
+        if(middleware === 'auth:manager'){
+          checkOrganizerPermission(user)
+        }
 
       }
-
-      setRendering(false);
-
+      setRendering(false); 
     })
-    .catch(() => {
+      .catch(() => {
 
-      setAuthorized(false);
-      router.push('/account/login');
-      setUser({});
-      setRendering(false);
-    })
+        setAuthorized(false);
+        router.push(config.loginRoute);
+        setUser({});
+        setRendering(false);
+      })
 
   }
 
@@ -184,7 +180,7 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
     try {
       // Chama a função de logout do serviço de autenticação
       await authService.logout().then(response => {
-        window.location.href = '/account/login'
+        window.location.href = config.loginRoute
       });
       // Limpa o estado do usuário
 
@@ -220,7 +216,7 @@ export function AuthProvider({ children }: { children: JSX.Element | JSX.Element
 
   }
 
-  if (rendering || (!authorized && window.location.pathname !== '/account/login')) return null
+  if (rendering || (!authorized && window.location.pathname !== config.loginRoute)) return null
 
   if (checkingPermissions) return null
   return (

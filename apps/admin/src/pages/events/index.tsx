@@ -1,6 +1,5 @@
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
-import Link from '@mui/material/Link'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import CardHeader from '@mui/material/CardHeader'
@@ -21,6 +20,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import { Avatar, FormControl, InputLabel, TextField } from '@mui/material'
 import { FaUserCircle } from 'react-icons/fa'
+import Link from 'next/link'
 
 
 const card = (
@@ -61,7 +61,7 @@ export default function Organizers() {
                     <CardContent>
                         <Box justifyContent={'flex-end'} gap={5} display={'flex'} alignItems={'center'}>
                             <TextField id="outlined-basic" label="Procurar evento" variant="outlined" size='small' />
-                            <Button variant="contained" color="primary">Ciar Novo Evento</Button>
+                            <Button LinkComponent={Link} href='/events/create' variant="contained" color="primary">Ciar Novo Evento</Button>
                         </Box>
                     </CardContent>
                     <TableStickyHeader />

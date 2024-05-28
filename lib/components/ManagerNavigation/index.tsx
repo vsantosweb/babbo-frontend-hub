@@ -28,7 +28,6 @@ import { useRouter } from 'next/router'
 import container from '@/container'
 import { AuthRepositoryInterface } from '@/interfaces'
 
-const customerAuthContainer = container.get<AuthRepositoryInterface>('auth-manager');
 interface Props {
   children: React.ReactNode
 }

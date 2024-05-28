@@ -10,6 +10,7 @@ export const addressValidatorSchema = {
     city: Yup.string().required('Campo obrigatório'),
     state: Yup.string().required('Campo obrigatório'),
     address_number: Yup.string().required('Campo obrigatório'),
+    geolocation: Yup.string(),
 }
 
 

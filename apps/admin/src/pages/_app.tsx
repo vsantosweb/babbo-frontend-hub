@@ -50,6 +50,7 @@ dayjs.locale('pt-br');
 
 const clientSideEmotionCache = createEmotionCache()
 
+import { AuthProvider } from '@/hooks'
 // ** Pace Loader
 if (themeConfig.routingLoader) {
   Router.events.on('routeChangeStart', () => {
@@ -71,7 +72,7 @@ const App = (props: ExtendedAppProps) => {
   const getLayout = Component.getLayout ?? (page => <UserLayout>{page}</UserLayout>)
 
   return (
-    <CacheProvider value={emotionCache}>
+    <AuthProvider middleware='auth:admin' config={{ loginRoute: '/login', startPage: '/' }}>
       <Head>
         <title>{`${themeConfig.templateName}`}</title>
         <meta name='viewport' content='initial-scale=1, width=device-width' />
@@ -84,7 +85,7 @@ const App = (props: ExtendedAppProps) => {
           }}
         </SettingsConsumer>
       </SettingsProvider>
-    </CacheProvider>
+    </AuthProvider>
   )
 }
 

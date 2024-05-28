@@ -20,11 +20,10 @@ SwiperCore.use([Navigation, Pagination]);
 function App({ Component, pageProps }: AppProps) {
   return (
     <Theme>
-      <AuthProvider>
+      <AuthProvider middleware='auth:manager' config={{ loginRoute: '/account/login', startPage: '/' }}>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <title>Babbo</title>
-
         </Head>
         <AlertProvider>
           <OrganizerProvider>
