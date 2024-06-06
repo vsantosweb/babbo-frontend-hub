@@ -4,7 +4,7 @@ import { Theme } from '@mui/material/styles'
 // ** Util Import
 import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
 
-const Pagination = (theme: Theme) => {
+const Pagination = (theme: any) => {
   return {
     MuiPaginationItem: {
       styleOverrides: {

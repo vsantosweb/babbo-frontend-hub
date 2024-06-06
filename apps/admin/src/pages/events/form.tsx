@@ -1,4 +1,18 @@
-import { Autocomplete, Checkbox, Divider, FormControl, FormControlLabel, FormHelperText, Grid, InputAdornment, InputLabel, Stack, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import {
+    Autocomplete,
+    Checkbox,
+    Divider,
+    FormControl,
+    FormControlLabel,
+    FormHelperText,
+    Grid,
+    InputAdornment,
+    InputLabel,
+    Link as MuiLink,
+    Stack,
+    ToggleButton,
+    ToggleButtonGroup
+} from "@mui/material";
 import { TextField, Button, MenuItem, Select, Box, Typography } from '@mui/material';
 import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
 import { Controller, FormProvider, useForm } from "react-hook-form";
@@ -19,6 +33,7 @@ import { EventImageUpload, GoogleAutoComplete } from '@/components';
 import dynamic from "next/dynamic";
 import { IoTicket } from "react-icons/io5";
 import { FaExternalLinkAlt, FaSearch } from "react-icons/fa";
+import Link from "next/link";
 
 
 
@@ -181,20 +196,24 @@ export default function EventForm({ event }: { event?: Record<string, any> }) {
                         onSubmit={!event ? eventHookForm.handleSubmit(handleCreateEvent) : eventHookForm.handleSubmit(handleUpdateEvent)}
                         spacing={6}
                     >
-                        <Autocomplete
-                            fullWidth
-                            options={customers}
-                            defaultValue={customer}
-                            onChange={(_, item: any) => setValue('customer_id', item?.id, { shouldValidate: true })}
-                            renderInput={(params) => <TextField
-                                {...params}
-                                label="Organizador"
-                                error={!!errors.customer_id}
-                                helperText={errors.customer_id ? errors.customer_id.message : ''}
+                        <Stack>
+                            <Autocomplete
+                                fullWidth
+                                options={customers}
+                                defaultValue={customer}
+                                onChange={(_, item: any) => setValue('customer_id', item?.id, { shouldValidate: true })}
+                                renderInput={(params) => <TextField
+                                    {...params}
+                                    label="Organizador"
+                                    error={!!errors.customer_id}
+                                    helperText={errors.customer_id ? errors.customer_id.message : ''}
+                                />
+                                }
                             />
-                            }
-                        />
-
+                            <FormHelperText>
+                                <Link href={'/customers/create'}>+ Cadastrar novo cliente</Link>
+                            </FormHelperText>
+                        </Stack>
                         <Divider />
                         <Stack spacing={6} >
                             <Box>
@@ -279,7 +298,7 @@ export default function EventForm({ event }: { event?: Record<string, any> }) {
                             </Box>
                             {!!watch('is_recurring') && <FormControl fullWidth error={!!errors.recurrence_pattern}>
                                 <ToggleButtonGroup
-                                    
+
                                     color="primary"
                                     value={getValues('recurrence_pattern')}
                                     exclusive

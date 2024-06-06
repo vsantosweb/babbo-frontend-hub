@@ -37,7 +37,7 @@ interface Props {
 // ** Styled Components
 const MenuNavLink = styled(ListItemButton)<
   ListItemButtonProps & { component?: ElementType; target?: '_blank' | undefined }
->(({ theme }) => ({
+>(({ theme }: {theme: any}) => ({
   width: '100%',
   borderTopRightRadius: 100,
   borderBottomRightRadius: 100,

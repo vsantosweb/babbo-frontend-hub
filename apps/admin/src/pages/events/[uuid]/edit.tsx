@@ -1,6 +1,6 @@
-import { GetServerSidePropsContext } from "next";
 import EventForm from "../form";
 import container from "@/container";
+import { GetServerSidePropsContext } from "next/types";
 
 import { AdminEventRepositoryInterface } from '@/interfaces';
 import { EventInterface } from '@/types';

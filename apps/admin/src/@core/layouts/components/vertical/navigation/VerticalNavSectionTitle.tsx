@@ -24,7 +24,7 @@ const ListSubheader = styled((props: ListSubheaderProps) => <MuiListSubheader co
   })
 )
 
-const TypographyHeaderText = styled(Typography)<TypographyProps>(({ theme }) => ({
+const TypographyHeaderText = styled(Typography)<TypographyProps>(({ theme }: {theme: any}) => ({
   fontSize: '0.75rem',
   lineHeight: 'normal',
   letterSpacing: '0.21px',
@@ -38,7 +38,7 @@ const VerticalNavSectionTitle = (props: Props) => {
   const { item } = props
 
   // ** Hook
-  const theme = useTheme()
+  const theme: any = useTheme()
 
   return (
     <ListSubheader

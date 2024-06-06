@@ -135,7 +135,7 @@ const LoginPage = () => {
               }}
               {...register('password')}
               fullWidth
-              label="Empresa fornecedora"
+              label="Senha"
               error={!!errors.ticket_partner_name}
             />
             {errorMessage && <FormHelperText style={{ color: 'red' }}>{errorMessage}</FormHelperText>}

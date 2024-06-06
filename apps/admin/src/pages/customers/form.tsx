@@ -1,55 +1,31 @@
-import { Autocomplete, Checkbox, Divider, FormControl, FormControlLabel, FormHelperText, Grid, InputAdornment, InputLabel, Stack } from "@mui/material";
-import { TextField, Button, MenuItem, Select, Box, Typography } from '@mui/material';
-import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
-import { Controller, FormProvider, useForm } from "react-hook-form";
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-
-import dayjs from "dayjs";
-
+import { Checkbox, FormControlLabel, FormHelperText, Grid, InputAdornment, InputLabel, Stack } from "@mui/material";
+import { TextField, Button, Box, Typography } from '@mui/material';
+import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
 import container from "@/container";
-import { AdminCustomertRepositoryInterface, AdminEventRepositoryInterface, EventRepositoryInterface } from '@/interfaces';
+import { AdminCustomertRepositoryInterface } from '@/interfaces';
 import { useEffect, useState } from "react";
-import { AxiosResponse } from "axios";
 import { customerValidatorSchema, eventValidatorSchema } from '@/validators';
-import moment from "moment";
-import { SessionHelper, eventPayloadResolver } from '@/helpers';
-import { EventImageUpload, GoogleAutoComplete } from '@/components';
-import dynamic from "next/dynamic";
-import { IoTicket } from "react-icons/io5";
-import { FaExternalLinkAlt, FaSearch } from "react-icons/fa";
+import { SessionHelper, customerPayloadResolver } from '@/helpers';
 
 
-
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-
-const eventService = container.get<EventRepositoryInterface>('public');
 const adminCustomerService = container.get<AdminCustomertRepositoryInterface>('admin-customer');
-const adminEventService = container.get<AdminEventRepositoryInterface>('admin-event');
 
-export default function EventForm({ customer }: { customer?: Record<string, any> }) {
-
-
-    const [categories, setCategories] = useState([]);
-    const [customers, setCustomers] = useState<Record<string, any>[]>([]);
-    const [place, setPlace] = useState<any>();
+export default function CustomerForm({ customer }: { customer?: Record<string, any> }) {
 
     const buttonActionText: string = !customer ? 'Cadastrar cliente' : 'Atualizar cliente';
 
-    const eventValidation = Yup.object().shape({ ...customerValidatorSchema })
+    const validation = Yup.object().shape({ ...customerValidatorSchema })
 
-    const eventHookForm = useForm({
-        resolver: yupResolver(eventValidation),
+    const hookForm = useForm({
+        resolver: yupResolver(validation),
     });
 
-    const { register, watch, handleSubmit, setValue, getValues, control, formState: { errors } } = eventHookForm;
+    const { register, watch, handleSubmit, setValue, getValues, control, formState: { errors } } = hookForm;
 
-    const address = place?.address_components;
-
-    console.log(errors, 'errors!!')
     useEffect(() => {
-
+        console.log(customer, 'customer')
         if (customer) {
             setValue('name', customer?.name, { shouldValidate: true });
             setValue('email', customer?.email, { shouldValidate: true });
@@ -61,41 +37,38 @@ export default function EventForm({ customer }: { customer?: Record<string, any>
         }
     }, [customer])
 
-    const handleCreateEvent = async (formData: Record<string, any>) => {
+    const handleCreateCustomer = async (formData: Record<string, any>) => {
 
-        const payload = eventPayloadResolver(formData);
+        const payload = customerPayloadResolver(formData);
 
-        await adminEventService.create({ ...payload, customer_id: formData.customer_id })
+        await adminCustomerService.create(payload)
             .then((response: Record<string, any>) => {
-                SessionHelper.redirectWith('/events', 'eventCreated',
-                    `O evento  <a href="/events/${response.data.uuid}/details">${response.data.name}</a> foi criado com sucesso`
+                SessionHelper.redirectWith('/customers', 'customerCreated',
+                    `O cliente  <a href="/events/${response.data.uuid}/details">${response.data.name}</a> foi criado com sucesso`
                 );
             })
 
     }
-    const handleUpdateEvent = async (formData: Record<string, any>) => {
+    const handleUpdateCustomer = async (formData: Record<string, any>) => {
 
-        const payload = eventPayloadResolver(formData);
+        const payload = customerPayloadResolver(formData);
 
-        await adminEventService.update({ ...payload, customer_id: formData.customer_id }, customer?.id)
+        await adminCustomerService.update(payload, customer?.id)
             .then((response: Record<string, any>) => {
-                SessionHelper.redirectWith('/events', 'eventUpdated',
-                    `O evento  <a href="/events/${response.data.uuid}/details">${response.data.name}</a> foi atualizado.`
+                SessionHelper.redirectWith('/customers', 'customerUpdated',
+                    `O cliente  <a href="/events/${response.data.uuid}/details">${response.data.name}</a> foi atualizado.`
                 );
             })
     }
-
-    if (event && !customer) return null;
-
     return (
 
-        <FormProvider {...eventHookForm}>
+        <FormProvider {...hookForm}>
             <Grid container gap={6} justifyContent={'center'}>
                 <Grid md={12} xs={12} item>
 
                     <Stack
                         component="form"
-                        onSubmit={!event ? eventHookForm.handleSubmit(handleCreateEvent) : eventHookForm.handleSubmit(handleUpdateEvent)}
+                        onSubmit={!customer ? hookForm.handleSubmit(handleCreateCustomer) : hookForm.handleSubmit(handleUpdateCustomer)}
                         spacing={6}
                     >
 
@@ -129,7 +102,7 @@ export default function EventForm({ customer }: { customer?: Record<string, any>
                             <Box>
                                 <Typography variant='h6' gutterBottom>Perfil de organizador</Typography>
                                 <Typography variant="body2" component={'p'}>Marque essa opção para configurar o perfil de organizador</Typography>
-                                <FormControlLabel control={<Checkbox {...register('is_organizer')} checked={watch('is_organizer')} />} label="Organizador de eventos?" />
+                                <FormControlLabel control={<Checkbox {...register('is_organizer')} checked={!!watch('is_organizer')} />} label="Organizador de eventos?" />
                             </Box>
                             {!!watch('is_organizer') && <>
                                 <TextField

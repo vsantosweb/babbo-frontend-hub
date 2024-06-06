@@ -5,27 +5,13 @@ import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import CardHeader from '@mui/material/CardHeader'
-
-// ** Demo Components Imports
-import TableBasic from 'src/views/tables/TableBasic'
-import TableDense from 'src/views/tables/TableDense'
-import TableSpanning from 'src/views/tables/TableSpanning'
-import TableCustomized from 'src/views/tables/TableCustomized'
-import TableCollapsible from 'src/views/tables/TableCollapsible'
-import TableStickyHeader from 'src/views/tables/TableStickyHeader'
-import StatisticsCard from 'src/views/dashboard/StatisticsCard'
-
 import Box from '@mui/material/Box';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import { Avatar, IconButton, InputAdornment, TextField } from '@mui/material'
-import { FaUserCircle } from 'react-icons/fa'
 import Link from 'next/link'
 import { AdminEventRepositoryInterface } from '@/interfaces';
-import { EventInterface } from '@/types';
 import container from '@/container'
-import { useRouter } from 'next/router'
 import { AxiosResponse } from 'axios'
 import EventTable from './components/EventTable'
 import { CiSearch } from 'react-icons/ci'
@@ -51,8 +37,6 @@ const columns = [
     { id: 'end_date', label: 'Ativo/Expirado'},
     { id: 'action', label: 'action', },
 ]
-
-
 
 export default function Events() {
 

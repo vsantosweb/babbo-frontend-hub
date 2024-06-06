@@ -27,9 +27,9 @@ const navigation = (): VerticalNavItemsType => {
       path: '/'
     },
     {
-      title: 'Organizadores',
+      title: 'Clientes',
       icon: AccountOutline,
-      path: '/organizers'
+      path: '/customers'
     },
     {
       title: 'Eventos',

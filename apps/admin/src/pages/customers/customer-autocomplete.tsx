@@ -8,7 +8,7 @@ export default function CustomerAutocomplete() {
       disablePortal
       fullWidth
       options={top100Films}
-      renderInput={(params) => <TextField fullWidth {...params} label="Organizador" />}
+      renderInput={(params) => <TextField {...params} label="Organizador" />}
     />
   );
 }

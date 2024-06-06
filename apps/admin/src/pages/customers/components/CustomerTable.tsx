@@ -53,12 +53,12 @@ type EventTableProps = {
   columns: Column[],
   rows: Record<string, any> | undefined,
   fetchData: (params: Record<string, any>) => void
-  handleDeleteEvent: (id: number) => Promise<any>
+  handleDeleteItem: (id: number) => Promise<any>
   filters: any
 }
 
 
-const EventTable = ({ rows, columns, fetchData, handleDeleteEvent, filters }: EventTableProps) => {
+const CustomerTable = ({ rows, columns, fetchData, handleDeleteItem, filters }: EventTableProps) => {
   // ** States
   const [page, setPage] = useState<number>(0)
   const [rowsPerPage, setRowsPerPage] = useState<number>(20)
@@ -90,9 +90,9 @@ const EventTable = ({ rows, columns, fetchData, handleDeleteEvent, filters }: Ev
     setPage(0)
   }
 
-  const deleteEvent = () => {
+  const deleteItem = () => {
     setLoading(true)
-    selectedEvent?.id && handleDeleteEvent(selectedEvent?.id).then(res => {
+    selectedEvent?.id && handleDeleteItem(selectedEvent?.id).then(res => {
       setLoading(false);
       setOpen(false);
       SessionHelper.withMessage('eventDeleted', {
@@ -132,16 +132,13 @@ const EventTable = ({ rows, columns, fetchData, handleDeleteEvent, filters }: Ev
             {rows.data?.map((row: any) => (
               <TableRow key={row.uuid}>
                 <TableCell>
-                  <Link href={`/events/${row.uuid}/edit`} key={row.id}>
+                  <Link href={`/customers/${row.uuid}/edit`} key={row.id}>
                     <Box gap={3} style={{ display: 'flex', alignItems: 'center' }}>
-                      <Box flexDirection={'column'} style={{ display: 'flex', alignItems: 'center' }}>
-                        <Typography sx={{ color: 'red' }} variant='subtitle1'>{dayjs(row.start_date).format('MMM').toUpperCase()}</Typography>
-                        <Typography >{dayjs(row.start_date).format('DD').toUpperCase()}</Typography>
-                      </Box>
-                      <Avatar sx={{ width: 50, height: 50 }} src={`${row.event_image}-xs.jpg`} />
+                     
+                      <Avatar sx={{ width: 40, height: 40 }} src={`${row.event_image}-xs.jpg`} />
                       <div style={{ marginLeft: '10px' }}>
                         <Typography fontWeight={'500'}>{row.name}</Typography>
-                        <Typography variant='body2' color={'text.secondary'}>{row.place_name}</Typography>
+                        <Typography variant='body2' color={'text.secondary'}>{row.organizer_instagram}</Typography>
                       </div>
                     </Box>
                   </Link>
@@ -154,7 +151,7 @@ const EventTable = ({ rows, columns, fetchData, handleDeleteEvent, filters }: Ev
                 <TableCell>
                   <IconButton onClick={() => [handleClickOpen(), setSelectedEvent(row)]} aria-label="delete"><RiDeleteBin5Line /></IconButton>
                   <IconButton aria-label="show"><RiEyeLine /></IconButton>
-                  <IconButton LinkComponent={Link} href={`/events/${row.uuid}/edit`} aria-label="edit"><MdEdit /></IconButton>
+                  <IconButton LinkComponent={Link} href={`/customers/${row.id}/edit`} aria-label="edit"><MdEdit /></IconButton>
 
                 </TableCell>
               </TableRow>
@@ -177,14 +174,14 @@ const EventTable = ({ rows, columns, fetchData, handleDeleteEvent, filters }: Ev
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Deseja excluir este evento?</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Deseja excluir este cliente?</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">Essa ação será irreversível, tem certeza?</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>cancelar</Button>
           <LoadingButton
-            onClick={deleteEvent}
+            onClick={deleteItem}
             loading={loading}
           > Excluir
           </LoadingButton>
@@ -194,4 +191,4 @@ const EventTable = ({ rows, columns, fetchData, handleDeleteEvent, filters }: Ev
   )
 }
 
-export default EventTable
+export default CustomerTable

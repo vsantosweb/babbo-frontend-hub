@@ -1,11 +1,12 @@
-import { GetServerSidePropsContext } from "next";
-import EventForm from "../form";
+import { GetServerSidePropsContext } from "next/types";
+import CustomerForm from "../form";
 import container from "@/container";
 
-import { AdminEventRepositoryInterface } from '@/interfaces';
+import { AdminCustomertRepositoryInterface, AdminEventRepositoryInterface } from '@/interfaces';
 import { EventInterface } from '@/types';
 
 const adminEventService = container.get<AdminEventRepositoryInterface>('admin-event');
+const adminCustomerService = container.get<AdminCustomertRepositoryInterface>('admin-customer');
 
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -14,17 +15,19 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     const id: string = query?.uuid as string
 
-    const event = await adminEventService.show(id);
+    const customer = await adminCustomerService.show(id);
 
     return {
         props: {
-            event: event.data
+            customer: customer.data
         }
     };
 }
 
-export default function EditEvent({ event }: { event: EventInterface }) {
+export default function EditEvent({ customer }: { customer: Record<string, any> }) {
+
+    console.log(customer, 'customercustomercustomer')
     return (
-        <EventForm event={event} />
+        <CustomerForm customer={customer} />
     )
 }

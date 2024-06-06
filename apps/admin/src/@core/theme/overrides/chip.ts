@@ -1,7 +1,7 @@
 // ** MUI Imports
 import { Theme } from '@mui/material/styles'
 
-const Chip = (theme: Theme) => {
+const Chip = (theme: any) => {
   return {
     MuiChip: {
       styleOverrides: {
