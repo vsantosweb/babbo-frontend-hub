@@ -22,19 +22,19 @@ import Button from '@mui/material/Button';
 import { Avatar, IconButton, InputAdornment, TextField } from '@mui/material'
 import { FaUserCircle } from 'react-icons/fa'
 import Link from 'next/link'
-import { AdminEventRepositoryInterface } from '@/interfaces';
+import { AdminCustomertRepositoryInterface, AdminEventRepositoryInterface } from '@/interfaces';
 import { EventInterface } from '@/types';
 import container from '@/container'
 import { useRouter } from 'next/router'
 import { AxiosResponse } from 'axios'
-import EventTable from './components/EventTable'
+import EventTable from './components/CustomerTable'
 import { CiSearch } from 'react-icons/ci'
 import { useForm } from 'react-hook-form'
 import Close from 'mdi-material-ui/Close'
 import { CalendarIcon } from '@chakra-ui/icons'
 
 
-const adminEventService = container.get<AdminEventRepositoryInterface>('admin-event');
+const adminCustomerService = container.get<AdminCustomertRepositoryInterface>('admin-customer');
 
 type CountSummary = {
     label: string
@@ -48,7 +48,7 @@ const columns = [
     { id: 'created_at', label: 'Criado em', },
     { id: 'updated_at', label: 'Ultima atualização', },
     { id: 'status', label: 'Status', },
-    { id: 'end_date', label: 'Ativo/Expirado'},
+    { id: 'end_date', label: 'Ativo/Expirado' },
     { id: 'action', label: 'action', },
 ]
 
@@ -61,56 +61,49 @@ export default function Events() {
     const [countSummary, setCountSummary] = useState<CountSummary[]>();
     const { register, handleSubmit, reset } = useForm();
 
-    useEffect(() => {
-        adminEventService.countSummary().then((response: AxiosResponse) => {
-            setCountSummary(response.data)
-        })
-    }, [])
 
     // const fetchData = async (page?: number, rowsPerPage?: number) => {
     const fetchData = async (params: Record<string, any>) => {
 
-        adminEventService.get(params).then((response: Record<string, any>) => {
+        adminCustomerService.get(params).then((response: Record<string, any>) => {
             setEvents(response)
         })
     };
 
     const handleDeleteEvent = (id: number) => {
-        return adminEventService.destroy(id)
+        return adminCustomerService.destroy(id)
     }
 
     const handleEventSearch = (formData: Record<string, any>) => {
         setEventFilter({ ...formData, skip: 0 });
     }
 
-    const summaryCards = (
-        countSummary && countSummary?.map((summary, key) =>
-            <Grid item xs={12} md={3} key={key}>
-                <Card>
-                    <CardContent>
-                        <Box display={'flex'} justifyContent={'space-between'}>
-                            <Box>
-                                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>{summary.label}</Typography>
-                                <Typography variant="h5" component="div">
-                                </Typography>
-                                <Typography sx={{ mb: 1.5 }} variant='h4' color="text.primary"> {summary.count} </Typography>
-                                <Typography variant="body2">No sistema</Typography>
-                            </Box>
-                            <Avatar sx={{ color: 'primary.main' }}><CalendarIcon /></Avatar>
-                        </Box>
-                    </CardContent>
-                </Card>
-            </Grid>
-        )
-    )
+    // const summaryCards = (
+    //     countSummary && countSummary?.map((summary, key) =>
+    //         <Grid item xs={12} md={3} key={key}>
+    //             <Card>   
+    //                 <CardContent>
+    //                     <Box display={'flex'} justifyContent={'space-between'}>
+    //                         <Box>
+    //                             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>{summary.label}</Typography>
+    //                             <Typography variant="h5" component="div">
+    //                             </Typography>
+    //                             <Typography sx={{ mb: 1.5 }} variant='h4' color="text.primary"> {summary.count} </Typography>
+    //                             <Typography variant="body2">No sistema</Typography>
+    //                         </Box>
+    //                         <Avatar sx={{ color: 'primary.main' }}><CalendarIcon /></Avatar>
+    //                     </Box>
+    //                 </CardContent>
+    //             </Card>
+    //         </Grid>
+    //     )
+    // )
     return (
         <Grid container spacing={6}>
-            {summaryCards}
-
-
+            {/* {summaryCards} */}
             <Grid item xs={12}>
                 <Card>
-                    <CardHeader title='Eventos' titleTypographyProps={{ variant: 'h6' }} />
+                    <CardHeader title='Organizadores' titleTypographyProps={{ variant: 'h6' }} />
                     <CardContent>
                         <Box
                             component={'form'}
@@ -130,11 +123,11 @@ export default function Events() {
                                     </InputAdornment>,
                                 }}
                                 size='small'
-                                label="Procurar evento"
+                                label="Procurar cliente"
                             />
                             {eventFilter && <Button endIcon={<Close />} onClick={() => [setEventFilter(null), reset()]}>Limpar filtro</Button>}
                             <Box >
-                                <Button LinkComponent={Link} href='/events/create' variant="contained" color="primary">Ciar Novo Evento</Button>
+                                <Button LinkComponent={Link} href='/customers/create' variant="contained" color="primary">Adicionar cliente</Button>
                             </Box>
                         </Box>
                     </CardContent>

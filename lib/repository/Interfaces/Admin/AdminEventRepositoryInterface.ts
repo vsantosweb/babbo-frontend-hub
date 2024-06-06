@@ -5,4 +5,5 @@ import { AdminBaseRepositoryInterface } from "./AdminBaseRepositoryInterface";
  */
 export interface AdminEventRepositoryInterface extends AdminBaseRepositoryInterface{
 
+    countSummary(): Promise<any | null>
 }

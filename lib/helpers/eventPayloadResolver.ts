@@ -13,6 +13,8 @@ export function eventPayloadResolver(formData: Record<string, any>) {
         end_date: moment(formData?.end_date).format('YYYY-MM-DD HH:mm'),
         description: formData?.description,
         category: formData?.category,
+        is_recurring: formData.is_recurring,
+        recurrence_pattern: formData.recurrence_pattern
     }
 
     if (formData.image) payload.event_image = formData.event_image;

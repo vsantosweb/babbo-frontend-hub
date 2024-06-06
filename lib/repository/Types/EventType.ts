@@ -29,9 +29,9 @@ export interface EventInterface  {
     has_external_ticket?:boolean;
     ticket_partner_name?: string,
     ticket_partner_url?:string;
-    organizer:{
-        organizer_id: string,
-        organizer_name: string,
+    organizer?:{
+        organizer_id?: string,
+        organizer_name?: string,
     }
 }
 

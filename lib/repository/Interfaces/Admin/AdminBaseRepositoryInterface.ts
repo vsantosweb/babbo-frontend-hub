@@ -7,7 +7,7 @@ export interface AdminBaseRepositoryInterface {
      *
      * @returns {Promise<any>} Uma promessa que resolve com a lista de recursos.
      */
-    get(): Promise<any>;
+    get(params?: Record<string, any>): Promise<any>;
 
     /**
      * Cria um novo recurso.

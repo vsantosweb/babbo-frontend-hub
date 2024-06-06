@@ -10,7 +10,7 @@ export type PlaceType = {
 }
 
 export type EventPayloadType = {
-    place: PlaceType
+    place: PlaceType;
     start_date: string;
     end_date: string;
     category: any;
@@ -20,4 +20,17 @@ export type EventPayloadType = {
     has_external_ticket: string;
     ticket_partner_name: string;
     ticket_partner_url: string;
+    is_recurring: boolean;
+    recurrence_pattern: 'daily' | 'weekly' | 'monthly'
+}
+
+export type CustomerPayloadType = {
+    name?: string;
+    email?: string;
+    phone?: string;
+    photo_profile?: string;
+    is_organizer?: string;
+    organizer_name?: string;
+    organizer_email?: string;
+    organizer_instagram?: string;
 }

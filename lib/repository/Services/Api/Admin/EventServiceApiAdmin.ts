@@ -1,6 +1,7 @@
 import { AdminEventRepositoryInterface } from "@/interfaces";
 import { ApiBaseService } from "../ApiBaseService";
 import { injectable } from "inversify";
+import { EventPayloadType } from "@/types";
 
 @injectable()
 export class EventServiceApiAdmin extends ApiBaseService implements AdminEventRepositoryInterface {
@@ -11,9 +12,9 @@ export class EventServiceApiAdmin extends ApiBaseService implements AdminEventRe
     }
 
     // Display a listing of the resource.
-    async get(): Promise<any | null> {
+    async get(params?: Record<string, string>): Promise<any | null> {
         try {
-            const response = await this.api.get(`/events`);
+            const response = await this.api.get(`/events?${new URLSearchParams(params)}`);
             return response.data;
         } catch (error) {
             console.error('Erro ao obter dados:', error);
@@ -44,12 +45,12 @@ export class EventServiceApiAdmin extends ApiBaseService implements AdminEventRe
     }
 
     // Display a listing of the resource.
-    async update(payload: Record<string, any>, eventId: number): Promise<any | null> {
+    async update(payload: EventPayloadType, eventId: number): Promise<any> {
         try {
-            const response = await this.api.post<any>(`/events`, payload);
+            const response = await this.api.patch<any>(`/events/${eventId}`, payload);
             return response.data;
         } catch (error) {
-            console.error(error);
+            console.error('Erro ao atualizar evento:', error);
             throw error;
         }
     }
@@ -57,7 +58,18 @@ export class EventServiceApiAdmin extends ApiBaseService implements AdminEventRe
     // Display a listing of the resource.
     async destroy(id: number): Promise<any | null> {
         try {
-            const response = await this.api.post<any>(`/events`);
+            const response = await this.api.delete<any>(`/events/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
+    
+    //Event acount summary
+    async countSummary(): Promise<any | null> {
+        try {
+            const response = await this.api.get<any>(`/events/count-summary`);
             return response.data;
         } catch (error) {
             console.error(error);

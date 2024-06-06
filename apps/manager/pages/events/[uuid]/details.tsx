@@ -72,7 +72,6 @@ export default function Event() {
             SessionHelper.redirectWith('/', 'eventDeleted', `O evento ${event?.name} foi excluído.`)
         })
     }
-    console.log(interactions, 'interactions')
 
     const [activeTab, setActiveTab] = useState(0);
 

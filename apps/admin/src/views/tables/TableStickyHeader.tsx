@@ -12,6 +12,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
 import { Avatar, Box, Button, IconButton, Typography } from '@mui/material'
 import { RiDeleteBin5Line, RiEyeLine } from "react-icons/ri";
+import Link from 'next/link'
 
 interface Column {
   id: any
@@ -81,7 +82,7 @@ const rows = [
   { id: '15', user: 'user15', avatarUrl: 'https://via.placeholder.com/150', email: 'user15@example.com', role: 'Editor', plan: 'Enterprise', status: 'Pending' }
 ];
 
-const TableStickyHeader = () => {
+const TableStickyHeader = ({ data, columns }: { columns: Column[], data: Record<string, any> }) => {
   // ** States
   const [page, setPage] = useState<number>(0)
   const [rowsPerPage, setRowsPerPage] = useState<number>(10)
@@ -95,6 +96,7 @@ const TableStickyHeader = () => {
     setPage(0)
   }
 
+  console.log(data, 'data')
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -109,17 +111,18 @@ const TableStickyHeader = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row: any) => (
-              <TableRow key={row.id}>
-
+            {data?.map((row: any) => (
+              <TableRow>
                 <TableCell>
-                  <Box gap={2} style={{ display: 'flex', alignItems: 'center' }}>
-                    <Avatar alt={row.user} />
-                    <div style={{ marginLeft: '10px' }}>
-                      <Typography variant="body1">{row.user}</Typography>
-                      <Typography variant='caption' color={'text.secondary'}>@{row.user}</Typography>
-                    </div>
-                  </Box>
+                  <Link href={`/events/${row.uuid}/edit`} key={row.id}>
+                    <Box gap={2} style={{ display: 'flex', alignItems: 'center' }}>
+                      <Avatar sx={{ width: 56, height: 56 }} src={`${row.event_image}-xs.jpg`} />
+                      <div style={{ marginLeft: '10px' }}>
+                        <Typography fontWeight={'500'}>{row.name}</Typography>
+                        <Typography variant='body2' color={'text.secondary'}>{row.place_name}</Typography>
+                      </div>
+                    </Box>
+                  </Link>
                 </TableCell>
                 <TableCell>{row.email}</TableCell>
                 <TableCell>{row.role}</TableCell>

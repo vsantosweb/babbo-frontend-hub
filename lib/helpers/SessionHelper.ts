@@ -1,6 +1,3 @@
-import { Session } from 'inspector';
-import { useRouter } from 'next/router';
-
 
 export type RedirectWithSessionType = {
   type?: string,
@@ -9,8 +6,8 @@ export type RedirectWithSessionType = {
 }
 
 interface SessionHelperInterface {
-
   redirectWith: (destination: string, key: string, data?: string | Record<string, any>) => void
+  withMessage: (key: string, data?: string | Record<string, any>) => void
   has: (key: string) => boolean | any
 }
 
@@ -25,12 +22,21 @@ export const SessionHelper: SessionHelperInterface = {
     location.href = destination;
   },
 
+  withMessage: (key: string, data?: string | Record<string, any>) => {
+    // Armazenar a mensagem no sessionStorage
+    sessionStorage.setItem(key, JSON.stringify(data));
+  },
+  
   has: (key: string) => {
 
     const message = sessionStorage.getItem(key);
   
     if (message) {
-      sessionStorage.removeItem(key);
+      
+      setTimeout(() => {
+        sessionStorage.removeItem(key)
+      }, 3500);
+
       return message;
     }
   

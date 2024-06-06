@@ -24,6 +24,11 @@ export const eventValidatorSchema = {
     event_image: Yup.string().required('A imagem do evento é obrigatória'),
     description: Yup.string().nullable(),
     has_external_ticket: Yup.boolean(),
+    is_recurring: Yup.boolean(),
+    recurrence_pattern:Yup.string().nullable().when('is_recurring', (isRecurring, schema) => {
+        return isRecurring[0] ? schema.required('Defina um padrão de recorrência') : schema;
+
+    }),
     ticket_partner_url: Yup.string().nullable().when('has_external_ticket', (hasTickets, schema) => {
         return hasTickets[0] ? schema.required('A url do parceiro é obrigatória') : schema;
 
@@ -36,7 +41,7 @@ export const eventValidatorSchema = {
         .test('fileSize', 'A imagem deve ter no máximo 1MB', (value: any) => {
             if (!value) return true; // Retorna true se nenhum arquivo for fornecido
             // Verifica se o tamanho é menor ou igual a 1MB
-            return value && value[0]?.size <= (1 * 1024 * 1024);
+            return value && value[0]?.size <= (2 * 1024 * 1024);
         })
         .test('fileType', 'A imagem deve ser do tipo JPG, JPEG, PNG ou GIF', (value: any) => {
             if (!value) return true; // Retorna true se nenhum arquivo for fornecido
