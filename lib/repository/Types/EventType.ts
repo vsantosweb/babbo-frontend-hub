@@ -29,6 +29,8 @@ export interface EventInterface  {
     has_external_ticket?:boolean;
     ticket_partner_name?: string,
     ticket_partner_url?:string;
+    customer: Record<string, any>;
+    place: Record<string, any>;
     organizer?:{
         organizer_id?: string,
         organizer_name?: string,

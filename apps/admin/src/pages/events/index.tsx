@@ -19,7 +19,6 @@ import { useForm } from 'react-hook-form'
 import Close from 'mdi-material-ui/Close'
 import { CalendarIcon } from '@chakra-ui/icons'
 
-
 const adminEventService = container.get<AdminEventRepositoryInterface>('admin-event');
 
 type CountSummary = {

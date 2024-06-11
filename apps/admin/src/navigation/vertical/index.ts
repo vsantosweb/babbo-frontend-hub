@@ -44,18 +44,12 @@ const navigation = (): VerticalNavItemsType => {
     {
       sectionTitle: 'Configurações'
     },
-    {
-      title: 'Jobs',
-      icon: Login,
-      path: '/pages/login',
-      openInNewTab: true
-    },
-    {
-      title: 'Register',
-      icon: AccountPlusOutline,
-      path: '/pages/register',
-      openInNewTab: true
-    },
+    // {
+    //   title: 'Jobs',
+    //   icon: Login,
+    //   path: '/pages/login',
+    //   openInNewTab: true
+    // },
     {
       title: 'Logs',
       icon: AlertCircleOutline,

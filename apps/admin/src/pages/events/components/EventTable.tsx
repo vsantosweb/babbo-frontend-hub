@@ -153,7 +153,7 @@ const EventTable = ({ rows, columns, fetchData, handleDeleteEvent, filters }: Ev
                 <TableCell>{dayjs() > dayjs(row.end_date) ? 'Expirado' : 'Ativo'}</TableCell>
                 <TableCell>
                   <IconButton onClick={() => [handleClickOpen(), setSelectedEvent(row)]} aria-label="delete"><RiDeleteBin5Line /></IconButton>
-                  <IconButton aria-label="show"><RiEyeLine /></IconButton>
+                  <IconButton LinkComponent={Link} href={`/events/${row.uuid}/panel`} aria-label="show"><RiEyeLine /></IconButton>
                   <IconButton LinkComponent={Link} href={`/events/${row.uuid}/edit`} aria-label="edit"><MdEdit /></IconButton>
 
                 </TableCell>
