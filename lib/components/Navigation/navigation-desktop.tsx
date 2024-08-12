@@ -5,6 +5,7 @@ import { EventSearch } from "../EventSearch";
 import { AvaiableCities } from "../AvaiableCities";
 import { Logo } from "../Logo";
 import { SearchIcon } from "@chakra-ui/icons";
+import { EventProvider } from "@/hooks";
 
 export function NavigationDesktop() {
     return (
@@ -27,7 +28,9 @@ export function NavigationDesktop() {
             >
                 <Logo />
             </Box>
-            <EventSearch />
+            <EventProvider>
+                <EventSearch />
+            </EventProvider>
             <AvaiableCities />
         </Flex>
 

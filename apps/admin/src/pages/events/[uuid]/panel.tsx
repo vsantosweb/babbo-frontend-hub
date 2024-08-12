@@ -6,8 +6,16 @@ import { GetServerSidePropsContext } from "next/types";
 import container from "@/container";
 import EventInfoDetails from "../components/EventInfoDetails";
 import CardNavigation from "../components/CardNavigation";
+import { AdminEventSessionRepositoryInterface } from '@/interfaces';
+import { useEffect, useState } from "react";
 
 const adminEventService = container.get<AdminEventRepositoryInterface>('admin-event');
+const adminEvenSessiontService = container.get<AdminEventSessionRepositoryInterface>('admin-event-session');
+
+type EventSessionType = {
+    id: number,
+    name: string,
+}
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
 
@@ -19,13 +27,27 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     return {
         props: {
-            event: event.data
+            event: event.data,
         }
     };
 }
 
 export default function EventPanel({ event }: { event: EventInterface }) {
-    console.log(event, 'eventevent')
+
+    const [sessions, setSessions] = useState<EventSessionType[]>([])
+
+    useEffect(() => {
+        adminEvenSessiontService.get(event.id).then(response => setSessions(response.data))
+    }, [])
+
+    const handleCreateSession = async (payload: { name: string }) => {
+
+        await adminEvenSessiontService.create(payload, event.id);
+
+    }
+
+    const eventActions = { handleCreateSession, sessions }
+
     return (
         <Grid spacing={4} container>
             <Grid item md={3}>
@@ -39,26 +61,7 @@ export default function EventPanel({ event }: { event: EventInterface }) {
                 </Card>
             </Grid>
             <Grid item md={9}>
-                <Grid sx={{ mb: 4 }} spacing={4} container>
-                    {[0, 1, 2, 3].map(x => <Grid item xs={12} md={3}>
-                        <Card>
-                            <CardContent>
-                                <Box display={'flex'} justifyContent={'space-between'}>
-                                    <Box>
-                                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>Impressoes</Typography>
-                                        <Typography variant="h5" component="div">
-                                        </Typography>
-                                        <Typography sx={{ mb: 1.5 }} variant='h4' color="text.primary"> 5678 </Typography>
-                                        <Typography variant="body2">No sistema</Typography>
-                                    </Box>
-                                </Box>
-                            </CardContent>
-                        </Card>
-                    </Grid>)}
-
-                </Grid>
-                <CardNavigation />
-
+                <CardNavigation event={event} />
             </Grid>
         </Grid>
     )

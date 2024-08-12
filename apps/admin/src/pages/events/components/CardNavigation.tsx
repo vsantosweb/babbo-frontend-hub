@@ -1,5 +1,5 @@
 // ** React Imports
-import { SyntheticEvent, useState } from 'react'
+import { SyntheticEvent, useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Tab from '@mui/material/Tab'
@@ -10,8 +10,25 @@ import Button from '@mui/material/Button'
 import TabContext from '@mui/lab/TabContext'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
+import { DateLabelButton } from '@/components';
+import { Box, Stack } from '@mui/material';
+import Accordion from '@mui/material/Accordion';
+import AccordionActions from '@mui/material/AccordionActions';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionLot from './AccordionLot'
+import SessionModalForm from './SessionModalForm'
 
-const CardNavigation = () => {
+import { AdminEventSessionRepositoryInterface } from '@/interfaces';
+import { EventInterface } from '@/types';
+import container from '@/container';
+import ActionMenu from './ActionMenu'
+import TabEventSessions from './TabEventSessions'
+
+const adminEvenSessiontService = container.get<AdminEventSessionRepositoryInterface>('admin-event-session');
+
+
+const CardNavigation = ({ event }: { event: EventInterface }) => {
   // ** State
   const [value, setValue] = useState<string>('1')
 
@@ -21,42 +38,20 @@ const CardNavigation = () => {
 
   return (
     <Card>
-      <TabContext value={value}>
+      <TabContext value={'ingressos'}>
         <TabList variant='scrollable' onChange={handleChange} aria-label='card navigation example'>
-          <Tab value='1' label='Overview' />
-          <Tab value='2' label='Item Two' />
-          <Tab value='3' label='Item Three' />
+          <Tab value='ingressos' label='Ingressos' />
         </TabList>
         <CardContent>
-          <TabPanel value='1' sx={{ p: 0 }}>
-            <Typography variant='h6' sx={{ marginBottom: 2 }}>
-              Header One
-            </Typography>
-            <Typography variant='body2' sx={{ marginBottom: 4 }}>
-              Pudding tiramisu caramels. Gingerbread gummies danish chocolate bar toffee marzipan. Wafer wafer cake
-              powder danish oat cake.
-            </Typography>
-            <Button variant='contained'>Button One</Button>
-          </TabPanel>
-          <TabPanel value='2' sx={{ p: 0 }}>
-            <Typography variant='h6' sx={{ marginBottom: 2 }}>
-              Header Two
-            </Typography>
-            <Typography variant='body2' sx={{ marginBottom: 4 }}>
-              Dragée chupa chups soufflé cheesecake jelly tootsie roll cupcake marzipan. Carrot cake sweet roll gummi
-              bears caramels jelly beans.
-            </Typography>
-            <Button variant='contained'>Button Two</Button>
-          </TabPanel>
-          <TabPanel value='3' sx={{ p: 0 }}>
-            <Typography variant='h6' sx={{ marginBottom: 2 }}>
-              Header Three
-            </Typography>
-            <Typography variant='body2' sx={{ marginBottom: 4 }}>
-              Icing cake macaroon macaroon jelly chocolate bar. Chupa chups dessert dessert soufflé chocolate bar
-              jujubes gummi bears lollipop.
-            </Typography>
-            <Button variant='contained'>Button Three</Button>
+          <TabPanel value='ingressos' sx={{ p: 0 }}>
+            <Stack spacing={4}>
+              <Typography variant='h6' sx={{ marginBottom: 1 }}>Gerenciar Ingressos</Typography>
+              <Typography variant='body1' sx={{ marginBottom: 4 }}>
+                Bem-vindo ao gerenciador de ingressos, aqui você poderá configurar a
+                data de venda, criar ingressos por lote ou individuais.
+              </Typography>
+              <TabEventSessions eventId={event.id} />
+            </Stack>
           </TabPanel>
         </CardContent>
       </TabContext>

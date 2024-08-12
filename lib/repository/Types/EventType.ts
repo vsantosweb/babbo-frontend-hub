@@ -6,7 +6,7 @@ export type EventDisplayType = {
 }
 
 export interface EventInterface  {
-    id?: number;
+    id: number;
     uuid?: string;
     name?: string;
     slug?: string;

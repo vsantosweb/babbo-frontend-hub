@@ -1,0 +1,44 @@
+{
+    "id": 1045958,
+    "name": "SEXTA-FEIRA - ESCOLHA DAYPASS",
+    "description": null,
+    "salable": true,
+    "status": "finished",
+    "faceRecognition": false,
+    "transferMandatoryFaceRecognition": false,
+    "type": [
+        {
+            "id": 1045962,
+            "name": "Sexta | PISTA | Escolha Daypass",
+            "description": "Este é o seu ingresso final e definitivo para entrar no evento. Qualquer dúvida, entrar em contato com contato@ingresse.com",
+            "price": 0,
+            "validationCpfTicket": false,
+            "tax": 0,
+            "beginSales": "2024-04-10T08:00:00-03:00",
+            "endSales": "2024-04-10T08:00:00-03:00",
+            "status": "finished",
+            "restrictions": {
+                "minimum": 1,
+                "maximum": 99
+            },
+            "hidden": false,
+            "dates": [
+                {
+                    "id": 98121,
+                    "date": "14/06/2024",
+                    "time": "17:00:00",
+                    "datetime": "2024-06-14T17:00:00-03:00"
+                }
+            ],
+            "quantityInStock": 204,
+            "hasCoupon": false,
+            "isTransferableGuestType": true,
+            "isDependents": false,
+            "category": {
+                "id": "1",
+                "name": "Inteira"
+            }
+        }
+    ],
+    "quantityInStock": 0
+}

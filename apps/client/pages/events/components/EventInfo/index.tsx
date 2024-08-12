@@ -27,7 +27,7 @@ export default function EventInfo({ event }: { event: EventInterface }) {
           <Heading size={'sm'}>
             {eventDateFormatter(event).fully}
           </Heading>
-          
+
         </Flex>
       </Flex>
       <Flex gap={4} alignItems={'center'}>
@@ -73,9 +73,9 @@ export default function EventInfo({ event }: { event: EventInterface }) {
           </Link>
         </Flex>
       }
-      {/* <Box>
-                  <Button background='green.500'>Comprar ingressos</Button>
-                </Box> */}
+      <Box>
+        <Button size={'lg'}>Comprar ingressos</Button>
+      </Box>
     </Stack>
   )
 }

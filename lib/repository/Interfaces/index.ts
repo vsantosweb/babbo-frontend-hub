@@ -13,5 +13,7 @@ export * from './Customer/CustomerRegisterRepositoryInterface';
 export * from './Admin/AdminBaseRepositoryInterface';
 export * from './Admin/AdminEventRepositoryInterface';
 export * from './Admin/AdminCustomertRepositoryInterface';
+export * from './Admin/AdminEventSessionRepositoryInterface';
+export * from './Admin/AdminEventLotRepositoryInterface';
 
 

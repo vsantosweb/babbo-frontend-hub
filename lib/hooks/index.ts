@@ -5,3 +5,5 @@ export * from './useAlert';
 export * from './useEventShare';
 export * from './useOrganizer';
 export * from './useUserLocation';
+export * from './useDisclosure';
+

@@ -1,16 +1,17 @@
 import 'reflect-metadata';
 import { Container } from 'inversify';
-import { AdminBaseRepositoryInterface, AdminCustomertRepositoryInterface, AdminEventRepositoryInterface, AuthRepositoryInterface, CustomerProfileRepositoryInterface, CustomerRegisterRepositoryInterface, EventRepositoryInterface, PublicOrganizerRepositoryInterface, PublicRepositoryInterface } from '@/interfaces';
+import { AdminCustomertRepositoryInterface, AdminEventLotRepositoryInterface, AdminEventRepositoryInterface, AdminEventSessionRepositoryInterface, AuthRepositoryInterface, CustomerProfileRepositoryInterface, CustomerRegisterRepositoryInterface, EventRepositoryInterface, PublicOrganizerRepositoryInterface, PublicRepositoryInterface } from '@/interfaces';
 import { AuthServiceApiCustomer } from './Api/Customer/AuthServiceApiCustomer';
 import { PublicEventService } from '../Services/Api/Public/PublicEventService';
 import { EventManagerApiService } from './Api/Customer/EventManagerApiService';
-import { EventApiService } from './Api/EventApiService';
 import { CustomerProfileApiService } from './Api/Customer/CustomerProfileApiService';
 import { PublicOrganizerService } from './Api/Public/PublicOrganizerService';
 import { CustomerRegisterApiService } from './Api/Customer/CustomerRegisterApiService';
 import { AuthServiceApiAdmin } from './Api/Admin/AuthServiceApiAdmin';
 import { CustomerServiceApiAdmin } from './Api/Admin/CustomerServiceApiAdmin';
 import { EventServiceApiAdmin } from './Api/Admin/EventServiceApiAdmin';
+import { EventSessionServiceApiAdmin } from './Api/Admin/EventSessionServiceApiAdmin';
+import { EventLotServiceApiAdmin } from './Api/Admin/EventLotServiceApiAdmin';
 
 const container = new Container();
 
@@ -31,6 +32,8 @@ container.bind<PublicOrganizerRepositoryInterface>('public-organizer').to(Public
 // ** Admin
 container.bind<AdminCustomertRepositoryInterface>('admin-customer').to(CustomerServiceApiAdmin);
 container.bind<AdminEventRepositoryInterface>('admin-event').to(EventServiceApiAdmin);
+container.bind<AdminEventSessionRepositoryInterface>('admin-event-session').to(EventSessionServiceApiAdmin);
+container.bind<AdminEventLotRepositoryInterface>('admin-event-ticket-lot').to(EventLotServiceApiAdmin);
 
 
 export default container;
