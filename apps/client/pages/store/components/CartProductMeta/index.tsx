@@ -33,10 +33,12 @@ import {
         />
         <Box pt="4">
           <Stack spacing="0.5">
-            <Text fontWeight="medium">{name}</Text>
-            <Text color={mode('gray.600', 'gray.400')} fontSize="sm">
-            Vel maiores aut earum sit id. Repudiandae
-            </Text>
+            <Text fontSize={'small'} fontWeight="medium">{name}</Text>
+            <Text fontSize={'x-small'} color={mode('gray.600', 'gray.400')} fontSize="sm">R$ 60,00 </Text>
+          </Stack>
+          <Stack spacing="0.5">
+            <Text fontSize={'small'} fontWeight="medium">{name}</Text>
+            <Text fontSize={'x-small'} color={mode('gray.600', 'gray.400')} fontSize="sm">R$ 60,00 </Text>
           </Stack>
           {/* {isGiftWrapping && (
             <HStack spacing="1" mt="3" color={mode('gray.600', 'gray.400')}>

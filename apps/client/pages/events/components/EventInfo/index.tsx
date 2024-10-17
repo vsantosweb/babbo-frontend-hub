@@ -73,8 +73,8 @@ export default function EventInfo({ event }: { event: EventInterface }) {
           </Link>
         </Flex>
       }
-      <Box>
-        <Button size={'lg'}>Comprar ingressos</Button>
+      <Box textAlign={{base: 'center', md: 'left'}} mt={4}>
+        <Button as={Link} href='/store' size={'lg'}>Comprar ingressos</Button>
       </Box>
     </Stack>
   )

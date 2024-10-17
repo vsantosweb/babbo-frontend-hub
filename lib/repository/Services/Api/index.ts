@@ -10,10 +10,8 @@ export default class ApiService {
   public static configure(serviceContainer: ServiceContainerType) {
 
     ApiService.baseURL = process.env.NEXT_PUBLIC_URL_API;
-
-    const api = axios.create({
-      baseURL: `${this.baseURL}/${serviceContainer}`,
-    });
+    
+    const api = axios.create({ baseURL: `${this.baseURL}/${serviceContainer}` });
 
     api.interceptors.request.use(async function (config) {
 
@@ -29,11 +27,10 @@ export default class ApiService {
           config.headers['X-User-Identifier'] = userIdentifier;
         }
       } else {
-        // Aqui você pode implementar a lógica para acessar o identificador do usuário no lado do servidor
-        // Por exemplo, acessar cookies HTTP ou passar o identificador do usuário como um parâmetro de função
-        const userIdentifier = (await fetch(ApiService.baseURL + '/public/user-identifier')).json(); // Substitua por sua lógica real para obter o identificador do usuário no servidor
+        
+        const userIdentifier = (await axios.get(ApiService.baseURL + '/public/user-identifier')).data; 
 
-        const { user_identifier } = await userIdentifier;
+        const { user_identifier } = userIdentifier;
 
         if (user_identifier) {
           config.headers['X-User-Identifier'] = user_identifier;

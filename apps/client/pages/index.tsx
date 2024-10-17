@@ -24,7 +24,7 @@ type GeoLocation = {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  
+
   const showcase = await eventService.showcase();
 
   const organizerShowcase = await publicOrganizerContainer.organizerShowcase();
@@ -37,7 +37,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   };
 
 }
-export default function Index({ showcase, organizerShowcase }: {showcase: any, organizerShowcase: any}) {
+export default function Index({ showcase, organizerShowcase }: { showcase: any, organizerShowcase: any }) {
 
   const [events, setEvents] = useState<EventInterface[] | null>(null);
   const [limit, setLimit] = useState(10); // Número de eventos a serem buscados por requisição
@@ -64,7 +64,7 @@ export default function Index({ showcase, organizerShowcase }: {showcase: any, o
   // }, [userLocation, currentLocation]);
 
   useEffect(() => {
-    eventService.showcase({...userLocation}).then((response: AxiosResponse) => {
+    eventService.showcase({ ...userLocation }).then((response: AxiosResponse) => {
       setEventShowcase(response.data);
     })
   }, [userLocation])

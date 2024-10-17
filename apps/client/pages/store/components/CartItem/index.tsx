@@ -45,13 +45,20 @@ export const CartItem = (props: CartItemProps) => {
   } = props
 
   return (
-    <Flex border={'dashed 1px #ddd'} borderRadius={'xl'} p={2} direction={{ base: 'column', md: 'row' }} justify="space-between" align="center">
+    <Flex border={'dashed 1px #ddd'}
+      borderRadius={'xl'}
+      p={2}
+      direction={{ base: 'column', md: 'row' }}
+      justify="space-between"
+      align="center"
+    >
       <CartProductMeta
         name={name}
         description={description}
         image={imageUrl}
         isGiftWrapping={isGiftWrapping}
       />
+
 
       {/* Desktop */}
       <Flex width="full" justify="space-between" display={{ base: 'none', md: 'flex' }}>
@@ -66,7 +73,7 @@ export const CartItem = (props: CartItemProps) => {
       </Flex>
 
       {/* Mobile */}
-      <Flex
+      {/* <Flex
         mt="4"
         align="center"
         width="full"
@@ -76,14 +83,9 @@ export const CartItem = (props: CartItemProps) => {
         <Link fontSize="sm" textDecor="underline">
           Delete
         </Link>
-        <QuantitySelect
-          value={quantity}
-          onChange={(e) => {
-            onChangeQuantity?.(+e.currentTarget.value)
-          }}
-        />
+
         <PriceTag price={price} currency={currency} />
-      </Flex>
+      </Flex> */}
     </Flex>
   )
 }
