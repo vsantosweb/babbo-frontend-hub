@@ -17,3 +17,7 @@ RUN npm install
 
 # Comando para rodar a aplicação
 #CMD ["npx", "nx", "dev", "client"]
+# RUN chmod +x ./entrypoint.sh
+
+# # Comando de entrada para o script entrypoint.sh
+# ENTRYPOINT ["./entrypoint.sh"]

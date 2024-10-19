@@ -1,1 +1,0 @@
-NEXT_PUBLIC_URL_API=http://api.rolezeiros.local/api
