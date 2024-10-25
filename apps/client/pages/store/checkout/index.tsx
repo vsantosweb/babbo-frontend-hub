@@ -1,9 +1,9 @@
 import React from 'react'
-import { Cart } from '../components/Cart'
+import { Cart } from '../_components/Cart'
 import Layout from '@/layouts'
 import { Box, Button, Link, Stack } from '@chakra-ui/react'
-import TicketSelector from '../components/TicketSelector'
-import { cartData } from '../components/_data'
+import TicketSelector from '../_components/TicketSelector/indexx'
+import { cartData } from '../_components/_data'
 
 export default function index() {
     return (

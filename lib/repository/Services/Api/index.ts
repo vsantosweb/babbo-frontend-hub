@@ -1,7 +1,7 @@
 import Cookie from 'js-cookie';
 import axios from 'axios';
 
-export type ServiceContainerType = 'admin' | 'public' | 'customer';
+export type ServiceContainerType = 'admin' | 'public' | 'customer' | 'store';
 
 export default class ApiService {
 
@@ -21,11 +21,14 @@ export default class ApiService {
 
       // Verifica se está no lado do cliente
       if (typeof window !== 'undefined') {
+
         // Se estiver no lado do cliente, acessa o localStorage normalmente
         const userIdentifier = localStorage.getItem('user_identifier');
+        
         if (userIdentifier) {
           config.headers['X-User-Identifier'] = userIdentifier;
         }
+
       } else {
         
         const userIdentifier = (await axios.get(ApiService.baseURL + '/public/user-identifier')).data; 

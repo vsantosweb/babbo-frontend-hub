@@ -1,5 +1,5 @@
-import { EventRepositoryInterface, PublicRepositoryInterface } from '@/interfaces';
-import { EventBanner, EventDisplayType, EventInterface } from '@/types';
+import { PublicRepositoryInterface } from '@/interfaces';
+import { EventDisplayType } from '@/types';
 import { AxiosInstance } from 'axios';
 import ApiService from '..';
 import { injectable } from 'inversify';

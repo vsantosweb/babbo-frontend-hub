@@ -17,3 +17,8 @@ export * from './Admin/AdminEventSessionRepositoryInterface';
 export * from './Admin/AdminEventLotRepositoryInterface';
 
 
+// ** Store
+
+export * from '../Services/Api/Store/Interfaces/StoreEventInterface'
+
+

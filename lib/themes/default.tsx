@@ -44,12 +44,15 @@ const activeLabelStyles = {
 const variantOutlined = () => ({
   field: {
     _focus: {
-      borderColor: '#000 !important',
+      border: 'solid 1px #141414',
       // boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px;',
       outline: 'none',
       boxShadow: 'none',
     },
-    borderRadius: '30px',
+    borderWidth: '1px',
+    borderRadius: '.5rem',
+    backgroundColor: '#eee',
+    pandding: '1rem'
   },
 });
 

@@ -13,6 +13,8 @@ import { EventServiceApiAdmin } from './Api/Admin/EventServiceApiAdmin';
 import { EventSessionServiceApiAdmin } from './Api/Admin/EventSessionServiceApiAdmin';
 import { EventLotServiceApiAdmin } from './Api/Admin/EventLotServiceApiAdmin';
 
+import { StoreEventInterface, StoreEventService} from './Api/Store';
+
 const container = new Container();
 
 
@@ -34,6 +36,9 @@ container.bind<AdminCustomertRepositoryInterface>('admin-customer').to(CustomerS
 container.bind<AdminEventRepositoryInterface>('admin-event').to(EventServiceApiAdmin);
 container.bind<AdminEventSessionRepositoryInterface>('admin-event-session').to(EventSessionServiceApiAdmin);
 container.bind<AdminEventLotRepositoryInterface>('admin-event-ticket-lot').to(EventLotServiceApiAdmin);
+
+// ** Store
+container.bind<StoreEventInterface>('store-event-service').to(StoreEventService);
 
 
 export default container;
