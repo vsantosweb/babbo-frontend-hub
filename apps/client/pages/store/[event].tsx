@@ -6,10 +6,11 @@ import { GetServerSidePropsContext } from 'next';
 import container from '@/container';
 import { StoreEventInterface } from '@/interfaces';
 import StoreHeader from './_components/StoreHeader';
+import { EventInterface } from '@/types';
+import { AuthProvider, CartProvider } from '@/hooks';
 
 
 const storeEventService = container.get<StoreEventInterface>('store-event-service');
-
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
 
@@ -17,20 +18,23 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     const response = await storeEventService.eventTickets(query.event as string)
 
-    const trackid: string = query?.trackid as string
-
     return { props: { data: response.data } };
 
 }
 
-export default function StorePage({ data }: { data: Record<string, any> }) {
+export default function StorePage({ data }: { data: EventInterface }) {
 
     return (
-        <Layout title={'Babbo Eventos'} name={'client'}>
-            <Stack className='app-wrapper'spacing='6' mt={4}>
-                <StoreHeader />
-                <Cart event={data} />
-            </Stack>
-        </Layout>
+        <AuthProvider middleware='auth:customer' config={{ loginRoute: '/account/login', startPage: '/store/payment' }}>
+            <Layout title={'Babbo Eventos'} name={'client'}>
+                <Stack className='app-wrapper' spacing='6' mt={4}>
+                    <StoreHeader event={data} />
+                    <CartProvider>
+                        <Cart event={data} />
+                    </CartProvider>
+                </Stack>
+            </Layout>
+        </AuthProvider>
+
     )
 }

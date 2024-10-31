@@ -29,21 +29,18 @@ const Login = ({ layout }: any) => {
     setButonState({ disabled: true, isLoading: true });
 
     login(credentials).then((response: any) => {
-
       if (!response.success) {
         setButonState({ disabled: false, isLoading: false });
         return setErrorMessage(response.message)
       }
       // _watch();
-
     })
 
   }
 
   return (
-    <Layout name={'auth'}>
-      <form onSubmit={handleSubmit(submitCredentials)}>
-        <Stack>
+     <form onSubmit={handleSubmit(submitCredentials)}>
+        <Stack p='6'>
           <FormControl>
             <FormLabel>Email</FormLabel>
             <Input placeholder={'Edereço de email'} autoComplete={'off'} {...register('email', { required: true })} />
@@ -69,7 +66,6 @@ const Login = ({ layout }: any) => {
             rightIcon={<FaArrowRightLong />}>Registre-se</Styled.AccountButton>
         </Stack>
       </form>
-    </Layout>
   );
 };
 

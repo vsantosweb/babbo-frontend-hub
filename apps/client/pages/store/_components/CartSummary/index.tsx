@@ -2,22 +2,21 @@ import {
   Button,
   Flex,
   Heading,
-  Link,
   Stack,
   Text,
   useColorModeValue as mode,
 } from '@chakra-ui/react'
 import { FaArrowRight } from 'react-icons/fa'
 import { formatPrice } from '../PriceTag'
-import { useTicket } from '../../_hooks/useTicket'
+import { useAuth, useCart, useTicket } from '@/hooks'
 
-type OrderSummaryItemProps = {
+type CartSummaryItemProps = {
   label: string
   value?: string
   children?: React.ReactNode
 }
 
-const OrderSummaryItem = (props: OrderSummaryItemProps) => {
+const CartSummaryItem = (props: CartSummaryItemProps) => {
   const { label, value, children } = props
   return (
     <Flex justify="space-between" fontSize="sm">
@@ -29,16 +28,20 @@ const OrderSummaryItem = (props: OrderSummaryItemProps) => {
   )
 }
 
-export const CartOrderSummary = () => {
 
-  const { totalAmount } = useTicket();
+export const CartSummary = () => {
+
+  const { totalAmount, selectedTickets } = useTicket();
+  const { addCart, isLoading } = useCart();
+  const { user } = useAuth();
+  
 
   return (
     <Stack spacing="8" borderWidth="1px" rounded="lg" padding="4" width="full">
       <Heading size="md">Detalhes do pedido</Heading>
 
       <Stack spacing="6">
-        <OrderSummaryItem label="Subtotal" value={formatPrice(totalAmount)} />
+        <CartSummaryItem label="Subtotal" value={formatPrice(totalAmount)} />
         {/* <OrderSummaryItem label="Shipping + Tax">
             <Link href="#" textDecor="underline">
               Calculate shipping
@@ -59,7 +62,14 @@ export const CartOrderSummary = () => {
           </Flex>
         </Flex>
       </Stack>
-      <Button as={Link} href='/store/payment' colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />}>
+      <Button
+        onClick={() => addCart(selectedTickets)}
+        colorScheme="blue"
+        size="lg"
+        isLoading={isLoading}
+        fontSize="md"
+        isDisabled={selectedTickets.length === 0}
+        rightIcon={<FaArrowRight />}>
         Pagamento
       </Button>
     </Stack>

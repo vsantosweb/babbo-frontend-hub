@@ -19,8 +19,8 @@ export const theme: ThemeProps = {
     spacing: '.9em',
   },
   colors: {
-    primary: '#9546fc',
-    // primary: '#ea1e63',
+    // primary: '#9546fc',
+    primary: '#FF0068',
     secondary: '#15FF83',
     text: '#333',
     background: '#fff',
@@ -87,24 +87,36 @@ const charkaExtendThemeConfig = {
     useSystemColorMode: false,
   },
   colors: {
+    // primary: {
+    //   50: '#F0E6F6',
+    //   100: '#D3BDF0',
+    //   200: '#B693E9',
+    //   300: '#9969E3',
+    //   400: '#7C3FDD',
+    //   500: '#6F2CF6', // Sua nova cor principal
+    //   600: '#571EAD',
+    //   700: '#3E1578',
+    //   800: '#260C43',
+    //   900: '#130420',
+    // },
     primary: {
-      50: '#F0E6F6',
-      100: '#D3BDF0',
-      200: '#B693E9',
-      300: '#9969E3',
-      400: '#7C3FDD',
-      500: '#6F2CF6', // Sua nova cor principal
-      600: '#571EAD',
-      700: '#3E1578',
-      800: '#260C43',
-      900: '#130420',
+      50: '#FFE6EF',
+      100: '#FFB3CC',
+      200: '#FF80AA',
+      300: '#FF4D87',
+      400: '#FF1A65',
+      500: '#FF0068', // Nova cor principal
+      600: '#D10056',
+      700: '#A30045',
+      800: '#750034',
+      900: '#470022',
     },
-  },
 
+  },
   components: {
     Heading: {
       baseStyle: {
-        fontWeight: 400, // Define o fontWeight padrão como 500
+        // fontWeight: 400, // Define o fontWeight padrão como 500
       },
     },
     Modal: {
@@ -159,7 +171,11 @@ const charkaExtendThemeConfig = {
     },
     Input: {
       baseStyle: {
-        borderRadius: theme.defaultRadius,
+        field: {
+          borderRadius: theme.defaultRadius,
+          fontSize: 'sm',
+          _placeholder: { fontSize: 'sm' }, // Define o tamanho do placeholder para todas as variantes
+        },
       },
       sizes: {
         lg: {
@@ -194,6 +210,13 @@ const charkaExtendThemeConfig = {
       },
     },
     Select: {
+      baseStyle: {
+        field: {
+          borderRadius: theme.defaultRadius,
+          fontSize: 'sm',
+          _placeholder: { fontSize: 'sm' }, // Define o tamanho do placeholder para todas as variantes
+        },
+      },
       sizes: {
         lg: {
           field: {
@@ -213,6 +236,7 @@ const charkaExtendThemeConfig = {
     FormLabel: {
       baseStyle: {
         marginBottom: 2,
+        fontSize: 14
       },
     },
   },

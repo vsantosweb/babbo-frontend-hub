@@ -43,7 +43,7 @@ export const useAuth = () => {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error('useAuth must be used within an AccessibilityProvider');
+    throw new Error('useAuth must be used within an AuthProvider');
   }
 
   // Retorna os estados e funções necessários para gerenciar a autenticação do usuário
@@ -108,6 +108,7 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
 
       } else {
         setAuthorized(true);
+        console.log(user, 'useruseruseruseruser')
         setUser(user);
         
         if(middleware === 'auth:manager'){
@@ -158,11 +159,8 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
 
         Cookies.set('token', response?.data.data.token, { expires: expiresAt })
         Cookies.set('token-exp', expiresAt.toString(), { expires: expiresAt });
-
-        router.push('/');
-
-        setUser(response?.data.user);
-
+        session(router.asPath)
+        // router.push('/');
       }
       // Retorna a resposta da função de login
       return response?.data;

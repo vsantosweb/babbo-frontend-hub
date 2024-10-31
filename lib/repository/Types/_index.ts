@@ -6,3 +6,4 @@ export * from './EventType';
 export * from './PayloadType';
 export * from './OrganizerType';
 export * from './MiddlewareType';
+export * from './TicketType';

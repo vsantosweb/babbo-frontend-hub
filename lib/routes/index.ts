@@ -1,6 +1,7 @@
 import { MiddlewareType } from '@/types';
 import { adminRoutes } from './admin';
 import { managerRoutes } from './manager';
+import { storeRoutes } from './store';
 
 export type RouteProps = {
     name: string,
@@ -8,9 +9,10 @@ export type RouteProps = {
     private: boolean,
 }
 
-const middleware = {
+export const middleware = {
     'auth:admin': adminRoutes,
     'auth:manager': managerRoutes,
+    'auth:customer': storeRoutes,
 }
 
 export const getMiddlewareRoutes = (middlewareName: MiddlewareType) => {

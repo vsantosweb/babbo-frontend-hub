@@ -14,6 +14,8 @@ import { EventSessionServiceApiAdmin } from './Api/Admin/EventSessionServiceApiA
 import { EventLotServiceApiAdmin } from './Api/Admin/EventLotServiceApiAdmin';
 
 import { StoreEventInterface, StoreEventService} from './Api/Store';
+import { CustomerCartInterface } from './Api/Customer/Interfaces/CustomerCartInterface';
+import { CustomerCartApiService } from './Api/Customer/Services/CustomerCartApiService';
 
 const container = new Container();
 
@@ -21,11 +23,15 @@ const container = new Container();
 // ** Customer
 container.bind<CustomerProfileRepositoryInterface>('customer-profile').to(CustomerProfileApiService);
 container.bind<CustomerRegisterRepositoryInterface>('customer-register').to(CustomerRegisterApiService);
+container.bind<CustomerCartInterface>('customer-cart').to(CustomerCartApiService);
+
+
 container.bind<EventRepositoryInterface>('customer-event').to(EventManagerApiService);
 
 // ** Auth
 container.bind<AuthRepositoryInterface>('auth:manager').to(AuthServiceApiCustomer);
 container.bind<AuthRepositoryInterface>('auth:admin').to(AuthServiceApiAdmin);
+container.bind<AuthRepositoryInterface>('auth:customer').to(AuthServiceApiCustomer);
 
 // ** Public
 container.bind<PublicRepositoryInterface>('public').to(PublicEventService);

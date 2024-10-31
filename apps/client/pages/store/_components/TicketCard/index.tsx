@@ -1,7 +1,13 @@
 import { Box, Text, HStack, IconButton } from '@chakra-ui/react';
 import { AddIcon, MinusIcon } from '@chakra-ui/icons';
+import { Ticket } from '@/types';
 
-const TicketCard = ({ ticket, onChange }: any) => (
+type TickerCardProps = {
+    ticket: Ticket,
+    onChange: (ticket: Record<string, any>, action: 'add' | 'remove') => any
+}
+
+const TicketCard = ({ ticket, onChange }: TickerCardProps) => (
     <Box
         borderBottom='solid 1px #ddd'
         alignItems='center'
@@ -17,7 +23,7 @@ const TicketCard = ({ ticket, onChange }: any) => (
         <HStack spacing='4'>
             <IconButton
                 variant={'outline'}
-                aria-label='Decrement'
+                aria-label='decrement'
                 icon={<MinusIcon />}
                 onClick={() => onChange(ticket, 'remove')}
                 isDisabled={ticket.quantity === 0 || !ticket.quantity}
@@ -26,7 +32,7 @@ const TicketCard = ({ ticket, onChange }: any) => (
             <IconButton
                 onClick={() => onChange(ticket, 'add')}
                 variant={'outline'}
-                aria-label='Increment'
+                aria-label='increment'
                 icon={<AddIcon />}
             />
         </HStack>

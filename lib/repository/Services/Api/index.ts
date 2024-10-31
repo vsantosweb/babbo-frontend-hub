@@ -24,9 +24,10 @@ export default class ApiService {
 
         // Se estiver no lado do cliente, acessa o localStorage normalmente
         const userIdentifier = localStorage.getItem('user_identifier');
-        
+        const token = Cookie.get('token');
         if (userIdentifier) {
           config.headers['X-User-Identifier'] = userIdentifier;
+          config.headers['Authorization'] = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLmJhY2tlbmQubG9jYWwvYXBpL2N1c3RvbWVyL2F1dGgvbG9naW4iLCJpYXQiOjE3MzAzNDU0MzYsImV4cCI6MTczMDU2MTQzNiwibmJmIjoxNzMwMzQ1NDM2LCJqdGkiOiJHd2FSeTJ1SzRmYUptWUNMIiwic3ViIjoiMSIsInBydiI6ImRhOWM1NTYwZGUxNjE1M2JhODE4MGM1ODkzZmQ3NDk0YWQ1OGFmOWUifQ.31v4PTcyP-B_hpheDr2Jh0nChI1a2kjUQfVBR6XKbFs`;
         }
 
       } else {
@@ -37,6 +38,8 @@ export default class ApiService {
 
         if (user_identifier) {
           config.headers['X-User-Identifier'] = user_identifier;
+          config.headers['Authorization'] = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLmJhY2tlbmQubG9jYWwvYXBpL2N1c3RvbWVyL2F1dGgvbG9naW4iLCJpYXQiOjE3MzAzNDU0MzYsImV4cCI6MTczMDU2MTQzNiwibmJmIjoxNzMwMzQ1NDM2LCJqdGkiOiJHd2FSeTJ1SzRmYUptWUNMIiwic3ViIjoiMSIsInBydiI6ImRhOWM1NTYwZGUxNjE1M2JhODE4MGM1ODkzZmQ3NDk0YWQ1OGFmOWUifQ.31v4PTcyP-B_hpheDr2Jh0nChI1a2kjUQfVBR6XKbFs`;
+
         }
       }
 

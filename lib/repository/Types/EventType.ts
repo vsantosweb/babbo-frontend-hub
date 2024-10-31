@@ -1,3 +1,5 @@
+import { SessionType } from "./TicketType";
+
 export type EventDisplayType = {
     id?: number,
     name?: string,
@@ -35,6 +37,7 @@ export interface EventInterface  {
         organizer_id?: string,
         organizer_name?: string,
     }
+    sessions?: Array<SessionType>
 }
 
 

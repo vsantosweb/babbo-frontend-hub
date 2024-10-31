@@ -8,20 +8,23 @@ import {
     Box,
     AccordionIcon,
     AccordionPanel,
+    Flex,
 } from "@chakra-ui/react";
 import TicketCard from "../TicketCard";
-import { useTicket } from "../../_hooks/useTicket";
+import Datebox from "../Datebox";
+import { Session } from "@/types";
+import { useTicket } from "@/hooks";
 
-type Session = {
-    id: number
-    name: string
-    ticket_batches: Array<{
-        name: string
-        tickets: Array<{
-            name: string
-        }>
-    }>
-}
+// type Session = {
+//     id: number
+//     name: string
+//     ticket_batches: Array<{
+//         name: string
+//         tickets: Array<{
+//             name: string
+//         }>
+//     }>
+// }
 
 export default function TicketSelector({ sessions }: { sessions: Session[] }) {
 
@@ -39,15 +42,18 @@ export default function TicketSelector({ sessions }: { sessions: Session[] }) {
 
             <Accordion as={Box} width={'100%'} borderWidth="1px" borderRadius="xl" reduceMotion allowToggle>
                 {sessions.map((session, index) => <AccordionItem key={index} border='none'>
-                    <AccordionButton as={Box} p={6} border='none' borderRadius="lg" overflow="hidden" cursor="pointer">
-                        <Box as='span' flex='1' fontWeight='bold' textAlign='left'>Sessão 1 - 28/10/2024</Box>
+                    <AccordionButton gap='6' as={Box} pl={0} border='none' borderRadius="lg" overflow="hidden" cursor="pointer">
+                        <Box>
+                            <Datebox />
+                        </Box>
+                        <Heading size='md' flex='2'>{session.name}</Heading>
                         <AccordionIcon />
                     </AccordionButton>
                     <AccordionPanel p='0'>
                         <Accordion reduceMotion allowToggle>
-                            {session.ticket_batches.map((batch, index) => <AccordionItem key={index} borderBottom={session.ticket_batches.length === index + 1 ? 'none' :''}>
+                            {session.ticket_batches.map((batch, index) => <AccordionItem key={index} borderBottom={session.ticket_batches.length === index + 1 ? 'none' : ''}>
                                 <AccordionButton p={4}>
-                                    <Box as='span' fontWeight='bold' flex='1' textAlign='left'>Lote {index + 1}</Box>
+                                    <Box as='span' fontWeight='bold' flex='1' textAlign='left'>{batch.name}</Box>
                                     <AccordionIcon />
                                 </AccordionButton>
                                 <AccordionPanel p={0}>
@@ -62,4 +68,3 @@ export default function TicketSelector({ sessions }: { sessions: Session[] }) {
         </Stack>
     )
 }
- 

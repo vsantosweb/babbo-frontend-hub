@@ -6,17 +6,18 @@
     "declaration": false,
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "emitDecoratorMetadata": false,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es2015",
-    "module": "esnext",
+    "target": "ES2020",
+    "module": "ESNext",
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
+      "@/*": ["./lib/*"],
       "@/components": ["lib/components/index.ts"],
       "@/container": ["lib/repository/Services/container.ts"],
       "@/helpers": ["lib/helpers/index.ts"],
@@ -31,9 +32,10 @@
       "@/themes/babbo": ["lib/themes/babbo/index.ts"],
       "@/themes/default": ["lib/themes/default.tsx"],
       "@/tools": ["lib/tools/index.ts"],
-      "@/types": ["lib/repository/Types/_index.ts"]
+      "@/types": ["lib/repository/Types/_index.ts"],
+      "@/redux*": ["lib/redux/store.ts"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "./lib/**/*"],
   "exclude": ["node_modules"]
 }
