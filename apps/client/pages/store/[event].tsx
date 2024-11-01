@@ -25,16 +25,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 export default function StorePage({ data }: { data: EventInterface }) {
 
     return (
-        <AuthProvider middleware='auth:customer' config={{ loginRoute: '/account/login', startPage: '/store/payment' }}>
-            <Layout title={'Babbo Eventos'} name={'client'}>
-                <Stack className='app-wrapper' spacing='6' mt={4}>
-                    <StoreHeader event={data} />
-                    <CartProvider>
-                        <Cart event={data} />
-                    </CartProvider>
-                </Stack>
-            </Layout>
-        </AuthProvider>
+        <Layout title={'Babbo Eventos'} name={'client'}>
+            <Stack className='app-wrapper' spacing='6' mt={4}>
+                <StoreHeader event={data} />
+                <CartProvider>
+                    <Cart event={data} />
+                </CartProvider>
+            </Stack>
+        </Layout>
 
     )
 }

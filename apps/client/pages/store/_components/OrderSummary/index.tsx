@@ -15,6 +15,7 @@ import { formatPrice } from '@/tools'
 import Link from 'next/link'
 import { useTicket } from '@/hooks'
 import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
+import { TicketCartType } from '@/repository/Types/TicketCartType'
 type OrderSummaryItemProps = {
   label: string
   value?: string
@@ -40,9 +41,9 @@ const OrderSummaryItem = ({ label, quantity, description, value, children }: Ord
 }
 
 
-export const OrderSummary = ({ cart }: { cart: any }) => {
+export const OrderSummary = ({ cart }: { cart?: TicketCartType | null }) => {
 
-  if(!cart) return <div>Loading...</div>
+  if (!cart) return <div>Loading...</div>
   return (
 
     <Card boxShadow={'none'} border={'solid 1px #eee'} rounded="xl" width="full">
@@ -60,8 +61,7 @@ export const OrderSummary = ({ cart }: { cart: any }) => {
               value={formatPrice(ticket.total)}
             />
           })}
-
-
+          
         </Stack>
         <Divider my='8' />
         <Stack spacing='8'>

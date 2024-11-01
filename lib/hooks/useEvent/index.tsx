@@ -7,35 +7,12 @@ import container from '@/container';
 const EventContext = createContext<any>({});
 
 export function useEvent() {
-  const {
-    loading,
-    error,
-    fetchEvents,
-    fetchEvent,
-    fetchRelatedEvents,
-    fetchEventCategories,
-    fetchEventBanners,
-    getFormattedDate,
-    fetchSearch,
-    fetchCategories,
-    fetchAvaiableCities,
-    createEvent
-  } = useContext(EventContext);
+  const context = useContext(EventContext);
 
-  return {
-    loading,
-    error,
-    fetchEvents,
-    fetchEvent,
-    fetchRelatedEvents,
-    fetchEventCategories,
-    fetchEventBanners,
-    getFormattedDate,
-    fetchSearch,
-    fetchCategories,
-    fetchAvaiableCities,
-    createEvent
-  };
+  if(!context){
+    throw new Error('useEvent must be used within an EventProvider')
+  }
+  return { ...context }
 }
 
 export function EventProvider({ children, }: { children: JSX.Element | JSX.Element[] }) {

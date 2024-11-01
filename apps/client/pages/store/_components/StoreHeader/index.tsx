@@ -7,7 +7,7 @@ export default function StoreHeader({ event }: { event: EventInterface }) {
 
         <Box borderBottom='solid 1px #ddd' gap='4' maxHeight='300px' display='flex' py='3'>
             <Box width='170px' overflow='hidden'>
-                <Image borderRadius='2xl' overflow='hidden' width='100%' src='https://event-kraken.s3.amazonaws.com/event/posters/75702/large.jpg' />
+                <Image borderRadius='2xl' overflow='hidden' width='100%' src={`${event.event_image}-lg.jpg`} />
             </Box>
             <Stack>
                 <Heading fontSize={{ lg: '2xl' }} fontWeight='bold'>{event.name}</Heading>

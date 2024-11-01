@@ -16,6 +16,8 @@ import { EventLotServiceApiAdmin } from './Api/Admin/EventLotServiceApiAdmin';
 import { StoreEventInterface, StoreEventService} from './Api/Store';
 import { CustomerCartInterface } from './Api/Customer/Interfaces/CustomerCartInterface';
 import { CustomerCartApiService } from './Api/Customer/Services/CustomerCartApiService';
+import { CustomerOrderApiService } from './Api/Customer/Services/CustomerOrderApiService';
+import { CustomerOrderInterface } from './Api/Customer/Interfaces/CustomerOrderInterface';
 
 const container = new Container();
 
@@ -24,6 +26,7 @@ const container = new Container();
 container.bind<CustomerProfileRepositoryInterface>('customer-profile').to(CustomerProfileApiService);
 container.bind<CustomerRegisterRepositoryInterface>('customer-register').to(CustomerRegisterApiService);
 container.bind<CustomerCartInterface>('customer-cart').to(CustomerCartApiService);
+container.bind<CustomerOrderInterface>('customer-order').to(CustomerOrderApiService);
 
 
 container.bind<EventRepositoryInterface>('customer-event').to(EventManagerApiService);

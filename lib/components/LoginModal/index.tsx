@@ -17,25 +17,29 @@ import {
 import Login from '../Login'
 import { useEffect } from 'react'
 
-export function LoginModal({ open, setRequestLogin }: { open: boolean, setRequestLogin: (status:boolean) => void }) {
+export function LoginModal({ open, setRequestLogin }: { open: boolean, setRequestLogin: (status: {redirect: string, active: boolean} | null) => void }) {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     useEffect(() => {
         open && onOpen()
-        console.log(open,'open')
     }, [open])
 
     return (
-        <Modal size={'sm'} onClose={() => {
+        <Modal  onClose={() => {
             onClose()
-            setRequestLogin(false)
+            setRequestLogin(null)
 
         }} isOpen={isOpen} isCentered>
-            <ModalOverlay />
-            <ModalContent>
+            <ModalOverlay bg="blackAlpha.600" backdropFilter="blur(2px)" />
+            <ModalContent borderRadius='2xl'>
                 <ModalCloseButton />
-                <Login />
+                <ModalBody p='8'>
+                    <Stack spacing='4'>
+                        <Heading fontSize={24} fontWeight={'300'}>Bem-vindo ao Babbo</Heading>
+                        <Login />
+                    </Stack>
+                </ModalBody>
             </ModalContent>
         </Modal>
     )

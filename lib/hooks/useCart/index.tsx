@@ -31,7 +31,7 @@ export function useCart() {
 export function CartProvider({ children }: { children: ReactNode }) {
     const [requestLogin, setRequestLogin] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const { user } = useAuth();
+    const { user, setRequestModalLogin } = useAuth();
 
     const router = useRouter();
 
@@ -46,7 +46,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     const addCart = (tickets: TicketType[]) => {
         if (user) {
-
             setIsLoading(true)
 
             const dispatchData = tickets.map(ticket => ({
@@ -67,7 +66,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
             return tickets;
         };
 
-        setRequestLogin(true)
+        setRequestModalLogin({ redirect: '/store/payment', active: true })
 
         return false;
 
@@ -81,7 +80,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
     return (
         <CartContext.Provider value={{ addCart, getCart, isLoading }}>
             {children}
-            <LoginModal setRequestLogin={setRequestLogin} open={requestLogin} />
         </CartContext.Provider>
     )
 }

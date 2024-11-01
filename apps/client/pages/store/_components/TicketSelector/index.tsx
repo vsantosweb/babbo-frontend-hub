@@ -12,33 +12,16 @@ import {
 } from "@chakra-ui/react";
 import TicketCard from "../TicketCard";
 import Datebox from "../Datebox";
-import { Session } from "@/types";
 import { useTicket } from "@/hooks";
+import { SessionType } from "@/repository/Types/TicketType";
 
-// type Session = {
-//     id: number
-//     name: string
-//     ticket_batches: Array<{
-//         name: string
-//         tickets: Array<{
-//             name: string
-//         }>
-//     }>
-// }
 
-export default function TicketSelector({ sessions }: { sessions: Session[] }) {
+export default function TicketSelector({ sessions }: { sessions: SessionType[] }) {
 
     const { handleTicket } = useTicket();
 
     return (
         <Stack spacing={6}>
-
-            {/* <Heading size={'md'} fontSize='2xl' fontWeight='extrabold'>Selecione seus ingressos</Heading> */}
-
-            {/* <Text>
-                Bem-vindo ao gerenciador de ingressos, aqui você poderá configurar a
-                data de venda, criar ingressos por lote ou individuais.
-            </Text> */}
 
             <Accordion as={Box} width={'100%'} borderWidth="1px" borderRadius="xl" reduceMotion allowToggle>
                 {sessions.map((session, index) => <AccordionItem key={index} border='none'>

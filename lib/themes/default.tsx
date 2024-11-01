@@ -34,7 +34,7 @@ export const theme: ThemeProps = {
     body: 'Helvetica Neue, Helvetica, Arial, sans-serif',
     heading: 'Helvetica Neue, Helvetica, Arial, sans-serif',
   },
-  defaultRadius: '20px',
+  defaultRadius: '16px',
 };
 
 const activeLabelStyles = {
@@ -133,9 +133,16 @@ const charkaExtendThemeConfig = {
         },
       },
     },
+    FormError: {
+      baseStyle: {
+        text: {
+          fontSize: 'xs'
+        }
+      }
+    },
     Button: {
       baseStyle: {
-        borderRadius: theme.defaultRadius,
+        borderRadius: '50px',
         fontWeight: 'bold',
       },
       variants: {
@@ -145,6 +152,11 @@ const charkaExtendThemeConfig = {
           _hover: {
             bg: 'primary.400',
           },
+          _disabled: {
+            bg: 'primary.400', // Cor de fundo quando desativado
+            color: 'white', // Cor do texto quando desativado
+            cursor: 'not-allowed', // Muda o cursor para indicar que o botão está desativado
+          }
         },
         outline: {
           borderColor: 'primary.500',
@@ -174,7 +186,13 @@ const charkaExtendThemeConfig = {
         field: {
           borderRadius: theme.defaultRadius,
           fontSize: 'sm',
-          _placeholder: { fontSize: 'sm' }, // Define o tamanho do placeholder para todas as variantes
+          boxShadow: 'none !important',
+          _placeholder: { fontSize: 'sm' },
+          _invalid: {
+            borderColor: '#000', // Define a cor da borda quando inválido
+            borderWidth: '1px', // Define a largura da borda quando inválido
+
+          },
         },
       },
       sizes: {
@@ -213,6 +231,7 @@ const charkaExtendThemeConfig = {
       baseStyle: {
         field: {
           borderRadius: theme.defaultRadius,
+          boxShadow: 'none !important',
           fontSize: 'sm',
           _placeholder: { fontSize: 'sm' }, // Define o tamanho do placeholder para todas as variantes
         },

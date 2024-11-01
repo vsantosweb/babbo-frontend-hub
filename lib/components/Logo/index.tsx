@@ -1,3 +1,5 @@
+import { theme } from "@/themes/default";
+
 export function Logo(props:any) {
     return (
         <svg
@@ -8,7 +10,7 @@ export function Logo(props:any) {
             {...props}
         >
             <defs>
-                <style>{".cls-1{fill:#9546fc;stroke-width:0}"}</style>
+                <style>{`.cls-1{fill:${theme.colors.primary};stroke-width:0}`}</style>
             </defs>
             <g id="Camada_1-2" data-name="Camada 1">
                 <path

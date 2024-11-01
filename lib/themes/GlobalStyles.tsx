@@ -19,6 +19,9 @@ const GlobalStyles = css`
     font-style: normal;
     font-variation-settings: 'slnt' 0;
   }
+  p,a{
+    font-size: 14px;
+  }
   .app-wrapper{
     max-width: 1280px;
     width: 100%;

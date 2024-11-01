@@ -33,7 +33,6 @@ export const CartSummary = () => {
 
   const { totalAmount, selectedTickets } = useTicket();
   const { addCart, isLoading } = useCart();
-  const { user } = useAuth();
   
 
   return (

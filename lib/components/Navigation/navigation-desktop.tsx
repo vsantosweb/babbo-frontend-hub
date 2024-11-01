@@ -1,13 +1,17 @@
 
 import { theme } from "@/themes/default";
-import { Box, Button, Flex, IconButton, Link, Stack, useColorModeValue } from "@chakra-ui/react";
+import { Avatar, Box, Button, Flex, IconButton, Stack, useColorModeValue } from "@chakra-ui/react";
 import { EventSearch } from "../EventSearch";
 import { AvaiableCities } from "../AvaiableCities";
 import { Logo } from "../Logo";
-import { SearchIcon } from "@chakra-ui/icons";
-import { EventProvider } from "@/hooks";
+import { EventProvider, useAuth } from "@/hooks";
+import { LuUser2 } from "react-icons/lu";
+import Link from "next/link";
 
 export function NavigationDesktop() {
+    const { user, setRequestModalLogin } = useAuth()
+
+    console.log(user, 'useruser')
     return (
 
         <Flex
@@ -16,6 +20,7 @@ export function NavigationDesktop() {
             width={'100%'}
             margin={'auto'}
             alignItems={'center'}
+            justifyContent={'center'}
         >
             <Box
                 as={Link}
@@ -32,6 +37,7 @@ export function NavigationDesktop() {
                 <EventSearch />
             </EventProvider>
             <AvaiableCities />
+            {user ? <Avatar as={Link} href='/minhas-compras' bg={'gray.500'} icon={<LuUser2 fontSize='1.5rem' />} /> : <Button onClick={() => setRequestModalLogin({ active: true, redirect: '/minhas-compras' })} size='sm' variant='outline'>Entrar</Button>}
         </Flex>
 
     );

@@ -7,3 +7,6 @@ export * from './PayloadType';
 export * from './OrganizerType';
 export * from './MiddlewareType';
 export * from './TicketType';
+export * from './TicketCartType';
+export * from './PaymentMethodType';
+

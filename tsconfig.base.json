@@ -32,8 +32,9 @@
       "@/themes/babbo": ["lib/themes/babbo/index.ts"],
       "@/themes/default": ["lib/themes/default.tsx"],
       "@/tools": ["lib/tools/index.ts"],
+      // "@/types": ["lib/repository/Types/_index.ts"],
       "@/types": ["lib/repository/Types/_index.ts"],
-      "@/redux*": ["lib/redux/store.ts"]
+      "@/redux": ["lib/redux/store.ts"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "./lib/**/*"],

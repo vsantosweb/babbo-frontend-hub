@@ -10,13 +10,17 @@ import {
 import { NavigationDesktop } from './navigation-desktop';
 import { useEffect, useState } from 'react';
 import { NavigationMobile } from './navigation-mobile';
+import { useAuth } from '@/hooks';
+import { LoginModal } from '../LoginModal';
 
 export function Navigation() {
   const { isOpen, onToggle } = useDisclosure();
 
+  const { user } = useAuth();
+
   const [isMobile, setIsMobile] = useState<boolean | null>(); // Defina o estado inicial com base na largura da janela
   const [loading, setLoading] = useState<boolean>(true);
-
+  
   useEffect(() => {
     if (window !== undefined) {
       setIsMobile(window.innerWidth < 768);
@@ -54,7 +58,7 @@ export function Navigation() {
         borderColor={'gray.200'}
         align={'center'}
       >
-        {isMobile ? <NavigationMobile /> : <NavigationDesktop />}
+        {isMobile ? <NavigationMobile /> : <NavigationDesktop user={user} />}
 
       </Flex>
 

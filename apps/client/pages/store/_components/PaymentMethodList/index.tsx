@@ -1,77 +1,84 @@
-import React, { useState } from 'react';
-import { Box, Stack, Radio, RadioGroup, useRadio, useRadioGroup, HStack, Text, Collapse } from '@chakra-ui/react';
+import React, { ReactNode, useState } from 'react';
+import { Box, Stack, Radio, RadioGroup, useRadio, useRadioGroup, HStack, Text, Collapse, Flex } from '@chakra-ui/react';
 import CreditCardForm from '../Payment/CreditCard';
 import { theme } from '@/themes/default';
+import { CiCreditCard1 } from "react-icons/ci";
+import { useFormContext } from 'react-hook-form';
 
+
+type RadioCardProps<T> = {
+  isChecked: boolean
+  value: T,
+  children: ReactNode,
+  default?: string,
+  isExpanded: boolean
+}
+
+type PaymentMethodProps = {
+  name: string;
+  key: string;
+  Component: () => React.JSX.Element
+}
 // Componente individual RadioCard
-function RadioCard(props) {
-  const { getInputProps, getCheckboxProps } = useRadio(props);
-  const input = getInputProps();
-  const checkbox = getCheckboxProps();
+function RadioCard({ value, children }: RadioCardProps<PaymentMethodProps>) {
+  
+  const { register, getValues } = useFormContext();
+  const checked = value.key === getValues('payment_method');
+  const Component = value.Component;
 
   return (
-    <Box as="label">
-      <input {...input} />
       <Box
-        {...checkbox}
         cursor="pointer"
         borderWidth="1px"
         borderRadius="md"
-        _checked={{
-          borderColor: theme.colors.primary,
-        }}
-        px={5}
-        py={3}
+        borderColor={checked && theme.colors.primary}
+        p={5}
+        as='label'
       >
-        <HStack mb={props.isChecked && '4'}>
+        <HStack mb={checked ? '6' : '1'}>
           <Radio
-            isChecked={props.isChecked}
-            pointerEvents="none"
-            _checked={{
-              background: theme.colors.primary,
-            }}
+            isChecked={checked}
+            // pointerEvents="none"
+            value={value.key}
+            {...register('payment_method')}
+            _checked={{ background: theme.colors.primary, }}
           />
-          <Text>{props.children}</Text>
+          {children}
         </HStack>
-        <Collapse in={props.isExpanded || props.default}>
-          <CreditCardForm />
+        <Collapse in={value.key === getValues('payment_method')}>
+          <Component />
         </Collapse>
       </Box>
 
-    </Box>
   );
 }
 
+
 // Componente para seleção de meios de pagamento
 const PaymentMethods = () => {
-  const options = ['Cartão de crédito', 'Boleto', 'PIX', 'Boleto/PIX'];
-  const [selectedValue, setSelectedValue] = useState('Cartão de crédito');
 
-  const { getRootProps, getRadioProps } = useRadioGroup({
-    name: 'paymentMethod',
-    onChange: setSelectedValue,
-  });
+  const paymentMethods = [
+    { name: 'Cartão de Crédito', key: 'credit_card', Component: CreditCardForm }
+  ]
 
-  const group = getRootProps();
-
+  const [selectedValue, setSelectedValue] = useState(null);
   return (
-    <RadioGroup {...group}>
-      <Stack direction="column" spacing={4}>
-        {options.map((value) => {
-          const radio = getRadioProps({ value });
-          return (
-            <RadioCard
-              key={value}
-              {...radio}
-              isChecked={selectedValue === value}
-              isExpanded={selectedValue === value}
-            >
-              {value}
-            </RadioCard>
-          );
-        })}
-      </Stack>
-    </RadioGroup>
+    <Stack direction="column" spacing={4}>
+      {paymentMethods.map((paymentMethod, index) => {
+        return (
+          <RadioCard
+            key={index}
+            value={paymentMethod}
+            isChecked={selectedValue === paymentMethod.key}
+            isExpanded={selectedValue === paymentMethod.key}
+          >
+            <HStack>
+              <CiCreditCard1 fontSize={'24px'} /> <Text>{paymentMethod.name}</Text>
+            </HStack>
+          </RadioCard>
+        );
+      })}
+    </Stack>
   );
 };
 

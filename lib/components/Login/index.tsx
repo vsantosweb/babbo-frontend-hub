@@ -39,33 +39,36 @@ const Login = ({ layout }: any) => {
   }
 
   return (
-     <form onSubmit={handleSubmit(submitCredentials)}>
-        <Stack p='6'>
-          <FormControl>
-            <FormLabel>Email</FormLabel>
-            <Input placeholder={'Edereço de email'} autoComplete={'off'} {...register('email', { required: true })} />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Senha</FormLabel>
-            <Input placeholder='••••••••••' type={'password'} {...register('password', { required: true })} />
-          </FormControl>
+    <form onSubmit={handleSubmit(submitCredentials)}>
+      <Stack>
+        <FormControl>
+          <FormLabel>Email</FormLabel>
+          <Input size='lg' placeholder={'Edereço de email'} autoComplete={'off'} {...register('email', { required: true })} />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Senha</FormLabel>
+          <Input size='lg' placeholder='••••••••••' type={'password'} {...register('password', { required: true })} />
+        </FormControl>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Link href={'/account/recovery'}>Esqueci minha senha</Link>
-          </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Link href={'/account/recovery'}>Esqueci minha senha</Link>
+        </div>
 
-          <Styled.AccountButton type={'submit'}
-            colorScheme={'primary'} {...buttonState} isDisabled={!isValid} rightIcon={<FaArrowRightLong />}>Entrar</Styled.AccountButton>
-          <p style={{ color: 'red' }}>{errorMessage}</p>
+        <Styled.AccountButton type={'submit'}
+          {...buttonState} size='lg' 
+          // isDisabled={!isValid} 
+          rightIcon={<FaArrowRightLong />}>Entrar</Styled.AccountButton>
 
-          <p>Não tem uma conta na Babbo?</p>
-          <Styled.AccountButton
-            style={{ width: '100%' }}
-            variant={'outline'}
-            onClick={() => route.push('/account/register')}
-            rightIcon={<FaArrowRightLong />}>Registre-se</Styled.AccountButton>
-        </Stack>
-      </form>
+        <p style={{ color: 'red' }}>{errorMessage}</p>
+
+        <p>Não tem uma conta na Babbo?</p>
+        <Styled.AccountButton
+          style={{ width: '100%' }}
+          variant={'outline'}
+          onClick={() => route.push('/account/register')}
+          rightIcon={<FaArrowRightLong />}>Registre-se</Styled.AccountButton>
+      </Stack>
+    </form>
   );
 };
 

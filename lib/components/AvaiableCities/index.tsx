@@ -79,6 +79,7 @@ export function AvaiableCities({ callback }: { callback?: () => any }) {
             <Box p={0} as={Button}
                 onClick={onOpen}
                 variant={'muted'}
+                fontSize={'sm'}
                 leftIcon={<CiLocationOn />}
                 rightIcon={<ChevronDownIcon />}>
                 {userLocation?.region ? <TruncateText text={userLocation?.label} limit={20} /> : (userLocation?.geolocation ? 'Perto de mim' : 'Qualquer lugar')}

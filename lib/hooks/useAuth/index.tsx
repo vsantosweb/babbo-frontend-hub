@@ -7,6 +7,7 @@ import { RouteProps, getMiddlewareRoutes, managerRoutes } from '@/routes';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import container from '@/container';
+import { LoginModal } from '@/components';
 
 
 // Define o tipo para o objeto do usuário
@@ -30,6 +31,7 @@ export interface AuthProviderInterface {
   authState?: any,
   socialLogin: (credentials: any) => void,
   user: Record<string, any> | null
+  setRequestModalLogin: (value: {redirect: string, active: boolean} | null) => void
 }
 
 const AuthContext = createContext<AuthProviderInterface | undefined>(undefined)
@@ -51,14 +53,14 @@ export const useAuth = () => {
 };
 
 type AuthProviderConfigProps = {
-  loginRoute: string,
-  startPage: string
+  loginRoute?: string,
+  startPage?: string
 }
 
 type AuthProviderProps = {
   children: JSX.Element | JSX.Element[],
   middleware: MiddlewareType
-  config: AuthProviderConfigProps
+  config?: AuthProviderConfigProps
 }
 
 
@@ -69,14 +71,17 @@ type AuthProviderProps = {
 export function AuthProvider({ children, middleware, config }: AuthProviderProps) {
 
   const privatePaths = getMiddlewareRoutes(middleware).filter((nav: RouteProps) => nav.private).map(x => x.path);
-
+  console.log(privatePaths, 'privatePaths')
   // ** States
   const [loading, setLoading] = useState<boolean>(true);
   const [authorized, setAuthorized] = useState<boolean>(false);
   const [user, setUser] = useState<Record<string, any> | null>(null);
   const [rendering, setRendering] = useState<boolean>(true);
   const [checkingPermissions, setCheckingPermissions] = useState<boolean>(false);
+  const [requestModalLogin, setRequestModalLogin] = useState<{redirect: string, active: boolean} | null>(null);
+
   const router = useRouter();
+
   const [authState, setAuthState] = useState<AuthStateInterface>({
     user: null,
     loading: true,
@@ -97,11 +102,11 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
 
       let user = response?.data?.data;
 
-      if (user && router.pathname === config.loginRoute) router.push(config.startPage)
+      if (user && router.pathname === config.loginRoute) config?.startPage && router.push(config.startPage)
 
       const isPrivatePath = privatePaths.some(path => window.location.pathname.startsWith(path));
       if (!user && isPrivatePath) {
-        router.push(config.loginRoute);
+        config && router.push(config.loginRoute);
         setAuthorized(false);
         setUser({})
         setRendering(false);
@@ -110,18 +115,18 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
         setAuthorized(true);
         console.log(user, 'useruseruseruseruser')
         setUser(user);
-        
-        if(middleware === 'auth:manager'){
+
+        if (middleware === 'auth:manager') {
           checkOrganizerPermission(user)
         }
 
       }
-      setRendering(false); 
+      setRendering(false);
     })
       .catch(() => {
 
         setAuthorized(false);
-        router.push(config.loginRoute);
+        config && router.push(config.loginRoute);
         setUser({});
         setRendering(false);
       })
@@ -148,7 +153,7 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
   * @param {CredentialsType} credentials - As credenciais do usuário.
   * @returns {Promise<ApiResponseType | null>} Uma promessa que resolve com a resposta da API ou null.
   */
-  const login = async (credentials: CredentialsType): Promise<ApiResponseType | null> => {
+  const login = async (credentials: CredentialsType, redirect = null): Promise<ApiResponseType | null> => {
     try {
       // Chama a função de login do serviço de autenticação
       const response: ApiResponseType | null = await authService.login(credentials);
@@ -160,6 +165,12 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
         Cookies.set('token', response?.data.data.token, { expires: expiresAt })
         Cookies.set('token-exp', expiresAt.toString(), { expires: expiresAt });
         session(router.asPath)
+        if (redirect) router.push(redirect)
+
+        if(requestModalLogin.redirect) {
+          router.push(requestModalLogin.redirect)
+          setRequestModalLogin(null)
+        }
         // router.push('/');
       }
       // Retorna a resposta da função de login
@@ -214,12 +225,16 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
 
   }
 
-  if (rendering || (!authorized && window.location.pathname !== config.loginRoute)) return null
+  if (config) {
+
+    if (rendering || (!authorized && window.location.pathname !== config.loginRoute)) return null
+  }
 
   if (checkingPermissions) return null
   return (
-    <AuthContext.Provider value={{ authState, loading, login, logout, socialLogin, user }}>
+    <AuthContext.Provider value={{ authState, loading, login, logout, socialLogin, user, setRequestModalLogin }}>
       {children}
+      {requestModalLogin && <LoginModal setRequestLogin={setRequestModalLogin} open={requestModalLogin.active} />}
     </AuthContext.Provider>
   )
 }
