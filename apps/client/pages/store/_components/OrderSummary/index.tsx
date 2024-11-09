@@ -27,8 +27,6 @@ type OrderSummaryItemProps = {
 const OrderSummaryItem = ({ label, quantity, description, value, children }: OrderSummaryItemProps) => {
   return (
     <Flex justify="space-between" fontSize="sm">
-
-
       <Box>
         <Heading display={'flex'} gap='2' alignItems={'center'} size={{ base: 'xs', md: 'sm' }}>
           <Tag variant='outline' colorScheme='primary'>{quantity}x</Tag> {label}
@@ -52,10 +50,10 @@ export const OrderSummary = ({ cart }: { cart?: TicketCartType | null }) => {
       </CardHeader>
 
       <CardBody>
-        <Stack spacing='8'>
+        <Stack  spacing='8'>
           {cart && cart.tickets.map((ticket, index) => {
             return <OrderSummaryItem
-              label={`${ticket.batch} - ${ticket.name}`}
+              label={`${ticket.name}`}
               quantity={ticket.quantity}
               description={ticket.session}
               value={formatPrice(ticket.total)}

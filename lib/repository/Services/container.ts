@@ -1,9 +1,8 @@
 import 'reflect-metadata';
 import { Container } from 'inversify';
-import { AdminCustomertRepositoryInterface, AdminEventLotRepositoryInterface, AdminEventRepositoryInterface, AdminEventSessionRepositoryInterface, AuthRepositoryInterface, CustomerProfileRepositoryInterface, CustomerRegisterRepositoryInterface, EventRepositoryInterface, PublicOrganizerRepositoryInterface, PublicRepositoryInterface } from '@/interfaces';
-import { AuthServiceApiCustomer } from './Api/Customer/AuthServiceApiCustomer';
+import { AuthServiceApiCustomer } from './Api/Customer/CustomerAuthService';
 import { PublicEventService } from '../Services/Api/Public/PublicEventService';
-import { EventManagerApiService } from './Api/Customer/EventManagerApiService';
+import { EventManagerApiService } from './Api/Customer/CustomerEventApiService';
 import { CustomerProfileApiService } from './Api/Customer/CustomerProfileApiService';
 import { PublicOrganizerService } from './Api/Public/PublicOrganizerService';
 import { CustomerRegisterApiService } from './Api/Customer/CustomerRegisterApiService';
@@ -13,11 +12,35 @@ import { EventServiceApiAdmin } from './Api/Admin/EventServiceApiAdmin';
 import { EventSessionServiceApiAdmin } from './Api/Admin/EventSessionServiceApiAdmin';
 import { EventLotServiceApiAdmin } from './Api/Admin/EventLotServiceApiAdmin';
 
-import { StoreEventInterface, StoreEventService} from './Api/Store';
-import { CustomerCartInterface } from './Api/Customer/Interfaces/CustomerCartInterface';
-import { CustomerCartApiService } from './Api/Customer/Services/CustomerCartApiService';
-import { CustomerOrderApiService } from './Api/Customer/Services/CustomerOrderApiService';
-import { CustomerOrderInterface } from './Api/Customer/Interfaces/CustomerOrderInterface';
+import {
+    StoreRepositoryInterface,
+    AdminCustomertRepositoryInterface,
+    AdminEventLotRepositoryInterface,
+    AdminEventRepositoryInterface,
+    AdminEventSessionRepositoryInterface,
+    AuthRepositoryInterface,
+    CustomerProfileRepositoryInterface,
+    CustomerRegisterRepositoryInterface,
+    EventRepositoryInterface,
+    PublicOrganizerRepositoryInterface,
+    PublicRepositoryInterface,
+    CustomerCartInterface,
+    CustomerOrderRepositoryInterface,
+    CustomerEventTicketRepositoryInterface,
+    EventSessionRepositoryInterface,
+    EventTicketBatchRepositoryInterface,
+    EventTicketRepositoryInterface
+} from '@/interfaces';
+
+import {
+    CustomerCartApiService,
+    CustomerOrderApiService,
+    CustomerEventTicketApiService,
+    CustomerEventSessionService,
+    CustomerEventTicketBatchApiService,
+    
+} from '@/services';
+import { StoreEventService } from './Api/Store/StoreEventService';
 
 const container = new Container();
 
@@ -26,14 +49,16 @@ const container = new Container();
 container.bind<CustomerProfileRepositoryInterface>('customer-profile').to(CustomerProfileApiService);
 container.bind<CustomerRegisterRepositoryInterface>('customer-register').to(CustomerRegisterApiService);
 container.bind<CustomerCartInterface>('customer-cart').to(CustomerCartApiService);
-container.bind<CustomerOrderInterface>('customer-order').to(CustomerOrderApiService);
-
+container.bind<CustomerOrderRepositoryInterface>('customer-order').to(CustomerOrderApiService);
+container.bind<EventSessionRepositoryInterface>('customer-event-session').to(CustomerEventSessionService)
+container.bind<EventTicketBatchRepositoryInterface>('customer-event-batch').to(CustomerEventTicketBatchApiService)
+container.bind<EventTicketRepositoryInterface>('customer-event-ticket').to(CustomerEventTicketApiService)
 
 container.bind<EventRepositoryInterface>('customer-event').to(EventManagerApiService);
 
 // ** Auth
 container.bind<AuthRepositoryInterface>('auth:manager').to(AuthServiceApiCustomer);
-container.bind<AuthRepositoryInterface>('auth:admin').to(AuthServiceApiAdmin);
+// container.bind<AuthRepositoryInterface>('auth:admin').to(AuthServiceApiAdmin);
 container.bind<AuthRepositoryInterface>('auth:customer').to(AuthServiceApiCustomer);
 
 // ** Public
@@ -47,7 +72,8 @@ container.bind<AdminEventSessionRepositoryInterface>('admin-event-session').to(E
 container.bind<AdminEventLotRepositoryInterface>('admin-event-ticket-lot').to(EventLotServiceApiAdmin);
 
 // ** Store
-container.bind<StoreEventInterface>('store-event-service').to(StoreEventService);
+container.bind<StoreRepositoryInterface>('store-event-service').to(StoreEventService);
 
+//** Event
 
 export default container;

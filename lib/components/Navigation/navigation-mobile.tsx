@@ -1,15 +1,18 @@
 import { theme } from "@/themes/default";
-import { Box, Button, Flex, IconButton, Link, Stack, useColorModeValue, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Flex, IconButton, Stack, useColorModeValue, useDisclosure } from "@chakra-ui/react";
 import { EventSearch } from "../EventSearch";
-import { AvaiableCities } from "../AvaiableCities";
+import { AvailableCities } from "../AvailableCities";
 import { Logo } from "../Logo";
 import { CloseIcon, HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
-import { IoCloseOutline, IoMenu } from "react-icons/io5";
+import { IoCloseOutline, IoLogOutOutline, IoMenu, IoPersonOutline } from "react-icons/io5";
+import { useAuth } from "@/hooks";
+import Link from "next/link";
+import { IoBagHandle } from "react-icons/io5";
 
 export function NavigationMobile() {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-
+    const { user, logout, setRequestModalLogin } = useAuth()
     return (
 
         <Flex
@@ -43,11 +46,32 @@ export function NavigationMobile() {
                     width={'100%'}
                     minHeight={'100%'}
                     height={'auto'}
-                    px={4}
                 >
                     <Flex flexDirection={'column'}>
-                        <Box p={3} borderBottom={'solid 1px #f1f1f1'} width={'100%'}><AvaiableCities callback={() => onClose()} /></Box>
+                        <Box p={3} borderBottom={'solid 1px #f1f1f1'} width={'100%'}><AvailableCities callback={() => onClose()} /></Box>
                     </Flex>
+                    {
+                        user ? <Flex flexDirection={'column'}>
+                            <Link href='/minha-conta'>
+                                <Flex p={3} gap='2' alignItems='center' borderBottom={'solid 1px #f1f1f1'} width={'100%'}>
+                                    <IoPersonOutline /> <span> Minha conta</span>
+                                </Flex>
+                            </Link>
+                            <Link href='/minhas-compras'>
+                                <Flex p={3} gap='2' alignItems='center' borderBottom={'solid 1px #f1f1f1'} width={'100%'}>
+                                    <IoBagHandle /><span> Minhas compras</span>
+                                </Flex>
+                            </Link>
+                            <Link href='/minha-conta'>
+                                <Flex p={3} onClick={logout} gap='2' alignItems='center' borderBottom={'solid 1px #f1f1f1'} width={'100%'}>
+                                    <IoLogOutOutline /><span> Sair</span>
+                                </Flex>
+                            </Link>
+
+                        </Flex> : <Flex p={3} gap='2' onClick={() => setRequestModalLogin({redirect: '/minhas-compras', active: true})} alignItems='center' borderBottom={'solid 1px #f1f1f1'} width={'100%'}>
+                            <IoPersonOutline /> <span>Entrar</span>
+                        </Flex>
+                    }
                 </Box>
             }
         </Flex>

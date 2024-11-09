@@ -1,4 +1,4 @@
-import { EventRepositoryInterface } from '@/interfaces';
+import { EventRepositoryInterface } from '@/repository/Interfaces';
 
 export interface CustomerRegisterRepositoryInterface {
 

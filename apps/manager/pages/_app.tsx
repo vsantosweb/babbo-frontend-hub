@@ -12,7 +12,8 @@ import { Navigation, Pagination } from 'swiper/modules';
 
 import moment from 'moment';
 import 'moment/locale/pt-br'; // without this line it didn't work
-import { AlertProvider, AuthProvider, OrganizerProvider } from '@/hooks';
+import { AlertProvider, AuthProvider, EventProvider, OrganizerProvider } from '@/hooks';
+import AppProvider from '@/hooks/useApp';
 moment.defineLocale('pt-BR', null);
 
 SwiperCore.use([Navigation, Pagination]);
@@ -20,19 +21,23 @@ SwiperCore.use([Navigation, Pagination]);
 function App({ Component, pageProps }: AppProps) {
   return (
     <Theme>
-      <AuthProvider middleware='auth:manager' config={{ loginRoute: '/account/login', startPage: '/' }}>
-        <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <title>Babbo</title>
-        </Head>
-        <AlertProvider>
-          <OrganizerProvider>
-            <main className="app">
-              <Component {...pageProps} />
-            </main>
-          </OrganizerProvider>
-        </AlertProvider>
-      </AuthProvider>
+      <AppProvider>
+        <AuthProvider middleware='auth:manager' config={{ loginRoute: '/account/login', startPage: '/' }}>
+          <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>Babbo</title>
+          </Head>
+          <AlertProvider>
+            <OrganizerProvider>
+              <EventProvider>
+                <main className="app">
+                  <Component {...pageProps} />
+                </main>
+              </EventProvider>
+            </OrganizerProvider>
+          </AlertProvider>
+        </AuthProvider>
+      </AppProvider>
     </Theme>
   );
 }

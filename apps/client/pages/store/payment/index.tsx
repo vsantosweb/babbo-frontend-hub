@@ -7,8 +7,7 @@ import {
 } from '@chakra-ui/react'
 import { OrderSummary } from '../_components/OrderSummary'
 import PaymentMethodList from '../_components/PaymentMethodList'
-import { AuthProvider, CartProvider, TicketProvider } from '@/hooks'
-import { CustomerCartInterface } from '@/repository/Services/Api/Customer/Interfaces/CustomerCartInterface'
+import { AuthProvider, CartProvider, TicketProvider, useCart } from '@/hooks'
 import container from '@/repository/Services/container'
 import { TicketCartType } from '@/types'
 import SessionCountdown from '../_components/SessionCountdown'
@@ -17,27 +16,32 @@ import { useForm, FormProvider, useFormContext } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import { cardValidatorSchema } from '@/validators';
 import * as Yup from 'yup';
-import { CustomerOrderInterface } from '@/repository/Services/Api/Customer/Interfaces/CustomerOrderInterface'
+import { CustomerOrderRepositoryInterface, CustomerCartRepositoryInterface } from '@/repository'
 import PaymentMenssageStatus from '../_components/PaymentMenssageStatus'
+import { NextPage } from 'next'
+import CartExpiredSession from '../_components/CartExpiredSession'
 
-const customerCartService = container.get<CustomerCartInterface>('customer-cart')
-const customerOrderService = container.get<CustomerOrderInterface>('customer-order')
+const customerCartService = container.get<CustomerCartRepositoryInterface>('customer-cart')
+const customerOrderService = container.get<CustomerOrderRepositoryInterface>('customer-order')
 
 const validationSchema = Yup.object().shape({ ...cardValidatorSchema });
 
-export default function PaymentPage() {
 
-  const [cart, setCart] = useState<TicketCartType | null>(null)
+const PaymentPage: NextPage = () => (
+  <CartProvider>
+    <CartContext />
+  </CartProvider>
+
+)
+
+function CartContext() {
+
   const [successPaymentStatus, setSuccessPaymentStatus] = useState<boolean | null>(null)
 
   const paymentForm = useForm({ resolver: yupResolver(validationSchema), mode: 'onChange' });
 
-  useEffect(() => {
-    customerCartService.getCart().then(response => {
-      console.log(response.data)
-      setCart(response.data.data)
-    })
-  }, [])
+  const { cart, cartExpired } = useCart();
+
 
   const handlePayment = async (formData: any) => {
 
@@ -47,7 +51,11 @@ export default function PaymentPage() {
       })
   }
 
-  if (!cart) return <Loader />
+  if (!cart && !cartExpired) return <Loader />
+
+  if (cartExpired) return <Layout title={'Babbo Eventos'} name={'client'}>
+    <CartExpiredSession />
+  </Layout>
 
   if (successPaymentStatus) {
     return (
@@ -60,29 +68,31 @@ export default function PaymentPage() {
 
   return (
     <Layout title={'Babbo Eventos'} name={'client'}>
-       <CartProvider>
-          <Stack className='app-wrapper' spacing='4' mt={4}>
-            <Stack
-              direction={{ base: 'column', lg: 'row' }}
-              align={{ lg: 'flex-start' }}
-              gap={4}
-            >
-              <Stack flex='1'>
-                <FormProvider {...paymentForm}>
-                  <form onSubmit={paymentForm.handleSubmit(handlePayment)}>
-                    <PaymentMethodList />
-                  </form>
-                </FormProvider>
-              </Stack>
-              <Flex direction="column" flex="1.5" gap='4'>
-                <SessionCountdown date={cart?.expire_at} />
-                <OrderSummary cart={cart} />
-              </Flex>
+      <CartProvider>
+        <Stack className='app-wrapper' spacing='4' mt={4}>
+          <Stack
+            direction={{ base: 'column', lg: 'row' }}
+            align={{ lg: 'flex-start' }}
+            gap={4}
+          >
+            <Stack flex='1'>
+              <FormProvider {...paymentForm}>
+                <form onSubmit={paymentForm.handleSubmit(handlePayment)}>
+                  <PaymentMethodList />
+                </form>
+              </FormProvider>
             </Stack>
+            <Flex direction="column" flex="1.5" gap='4'>
+              <SessionCountdown/>
+              <OrderSummary cart={cart} />
+            </Flex>
           </Stack>
-        </CartProvider>
+        </Stack>
+      </CartProvider>
     </Layout>
 
 
   )
 }
+
+export default PaymentPage;

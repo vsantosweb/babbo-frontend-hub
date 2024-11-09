@@ -35,7 +35,7 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
     const eventForm = useForm({ resolver: yupResolver(validationSchema), mode: 'all' });
 
     useEffect(() => {
-
+        console.log(event, 'event')
         if (event) {
 
             const startDate: any = moment(event.start_date).format("YYYY-MM-DD HH:mm");
@@ -50,14 +50,14 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
             eventForm.setValue('start_date', startDate, { shouldValidate: true });
             eventForm.setValue('end_date', endDate, { shouldValidate: true });
             eventForm.setValue('category', {value: event.category, label: event.category}, { shouldValidate: true })
-            eventForm.setValue('place.full_address', event.place.formatted_address, { shouldValidate: true });
-            eventForm.setValue('place.name', event.place.name, { shouldValidate: true });
-            eventForm.setValue('place.address_1', event.place.address_1, { shouldValidate: true });
-            eventForm.setValue('place.address_2', event.place.address_2, { shouldValidate: true });
-            eventForm.setValue('place.zipcode', event.place.zipcode, { shouldValidate: true });
-            eventForm.setValue('place.city', event.place.city, { shouldValidate: true });
-            eventForm.setValue('place.state', event.place.state, { shouldValidate: true });
-            eventForm.setValue('place.address_number', event.place.address_number, { shouldValidate: true });
+            eventForm.setValue('place.full_address', event.place_formatted_address, { shouldValidate: true });
+            eventForm.setValue('place.name', event.place_name, { shouldValidate: true });
+            eventForm.setValue('place.address_1', event.full_address, { shouldValidate: true });
+            eventForm.setValue('place.address_2', event.place_address_2, { shouldValidate: true });
+            eventForm.setValue('place.zipcode', event.place_zipcode, { shouldValidate: true });
+            eventForm.setValue('place.city', event.place_city, { shouldValidate: true });
+            eventForm.setValue('place.state', event.place_state, { shouldValidate: true });
+            eventForm.setValue('place.address_number', event.place_address_number, { shouldValidate: true });
         }
 
     }, [event])
@@ -114,7 +114,6 @@ const EventForm = ({ event }: { event?: Record<string, any> }) => {
                 gap={4}
                 width={'930px'}
                 maxWidth={'100%'}
-                margin={'auto'}
                 flexDirection={{ base: 'column', md: 'row' }}
             >
                 <Stack spacing={4}>

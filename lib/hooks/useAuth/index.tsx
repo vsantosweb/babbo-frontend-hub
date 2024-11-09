@@ -71,7 +71,7 @@ type AuthProviderProps = {
 export function AuthProvider({ children, middleware, config }: AuthProviderProps) {
 
   const privatePaths = getMiddlewareRoutes(middleware).filter((nav: RouteProps) => nav.private).map(x => x.path);
-  console.log(privatePaths, 'privatePaths')
+  
   // ** States
   const [loading, setLoading] = useState<boolean>(true);
   const [authorized, setAuthorized] = useState<boolean>(false);
@@ -113,7 +113,6 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
 
       } else {
         setAuthorized(true);
-        console.log(user, 'useruseruseruseruser')
         setUser(user);
 
         if (middleware === 'auth:manager') {

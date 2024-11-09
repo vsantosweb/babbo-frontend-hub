@@ -11,14 +11,34 @@ import {
     Flex,
 } from "@chakra-ui/react";
 import TicketCard from "../TicketCard";
-import Datebox from "../Datebox";
 import { useTicket } from "@/hooks";
-import { SessionType } from "@/repository/Types/TicketType";
+import { EventSessionType, EventTicketType } from "@/types";
+import Datebox from "@/components/Datebox";
+import { useEffect } from "react";
 
 
-export default function TicketSelector({ sessions }: { sessions: SessionType[] }) {
+export default function TicketSelector({ sessions }: { sessions: EventSessionType[] }) {
 
-    const { handleTicket } = useTicket();
+    const { handleTicket, selectedTickets, setSelectedTickets } = useTicket();
+
+    useEffect(() => {
+
+        let tickets: Array<EventTicketType> = []
+    
+        sessions.map(session => session.tickets && tickets.push(...session.tickets))  
+        setSelectedTickets(tickets)
+        console.log(tickets, 'ticketsticketsticketsticketstickets')
+
+    },[])
+    function disableIncrement(ticket: EventTicketType, index: number) {
+        
+        if(selectedTickets[index]){
+
+                console.log(ticket.name, selectedTickets[index]?.quantity,ticket?.max_quantity, 'selectedTickets[index]?.quantity === ticket?.max_quantity')
+                return selectedTickets[index]?.quantity === ticket?.max_quantity;
+
+        }
+    }
 
     return (
         <Stack spacing={6}>
@@ -33,17 +53,13 @@ export default function TicketSelector({ sessions }: { sessions: SessionType[] }
                         <AccordionIcon />
                     </AccordionButton>
                     <AccordionPanel p='0'>
-                        <Accordion reduceMotion allowToggle>
-                            {session.ticket_batches.map((batch, index) => <AccordionItem key={index} borderBottom={session.ticket_batches.length === index + 1 ? 'none' : ''}>
-                                <AccordionButton p={4}>
-                                    <Box as='span' fontWeight='bold' flex='1' textAlign='left'>{batch.name}</Box>
-                                    <AccordionIcon />
-                                </AccordionButton>
-                                <AccordionPanel p={0}>
-                                    {batch.tickets.map((ticket, index) => <TicketCard onChange={handleTicket} key={index} ticket={ticket} />)}
-                                </AccordionPanel>
-                            </AccordionItem>)}
-                        </Accordion>
+                        {session?.tickets?.map((ticket, index) => {
+                            return <TicketCard
+                                disableIncrement={!!disableIncrement(ticket, index)}
+                                onChange={handleTicket}
+                                key={index}
+                                ticket={ticket} />
+                        })}
                     </AccordionPanel>
                 </AccordionItem>
                 )}

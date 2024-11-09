@@ -1,3 +1,4 @@
+import { EventTicketType } from "@/repository/Types/EventType";
 import { TicketType } from "@/repository/Types/TicketType";
 import _ from "lodash";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
@@ -5,9 +6,10 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 import { useSelector, useDispatch } from 'react-redux';
 
 interface TicketContextInterface {
-    handleTicket: (ticket: Record<string, any>, action: 'add' | 'remove') => void
+    handleTicket: (ticket: EventTicketType, action: 'add' | 'remove') => void
     totalAmount: number
-    selectedTickets: TicketType[]
+    selectedTickets: EventTicketType[]
+    setSelectedTickets: (data: EventTicketType[]) => void
 }
 
 const TicketContext = createContext<TicketContextInterface | undefined>(undefined);
@@ -25,7 +27,7 @@ export function useTicket() {
 
 export function TicketProvider({ children }: { children: ReactNode }) {
 
-    const [selectedTickets, setSelectedTickets] = useState<any[]>([])
+    const [selectedTickets, setSelectedTickets] = useState<EventTicketType[]>([])
     const [totalAmount, setTotalAmount] = useState<number>(0)
     const dispatch = useDispatch();
 
@@ -33,14 +35,14 @@ export function TicketProvider({ children }: { children: ReactNode }) {
         setTotalAmount(selectedTickets.reduce((sum, ticket) => sum + ticket.price * ticket.quantity, 0))
     }, [selectedTickets])
 
-    const handleTicket = (ticket: Record<string, any>, action: 'add' | 'remove') => {
+    const handleTicket = (ticket: EventTicketType, action: 'add' | 'remove') => {
 
         switch (action) {
             case 'add':
-
+ 
                 for (let item of selectedTickets) {
                     if (item.id === ticket.id) {
-                        item.quantity = item.quantity + 1
+                        item.quantity++
                         setSelectedTickets([...selectedTickets])
                         return ticket;
                     }
@@ -52,7 +54,7 @@ export function TicketProvider({ children }: { children: ReactNode }) {
             case 'remove':
                 for (let item of selectedTickets) {
                     if (item.id === ticket.id) {
-                        item.quantity = item.quantity - 1
+                        item.quantity--
                         if (item.quantity === 0) _.remove(selectedTickets, item)
                         setSelectedTickets([...selectedTickets])
                         return ticket;
@@ -65,6 +67,6 @@ export function TicketProvider({ children }: { children: ReactNode }) {
     }
 
     return (
-        <TicketContext.Provider value={{ handleTicket, selectedTickets, totalAmount }}>{children}</TicketContext.Provider>
+        <TicketContext.Provider value={{ handleTicket, selectedTickets, setSelectedTickets, totalAmount }}>{children}</TicketContext.Provider>
     )
 }

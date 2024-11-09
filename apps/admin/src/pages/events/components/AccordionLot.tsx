@@ -116,7 +116,7 @@ export default function AccordionLot({ session, eventId }: any) {
                 open={modalDisclosure.isOpen}
                 selectedLot={selectedLot}
             />
-            {session?.ticket_lots?.map((lot, index) => {
+            {session?.ticket_batches?.map((lot, index) => {
                 return <Accordion key={index} expanded={index === expanded} onChange={handleChange(index)}>
                     <AccordionSummary aria-controls={index} id={index}>
                         <Typography sx={{ flex: 1, alignContent: 'center' }}>{lot.name}</Typography>
@@ -138,7 +138,7 @@ export default function AccordionLot({ session, eventId }: any) {
                         rows={[
                             {
                                 "id": 1,
-                                "event_ticket_lot_id": 1,
+                                "event_ticket_batch_id": 1,
                                 "name": "Homem",
                                 "ticket_type": "paid",
                                 "quantity": 100,
@@ -156,7 +156,7 @@ export default function AccordionLot({ session, eventId }: any) {
                             },
                             {
                                 "id": 1,
-                                "event_ticket_lot_id": 1,
+                                "event_ticket_batch_id": 1,
                                 "name": "Mulher",
                                 "ticket_type": "paid",
                                 "quantity": 100,
@@ -174,7 +174,7 @@ export default function AccordionLot({ session, eventId }: any) {
                             },
                             {
                                 "id": 1,
-                                "event_ticket_lot_id": 1,
+                                "event_ticket_batch_id": 1,
                                 "name": "Área VIP",
                                 "ticket_type": "paid",
                                 "quantity": 100,

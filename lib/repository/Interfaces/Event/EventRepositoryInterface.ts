@@ -54,6 +54,6 @@ export interface EventRepositoryInterface {
    * Retorna uma lista de cidades com eventos disponíveis
    * @returns {Promise<any>}
    */
-  avaiableCities(): Promise<any>;
+  availableCities(): Promise<any>;
 
 }

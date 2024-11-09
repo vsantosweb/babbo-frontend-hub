@@ -9,6 +9,7 @@
     "moduleResolution": "Bundler",
     "emitDecoratorMetadata": false,
     "experimentalDecorators": true,
+    "isolatedModules": false,
     "importHelpers": true,
     "target": "ES2020",
     "module": "ESNext",
@@ -24,19 +25,22 @@
       "@/hooks": ["lib/hooks/index.ts"],
       "@/interfaces": ["lib/repository/Interfaces/index.ts"],
       "@/layouts": ["lib/layouts/index.tsx"],
+      "@/redux": ["lib/redux/store.ts"],
       "@/repository": ["lib/repository/Interfaces/index.ts"],
       "@/routes": ["lib/routes/index.ts"],
-      "@/validators": ["lib/validators/index.ts"],
       "@/templates/forms": ["lib/templates/Forms/index.ts"],
       "@/teste": ["lib/teste/lib/index.ts"],
       "@/themes/babbo": ["lib/themes/babbo/index.ts"],
       "@/themes/default": ["lib/themes/default.tsx"],
       "@/tools": ["lib/tools/index.ts"],
-      // "@/types": ["lib/repository/Types/_index.ts"],
       "@/types": ["lib/repository/Types/_index.ts"],
-      "@/redux": ["lib/redux/store.ts"]
+      "@/validators": ["lib/validators/index.ts"],
+      "@babbo/validator": ["validator/src/index.ts"],
+      "@babbo/validator/server": ["validator/src/server.ts"],
+      "@/services": ["lib/repository/Services/index.ts"],
+      "@/entities": ["lib/repository/Entities/index.ts"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "./lib/**/*"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

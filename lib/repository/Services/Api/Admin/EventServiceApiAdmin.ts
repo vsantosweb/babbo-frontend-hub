@@ -1,4 +1,4 @@
-import { AdminEventRepositoryInterface } from "@/interfaces";
+import { AdminEventRepositoryInterface } from "@/repository/Interfaces";
 import { ApiBaseService } from "../ApiBaseService";
 import { injectable } from "inversify";
 import { EventPayloadType } from "@/types";

@@ -16,7 +16,10 @@ import { AxiosResponse } from 'axios';
 import Link from 'next/link';
 import { GetServerSidePropsContext } from 'next';
 
+import { IEventRepository } from "@repository/interfaces"
+
 export default function CartPage() {
+  new IEventRepository()
   return (
     <Layout
       title={'Babbo - Carrinho'}

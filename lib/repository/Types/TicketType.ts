@@ -22,11 +22,11 @@ export type TicketType = {
     id?: number
     name: string
     ticket_type: string
-    avaiable_quantity: number
+    readonly available_quantity: number
     price: number
     tax: number
     min_quantity: number
     max_quantity: number
-    is_visible: boolean
+    is_visible?: boolean | number
     quantity?: number
 }

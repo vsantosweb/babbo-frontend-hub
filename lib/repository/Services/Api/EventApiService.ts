@@ -1,9 +1,8 @@
 import { AxiosInstance } from "axios";
-import ApiService, { type ServiceContainerType } from ".";
+import ApiService, { type ServiceContainerType } from "./service";
 import { inject, injectable, unmanaged } from "inversify";
 import { EventPayloadType } from "@/types";
 import moment from 'moment';
-import { EventRepositoryInterface } from "@/interfaces";
 @injectable()
 export class EventApiService {
 
@@ -149,9 +148,9 @@ export class EventApiService {
      * Retorna uma lista de cidades com eventos disponíveis
      * @returns {Promise<any>}
      */
-    async avaiableCities(): Promise<any> {
+    async availableCities(): Promise<any> {
         try {
-            const response = await this.api.get<any>(`/avaiable-cities`);
+            const response = await this.api.get<any>(`/available-cities`);
             return response.data;
         } catch (error) {
             console.error('Erro ao obter banners de eventos:', error);

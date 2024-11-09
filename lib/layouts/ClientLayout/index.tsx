@@ -54,9 +54,6 @@ export default function ClientLayout({ ...rest }: LayoutProps) {
           {/* <meta property="og:type" content="book"/> */}
           {/* <meta property="og:type" content="article"/> */}
           {/* <meta property="og:type" content="profile"/> */}
-
-
-
         </Head>
       }
       {/* <Header /> */}

@@ -14,9 +14,9 @@ type MixedObjectType = { [index: string]: any };
 export function EventFilter() {
   const [categories, setCategories] = useState<MixedObjectType[]>([]);
 
-  const [avaiableCities, setAvaiableCities] = useState([]);
+  const [availableCities, setAvailableCities] = useState([]);
 
-  const { fetchEvents, fetchCategories, fetchAvaiableCities } = useEvent();
+  const { fetchEvents, fetchCategories, fetchAvailableCities } = useEvent();
   const { query, setQuery, parsed, clearQueryString } = useQueryString();
   const router = useRouter();
 
@@ -27,8 +27,8 @@ export function EventFilter() {
 
   useEffect(() => {
     fetchCategories().then((response: any) => setCategories(response.data));
-    fetchAvaiableCities().then((response: any) =>
-      setAvaiableCities(response.data)
+    fetchAvailableCities().then((response: any) =>
+      setAvailableCities(response.data)
     );
   }, []);
 
@@ -61,7 +61,7 @@ export function EventFilter() {
           onChange={(e) => setQuery({ ...query, region: e.target.value })}
         >
           {' '}
-          {avaiableCities?.map((city: Record<string, any>) => (
+          {availableCities?.map((city: Record<string, any>) => (
             <option value={city.city}>{city.city}</option>
           ))}
         </Select>

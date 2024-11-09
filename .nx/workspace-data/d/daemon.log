@@ -1,0 +1,11 @@
+[NX Daemon Server] - 2024-11-03T21:06:15.456Z - Started listening on: \\.\pipe\nx\C:\Users\shock\AppData\Local\Temp\29f1bf508f59498c848e\d.sock
+[NX Daemon Server] - 2024-11-03T21:06:15.462Z - [WATCHER]: Subscribed to changes within: C:\lab\babbo-docker\babbo-frontend-hub (native)
+[NX Daemon Server] - 2024-11-03T21:06:15.468Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2024-11-03T21:06:15.469Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2024-11-03T21:06:15.473Z - Closed a connection. Number of open connections: 1
+[NX Daemon Server] - 2024-11-03T21:06:15.477Z - [REQUEST]: Responding to the client. Shutdown initiated
+[NX Daemon Server] - 2024-11-03T21:06:15.479Z - Done responding to the client Shutdown initiated
+[NX Daemon Server] - 2024-11-03T21:06:15.479Z - Handled FORCE_SHUTDOWN. Handling time: 0. Response time: 3.
+[NX Daemon Server] - 2024-11-03T21:06:15.480Z - Closed a connection. Number of open connections: 0
+[NX Daemon Server] - 2024-11-03T21:06:15.480Z - [WATCHER]: Stopping the watcher for C:\lab\babbo-docker\babbo-frontend-hub (sources)
+[NX Daemon Server] - 2024-11-03T21:06:15.480Z - [WATCHER]: Stopping the watcher for C:\lab\babbo-docker\babbo-frontend-hub (outputs)

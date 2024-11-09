@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
 import { PublicRepositoryInterface } from '@/interfaces';
 import { CookiePolicy } from '@/components';
 import TagManager from 'react-gtm-module';
-import { AuthProvider, UserLocationProvider } from '@/hooks';
+import { AuthProvider, EventProvider, UserLocationProvider } from '@/hooks';
 import { Provider } from 'react-redux';
 import { store, persistor } from '@/redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -67,14 +67,15 @@ function App({ Component, pageProps }: AppProps) {
 
             </Head>
             <main className="app">
-              <UserLocationProvider>
-                <Component {...pageProps} />
-              </UserLocationProvider>
+              <EventProvider>
+                <UserLocationProvider>
+                  <Component {...pageProps} />
+                </UserLocationProvider>
+              </EventProvider>
               <CookiePolicy />
             </main>
           </AuthProvider>
         </Theme>
-
       </PersistGate>
     </Provider>
   );

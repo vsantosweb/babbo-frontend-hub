@@ -3,7 +3,6 @@ import {
   Box,
   Flex,
   Collapse,
-  useColorModeValue,
   useDisclosure,
 
 } from '@chakra-ui/react';
@@ -11,7 +10,6 @@ import { NavigationDesktop } from './navigation-desktop';
 import { useEffect, useState } from 'react';
 import { NavigationMobile } from './navigation-mobile';
 import { useAuth } from '@/hooks';
-import { LoginModal } from '../LoginModal';
 
 export function Navigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -58,7 +56,7 @@ export function Navigation() {
         borderColor={'gray.200'}
         align={'center'}
       >
-        {isMobile ? <NavigationMobile /> : <NavigationDesktop user={user} />}
+        {isMobile ? <NavigationMobile /> : <NavigationDesktop />}
 
       </Flex>
 

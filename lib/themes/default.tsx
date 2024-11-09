@@ -1,284 +1,91 @@
-import React from 'react';
-import { Global, ThemeProvider } from '@emotion/react';
-import { extendTheme, withDefaultProps, ChakraProvider } from '@chakra-ui/react';
+
+import { Global } from '@emotion/react';
 import GlobalStyles, { ViewPort } from './GlobalStyles';
 
-export type ThemeProps = {
-  defaultContainer: {
-    width: string;
-    spacing: string;
-  };
-  colors: any;
-  fonts: any;
-  defaultRadius: string;
-};
+import { ChakraProvider, extendTheme, ThemeConfig, ThemeOverride, ThemeProvider, useColorMode, withDefaultColorScheme, withDefaultProps, withDefaultSize, withDefaultVariant } from "@chakra-ui/react";
+import { Button } from './components/button';
+import { Input } from './components/input';
+import { Checkbox } from './components/checkbox';
+import { Textarea } from './components/textarea';
+import { Select } from './components/select';
+import { Switch } from './components/switch';
+import { Radio } from './components/radio';
+import { mode } from '@chakra-ui/theme-tools';
+import { Modal } from './components/modal';
+import { Menu } from './components/menu';
 
-export const theme: ThemeProps = {
+const components = ['Button', 'Input', 'NumberInput', 'PinInput', 'Swith', 'Select', 'Textarea', 'Checkbox', 'Radio', 'Badge'];
+
+const defaultProps = withDefaultProps({
+  defaultProps: { variant: 'filled', size: 'md', },
+  components: components,
+})
+
+const defaultColorScheme = withDefaultColorScheme({
+  colorScheme: 'purple',
+  components: components,
+})
+
+export const theme: ThemeOverride = extendTheme({
+  config: {
+    initialColorMode: 'dark',
+  },
+  defaultRadius: '16px',
   defaultContainer: {
     width: '1280px',
     spacing: '.9em',
   },
+  
   colors: {
-    // primary: '#9546fc',
-    primary: '#FF0068',
-    secondary: '#15FF83',
-    text: '#333',
-    background: '#fff',
-    error: '#ee2728',
-    success: '#10d08e',
-    warning: '#ffA214',
-    info: '#28abeb',
-  },
-
-  fonts: {
-    body: 'Helvetica Neue, Helvetica, Arial, sans-serif',
-    heading: 'Helvetica Neue, Helvetica, Arial, sans-serif',
-  },
-  defaultRadius: '16px',
-};
-
-const activeLabelStyles = {
-  transform: 'scale(0.85) translateY(-24px) translateX(-10px)',
-};
-
-const variantOutlined = () => ({
-  field: {
-    _focus: {
-      border: 'solid 1px #141414',
-      // boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px;',
-      outline: 'none',
-      boxShadow: 'none',
-    },
-    borderWidth: '1px',
-    borderRadius: '.5rem',
-    backgroundColor: '#eee',
-    pandding: '1rem'
-  },
-});
-
-const variantFilled = () => ({
-  field: {
-    _focus: {
-      borderColor: theme.colors.primary,
-    },
-  },
-});
-
-const variantFlushed = () => ({
-  field: {
-    _focus: {
-      borderColor: theme.colors.primary,
-    },
-    borderBottom: 'solid 2px',
-  },
-});
-
-// Chakra theme extension
-const charkaExtendThemeConfig = {
-  fonts: {
-    sizes: {
-      sm: '12px', // Exemplo de tamanho de fonte pequeno
-      md: '14px', // Tamanho de fonte médio (padrão)
-      lg: '20px', // Exemplo de tamanho de fonte grande
-    },
-  },
-  config: {
-    initialColorMode: 'light',
-    useSystemColorMode: false,
-  },
-  colors: {
-    // primary: {
-    //   50: '#F0E6F6',
-    //   100: '#D3BDF0',
-    //   200: '#B693E9',
-    //   300: '#9969E3',
-    //   400: '#7C3FDD',
-    //   500: '#6F2CF6', // Sua nova cor principal
-    //   600: '#571EAD',
-    //   700: '#3E1578',
-    //   800: '#260C43',
-    //   900: '#130420',
-    // },
     primary: {
       50: '#FFE6EF',
       100: '#FFB3CC',
       200: '#FF80AA',
       300: '#FF4D87',
       400: '#FF1A65',
-      500: '#FF0068', // Nova cor principal
-      600: '#D10056',
-      700: '#A30045',
-      800: '#750034',
-      900: '#470022',
+      500: '#FF0068', // Cor principal
+      600: '#ec0565',
+      700: '#c70354',
+      800: '#bd0457',
+      900: '#9d014c',
     },
-
+    black: {
+      900: '#0f0f0f',
+      800: '#141414'
+    }
+  },
+  styles: {
+    global: (props:any) => ({
+      body: {
+        color: mode('gray.800', 'whiteAlpha.900')(props),
+        bg: mode('white', 'black.900')(props),
+      },
+    }),
   },
   components: {
-    Heading: {
-      baseStyle: {
-        // fontWeight: 400, // Define o fontWeight padrão como 500
-      },
-    },
-    Modal: {
-      baseStyle: {
-        container: {
-          borderRadius: "3xl",
-        },
-      },
-    },
-    Alert: {
-      baseStyle: {
-        container: {
-          borderRadius: theme.defaultRadius,
-        },
-      },
-    },
-    FormError: {
-      baseStyle: {
-        text: {
-          fontSize: 'xs'
-        }
-      }
-    },
-    Button: {
-      baseStyle: {
-        borderRadius: '50px',
-        fontWeight: 'bold',
-      },
-      variants: {
-        solid: {
-          bg: 'primary.500',
-          color: 'white',
-          _hover: {
-            bg: 'primary.400',
-          },
-          _disabled: {
-            bg: 'primary.400', // Cor de fundo quando desativado
-            color: 'white', // Cor do texto quando desativado
-            cursor: 'not-allowed', // Muda o cursor para indicar que o botão está desativado
-          }
-        },
-        outline: {
-          borderColor: 'primary.500',
-          color: 'primary.500',
-          _hover: {
-            bg: 'primary.50',
-          },
-        },
-      },
-    },
-    IconButton: {
-      baseStyle: {
-        borderRadius: '100%',
-      },
-      defaultProps: {
-        colorScheme: 'gray',
-      },
-    },
-    Box: {
-      baseStyle: {
-        boxShadow: 'sm',
-        bg: 'white',
-      },
-    },
-    Input: {
-      baseStyle: {
-        field: {
-          borderRadius: theme.defaultRadius,
-          fontSize: 'sm',
-          boxShadow: 'none !important',
-          _placeholder: { fontSize: 'sm' },
-          _invalid: {
-            borderColor: '#000', // Define a cor da borda quando inválido
-            borderWidth: '1px', // Define a largura da borda quando inválido
-
-          },
-        },
-      },
-      sizes: {
-        lg: {
-          field: {
-            borderRadius: theme.defaultRadius,
-          },
-        },
-      },
-      variants: {
-        outline: variantOutlined,
-        filled: variantFilled,
-        flushed: variantFlushed,
-      },
-      defaultProps: {
-        size: 'md',
-      },
-    },
-    Textarea: {
-      baseStyle: {
-        borderRadius: theme.defaultRadius,
-        _focusVisible: {
-          borderColor: '#000', // Alterado para a cor roxa do tema
-          boxShadow: 'none', // Sombra de foco em roxo claro
-        },
-        _focus: {
-          borderColor: '#000', // Alterado para a cor roxa do tema
-          boxShadow: 'none', // Sombra de foco em roxo claro
-        },
-      },
-      defaultProps: {
-        size: 'md',
-      },
-    },
-    Select: {
-      baseStyle: {
-        field: {
-          borderRadius: theme.defaultRadius,
-          boxShadow: 'none !important',
-          fontSize: 'sm',
-          _placeholder: { fontSize: 'sm' }, // Define o tamanho do placeholder para todas as variantes
-        },
-      },
-      sizes: {
-        lg: {
-          field: {
-            borderRadius: theme.defaultRadius,
-          },
-        },
-      },
-      variants: {
-        outline: variantOutlined,
-        filled: variantFilled,
-        flushed: variantFlushed,
-      },
-      defaultProps: {
-        size: 'md',
-      },
-    },
-    FormLabel: {
-      baseStyle: {
-        marginBottom: 2,
-        fontSize: 14
-      },
-    },
+    Button: Button,
+    Input: Input,
+    Textarea: Textarea,
+    Checkbox: Checkbox,
+    Select: Select,
+    Switch: Switch,
+    Radio: Radio,
+    Menu: Menu,
+    Modal: Modal,
   },
-};
+});
 
-export const chakraTheme = extendTheme(
-  withDefaultProps({
-    defaultProps: {
-      variant: 'outline',
-    },
-
-    components: ['Input', 'NumberInput', 'PinInput', 'Select', 'Textarea', 'Modal', 'ModalContent'],
-  }),
-  charkaExtendThemeConfig,
-);
-
+const themeConfig = extendTheme(
+  defaultProps,
+  defaultColorScheme,
+)
+export default theme;
 export const Theme = ({ children }: any) => {
+
   return (
-    <ChakraProvider theme={chakraTheme}>
-      <ThemeProvider theme={{ ...theme, ...chakraTheme }}>
-        <Global styles={GlobalStyles} />
-        {children}
-      </ThemeProvider>
+    <ChakraProvider theme={{ ...themeConfig, ...theme }}>
+      <Global styles={GlobalStyles} />
+      {children}
     </ChakraProvider>
   );
 };

@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import ApiService, { type ServiceContainerType } from ".";
+import ApiService, { type ServiceContainerType } from "./service";
 import { injectable, unmanaged } from "inversify";
 
 @injectable()

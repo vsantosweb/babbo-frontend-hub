@@ -1,4 +1,4 @@
-import { AuthRepositoryInterface } from '@/interfaces';
+import { AuthRepositoryInterface } from '@/repository/Interfaces';
 import { injectable } from 'inversify';
 import { AuthServiceBase } from '../AuthServiceBase';
 

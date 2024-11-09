@@ -1,4 +1,4 @@
-import { EventRepositoryInterface } from '@/interfaces';
+import { EventRepositoryInterface } from '@/repository/Interfaces';
 import { EventPayloadType } from '@/types';
 /**
  * Interface que define métodos para recuperar informações sobre eventos do cliente.

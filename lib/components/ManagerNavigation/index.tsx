@@ -16,17 +16,18 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
+  useColorMode,
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
 import Link from 'next/link'
 import { Logo } from '../Logo'
 import { FaTicket } from 'react-icons/fa6'
 import { IoMdExit } from "react-icons/io";
-import { IoLogOutOutline, IoPersonOutline, IoTicketOutline } from "react-icons/io5";
 import { useAuth, useOrganizer } from '@/hooks'
 import { useRouter } from 'next/router'
 import container from '@/container'
 import { AuthRepositoryInterface } from '@/interfaces'
+import { IoLogOutOutline, IoPersonOutline, IoTicketOutline } from "react-icons/io5";
 
 interface Props {
   children: React.ReactNode
@@ -54,30 +55,34 @@ const NavLink = (props: Props) => {
 
 export function ManagerNavigation() {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const { user, logout } = useAuth();
   const { checkCustomerIsOrganizer } = useOrganizer();
 
   return (
-    <Box mb={8} color={'#fff'} borderBottom={'solid 1px #f1f1f1'}>
+    <Box borderBottomWidth={'1px'}>
       <Box px={3}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
-            size={'md'}
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label={'Open Menu'}
             display={{ md: 'none' }}
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Box width={'120px'}><Logo /></Box>
+            {/* <Box width={'120px'}><Logo /></Box> */}
             <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
               {Links.map((link) => (
                 <NavLink key={link}>{link}</NavLink>
               ))}
             </HStack>
           </HStack>
-          <Flex alignItems={'center'}>
+          <Flex gap='4' alignItems={'center'}>
+
+            <Button variant='ghost' onClick={toggleColorMode}>
+              {colorMode === 'light' ? 'Dark' : 'Light'}
+            </Button>
             <Button
               as={Link}
               onClick={(e) => {
@@ -85,7 +90,6 @@ export function ManagerNavigation() {
                 checkCustomerIsOrganizer(user?.is_organizer)
               }}
               href={'/events/create'}
-              size={'sm'}
               mr={4}
               leftIcon={<AddIcon />}>
               Criar evento

@@ -63,7 +63,6 @@ export const CartSummary = () => {
       </Stack>
       <Button
         onClick={() => addCart(selectedTickets)}
-        colorScheme="blue"
         size="lg"
         isLoading={isLoading}
         fontSize="md"

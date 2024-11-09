@@ -5,7 +5,7 @@ import {
 } from '@/interfaces';
 import { EventBanner, EventDisplayType, EventInterface } from '@/types';
 import { AxiosInstance } from 'axios';
-import ApiService from '..';
+import ApiService from '../service';
 import { injectable } from 'inversify';
 
 /**

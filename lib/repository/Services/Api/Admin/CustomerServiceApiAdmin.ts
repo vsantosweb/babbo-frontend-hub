@@ -1,4 +1,4 @@
-import { AdminBaseRepositoryInterface } from "@/interfaces";
+import { AdminBaseRepositoryInterface } from "@/repository/Interfaces";
 import { ApiBaseService } from "../ApiBaseService";
 import { injectable } from "inversify";
 

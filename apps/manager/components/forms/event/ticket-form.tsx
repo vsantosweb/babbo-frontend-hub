@@ -1,6 +1,6 @@
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Checkbox, FormControl, FormErrorMessage, FormLabel, HStack, Input, InputGroup, InputLeftElement, Radio, RadioGroup, Stack } from "@chakra-ui/react";
-import Ticket from "apps/manager/pages/events/ticket";
+import Ticket from "apps/manager/pages/events/[eventId]/ticket";
 import { useFormContext } from "react-hook-form";
 import { FaTicketSimple } from "react-icons/fa6";
 

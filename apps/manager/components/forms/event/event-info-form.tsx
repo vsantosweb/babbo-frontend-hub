@@ -22,7 +22,7 @@ import { useEvent } from '@/hooks';
 import TicketForm from './ticket-form';
 import { FaTicketAlt } from 'react-icons/fa';
 import { IoTicket } from 'react-icons/io5';
-import Ticket from 'apps/manager/pages/events/ticket';
+import Ticket from 'apps/manager/pages/events/[eventId]/ticket';
 
 export default function EventInfoForm({ hookForm }: { hookForm: UseFormReturn<any> }) {
 

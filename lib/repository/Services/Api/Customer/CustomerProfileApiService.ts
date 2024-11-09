@@ -1,6 +1,6 @@
 import { CustomerProfileRepositoryInterface } from '@/interfaces';
 import { injectable } from 'inversify';
-import { CustomerApiService } from '../CustomerApiService';
+import CustomerApiService from './CustomerApiService';
 
 /**
  * Serviço responsável por recuperar informações sobre eventos do cliente.

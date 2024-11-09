@@ -1,7 +1,7 @@
-import { PublicRepositoryInterface } from '@/interfaces';
+import { PublicRepositoryInterface } from '@/repository/Interfaces';
 import { EventDisplayType } from '@/types';
 import { AxiosInstance } from 'axios';
-import ApiService from '..';
+import ApiService from '../service';
 import { injectable } from 'inversify';
 
 /**
@@ -139,9 +139,9 @@ export class PublicEventService implements PublicRepositoryInterface {
    * Retorna uma lista de cidades com eventos disponíveis
    * @returns {Promise<any>}
    */
-  async avaiableCities(): Promise<any> {
+  async availableCities(): Promise<any> {
     try {
-      const response = await this.api.get<any>(`/avaiable-cities`);
+      const response = await this.api.get<any>(`/available-cities`);
       return response.data;
     } catch (error) {
       console.error('Erro ao obter banners de eventos:', error);

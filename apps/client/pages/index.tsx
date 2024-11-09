@@ -14,7 +14,7 @@ import { AxiosResponse } from 'axios';
 import Link from 'next/link';
 import { GetServerSidePropsContext } from 'next';
 import { HomeDiscovery } from '@/themes/babbo';
-
+// import { IEventRepository } from '@/src/repository/interfaces/IEventRepository'
 const publicOrganizerContainer = container.get<PublicOrganizerRepositoryInterface>('public-organizer');
 const eventService = container.get<PublicRepositoryInterface>('public');
 

@@ -68,7 +68,7 @@ export function AvatarImageUpload() {
                 )}
             />
 
-            {isDragAccept && (<Avatar name={hookForm.getValues('name')} size={'xl'} />)}
+            {isDragAccept && (<Avatar name={hookForm.getValues('name')} size={'lg'} />)}
 
             {isDragReject && (
                 <Box color={'red.500'} textAlign={'center'}>
@@ -77,13 +77,13 @@ export function AvatarImageUpload() {
                 </Box>
             )}
             {!isDragActive && files.length === 0 && (hookForm.getValues('photo_profile') === undefined) && (
-                <Avatar src={hookForm.getValues('photo_profile')} name={hookForm.getValues('name')} size={'xl'} />
+                <Avatar src={hookForm.getValues('photo_profile')} name={hookForm.getValues('name')} size={'lg'} />
             )}
 
             {files.length === 0 && hookForm.getValues('photo_profile') !== undefined ? <Box overflow="hidden" borderRadius="lg" width="100%" height="100%">
                 {
                     <Avatar
-                        size={'xl'}
+                        size={'lg'}
                         src={hookForm.getValues('photo_profile')}
                     />
                 }

@@ -11,6 +11,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
+    "skipLibCheck": true,
+    
+
+    "module": "esnext",
+    "moduleResolution": "node",
+  
+    "experimentalDecorators": true,
+
     "plugins": [
       {
         "name": "next"

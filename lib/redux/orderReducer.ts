@@ -4,7 +4,7 @@ const initialState = {
     orders: [], // Lista de pedidos
 };
 
-export default function orderReducer(state = initialState, action) {
+export default function orderReducer(state = initialState, action: Record<string, unknown> ) {
     switch (action.type) {
         case 'ADD_ORDER':
             return {
@@ -14,7 +14,7 @@ export default function orderReducer(state = initialState, action) {
         case 'REMOVE_ORDER':
             return {
                 ...state,
-                orders: state.orders.filter(order => order.id !== action.payload), // Remove o pedido pelo ID
+                orders: state.orders.filter(order => order !== action.payload), // Remove o pedido pelo ID
             };
         case 'CLEAR_ORDERS':
             return {

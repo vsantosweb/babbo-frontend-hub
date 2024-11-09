@@ -14,10 +14,12 @@ import { Navigation, Pagination } from 'swiper/modules';
 
 import moment from 'moment';
 import 'moment/locale/pt-br'; // without this line it didn't work
+import { useColorMode } from '@chakra-ui/react';
 moment.locale('pt-BR');
 SwiperCore.use([Navigation, Pagination]);
 
 export default function App({ Component, pageProps }: AppProps) {
+  
   return (
     <Theme>
       <Head>

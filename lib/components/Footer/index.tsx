@@ -4,9 +4,11 @@ import moment from 'moment';
 export function Footer() {
   return (
     <Box
-      mt={10}
-      bg={useColorModeValue('gray.50', 'gray.900')}
-      color={useColorModeValue('gray.700', 'gray.200')}>
+      // mt={10}
+      // bg={useColorModeValue('gray.50', 'black')}
+      borderTopWidth='1px'
+      // color={useColorModeValue('gray.700', 'gray.200')}
+      >
       <Container
         as={Stack}
         maxW={'6xl'}

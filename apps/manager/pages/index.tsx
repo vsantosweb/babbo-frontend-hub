@@ -47,6 +47,7 @@ import { Search2Icon } from '@chakra-ui/icons';
 import { EventProvider, useAlert, useEvent } from '@/hooks';
 import { useForm } from 'react-hook-form';
 import { theme } from '@/themes/default';
+import Datebox from '@/components/Datebox';
 
 const eventService = container.get<EventRepositoryInterface>('customer-event')
 
@@ -66,7 +67,7 @@ function Events() {
 
   const PAGE_LIMIT = 10;
 
-  const { fetchSearch } = useEvent();
+  const { fetchSearch, setEvent } = useEvent();
   const [search, setSearch] = useState<Record<string, string | number>>()
   const [loading, setLoading] = useState<boolean>(false)
   const [events, setEvents] = useState<EventInterface[]>();
@@ -97,11 +98,10 @@ function Events() {
   if (events === null) return <></>
 
   return (
-    <Layout name="manager">
-
+    <Layout name='manager'>
       <Stack>
-        <Flex>
-          <Box flex={1}>
+        <Flex pt='4'>
+          <Box  flex={1}>
             <Heading flex={1} mb={4} size={'lg'}>Meus eventos</Heading>
           </Box>
           <Flex gap={4}>
@@ -131,24 +131,20 @@ function Events() {
                   <Button>Next</Button>
                 </TableCaption>
                 <Thead>
-                  <Tr p={3}>
-                  <Th></Th>
-                    <Th>Evento</Th>
-                    <Th>Status</Th>
+                  <Tr >
+                    <Th width='80px'>Data</Th>
+                    <Th width='100%'>Evento</Th>
                     <Th>criado em</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
                   {events?.map((event: EventInterface) => (
-                    <Tr key={event.id} _hover={{ background: 'gray.100' }} cursor={'pointer'}>
-                      <Td px={0} onClick={() => router.push(`/events/${event.uuid}/details`)}>
-                        <Flex gap={1} alignItems={'center'} flexDirection={'column'}>
-                          <Text fontWeight={'600'} color={'red.300'}>{moment(event.end_date).format('MMMM').toUpperCase()}</Text>
-                          <Text>{moment(event.end_date).format('DD')}</Text>
-                        </Flex>
+                    <Tr onClick={() => router.push(`/events/${event.uuid}`)} key={event.id} _hover={{ background: 'gray.50' }} cursor={'pointer'}>
+                      <Td p='0' >
+                        <Datebox date={event.start_date} />
                       </Td>
-                      <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>
-                        <Flex gap={3}>
+                      <Td p='2' >
+                        <Flex gap={4}>
                           <Box borderRadius={'10px'} overflow={'hidden'}>
                             <Image objectFit={'cover'} src={`${event.event_image}-md.jpg`} alt={event.name} boxSize="70px" />
                           </Box>
@@ -158,8 +154,11 @@ function Events() {
                           </Stack>
                         </Flex>
                       </Td>
-                      <Td onClick={() => router.push(`/events/${event.uuid}/details`)}>
+                      <Td >
                         <Badge size={'sm'} background={eventStatus[event.status as string].color}>{eventStatus[event.status as string].label}</Badge>
+                      </Td>
+                      <Td >
+                        <Button size='sm' variant={'outline'}>Gerenciar</Button>
                       </Td>
                     </Tr>
                   ))}
@@ -171,7 +170,7 @@ function Events() {
           </Stack>
         }
       </Stack>
-
     </Layout>
+
   );
 }
