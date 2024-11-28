@@ -1,23 +1,15 @@
-# Use uma imagem base do Node.js
-FROM node:22
+FROM node:20-alpine
 
-RUN apt-get update && apt-get install -y iputils-ping inetutils-traceroute net-tools dnsutils iproute2
+# Set working directory
+WORKDIR /usr/src/app
 
-# Defina o diretório de trabalho no contêiner
-WORKDIR /app
+# Install dependencies
+COPY package*.json ./
 
-# Copie o package.json e o package-lock.json
-COPY package*.json /app
+# Instalar as dependências do projeto usando npm
+RUN yarn
 
-# Instale as dependências do projeto
-RUN npm install
+# Copie o restante do código da aplicação para dentro do container
+COPY . ./
 
-# Copie o restante dos arquivos do projeto
-#COPY . .
-
-# Comando para rodar a aplicação
-#CMD ["npx", "nx", "dev", "client"]
-# RUN chmod +x ./entrypoint.sh
-
-# # Comando de entrada para o script entrypoint.sh
-# ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
