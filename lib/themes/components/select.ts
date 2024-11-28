@@ -3,7 +3,6 @@ export const Select = {
       focusBorderColor: "gray.500",
       variant: 'filled',
       borderWidth: "1px",
-      size: "md",
     },
     baseStyle: {
       field: {

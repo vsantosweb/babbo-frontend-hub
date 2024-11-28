@@ -1,13 +1,16 @@
-import { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 
 // Cria uma instância do serviço de autenticação
 import { AuthRepositoryInterface } from '@/interfaces';
-import { ApiResponseType, CredentialsType, MiddlewareType, UserType } from '@/types';
+import { ApiResponseType, CredentialsType, MiddlewareType, ResetPasswordType, UserType } from '@/types';
 import { RouteProps, getMiddlewareRoutes, managerRoutes } from '@/routes';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import container from '@/container';
 import { LoginModal } from '@/components';
+import { eventCart } from '../useCart';
+
+
 
 
 // Define o tipo para o objeto do usuário
@@ -31,7 +34,12 @@ export interface AuthProviderInterface {
   authState?: any,
   socialLogin: (credentials: any) => void,
   user: Record<string, any> | null
-  setRequestModalLogin: (value: {redirect: string, active: boolean} | null) => void
+  setRequestModalLogin: (value: { redirect: string, active: boolean } | null) => void
+  requestPasswordRecovery: (email: string) => Promise<ApiResponseType>
+  validateRecoveryToken: (token: string) => Promise<ApiResponseType>
+  resetPassword: (data: ResetPasswordType) => Promise<ApiResponseType>
+  registerCustomer: (data: Record<string, any>) => Promise<ApiResponseType | null>
+
 }
 
 const AuthContext = createContext<AuthProviderInterface | undefined>(undefined)
@@ -58,7 +66,7 @@ type AuthProviderConfigProps = {
 }
 
 type AuthProviderProps = {
-  children: JSX.Element | JSX.Element[],
+  children: React.ReactNode,
   middleware: MiddlewareType
   config?: AuthProviderConfigProps
 }
@@ -71,14 +79,15 @@ type AuthProviderProps = {
 export function AuthProvider({ children, middleware, config }: AuthProviderProps) {
 
   const privatePaths = getMiddlewareRoutes(middleware).filter((nav: RouteProps) => nav.private).map(x => x.path);
-  
+
   // ** States
   const [loading, setLoading] = useState<boolean>(true);
   const [authorized, setAuthorized] = useState<boolean>(false);
   const [user, setUser] = useState<Record<string, any> | null>(null);
   const [rendering, setRendering] = useState<boolean>(true);
   const [checkingPermissions, setCheckingPermissions] = useState<boolean>(false);
-  const [requestModalLogin, setRequestModalLogin] = useState<{redirect: string, active: boolean} | null>(null);
+  const [requestModalLogin, setRequestModalLogin] = useState<{ redirect: string, active: boolean } | null>(null);
+
 
   const router = useRouter();
 
@@ -102,11 +111,11 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
 
       let user = response?.data?.data;
 
-      if (user && router.pathname === config.loginRoute) config?.startPage && router.push(config.startPage)
+      if (user && router.pathname === config?.loginRoute) config?.startPage && router.push(config.startPage)
 
       const isPrivatePath = privatePaths.some(path => window.location.pathname.startsWith(path));
       if (!user && isPrivatePath) {
-        config && router.push(config.loginRoute);
+        config?.loginRoute && router.push(config.loginRoute);
         setAuthorized(false);
         setUser({})
         setRendering(false);
@@ -125,7 +134,7 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
       .catch(() => {
 
         setAuthorized(false);
-        config && router.push(config.loginRoute);
+        config?.loginRoute && router.push(config?.loginRoute);
         setUser({});
         setRendering(false);
       })
@@ -156,17 +165,20 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
     try {
       // Chama a função de login do serviço de autenticação
       const response: ApiResponseType | null = await authService.login(credentials);
-      // Se a resposta for bem-sucedida e contiver dados do usuário, atualiza o estado do usuário
+      // Se a resposta for bem-sucedida e conter dados do usuário, atualiza o estado do usuário
 
       if (response?.data?.success) {
         const expiresAt = new Date(response.data.data.expires_in * 1000);
 
         Cookies.set('token', response?.data.data.token, { expires: expiresAt })
         Cookies.set('token-exp', expiresAt.toString(), { expires: expiresAt });
-        session(router.asPath)
+        session(router.asPath);
+        
+        eventCart.emit('userLoggedIn');
+
         if (redirect) router.push(redirect)
 
-        if(requestModalLogin.redirect) {
+        if (requestModalLogin?.redirect) {
           router.push(requestModalLogin.redirect)
           setRequestModalLogin(null)
         }
@@ -188,7 +200,10 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
     try {
       // Chama a função de logout do serviço de autenticação
       await authService.logout().then(response => {
-        window.location.href = config.loginRoute
+        if (config?.loginRoute) {
+          window.location.href = config?.loginRoute
+        }
+
       });
       // Limpa o estado do usuário
 
@@ -224,6 +239,42 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
 
   }
 
+
+  const requestPasswordRecovery = (email: string) => {
+    return authService.requestPasswordRecovery(email).then(response => {
+      return response?.data
+    })
+  }
+
+  const validateRecoveryToken = (token: string) => {
+    return authService.validateRecoveryToken(token).then(response => {
+      return response?.data
+    })
+  }
+
+  const resetPassword = (data: ResetPasswordType) => {
+
+    data.token = sessionStorage.getItem('reset-token');
+
+    return authService.resetPassword(data).then(response => {
+      return response?.data
+    })
+  }
+
+  const registerCustomer = (data: Record<string, any>) => {
+
+    return authService.register(data).then(response => {
+      if (response?.data.success) {
+        const expiresAt = new Date(response.data.data.expires_in * 1000);
+        Cookies.set('token', response?.data.data.token, { expires: expiresAt });
+        Cookies.set('token-exp', expiresAt.toString(), { expires: expiresAt });
+        window.location.href = '/minhas-compras'
+      }
+      return response
+    })
+  }
+
+
   if (config) {
 
     if (rendering || (!authorized && window.location.pathname !== config.loginRoute)) return null
@@ -231,7 +282,19 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
 
   if (checkingPermissions) return null
   return (
-    <AuthContext.Provider value={{ authState, loading, login, logout, socialLogin, user, setRequestModalLogin }}>
+    <AuthContext.Provider value={{
+      authState,
+      loading,
+      login,
+      logout,
+      socialLogin,
+      user,
+      setRequestModalLogin,
+      requestPasswordRecovery,
+      validateRecoveryToken,
+      resetPassword,
+      registerCustomer
+    }}>
       {children}
       {requestModalLogin && <LoginModal setRequestLogin={setRequestModalLogin} open={requestModalLogin.active} />}
     </AuthContext.Provider>

@@ -28,7 +28,7 @@ function Explore() {
 
   useEffect(() => {
     !_.isEmpty(router.query) &&
-      fetchEvents(queryString.stringify(router.query)).then((response: any) =>
+      fetchEvents(router.query).then((response: any) =>
         setEvents(response.data)
       );
   }, [router.query]);

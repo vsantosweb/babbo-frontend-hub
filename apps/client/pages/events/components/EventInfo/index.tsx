@@ -3,7 +3,6 @@ import { theme } from "@/themes/default";
 import { EventInterface } from "@/types";
 import { Box, Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import { CiRoute } from "react-icons/ci";
 import { HiLocationMarker } from "react-icons/hi";
 import { FaDirections, FaTicketAlt } from "react-icons/fa";
 import { IoCalendar } from "react-icons/io5";
@@ -18,7 +17,7 @@ export default function EventInfo({ event }: { event: EventInterface }) {
           borderRadius={theme.defaultRadius}
           background={`#fff`}
           border={'solid 1px #ddd'}
-          color={theme.colors.primary}
+          color={'primary.400'}
 
         >
           <IoCalendar />
@@ -37,7 +36,7 @@ export default function EventInfo({ event }: { event: EventInterface }) {
           borderRadius={theme.defaultRadius}
           background={`#fff`}
           border={'solid 1px #ddd'}
-          color={theme.colors.primary}
+          color={'primary.400'}
         >
           <HiLocationMarker />
         </Box>
@@ -58,7 +57,7 @@ export default function EventInfo({ event }: { event: EventInterface }) {
             padding={4}
             fontSize={'1.4em'}
             borderRadius={theme.defaultRadius}
-            background={`${theme.colors.primary}26`}
+            background={'primary.200'}
           >
             <FaTicketAlt />
           </Box>
@@ -74,7 +73,7 @@ export default function EventInfo({ event }: { event: EventInterface }) {
         </Flex>
       }
       <Box textAlign={{base: 'center', md: 'left'}} mt={4}>
-        <Button as={Link} href={`/store/${event.uuid}`} size={'lg'}>Comprar ingressos</Button>
+        <Button as={Link} href={`${process.env.NEXT_PUBLIC_STORE_URL}/${event.uuid}`} size={'lg'}>Comprar ingressos</Button>
       </Box>
     </Stack>
   )

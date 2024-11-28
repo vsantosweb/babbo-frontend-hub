@@ -71,6 +71,7 @@ export default function ClientLayout({ ...rest }: LayoutProps) {
           margin: '0 auto',
           paddingLeft: '1em',
           paddingRight: '1em',
+          paddingBottom: '2.6rem'
         }}
       >
         {rest.children}

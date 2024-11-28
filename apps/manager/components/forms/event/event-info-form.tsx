@@ -8,9 +8,6 @@ import {
     FormHelperText,
     Stack,
     FormErrorMessage,
-    HStack,
-    Checkbox,
-    Button,
 } from '@chakra-ui/react'
 
 import 'react-quill/dist/quill.snow.css';
@@ -19,10 +16,7 @@ import { Select } from "chakra-react-select";
 import { Controller, UseFormReturn } from 'react-hook-form';
 import moment from 'moment';
 import { useEvent } from '@/hooks';
-import TicketForm from './ticket-form';
-import { FaTicketAlt } from 'react-icons/fa';
-import { IoTicket } from 'react-icons/io5';
-import Ticket from 'apps/manager/pages/events/[eventId]/ticket';
+
 
 export default function EventInfoForm({ hookForm }: { hookForm: UseFormReturn<any> }) {
 

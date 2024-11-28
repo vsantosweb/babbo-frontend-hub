@@ -28,7 +28,7 @@ export default function ProfileMenu({ extraItems }: { extraItems?: ReactNode }) 
                 <Avatar icon={<LuUser2 fontSize='1.5rem' />} />
             </MenuButton>
             <MenuList transition={'none'} color={'#000'}>
-                <MenuItem as={Link} href={'/minha-conta'} icon={<IoPersonOutline />}>Minha conta</MenuItem>
+                <MenuItem as={Link} href={`${process.env.NEXT_PUBLIC_CLIENT_URL}/minha-conta`} icon={<IoPersonOutline />}>Minha conta</MenuItem>
                 {/* <MenuItem icon={<IoTicketOutline />}>Meus ingressos</MenuItem> */}
                 {extraItems && extraItems}
                 <MenuDivider m={0} />

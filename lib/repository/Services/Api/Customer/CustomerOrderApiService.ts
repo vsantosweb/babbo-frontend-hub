@@ -1,12 +1,11 @@
 import { ApiResponseType, CredentialsType, PaymentMethodType, ResetPasswordType } from '@/types';
 import { AxiosInstance } from 'axios';
 import { injectable } from 'inversify';
-import { CustomerCartInterface } from '../../../Interfaces/Customer/CustomerCartRepositoryInterface';
 import ApiService from '../service';
-import { CustomerOrderInterface } from '../../../Interfaces/Customer/CustomerOrderRepositoryInterface';
+import { CustomerOrderRepositoryInterface } from '@/interfaces';
 
 @injectable()
-export class CustomerOrderApiService implements CustomerOrderInterface {
+export class CustomerOrderApiService implements CustomerOrderRepositoryInterface {
 
   protected api: AxiosInstance;
 

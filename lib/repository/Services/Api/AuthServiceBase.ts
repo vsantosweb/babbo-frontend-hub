@@ -1,7 +1,6 @@
 import { AxiosInstance } from "axios";
 import ApiService, { type ServiceContainerType } from './service';
 import { injectable, unmanaged } from "inversify";
-import { ApiResponseType, CredentialsType } from "@/types";
 @injectable()
 export class AuthServiceBase {
 

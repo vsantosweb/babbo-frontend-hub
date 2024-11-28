@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 
 type AppProviderProps = {
-    children: JSX.Element
+    children: React.ReactElement
 }
 
 interface AppContextInterface {

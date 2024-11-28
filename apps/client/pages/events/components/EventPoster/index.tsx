@@ -22,9 +22,9 @@ export default function EventPoster({ event }: { event: EventInterface }) {
             position={'relative'}
         >
             {isOpen && <Lightbox
-                medium={`${event?.event_image}-md.jpg`}
-                large={`${event?.event_image}-lg.jpg`}
-                small={`${event?.event_image}-sm.jpg`}
+                medium={`${event?.event_image}-md.jpg'`}
+                large={`${event?.event_image}-lg.jpg'`}
+                small={`${event?.event_image}-sm.jpg'`}
                 alt={event?.name}
                 onClose={onClose}
                 hideZoom={true}

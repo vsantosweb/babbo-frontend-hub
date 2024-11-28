@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
 import { PublicRepositoryInterface } from '@/interfaces';
 import { CookiePolicy } from '@/components';
 import TagManager from 'react-gtm-module';
-import { AuthProvider, EventProvider, UserLocationProvider } from '@/hooks';
+import { AuthProvider, CartProvider, EventProvider, UserLocationProvider } from '@/hooks';
 import { Provider } from 'react-redux';
 import { store, persistor } from '@/redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -49,8 +49,9 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Theme>
-          <AuthProvider middleware='auth:customer' config={{ loginRoute: '/' }}>
+        <AuthProvider middleware='auth:customer' config={{ loginRoute: '/' }}>
+
+          <Theme>
             <Head>
               <meta name="viewport" content="width=device-width, initial-scale=1" />
               <meta name="google-adsense-account" content="ca-pub-8530046753205274" />
@@ -67,15 +68,18 @@ function App({ Component, pageProps }: AppProps) {
 
             </Head>
             <main className="app">
-              <EventProvider>
-                <UserLocationProvider>
-                  <Component {...pageProps} />
-                </UserLocationProvider>
-              </EventProvider>
+
+              <CartProvider>
+                <EventProvider>
+                  <UserLocationProvider>
+                    <Component {...pageProps} />
+                  </UserLocationProvider>
+                </EventProvider>
+              </CartProvider>
               <CookiePolicy />
             </main>
-          </AuthProvider>
-        </Theme>
+          </Theme>
+        </AuthProvider>
       </PersistGate>
     </Provider>
   );

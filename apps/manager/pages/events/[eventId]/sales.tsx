@@ -4,7 +4,7 @@ import DataTable from 'datatables.net-react';
 
 import Layout from '@/layouts';
 
-import { Table, Thead, Tbody, Tr, Th, Td, Box, TableContainer, useColorModeValue } from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Td, Box, TableContainer, useColorModeValue, Stack } from "@chakra-ui/react";
 import { useEvent } from '@/hooks';
 import { ApiResponseType } from '@/repository/Types/ApiResponseType';
 
@@ -21,34 +21,41 @@ export type TicketSaleType = {
 
 
 const OrderTable = ({ sales }: { sales: TicketSaleType[] }) => (
-    <Table w="100%">
-        <Thead>
-            <Tr>
-                <Th>ID</Th>
-                <Th>Pedido</Th>
-                <Th>Ingresso</Th>
-                <Th>Status</Th>
-                <Th>Método de pagamento</Th>
-                <Th>Quantidade</Th>
-                <Th>Valor unitário</Th>
-                <Th>Total</Th>
-            </Tr>
-        </Thead>
-        <Tbody>
-            {sales?.map((sale, index) => (
-                <Tr key={index} _hover={{ background: useColorModeValue('gray.50', 'blackAlpha.500') }}>
-                    <Td borderWidth='1px'>{sale.id}</Td>
-                    <Td borderWidth='1px'>{sale.order}</Td>
-                    <Td borderWidth='1px' width={'30%'}>{sale.ticket}</Td>
-                    <Td borderWidth='1px'>{sale.status}</Td>
-                    <Td borderWidth='1px'>{sale.payment_method}</Td>
-                    <Td borderWidth='1px'>{sale.quantity}</Td>
-                    <Td borderWidth='1px'>{sale.unit_price.toFixed(2)}</Td>
-                    <Td borderWidth='1px'>{sale.total.toFixed(2)}</Td>
+    <TableContainer shadow='md'>
+        <Table width='100%' size='sm'>
+            <Thead>
+                <Tr>
+                    <Th>Comprador</Th>
+                    <Th>Pedido</Th>
+                    <Th>Ingresso</Th>
+                    <Th>Status</Th>
+                    <Th>Método de pagamento</Th>
+                    <Th>Quantidade</Th>
+                    <Th>Valor unitário</Th>
+                    <Th>Total</Th>
                 </Tr>
-            ))}
-        </Tbody>
-    </Table>
+            </Thead>
+            <Tbody>
+                {sales?.map((sale, index) => (
+                    <Tr  key={index} _hover={{ background: useColorModeValue('gray.100', 'blackAlpha.500') }}>
+                        <Td>
+                            <Stack>
+                                <strong>{sale.customer_name}</strong>
+                                <span>{sale.customer_email}</span>
+                            </Stack>
+                        </Td>
+                        <Td>{sale.order}</Td>
+                        <Td>{sale.ticket}</Td>
+                        <Td>{sale.status}</Td>
+                        <Td>{sale.payment_method}</Td>
+                        <Td>{sale.quantity}</Td>
+                        <Td>{sale.unit_price.toFixed(2)}</Td>
+                        <Td>{sale.total.toFixed(2)}</Td>
+                    </Tr>
+                ))}
+            </Tbody>
+        </Table>
+    </TableContainer>
 );
 
 
@@ -68,10 +75,8 @@ export default function Sales() {
     return (
 
         <Layout name='manager'>
-            <Box w={'100%'} overflow={'hidden'}>
             <OrderTable sales={sales} />
 
-            </Box>
         </Layout>
     );
 }

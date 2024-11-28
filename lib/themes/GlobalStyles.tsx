@@ -16,10 +16,11 @@ const GlobalStyles = css`
     height: 100%;
   }
   body, h1, h2, h3 {
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Roboto', sans-serif !important;
     font-optical-sizing: auto;
     font-style: normal;
     font-variation-settings: 'slnt' 0;
+    /* color: #3d3d3d; */
   }
 
   .app-wrapper{

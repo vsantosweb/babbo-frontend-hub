@@ -1,12 +1,10 @@
-import { ApiResponseType, CredentialsType, ResetPasswordType } from '@/types';
-import { AxiosInstance } from 'axios';
+import { ApiResponseType, CredentialsType } from '@/types';
 import { injectable } from 'inversify';
-import { CustomerCartInterface } from '@/interfaces';
-import ApiService from '../service';
+import { CustomerCartRepositoryInterface } from '@/interfaces';
 import CustomerApiService from './CustomerApiService';
 
 @injectable()
-export class CustomerCartApiService extends CustomerApiService implements CustomerCartInterface {
+export class CustomerCartApiService extends CustomerApiService implements CustomerCartRepositoryInterface {
 
   constructor() {
     super('customer')

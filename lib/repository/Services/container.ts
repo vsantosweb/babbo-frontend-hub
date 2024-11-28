@@ -6,7 +6,6 @@ import { EventManagerApiService } from './Api/Customer/CustomerEventApiService';
 import { CustomerProfileApiService } from './Api/Customer/CustomerProfileApiService';
 import { PublicOrganizerService } from './Api/Public/PublicOrganizerService';
 import { CustomerRegisterApiService } from './Api/Customer/CustomerRegisterApiService';
-import { AuthServiceApiAdmin } from './Api/Admin/AuthServiceApiAdmin';
 import { CustomerServiceApiAdmin } from './Api/Admin/CustomerServiceApiAdmin';
 import { EventServiceApiAdmin } from './Api/Admin/EventServiceApiAdmin';
 import { EventSessionServiceApiAdmin } from './Api/Admin/EventSessionServiceApiAdmin';
@@ -24,12 +23,11 @@ import {
     EventRepositoryInterface,
     PublicOrganizerRepositoryInterface,
     PublicRepositoryInterface,
-    CustomerCartInterface,
     CustomerOrderRepositoryInterface,
-    CustomerEventTicketRepositoryInterface,
     EventSessionRepositoryInterface,
     EventTicketBatchRepositoryInterface,
-    EventTicketRepositoryInterface
+    EventTicketRepositoryInterface,
+    CustomerCartRepositoryInterface
 } from '@/interfaces';
 
 import {
@@ -48,7 +46,7 @@ const container = new Container();
 // ** Customer
 container.bind<CustomerProfileRepositoryInterface>('customer-profile').to(CustomerProfileApiService);
 container.bind<CustomerRegisterRepositoryInterface>('customer-register').to(CustomerRegisterApiService);
-container.bind<CustomerCartInterface>('customer-cart').to(CustomerCartApiService);
+container.bind<CustomerCartRepositoryInterface>('customer-cart').to(CustomerCartApiService);
 container.bind<CustomerOrderRepositoryInterface>('customer-order').to(CustomerOrderApiService);
 container.bind<EventSessionRepositoryInterface>('customer-event-session').to(CustomerEventSessionService)
 container.bind<EventTicketBatchRepositoryInterface>('customer-event-batch').to(CustomerEventTicketBatchApiService)

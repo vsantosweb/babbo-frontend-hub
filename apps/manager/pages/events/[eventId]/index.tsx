@@ -23,12 +23,13 @@ import { useEffect, useState } from 'react';
 import { EventInterface } from '@/types';
 import { EventRepositoryInterface, CustomerEventRepositoryInterface } from '@/interfaces';
 import container from '@/container';
-import InteractionGraph from 'apps/manager/components/graphs/ImpressionGraph';
+import Graph from '../../../components/graphs/Graph';
 import { SessionHelper } from '@/helpers';
 import moment from 'moment';
 import { EventProvider, useEvent } from '@/hooks';
 import { GetServerSidePropsContext } from "next/types";
 import EventPanelContext from '../EventPanelContext';
+import { formatPrice } from '@/tools';
 // import SharesChart from './SharesChart';
 
 const eventServiceCustomer = container.get<CustomerEventRepositoryInterface>('customer-event');
@@ -43,10 +44,17 @@ const stats = [
 
 export default function Event() {
 
-    const [interactions, setInteractions] = useState<Record<string, any>>();
-    const { event } = useEvent();
-    
-    console.log(event, 'eventevent')
+    const [summaryData, setSummaryData] = useState<Record<string, any>>();
+    const { event, summary } = useEvent();
+
+    useEffect(() => {
+
+        if (event) summary(event?.id as number).then(response => {
+            setSummaryData(response.data)
+            console.log(response, 'id: number')
+        })
+
+    }, [event])
     const handleDeleteEvent = async (id: number) => {
         await eventServiceCustomer.deleteEvent(id).then(response => {
             SessionHelper.redirectWith('/', 'eventDeleted', `O evento ${event?.name} foi excluído.`)
@@ -58,66 +66,60 @@ export default function Event() {
     const handleTabChange = (index: number) => {
         setActiveTab(index);
     };
+
     return (
         <Layout name="manager">
-            {event ? <Flex gap={{ base: 0, md: 6 }} width={'100%'} flex={1}>
-                <Stack spacing={4} >
-                    <Box display={{ base: 'none', md: 'block' }} boxShadow={{
-                        base: 'none',
-                        md: 'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px',
-                    }} overflow="hidden" borderRadius="lg" width="300px">
-                        <img style={{ width: '100%', height: '100%', objectFit: 'cover' }} src={`${event?.event_image}-lg.jpg`} />
-                    </Box>
-                </Stack>
-                <Stack flex={1} height={'100%'}>
-                    <Box mb={8}>
-                        <EventDetails handleDelete={handleDeleteEvent} event={event} />
-                    </Box>
+            {summaryData ? <Flex gap={{ base: 0, md: 6 }} width={'100%'} flex={1}>
+
+                <Stack flex={1} height='100%'>
+                    {/* <EventDetails handleDelete={handleDeleteEvent} event={event} /> */}
                     <Box>
-                        <SimpleGrid columns={{ base: 1, md: 4 }} gap={{ base: '5', md: '6' }}>
-                            <Stat borderRadius={'xl'} p={3} border={'solid 1px #ddd'}>
-                                <StatLabel>Impressoes</StatLabel>
-                                <StatNumber>{interactions?.impressions?.total}</StatNumber>
-                                <StatHelpText>{interactions?.impressions?.reference}</StatHelpText>
-                            </Stat>
-                            <Stat borderRadius={'xl'} p={3} border={'solid 1px #ddd'}>
-                                <StatLabel>Cliques</StatLabel>
-                                <StatNumber>{interactions?.clicks?.total}</StatNumber>
-                                <StatHelpText>{interactions?.clicks?.reference}</StatHelpText>
-                            </Stat>
-                            <Stat borderRadius={'xl'} p={3} border={'solid 1px #ddd'}>
-                                <StatLabel>Compartilhamentos</StatLabel>
-                                <StatNumber>{interactions?.shares?.total}</StatNumber>
-                                <StatHelpText>{interactions?.shares?.reference}</StatHelpText>
-                            </Stat>
+                        <SimpleGrid columns={{ base: 1, md: summaryData?.financial.sales.length }} gap={{ base: '5', md: '6' }}>
+                            {summaryData?.financial.sales.map((sale: { status: string, total: number, label: string }, index: number) => {
+                                return <Stat key={index} borderRadius={'xl'} p={3} borderWidth='1px' gap='2'>
+                                    <StatLabel>{sale.label}</StatLabel>
+                                    <StatNumber>{formatPrice(sale.total || 0)}</StatNumber>
+                                </Stat>
+                            })}
                         </SimpleGrid>
                     </Box>
-                    <Box>
-                        <Flex h={'100%'} justifyContent="space-between" mb={8}>
-                            <Stack flex={1} width={'100%'} mb={[4, 0]} spacing={5}>
-                                <Heading size={'md'}>Interações</Heading>
-                                <Tabs variant={'enclosed'} colorScheme='black' w='100%' index={activeTab} onChange={handleTabChange}>
-                                    <TabList>
-                                        <Tab>Impressões</Tab>
-                                        <Tab>Cliques</Tab>
-                                        <Tab>Compartilhamentos</Tab>
-                                    </TabList>
+                    <Stack spacing='4' borderWidth='1px' p='4' borderRadius='lg'>
+                        <Heading size='md'>Histórico de vendas</Heading>
+                        <Graph label='Vendas' data={summaryData?.financial.sales_history.dates} />
+                    </Stack>
+                    <Stack borderWidth='1px' spacing='4' p='4' borderRadius='lg'>
+                        <Heading size='md'>Ingressos</Heading>
 
-                                    <TabPanels>
-                                        <TabPanel>
-                                            {activeTab === 0 && <InteractionGraph interaction='Impressões' data={interactions?.impressions.dates} />}
-                                        </TabPanel>
-                                        <TabPanel>
-                                            {activeTab === 1 && <InteractionGraph interaction='Cliques' data={interactions?.clicks.dates} />}
-                                        </TabPanel>
-                                        <TabPanel>
-                                            {activeTab === 2 && <InteractionGraph interaction='Compartilhamentos' data={interactions?.shares.dates} />}
-                                        </TabPanel>
-                                    </TabPanels>
-                                </Tabs>
-                            </Stack>
-                        </Flex>
-                    </Box>
+                        <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: '5', md: '6' }}>
+                            <Stat borderRadius={'xl'} gap='2'>
+                                <StatLabel>Ingressos vendidos</StatLabel>
+                                <StatNumber>{summaryData?.financial.sold_tickets}</StatNumber>
+                            </Stat>
+                            <Stat borderRadius={'xl'} gap='2'>
+                                <StatLabel>Ticket Médio</StatLabel>
+                                <StatNumber>{formatPrice(summaryData?.financial.average_ticket)}</StatNumber>
+                            </Stat>
+                        </SimpleGrid>
+                    </Stack>
+
+                    <Stack borderWidth='1px' p='4' spacing='4' borderRadius='lg'>
+                        <Heading size='md'>Repasses</Heading>
+                        <SimpleGrid columns={{ base: 1, md: 3 }} gap={{ base: '5', md: '6' }}>
+                            <Stat borderRadius={'xl'} p={3} gap='2'>
+                                <StatLabel>Total a receber</StatLabel>
+                                <StatNumber>{summaryData?.financial.sold_tickets}</StatNumber>
+                            </Stat>
+                            <Stat borderRadius={'xl'} gap='2'>
+                                <StatLabel>Repassado para a carteira</StatLabel>
+                                <StatNumber>{formatPrice(summaryData?.financial.average_ticket)}</StatNumber>
+                            </Stat>
+                            <Stat borderRadius={'xl'} gap='2'>
+                                <StatLabel>Valor a receber</StatLabel>
+                                <StatNumber>{formatPrice(summaryData?.financial.average_ticket)}</StatNumber>
+                            </Stat>
+                        </SimpleGrid>
+                    </Stack>
+
                 </Stack>
             </Flex> : <Spinner />}
         </Layout>

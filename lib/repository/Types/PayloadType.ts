@@ -17,11 +17,11 @@ export type EventPayloadType = {
     name: string;
     description: string;
     event_image?: string;
-    has_external_ticket: string;
-    ticket_partner_name: string;
-    ticket_partner_url: string;
-    is_recurring: boolean;
-    recurrence_pattern: 'daily' | 'weekly' | 'monthly'
+    has_external_ticket?: string;
+    ticket_partner_name?: string;
+    ticket_partner_url?: string;
+    is_recurring?: boolean;
+    recurrence_pattern?: 'daily' | 'weekly' | 'monthly'
 }
 
 export type CustomerPayloadType = {

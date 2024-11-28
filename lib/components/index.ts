@@ -19,14 +19,13 @@ export * from './Google';
 export * from './CookiePolicy';
 export * from './OrganizerLeadForm';
 export * from './AvatarImageUpload';
-export * from './SessionCard';
-export * from './SessionCard';
 export * from './SliderEvents';
 export * from './CopyLinkButton';
-export * from './Login'
+export * from './AuthComponent'
 export * from './LoginModal'
 export * from './ProfileMenu'
-export * from './Sidebar/sidebar-event'
+export * from './Sidebar'
+export * from './SidebarEvent'
 export * from './Datebox'
 export * from './MenuAction'
 

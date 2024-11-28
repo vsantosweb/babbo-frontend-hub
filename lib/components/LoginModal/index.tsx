@@ -1,21 +1,17 @@
 import {
-    Button,
-    Flex,
     Heading,
     Stack,
-    Text,
     useColorModeValue as mode,
     Modal,
     ModalOverlay,
     ModalContent,
-    ModalHeader,
-    ModalFooter,
     ModalBody,
     ModalCloseButton,
     useDisclosure,
 } from '@chakra-ui/react'
-import Login from '../Login'
+import Login from '../AuthComponent/login-form'
 import { useEffect } from 'react'
+import { AuthComponent } from '../AuthComponent'
 
 export function LoginModal({ open, setRequestLogin }: { open: boolean, setRequestLogin: (status: {redirect: string, active: boolean} | null) => void }) {
 
@@ -37,7 +33,7 @@ export function LoginModal({ open, setRequestLogin }: { open: boolean, setReques
                 <ModalBody p='8'>
                     <Stack spacing='4'>
                         <Heading fontSize={24} fontWeight={'300'}>Bem-vindo ao Babbo</Heading>
-                        <Login />
+                        <AuthComponent />
                     </Stack>
                 </ModalBody>
             </ModalContent>

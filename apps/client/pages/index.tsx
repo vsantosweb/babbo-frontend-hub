@@ -56,7 +56,7 @@ function HomePage() {
   const [currentLocation, setCurrentLocation] = useState<Record<string, any>>();
   // const [eventShowcase, setEventShowcase] = useState<Record<string, any>>(showcase);
   const { fetchEvents, loading } = useEvent();
-  const { userRegion, userCoordinates, userLocation } = useUserLocation();
+  const {  userLocation } = useUserLocation();
 
 
   const useDisclosureorganizerLeadForm = useDisclosure();

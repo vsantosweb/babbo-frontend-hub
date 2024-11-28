@@ -7,7 +7,7 @@ import { theme } from '@/themes/default';
 import { EventInterface } from '@/types';
 import { useEvent, useEventShare } from '@/hooks';
 import { LuSend } from "react-icons/lu";
-import { Box, Flex, IconButton, Skeleton } from '@chakra-ui/react';
+import { Box, Flex, Heading, IconButton, Image, Skeleton, Stack, Text, useColorModeValue } from '@chakra-ui/react';
 import { EventRepositoryInterface, PublicRepositoryInterface } from '@/interfaces';
 import container from '@/container';
 import { eventDateFormatter } from '@/helpers';
@@ -16,7 +16,6 @@ const eventService = container.get<PublicRepositoryInterface>('public');
 
 export const EventCard = (event: EventInterface) => {
 
-  const { getFormattedDate } = useEvent();
   const { handleShareClick } = useEventShare();
   const event_date = eventDateFormatter(event);
 
@@ -37,7 +36,7 @@ export const EventCard = (event: EventInterface) => {
 
     eventService.eventInteraction('click', event.uuid as string)
   }
-  
+
   return (
     event ? <Link
       onClick={handleClickInteraction}
@@ -46,42 +45,31 @@ export const EventCard = (event: EventInterface) => {
         query: { id: event.uuid },
       }}
     >
-      <Styled.CardEvent title={event.name}>
-        <Styled.CardEventImageContainer>
-          <Styled.CardEventImage
-          height={'360px'}
-            alt={event.name}
-            src={`${event.event_image}-lg.jpg`}
-          />
-          <Flex gap={3} position={'absolute'} right={0} margin={'-3.4em 1em'} zIndex={1}>
-            <IconButton
-              fontSize={'1.2em'}
-              boxShadow={'xl'}
-              title={'Compartilhar'}
-              variant={'outlined'}
-              background={'white'}
-              aria-label='event-share'
-              icon={<LuSend />}
-              onClick={handleShareInteraction}
-            />
-          </Flex>
-        </Styled.CardEventImageContainer>
-        <Styled.CardEventBody>
-          <Styled.CardEventDetails>
-            <Styled.CardEventDateInfo>
-              <Styled.CardEventMutedText style={{ color: theme.colors.primary }}>
-                {event_date.partial}
-              </Styled.CardEventMutedText>
-            </Styled.CardEventDateInfo>
-            {/* <span>{event.name}</span> */}
-            <Styled.CardEventTitle><TruncateText text={event?.name} limit={26} /></Styled.CardEventTitle>
-            <Styled.CardEventMutedText>
-              <CiLocationOn /> <TruncateText text={`${event.place_name} - ${event.place_city}`} limit={27} /> 
-            </Styled.CardEventMutedText>
-          </Styled.CardEventDetails>
-          <Styled.CardEventInfo></Styled.CardEventInfo>
-        </Styled.CardEventBody>
-      </Styled.CardEvent>
+      <Box
+        maxW="sm"
+        minHeight='400px'
+        borderRadius="lg"
+        overflow="hidden"
+        // bg="black.800" // cor de fundo estilo Netflix
+      >
+        {/* Imagem com bordas arredondadas */}
+        <Image
+          src={`${event.event_image}-md.jpg`}
+          alt={event.name}
+          borderRadius='2xl'
+          width="100%"
+          height="360px"
+          objectFit="cover"
+          mb={4}
+        />
+
+        {/* Informações do evento */}
+        <Stack px='1' spacing={1}>
+          <Heading size='sm' isTruncated  fontWeight="bold">{event.name}</Heading>
+          <Text fontSize="sm" fontWeight={'bold'} color='primary.400'> {eventDateFormatter(event).partial}</Text>
+          <Text fontSize="sm">{event.place_name}</Text>
+        </Stack>
+      </Box>
     </Link>
       : <CardSkeleton />
   );

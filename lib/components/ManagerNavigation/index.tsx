@@ -23,7 +23,7 @@ import Link from 'next/link'
 import { Logo } from '../Logo'
 import { FaTicket } from 'react-icons/fa6'
 import { IoMdExit } from "react-icons/io";
-import { useAuth, useOrganizer } from '@/hooks'
+import { useAuth, useNavigation, useOrganizer } from '@/hooks'
 import { useRouter } from 'next/router'
 import container from '@/container'
 import { AuthRepositoryInterface } from '@/interfaces'
@@ -54,8 +54,8 @@ const NavLink = (props: Props) => {
 }
 
 export function ManagerNavigation() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
   const { colorMode, toggleColorMode } = useColorMode();
+  const { isOpen, onOpen, onClose } = useNavigation();
 
   const { user, logout } = useAuth();
   const { checkCustomerIsOrganizer } = useOrganizer();
@@ -63,34 +63,28 @@ export function ManagerNavigation() {
   return (
     <Box borderBottomWidth={'1px'}>
       <Box px={3}>
-        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+        <Flex h={16} pl={isOpen ? '3rem': 0} alignItems={'center'} justifyContent={{ base: 'space-between', md: 'flex-end' }}>
           <IconButton
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+            icon={isOpen ? <CloseIcon /> : <HamburgerIcon boxSize='6' />}
             aria-label={'Open Menu'}
             display={{ md: 'none' }}
+            variant='ghost'
             onClick={isOpen ? onClose : onOpen}
           />
-          <HStack spacing={8} alignItems={'center'}>
-            {/* <Box width={'120px'}><Logo /></Box> */}
-            <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
-            </HStack>
-          </HStack>
           <Flex gap='4' alignItems={'center'}>
 
-            <Button variant='ghost' onClick={toggleColorMode}>
+            {/* <Button variant='ghost' onClick={toggleColorMode}>
               {colorMode === 'light' ? 'Dark' : 'Light'}
-            </Button>
+            </Button> */}
             <Button
               as={Link}
               onClick={(e) => {
                 e.preventDefault()
                 checkCustomerIsOrganizer(user?.is_organizer)
               }}
+              variant='ghost'
+              size={{ base: 'sm' }}
               href={'/events/create'}
-              mr={4}
               leftIcon={<AddIcon />}>
               Criar evento
             </Button>
@@ -107,25 +101,13 @@ export function ManagerNavigation() {
               </MenuButton>
               <MenuList color={'#000'}>
                 <MenuItem as={Link} href={'/account/profile'} icon={<IoPersonOutline />}>Minha conta</MenuItem>
-                {/* <MenuItem icon={<IoTicketOutline />}>Meus ingressos</MenuItem> */}
                 <MenuDivider m={0} />
                 <MenuItem onClick={logout} icon={<IoLogOutOutline />}>Sair</MenuItem>
               </MenuList>
             </Menu>
           </Flex>
         </Flex>
-
-        {isOpen ? (
-          <Box pb={4} display={{ md: 'none' }}>
-            <Stack as={'nav'} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
-            </Stack>
-          </Box>
-        ) : null}
       </Box>
-
     </Box>
   )
 }

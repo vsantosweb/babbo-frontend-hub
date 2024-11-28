@@ -26,9 +26,6 @@ export * from './Public/PublicRepositoryInterface';
 // ** Store
 export * from './Store/StoreRepositoryInterface';
 
-// Entities
-export * from '../Entities/Customer/Customer';
-
 // ** event
 export * from './Event/EventSessionRepositoryInterface';
 export * from './Event/EventTicketBatchRepositoryInterface';

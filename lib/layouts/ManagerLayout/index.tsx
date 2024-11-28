@@ -6,12 +6,13 @@ import { Footer, ManagerNavigation } from '@/components';
 import { theme } from '@/themes/default';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { Flex, IconButton, Box } from '@chakra-ui/react';
+import { Flex, IconButton, Box, Tooltip, Button } from '@chakra-ui/react';
 import { ArrowLeftIcon } from '@chakra-ui/icons';
 import { FaArrowLeft } from 'react-icons/fa';
-import SidebarEvent from '@/components/Sidebar/sidebar-event';
-import SidebarReduced from '@/components/Sidebar/sidebar';
+import SidebarEvent from '@/components/SidebarEvent';
+import Sidebar from '@/components/Sidebar';
 import { useEvent } from '@/hooks';
+import NavigationProvider from '@/hooks/useNavigation';
 
 export default function ManagerLayout({
   children,
@@ -32,13 +33,21 @@ export default function ManagerLayout({
 
   return (
     <Styled.DefaultWrapper>
-      <SidebarReduced />
 
-      {event && <SidebarEvent />}
+      <NavigationProvider>
+        <Box
+          position={{ base: 'fixed', sm: 'relative' }}
+          display='flex' zIndex={1}
+          height={'auto'}
+          flex={1}
+          minHeight='100%'
+          shadow={{ base: 'lg', md: 'none' }}>
+          <Sidebar />
+          {event && <SidebarEvent />}
+        </Box>
 
-      <Styled.DefaultContainer>
-        <ManagerNavigation />
-        <div style={{ flex: 1 }}>
+        <Styled.DefaultContainer>
+          <ManagerNavigation />
           <div
             style={{
               display: 'flex',
@@ -47,24 +56,22 @@ export default function ManagerLayout({
               height: 'auto',
               // width: '1170px',
               width: '100%',
-              minHeight: '100%',
               padding: '0 1em',
               margin: 'auto'
             }}
           >
-            {
-              router.pathname !== '/' && <Flex mb={8} alignItems={'center'}>
-                <IconButton onClick={() => router.back()} variant={'link'} icon={<FaArrowLeft />} aria-label='back-page' />
-                Voltar
-              </Flex>
-            }
+            {/* {
+                router.pathname !== '/' && <Flex mb={8} alignItems={'center'}>
+                  <IconButton onClick={() => router.back()} variant={'link'} icon={<FaArrowLeft />} aria-label='back-page' />
+                  Voltar
+                </Flex>
+              } */}
             {children}
           </div>
+          <Footer />
+        </Styled.DefaultContainer>
+      </NavigationProvider>
 
-        </div>
-
-        <Footer />
-      </Styled.DefaultContainer>
     </Styled.DefaultWrapper>
   );
 }

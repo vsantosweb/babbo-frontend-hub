@@ -11,7 +11,7 @@
       "options": {
         "port": 3000,
         "dev": true,
-        "experimentalHttps": true
+        "experimentalHttps": false
       },
       "configurations": {
         "development": {

@@ -15,6 +15,7 @@ import {
     BoxProps,
     FlexProps,
     useColorMode,
+    Tooltip,
 } from '@chakra-ui/react'
 import {
     FiHome,
@@ -26,7 +27,7 @@ import {
 } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import { ReactText } from 'react'
-import { Logo } from '@/components'
+import { LinkIconItemProps, Logo } from '@/components'
 import Link from 'next/link'
 
 interface LinkItemProps {
@@ -43,7 +44,7 @@ const LinkItems: Array<LinkItemProps> = [
 interface NavItemProps extends FlexProps {
     icon: IconType
     children: JSX.Element | string
-    path:string
+    path?: string
 }
 export const NavItem = ({ icon, children, path, ...rest }: NavItemProps) => {
     return (
@@ -80,37 +81,43 @@ export const NavItem = ({ icon, children, path, ...rest }: NavItemProps) => {
     )
 }
 
-export const NavItemReduced = ({ icon, children, ...rest }: NavItemProps) => {
+interface NavItemIconProps extends FlexProps {
+    icon: IconType
+    path?: string
+}
+
+export const NavItemIcon = ({ item, ...rest }: { item: LinkIconItemProps }) => {
     return (
         <Box
             as={Link}
             href='#'
             style={{ textDecoration: 'none' }}
             _focus={{ boxShadow: 'none' }}>
-            <Flex
-                align='center'
-                justifyContent={'center'}
-                p='2'
-                mx='2'
-                borderRadius='lg'
-                role='group'
-                cursor='pointer'
-                _hover={{
-                    bg: 'primary.50',
-                    color: 'primary.500',
-                }}
-                {...rest}>
-                {icon && (
+            <Tooltip hasArrow label={item.name} placement='right-start' aria-label={item.name}>
+                <Flex
+                    align='center'
+                    justifyContent={'center'}
+                    p='2'
+                    mx='2'
+                    borderRadius='lg'
+                    flexDirection='column'
+                    role='group'
+                    cursor='pointer'
+                    _hover={{ bg: 'primary.50', color: 'primary.500', }}
+                    {...rest}
+                >
                     <Icon
                         fontSize='20'
                         _groupHover={{
                             color: 'primary.500',
                         }}
-                        as={icon}
+                        as={item.icon}
                     />
-                )}
-                {/* {children && children} */}
-            </Flex>
+                    {/* <small style={{fontSize:'9px'}}>{item.name}</small> */}
+                </Flex>
+            </Tooltip>
+
+
         </Box>
     )
 }

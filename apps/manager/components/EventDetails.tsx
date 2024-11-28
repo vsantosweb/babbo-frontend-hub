@@ -25,8 +25,8 @@ const EventDetails = ({ event, handleDelete }: { event?: EventInterface, handleD
 
   return (
     event ? <Stack>
-      <Stack spacing={3} flex={1} height={'100%'}>
-        <Heading size={'lg'} >{event?.name}</Heading>
+      <Stack>
+        <Heading size={'md'} >{event?.name}</Heading>
         <HStack spacing={6}>
           <Text>
             <HStack>

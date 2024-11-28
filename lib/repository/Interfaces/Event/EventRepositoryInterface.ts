@@ -1,4 +1,5 @@
-import { EventBanner, EventDisplayType, EventInterface, EventPayloadType } from '@/types';
+import { EventDisplayType } from '@/types';
+import { ParsedUrlQuery } from 'querystring';
 
 /**
  * Interface que define métodos para recuperar informações sobre eventos do cliente.
@@ -10,7 +11,7 @@ export interface EventRepositoryInterface {
    * @param {string} params - Parâmetros de filtro para a consulta de eventos.
    * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
    */
-  events(params?: Record<string, string | number>): Promise<any>;
+  events(params?: ParsedUrlQuery): Promise<any>;
 
   /**
    * Retorna os detalhes de um evento com base no ID fornecido.

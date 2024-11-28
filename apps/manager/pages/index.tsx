@@ -31,6 +31,7 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  useColorModeValue,
 } from '@chakra-ui/react'
 
 import eventsMock from './events.json'
@@ -65,7 +66,7 @@ export default function Index() {
 
 function Events() {
 
-  const PAGE_LIMIT = 10;
+  const PAGE_LIMIT = '10';
 
   const { fetchSearch, setEvent } = useEvent();
   const [search, setSearch] = useState<Record<string, string | number>>()
@@ -139,7 +140,7 @@ function Events() {
                 </Thead>
                 <Tbody>
                   {events?.map((event: EventInterface) => (
-                    <Tr onClick={() => router.push(`/events/${event.uuid}`)} key={event.id} _hover={{ background: 'gray.50' }} cursor={'pointer'}>
+                    <Tr onClick={() => router.push(`/events/${event.uuid}`)} key={event.id} _hover={{ background: useColorModeValue('black.50', 'black.800')}} cursor={'pointer'}>
                       <Td p='0' >
                         <Datebox date={event.start_date} />
                       </Td>
@@ -149,13 +150,13 @@ function Events() {
                             <Image objectFit={'cover'} src={`${event.event_image}-md.jpg`} alt={event.name} boxSize="70px" />
                           </Box>
                           <Stack>
-                            <Heading color={'blue.700'} size={'xs'}>{event.name}</Heading>
+                            <Heading size={'xs'}>{event.name}</Heading>
                             <Text color='gray.400'>{event.place_name}</Text>
                           </Stack>
                         </Flex>
                       </Td>
                       <Td >
-                        <Badge size={'sm'} background={eventStatus[event.status as string].color}>{eventStatus[event.status as string].label}</Badge>
+                        <Badge size={'sm'}>{eventStatus[event.status as string].label}</Badge>
                       </Td>
                       <Td >
                         <Button size='sm' variant={'outline'}>Gerenciar</Button>

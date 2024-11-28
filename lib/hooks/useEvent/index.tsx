@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { EventSessionInterface, useEventSession } from './session';
 import { EventBatchInterface, useEventBatch } from './batch';
 import { EventTicketInterface, useEventTicket } from './ticket';
+import { ParsedUrlQuery } from 'querystring';
 
 type EventProviderProps = {
   children: ReactNode;
@@ -18,12 +19,12 @@ type EventContextType = EventSessionInterface & EventBatchInterface & EventTicke
   loading: boolean;
   error: string | null;
   event: EventInterface | null;
-  fetchEvents: (params?: Record<string, string>) => Promise<any>;
+  fetchEvents: (params?: ParsedUrlQuery | Record<string, any>) => Promise<any>;
   fetchEvent: (id: number | string) => Promise<any>;
+  summary: (id: number) => Promise<any>;
   fetchRelatedEvents: (id: number | string) => Promise<any>;
   fetchEventCategories: () => Promise<EventDisplayType[]>;
   fetchEventBanners: () => Promise<any>;
-  getFormattedDate: (event: EventInterface | null) => { fully: string; partial: string };
   fetchSearch: (name: string) => Promise<any>;
   fetchCategories: () => Promise<any>;
   fetchAvailableCities: () => Promise<any>;
@@ -71,7 +72,7 @@ export function EventProvider({ children }: EventProviderProps) {
     setEvent(null)
   }, [router.query.eventId])
 
-  async function fetchEvents(params?: Record<string, string>): Promise<any> {
+  async function fetchEvents(params?:  Record<string, any>): Promise<any> {
     setLoading(true);
     setError(null);
 
@@ -219,39 +220,25 @@ export function EventProvider({ children }: EventProviderProps) {
     return event?.uuid && (await customerEventTicket.ticketSales(event?.uuid)).data
   }
 
-  const getFormattedDate = (
-    event: EventInterface | null
-  ): { fully: string; partial: string } => {
-    const diffDate = moment(event?.end_date).diff(event?.start_date, 'days');
+  async function summary(id: number) {
+    setLoading(true);
+    setError(null);
 
-    if (diffDate > 0)
-      return {
-        fully: `${moment(event?.start_date)
-          .format('DD MMM - YYYY, LT')
-          .toUpperCase()} > ${moment(event?.end_date)
-            .format('DD MMM - YYYY, LT')
-            .toUpperCase()}`,
-        partial: `${moment(event?.start_date)
-          .format('DD MMM')
-          .toUpperCase()} • ${moment(event?.end_date)
-            .format('DD MMM')
-            .toUpperCase()}`,
-      };
-
-    return {
-      fully: `${moment(event?.start_date)
-        .format('DD MMM - YYYY, LT')
-        .toUpperCase()}`,
-      partial: `${moment(event?.start_date)
-        .format('DD MMM [-] HH a')
-        .toUpperCase()}`,
-    };
-  };
-
+    try {
+      const event = await eventServiceManager.summary(id)
+      return event;
+    } catch (error) {
+      setError('Erro ao buscar dados.');
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <EventContext.Provider
       value={{
+        summary,
         ticketSales,
         loading,
         error,
@@ -260,7 +247,6 @@ export function EventProvider({ children }: EventProviderProps) {
         fetchRelatedEvents,
         fetchEventCategories,
         fetchEventBanners,
-        getFormattedDate,
         fetchSearch,
         fetchCategories,
         fetchAvailableCities,

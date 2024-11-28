@@ -53,7 +53,6 @@ export type EventSessionType = {
     event_date: string
     tickets?: Array<EventTicketType>
 }
-// types/TicketLotType.ts
 export interface EventTicketBatchType {
     id?: number;
     uuid?: string;
@@ -72,19 +71,53 @@ export interface EventTicketBatchType {
 // types/TicketType.ts
 export interface EventTicketType {
     id: number
+    event_ticket_id: number,
     event_session_id: number;
     name: string;
-    ticket_type: string;  // Defina tipos específicos se houver opções fixas, como "paid", "free", etc.
+    session?:string
+    ticket_type: string; 
     quantity: number;
     sales_quantity: number;
     min_quantity: number;
     max_quantity: number;
     balance: number;
+    tax: number;
     price: number;
+    unit_price: number;
     code: string;
     avialable_quantity: number;
     description: string;
     is_visible: boolean | number;
     include_fee: boolean | number;
     is_selling: boolean
+    sold_out: boolean
+
 }
+
+export type EventTicketCartType = {
+    customer: string,
+    customer_document: string,
+    email: string,
+    expire_at: string,
+    total_tax: number,
+    total_amount_tickets: number,
+    total_amount: number,
+    tickets: EventTicketCartItemType[],
+}
+
+export type EventTicketCartItemType = {
+    event_ticket_id: number,
+    name: string,
+    sold_out?: boolean,
+    session?: string | null,
+    quantity: number,
+    unit_price: number,
+    total: number,
+    ticket_type: string,
+    tax: number,
+    code: string,
+    description: string,
+    min_quantity: number
+    max_quantity: number
+}
+

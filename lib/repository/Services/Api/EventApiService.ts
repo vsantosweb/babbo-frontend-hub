@@ -1,8 +1,7 @@
 import { AxiosInstance } from "axios";
 import ApiService, { type ServiceContainerType } from "./service";
-import { inject, injectable, unmanaged } from "inversify";
+import { injectable, unmanaged } from "inversify";
 import { EventPayloadType } from "@/types";
-import moment from 'moment';
 @injectable()
 export class EventApiService {
 

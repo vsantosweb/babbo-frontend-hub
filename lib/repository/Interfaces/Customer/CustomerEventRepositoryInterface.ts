@@ -27,5 +27,5 @@ export interface CustomerEventRepositoryInterface extends EventRepositoryInterfa
     * Relatorio de impressoes por data.
     * @returns {Promise<any>} Uma promessa que resolve com uma lista de eventos.
     */
-    interactionsByDate(eventId: number): Promise<any>;
+    summary(eventId: number): Promise<any>;
 }

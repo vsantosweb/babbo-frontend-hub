@@ -17,7 +17,7 @@ import { Menu } from './components/menu';
 const components = ['Button', 'Input', 'NumberInput', 'PinInput', 'Swith', 'Select', 'Textarea', 'Checkbox', 'Radio', 'Badge'];
 
 const defaultProps = withDefaultProps({
-  defaultProps: { variant: 'filled', size: 'md', },
+  defaultProps: { variant: 'outlined', size: 'md', },
   components: components,
 })
 
@@ -41,6 +41,7 @@ export const theme: ThemeOverride = extendTheme({
       50: '#FFE6EF',
       100: '#FFB3CC',
       200: '#FF80AA',
+      // 200: '#FF80AA',
       300: '#FF4D87',
       400: '#FF1A65',
       500: '#FF0068', // Cor principal
@@ -50,15 +51,23 @@ export const theme: ThemeOverride = extendTheme({
       900: '#9d014c',
     },
     black: {
-      900: '#0f0f0f',
-      800: '#141414'
-    }
+      50: "#f2f2f2",
+      100: "#d9d9d9",
+      200: "#a6a6a6",
+      300: "#737373",
+      400: "#404040",
+      500: "#141414",
+      600: "#0f0f0f",
+      700: "#0c0c0c",
+      800: "#0a0a0a",
+      900: "#050505",
+    },
   },
   styles: {
     global: (props:any) => ({
       body: {
         color: mode('gray.800', 'whiteAlpha.900')(props),
-        bg: mode('white', 'black.900')(props),
+        bg: mode('gray.50', 'black.600')(props),
       },
     }),
   },

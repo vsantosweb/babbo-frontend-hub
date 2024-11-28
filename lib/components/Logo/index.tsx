@@ -1,6 +1,9 @@
 import { theme } from "@/themes/default";
+import { useTheme } from "@chakra-ui/react";
 
 export function Logo(props:any) {
+
+    const theme = useTheme()
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +13,7 @@ export function Logo(props:any) {
             {...props}
         >
             <defs>
-                <style>{`.cls-1{fill:${theme.colors.primary};stroke-width:0}`}</style>
+                <style>{`.cls-1{fill:${theme.colors.primary[500]};stroke-width:0}`}</style>
             </defs>
             <g id="Camada_1-2" data-name="Camada 1">
                 <path

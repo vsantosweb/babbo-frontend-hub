@@ -21,6 +21,7 @@
       "@/*": ["./lib/*"],
       "@/components": ["lib/components/index.ts"],
       "@/container": ["lib/repository/Services/container.ts"],
+      "@/entities": ["lib/repository/Entities/index.ts"],
       "@/helpers": ["lib/helpers/index.ts"],
       "@/hooks": ["lib/hooks/index.ts"],
       "@/interfaces": ["lib/repository/Interfaces/index.ts"],
@@ -28,6 +29,7 @@
       "@/redux": ["lib/redux/store.ts"],
       "@/repository": ["lib/repository/Interfaces/index.ts"],
       "@/routes": ["lib/routes/index.ts"],
+      "@/services": ["lib/repository/Services/index.ts"],
       "@/templates/forms": ["lib/templates/Forms/index.ts"],
       "@/teste": ["lib/teste/lib/index.ts"],
       "@/themes/babbo": ["lib/themes/babbo/index.ts"],
@@ -37,8 +39,8 @@
       "@/validators": ["lib/validators/index.ts"],
       "@babbo/validator": ["validator/src/index.ts"],
       "@babbo/validator/server": ["validator/src/server.ts"],
-      "@/services": ["lib/repository/Services/index.ts"],
-      "@/entities": ["lib/repository/Entities/index.ts"]
+      "@/store/*": ["./apps/store/*"],
+      "@/client/*": ["./apps/client/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

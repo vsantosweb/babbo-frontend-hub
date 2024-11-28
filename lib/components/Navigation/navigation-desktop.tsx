@@ -1,6 +1,6 @@
 
 import { theme } from "@/themes/default";
-import { Avatar, Box, Button, Flex, HStack, IconButton, MenuItem, Stack, useColorModeValue } from "@chakra-ui/react";
+import { Avatar, Box, Button, Flex, HStack, IconButton, MenuItem, Stack, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import { EventSearch } from "../EventSearch";
 import { AvailableCities } from '../AvailableCities';
 import { Logo } from "../Logo";
@@ -12,6 +12,7 @@ import { IoBagHandle } from "react-icons/io5";
 
 export function NavigationDesktop() {
     const { user, setRequestModalLogin } = useAuth()
+    const { colorMode, toggleColorMode } = useColorMode();
 
     return (
 
@@ -39,10 +40,13 @@ export function NavigationDesktop() {
                     <EventSearch />
                 </EventProvider>
             </HStack>
+            <Button variant='ghost' onClick={toggleColorMode}>
+              {colorMode === 'light' ? 'Dark' : 'Light'}
+            </Button>
             <AvailableCities />
             {user ?
                 <ProfileMenu extraItems={
-                    <MenuItem as={Link} href='minhas-compras' icon={<IoBagHandle />}>Minhas compras</MenuItem>
+                    <MenuItem as={Link} href={`${process.env.NEXT_PUBLIC_CLIENT_URL}/minhas-compras`} icon={<IoBagHandle />}>Minhas compras</MenuItem>
                 } />
                 : <Button onClick={() => setRequestModalLogin({ active: true, redirect: '/minhas-compras' })} size='sm' variant='outline'>Entrar</Button>}
         </Flex>

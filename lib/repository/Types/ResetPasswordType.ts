@@ -1,6 +1,5 @@
 export type ResetPasswordType = {
-  email?: string;
-  token?: string;
+  token?: string|null;
   password?: string;
   password_confirmation?: string;
 };

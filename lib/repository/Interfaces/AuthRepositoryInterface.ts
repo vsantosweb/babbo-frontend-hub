@@ -24,4 +24,13 @@ export interface AuthRepositoryInterface {
    */
   session(): Promise<ApiResponseType | null>;
 
+  requestPasswordRecovery(email: string): Promise<ApiResponseType | null>
+
+  validateRecoveryToken(token: string): Promise<ApiResponseType | null>
+
+  resetPassword(data: ResetPasswordType): Promise<ApiResponseType | null>
+
+  register(data: Record<string, any>): Promise<ApiResponseType | null>;
+  
+
 }

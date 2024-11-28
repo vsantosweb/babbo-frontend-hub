@@ -1,4 +1,5 @@
-import { EventTicketType } from "@/repository/Types/EventType";
+import { EventTicketCartItemType } from "@/types";
+import {  EventTicketType } from "@/repository/Types/EventType";
 import { TicketType } from "@/repository/Types/TicketType";
 import _ from "lodash";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
@@ -6,10 +7,12 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 import { useSelector, useDispatch } from 'react-redux';
 
 interface TicketContextInterface {
-    handleTicket: (ticket: EventTicketType, action: 'add' | 'remove') => void
+    handleTicket: (ticket: EventTicketCartItemType, action: 'add' | 'remove') => void
     totalAmount: number
-    selectedTickets: EventTicketType[]
-    setSelectedTickets: (data: EventTicketType[]) => void
+    selectedTickets: EventTicketCartItemType[]
+    setSelectedTickets: (data: EventTicketCartItemType[]) => void
+    ticketCount: Array<{ id: number, quantity: number }>
+    setTicketCount: (data: Array<{ id: number, quantity: number }>) => void
 }
 
 const TicketContext = createContext<TicketContextInterface | undefined>(undefined);
@@ -27,35 +30,45 @@ export function useTicket() {
 
 export function TicketProvider({ children }: { children: ReactNode }) {
 
-    const [selectedTickets, setSelectedTickets] = useState<EventTicketType[]>([])
+    const [selectedTickets, setSelectedTickets] = useState<EventTicketCartItemType[]>([])
     const [totalAmount, setTotalAmount] = useState<number>(0)
+    const [ticketCount, setTicketCount] = useState<Array<{ id: number, quantity: number }>>([])
     const dispatch = useDispatch();
 
     useEffect(() => {
-        setTotalAmount(selectedTickets.reduce((sum, ticket) => sum + ticket.price * ticket.quantity, 0))
+        console.log(selectedTickets, 'testeee')
+        setTotalAmount(selectedTickets.reduce((sum, ticket) => sum + ticket.unit_price * ticket.quantity, 0))
     }, [selectedTickets])
 
-    const handleTicket = (ticket: EventTicketType, action: 'add' | 'remove') => {
+    const handleTicket = (ticket: EventTicketCartItemType, action: 'add' | 'remove') => {
 
         switch (action) {
             case 'add':
- 
+
                 for (let item of selectedTickets) {
-                    if (item.id === ticket.id) {
-                        item.quantity++
+                    if (item.event_ticket_id === ticket.event_ticket_id) {
+
+                        if (ticket.quantity < ticket.min_quantity) {
+                            item.quantity = ticket.min_quantity
+                        } else { item.quantity++ }
+
                         setSelectedTickets([...selectedTickets])
                         return ticket;
                     }
                 }
-                ticket.quantity = 1;
+                // ticket.quantity = 1;
                 setSelectedTickets([...selectedTickets, ticket])
 
                 break;
             case 'remove':
                 for (let item of selectedTickets) {
-                    if (item.id === ticket.id) {
-                        item.quantity--
-                        if (item.quantity === 0) _.remove(selectedTickets, item)
+                    if (item.event_ticket_id === ticket.event_ticket_id) {
+
+                        if (ticket.quantity > ticket.min_quantity) {
+                            item.quantity--
+                        } else { item.quantity = item.quantity - ticket.min_quantity }
+
+                        // if (item.quantity === 0) _.remove(selectedTickets, item)
                         setSelectedTickets([...selectedTickets])
                         return ticket;
                     }
@@ -67,6 +80,13 @@ export function TicketProvider({ children }: { children: ReactNode }) {
     }
 
     return (
-        <TicketContext.Provider value={{ handleTicket, selectedTickets, setSelectedTickets, totalAmount }}>{children}</TicketContext.Provider>
+        <TicketContext.Provider value={{
+            handleTicket,
+            selectedTickets,
+            setSelectedTickets,
+            totalAmount,
+            ticketCount,
+            setTicketCount
+        }}>{children}</TicketContext.Provider>
     )
 }

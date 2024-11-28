@@ -9,4 +9,7 @@ export * from './MiddlewareType';
 export * from './TicketType';
 export * from './TicketCartType';
 export * from './PaymentMethodType';
+export * from './RegisterFormType';
+export * from './PurchaseType';
+export * from './CustomerType';
 

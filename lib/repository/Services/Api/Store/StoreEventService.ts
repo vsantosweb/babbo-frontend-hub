@@ -1,4 +1,3 @@
-import { EventDisplayType } from '@/types';
 import { AxiosInstance } from 'axios';
 import { injectable } from 'inversify';
 import { StoreRepositoryInterface } from '@/interfaces';
