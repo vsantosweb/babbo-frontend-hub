@@ -5,7 +5,6 @@ import { Theme } from '@/themes/default';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import 'react-day-picker/src/style.css';
 
 import SwiperCore from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';

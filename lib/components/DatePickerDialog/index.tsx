@@ -1,9 +1,6 @@
 import React, { useRef, useState } from 'react';
 
 import { format } from 'date-fns';
-import { DateRange, SelectRangeEventHandler } from 'react-day-picker';
-import FocusTrap from 'focus-trap-react';
-import { usePopper } from 'react-popper';
 import { Box, Button, HStack, Input } from '@chakra-ui/react';
 import * as Styled from './styles';
 import moment from 'moment';

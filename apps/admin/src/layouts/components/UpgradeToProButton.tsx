@@ -10,7 +10,6 @@ import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 
 // ** Third Party Imports
-import { usePopper } from 'react-popper'
 
 const BuyNowButton = () => {
   // ** States

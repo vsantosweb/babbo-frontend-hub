@@ -16,6 +16,10 @@ npx nx repair
 cp .env.example .env
 
 # Inicie a aplicação
+
 echo "Iniciando a aplicação..."
+npx nx dev client --port=3000 &
+npx nx dev manager --port=3001 &
+npx nx dev store --port=3002 & wait
 
 exec "$@"
