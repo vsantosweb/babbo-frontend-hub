@@ -12,14 +12,16 @@ import { FaTicketAlt } from "react-icons/fa";
 import { EventTicketCartItemType, EventTicketCartType, EventTicketType, TicketCartType } from "@/types";
 import moment from "moment";
 import { EventEmitter } from 'events';
+import { useApp } from "../useApp";
 
 export const eventCart = new EventEmitter();
 
 const customerCartService = container.get<CustomerCartRepositoryInterface>('customer-cart')
+
 interface CartContextInterface {
     addCart: (tickets: EventTicketType[]) => void
     isLoading: boolean
-    clearCart: () => void
+    clearCart: () => Promise<any>
     setCart: (cart: EventTicketCartType) => void
     cart: EventTicketCartType | null
     cartExpired: boolean
@@ -49,7 +51,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const [isExpired, setIsExpired] = useState<boolean>(false)
     const router = useRouter();
     const [duration, setDuration] = useState<string>();
-
+    const { orders } = useSelector((state: Record<string, any>) => state.order)
+    const { setRedirectPath } = useApp()
     //cart expiration check
     useEffect(() => {
 
@@ -71,42 +74,45 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }, [cart, duration])
 
     useEffect(() => {
-        if (user && !requestLogin) {
+
+        if (user) {
             customerCartService.getCart().then(response => {
-
-                setCart(response.data.data)
-
-                if (!response.data.data &&  router.pathname.includes('payment')) {
+                if (!response.data.data && router.pathname.includes('payment')) {
                     clearCart()
                     setCartExpired(true)
                     return;
                 }
+                setCart(response.data.data)
             })
         }
     }, [user])
 
     useEffect(() => {
 
+        if (!eventCart) return; // Garante que o objeto eventCart existe
+
         const handleRestoreCart = async () => {
-            await saveCartFromSession();
+            console.log('Restaurando o carrinho:', orders);
+            await saveCartFromSession(orders);
         };
 
+        // Adiciona a assinatura do evento
         eventCart.on('userLoggedIn', handleRestoreCart);
 
+        // Remove a assinatura ao desmontar ou ao mudar o eventCart
         return () => {
             eventCart.off('userLoggedIn', handleRestoreCart);
         };
-    }, [eventCart]);
+    }, [eventCart, orders]); // Inclua 'orders' como dependência se ela for usada na função
+
 
     const dispatch = useDispatch();
 
-    const { orders } = useSelector((state: Record<string, any>) => state.order);
 
     const saveCartFromSession = async (cartData = orders) => {
         if (cartData) {
             customerCartService.addCartItems(cartData)
                 .then(() => {
-                    router.push('/payment');
                     setIsLoading(false)
                 })
 
@@ -125,17 +131,23 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
             setIsLoading(true)
             await saveCartFromSession(dispatchData)
+            router.push('/payment')
             return;
         };
 
         dispatch({ type: 'ADD_ORDER', payload: dispatchData });
         setRequestModalLogin({ redirect: '/payment', active: true })
+        setRedirectPath('/payment')
 
     }
 
-    const clearCart = async () => {
-        dispatch({ type: 'CLEAR_ORDERS' });
-        setCart(null)
+    const clearCart = async (): Promise<any> => {
+
+      await  customerCartService.deleteCart(cart?.id as number).then(() => {
+            dispatch({ type: 'CLEAR_ORDERS' })
+            setCart(null)
+        }).catch(error => console.error('Erro ao remover carrinho: '+ error))
+
     }
 
     const hydrateItemCart = (ticket: EventTicketType): EventTicketCartItemType => {

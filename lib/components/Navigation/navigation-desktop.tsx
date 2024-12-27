@@ -4,15 +4,18 @@ import { Avatar, Box, Button, Flex, HStack, IconButton, MenuItem, Stack, useColo
 import { EventSearch } from "../EventSearch";
 import { AvailableCities } from '../AvailableCities';
 import { Logo } from "../Logo";
-import { EventProvider, useAuth } from "@/hooks";
+import { EventProvider, useApp, useAuth } from "@/hooks";
 import { LuUser2 } from "react-icons/lu";
 import Link from "next/link";
 import ProfileMenu from "../ProfileMenu";
 import { IoBagHandle } from "react-icons/io5";
+import { useRouter } from "next/router";
 
 export function NavigationDesktop() {
     const { user, setRequestModalLogin } = useAuth()
     const { colorMode, toggleColorMode } = useColorMode();
+    const router = useRouter();
+    const { setRedirectPath } = useApp();
 
     return (
 
@@ -48,7 +51,10 @@ export function NavigationDesktop() {
                 <ProfileMenu extraItems={
                     <MenuItem as={Link} href={`${process.env.NEXT_PUBLIC_CLIENT_URL}/minhas-compras`} icon={<IoBagHandle />}>Minhas compras</MenuItem>
                 } />
-                : <Button onClick={() => setRequestModalLogin({ active: true, redirect: '/minhas-compras' })} size='sm' variant='outline'>Entrar</Button>}
+                : <Button onClick={() => {
+                    setRedirectPath(router.asPath)
+                    setRequestModalLogin({ active: true, redirect: router.asPath })
+                }} size='sm' variant='outline'>Entrar</Button>}
         </Flex>
 
     );

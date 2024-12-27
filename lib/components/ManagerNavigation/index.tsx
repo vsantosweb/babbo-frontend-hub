@@ -17,6 +17,11 @@ import {
   useColorModeValue,
   Stack,
   useColorMode,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  Heading,
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
 import Link from 'next/link'
@@ -28,6 +33,7 @@ import { useRouter } from 'next/router'
 import container from '@/container'
 import { AuthRepositoryInterface } from '@/interfaces'
 import { IoLogOutOutline, IoPersonOutline, IoTicketOutline } from "react-icons/io5";
+import { FaArrowLeft } from 'react-icons/fa'
 
 interface Props {
   children: React.ReactNode
@@ -53,17 +59,18 @@ const NavLink = (props: Props) => {
   )
 }
 
-export function ManagerNavigation() {
+export function ManagerNavigation({ pageTitle }: { pageTitle?: string }) {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useNavigation();
 
   const { user, logout } = useAuth();
   const { checkCustomerIsOrganizer } = useOrganizer();
+  const router = useRouter();
 
   return (
     <Box borderBottomWidth={'1px'}>
       <Box px={3}>
-        <Flex h={16} pl={isOpen ? '3rem': 0} alignItems={'center'} justifyContent={{ base: 'space-between', md: 'flex-end' }}>
+        <Flex h={16} gap='1' pl={isOpen ? '3rem' : 0} alignItems={'center'} justifyContent={{ base: 'space-between', md: 'flex-end' }}>
           <IconButton
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon boxSize='6' />}
             aria-label={'Open Menu'}
@@ -71,23 +78,20 @@ export function ManagerNavigation() {
             variant='ghost'
             onClick={isOpen ? onClose : onOpen}
           />
+          <Box flex='1'>
+            {
+               <Flex flex={1} >
+               <Heading size={'sm'}>{pageTitle}</Heading>
+             </Flex>
+            }
+          </Box>
+
           <Flex gap='4' alignItems={'center'}>
 
             {/* <Button variant='ghost' onClick={toggleColorMode}>
               {colorMode === 'light' ? 'Dark' : 'Light'}
             </Button> */}
-            <Button
-              as={Link}
-              onClick={(e) => {
-                e.preventDefault()
-                checkCustomerIsOrganizer(user?.is_organizer)
-              }}
-              variant='ghost'
-              size={{ base: 'sm' }}
-              href={'/events/create'}
-              leftIcon={<AddIcon />}>
-              Criar evento
-            </Button>
+
             <Menu>
               <MenuButton
                 as={Button}

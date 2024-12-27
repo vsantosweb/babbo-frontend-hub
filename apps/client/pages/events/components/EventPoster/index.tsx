@@ -1,6 +1,7 @@
 import { CopyLinkButton } from "@/components";
 import { EventInterface } from "@/types";
-import { Box, IconButton, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, IconButton, useDisclosure } from "@chakra-ui/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { FaArrowLeft, FaExpand } from "react-icons/fa";
 import { Lightbox } from "react-modal-image";
@@ -15,16 +16,16 @@ export default function EventPoster({ event }: { event: EventInterface }) {
     const { onOpen, isOpen, onClose } = useDisclosure();
 
     const router = useRouter();
-    
+
     return (
         <Box
             borderRadius={{ base: '0', md: 'xl' }}
             position={'relative'}
         >
             {isOpen && <Lightbox
-                medium={`${event?.event_image}-md.jpg'`}
-                large={`${event?.event_image}-lg.jpg'`}
-                small={`${event?.event_image}-sm.jpg'`}
+                medium={`${event?.event_image}-md.jpg`}
+                large={`${event?.event_image}-lg.jpg`}
+                small={`${event?.event_image}-sm.jpg`}
                 alt={event?.name}
                 onClose={onClose}
                 hideZoom={true}
@@ -36,7 +37,7 @@ export default function EventPoster({ event }: { event: EventInterface }) {
                 as={'img'}
                 borderRadius={{ base: '0', md: 'xl' }}
                 alt={event?.name as string}
-                width={{base: '100%', lg: '320px'}}
+                width={{ base: '100%', lg: '305px' }}
                 boxShadow={{
                     base: 'none',
                     md: 'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px',
@@ -80,18 +81,7 @@ export default function EventPoster({ event }: { event: EventInterface }) {
                     aria-label='expand-image'
                     icon={<FaExpand />} />
 
-            </Box>
-
-            <Box
-                position={'absolute'}
-                right={0}
-                textAlign={'center'}
-                mt={-15}
-                left={0}
-            >
-                <CopyLinkButton mode='button' link={process.env.NEXT_PUBLIC_URL + router.asPath as string} />
-
-            </Box>
+            </Box>           
         </Box>
     )
 }

@@ -28,6 +28,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const fetchEventData = await eventService.event(id);
   const eventData = fetchEventData.data;
 
+  if (!eventData) {
+    return {
+      redirect: {
+        destination: '/404',
+        permanent: false,
+      },
+    };
+  }
+
   if (moment() > moment(eventData.end_date)) {
     return {
       redirect: {
@@ -72,15 +81,23 @@ function EventShow({ eventData, relatedEvents }: Record<string, any>) {
       image={`${eventData?.event_image}-md.jpg`}
 
     >
-      {!eventData ? <Loader /> : <Stack spacing={{ base: 6, md: 10 }}>
+      {!eventData ? <Loader /> : <Stack spacing={{ base: 0, md: 6 }}>
         <Flex
-          mx={{ base: '-1em' }}
-          backgroundImage={{ base: 'none', md: `linear-gradient(#350053, rgba(0, 0, 0, 0.8)) ,url(${eventData?.event_image}-lg.jpg)` }}
-          backgroundSize={'cover'}
-          backgroundPosition={'center center'}
-          blur={'4px'}
-          color={{ md: '#fff' }}
+          position='relative'
+          minHeight='290px'
+          height='auto'
         >
+          <Box mx={{ base: '-1em' }}
+            backgroundImage={{ base: 'none', md: `linear-gradient(#222, rgba(0, 0, 0, 0.8)) ,url(${eventData?.event_image}-lg.jpg) ` }}
+            backgroundSize={'2%'}
+            backgroundPosition={'center center scroll'}
+            // filter="blur(2px)"
+            w={'100%'}
+            h='290px'
+            margin={'auto'}
+            position="absolute"
+            zIndex={-1}
+          />
           <Flex
             mx={'auto'}
             flexDirection={{ base: 'column', md: 'row' }}
@@ -91,25 +108,31 @@ function EventShow({ eventData, relatedEvents }: Record<string, any>) {
           >
             <EventPoster event={eventData} />
             <Stack
-              spacing={6}
+              spacing={10}
               p={{ base: '1em', md: '1em' }}
               mt={{ base: 4, md: 0 }}
+              justifyContent='space-between'
               flex={1}
               width={'100%'}
             >
-              <EventDetails event={eventData} />
-              <EventInfo event={eventData} />
+              <Stack color={{ md: '#fff' }} spacing={6}>
+                <EventDetails event={eventData} />
+                <EventInfo event={eventData} />
+              </Stack>
+              <Box pt='6'>
+                <Heading size={'md'}>Detalhes</Heading>
+                <Box dangerouslySetInnerHTML={{ __html: eventData.description as string }}></Box>
+              </Box>
             </Stack>
           </Flex>
         </Flex>
-        <Stack spacing={8} m={'auto'} width={'100%'} maxWidth={theme.defaultContainer.width}>
+        
+        <Stack p={{ base: '1em', md: '1em' }} spacing={8} m={'auto'} width={'100%'} maxWidth={theme.defaultContainer.width}>
           <Stack spacing={6}>
-            <Heading size={'md'}>Detalhes</Heading>
-            <Box dangerouslySetInnerHTML={{ __html: eventData.description as string }}></Box>
-            <TicketSaleComponent />
-            <Box>
+            
+            {/* <Box>
               <strong>Organizador:</strong> <Link href={`/organizer?trackid=${eventData.organizer.organizer_id}`}>{eventData.organizer.organizer_name}</Link>
-            </Box>
+            </Box> */}
             <Stack width={'100%'}>
               <Heading size={'lg'}>Local do evento</Heading>
               <EventMap event={eventData} />

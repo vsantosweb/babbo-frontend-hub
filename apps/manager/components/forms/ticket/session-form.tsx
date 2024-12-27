@@ -28,7 +28,7 @@ export const SessionForm: React.FC<{ eventSession: EventSessionType | null }> = 
         formHeader: `${state} sessão`
     }
 
-    const { event } = useEvent();
+    const { eventCustomer } = useEvent();
 
     const { handleCreateSession, handleUpdateSession } = useEvent();
 
@@ -42,14 +42,14 @@ export const SessionForm: React.FC<{ eventSession: EventSessionType | null }> = 
     }, [eventSession]);
 
     const handleCreate: SubmitHandler<EventSessionType> = async (formData) => {
-        event?.id && await handleCreateSession(formData, event?.id).then(response => {
+        eventCustomer?.id && await handleCreateSession(formData, eventCustomer?.id).then(response => {
             setRefresh(prev => !prev)
         })
     };
 
     const handleupdate: SubmitHandler<EventSessionType> = async (formData) => {
 
-        eventSession && event?.id && await handleUpdateSession(formData, event?.id, eventSession.id).then(response => {
+        eventSession && eventCustomer?.id && await handleUpdateSession(formData, eventCustomer?.id, eventSession.id).then(response => {
             setRefresh(prev => !prev)
         })
 

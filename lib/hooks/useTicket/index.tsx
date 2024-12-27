@@ -36,7 +36,6 @@ export function TicketProvider({ children }: { children: ReactNode }) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log(selectedTickets, 'testeee')
         setTotalAmount(selectedTickets.reduce((sum, ticket) => sum + ticket.unit_price * ticket.quantity, 0))
     }, [selectedTickets])
 

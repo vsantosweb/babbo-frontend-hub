@@ -68,9 +68,6 @@ export default function ClientLayout({ ...rest }: LayoutProps) {
           height: 'auto',
           width: '100%',
           // maxWidth: theme.defaultContainer.width,
-          margin: '0 auto',
-          paddingLeft: '1em',
-          paddingRight: '1em',
           paddingBottom: '2.6rem'
         }}
       >

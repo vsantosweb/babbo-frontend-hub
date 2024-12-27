@@ -2,9 +2,10 @@ import Layout from '@/layouts';
 import { AuthProvider, EventProvider, useEvent, useUserLocation } from '@/hooks';
 import { useEffect, useState } from 'react';
 import { HomeSegmented } from '@/themes/babbo';
-import { EventInterface, OrganizerType } from '@/types';
+import { EventInterface } from '@/types';
 import {
-  Box, Button, useDisclosure, Heading, Text, Stack, Flex, AvatarGroup, Avatar, UseDisclosureProps
+  Box, Button, useDisclosure, Heading,  Stack,
+  Input
 } from '@chakra-ui/react';
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import { GoogleAdSense, OrganizerLeadForm } from '@/components';
@@ -105,10 +106,10 @@ function HomePage() {
       >
         <Stack spacing={6} mt={8} flex={1}>
           {/* <Banner /> */}
-          <Box className='app-wrapper' height={'auto'}>
-            {/* <img src={'https://placehold.co/1280x120?text=Adsense'} /> <hr /> */}
+          {/* <Box className='app-wrapper' height={'auto'}>
+            <img src={'https://placehold.co/1280x120?text=Adsense'} /> <hr />
             <GoogleAdSense adClient={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_KEY as string} adSlot={'2752189175'} />
-          </Box>
+          </Box> */}
 
           {/* <HomeSegmented showcase={eventShowcase} /> */}
           <HomeDiscovery dataDiscovery={events} />

@@ -5,6 +5,7 @@ import PasswordResetForm from './password-reset-form'
 import LoginForm from './login-form'
 import PasswordRecoveryResult from './password-recovery-result'
 import RegisterForm from './register-form'
+import { Input } from '@chakra-ui/react'
 
 
 export type AuthFormType = 'recovery-form' | 'token-form' | 'reset-form' | 'login-form' | 'reset-result' | 'register-form'

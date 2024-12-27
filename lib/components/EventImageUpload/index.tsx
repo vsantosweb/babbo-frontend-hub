@@ -60,8 +60,11 @@ export function EventImageUpload({ hookForm }: { hookForm: UseFormReturn<any> })
 
 
     return (
-        <Card boxShadow={'none'}>
-            <CardBody p={0}>
+        <Card borderRadius='xl'  variant='outline' size='xl'  >
+            <CardHeader p='3' borderBottomWidth='1px'>
+                <Text fontWeight='bold'>Imagem do evento</Text>
+            </CardHeader>
+            <CardBody p='4'>
                 <Flex>
                     <Styled.StyledDropZone reject={isDragReject.toString()} {...getRootProps()}>
 
@@ -90,12 +93,12 @@ export function EventImageUpload({ hookForm }: { hookForm: UseFormReturn<any> })
                                 </Stack>
                             </Flex>
                         )}
-                        
+
                         {files.length === 0 && hookForm.getValues('event_image') !== undefined ? <Box overflow="hidden" borderRadius="md" width="100%" height="100%">
                             {
                                 <img
                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                    src={hookForm.getValues('event_image') + '.jpg'}
+                                    src={hookForm.getValues('event_image') + '-lg.jpg'}
                                     alt="Imagem"
                                 />
                             }

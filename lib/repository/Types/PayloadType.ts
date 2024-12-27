@@ -21,6 +21,7 @@ export type EventPayloadType = {
     ticket_partner_name?: string;
     ticket_partner_url?: string;
     is_recurring?: boolean;
+    is_private: boolean;
     recurrence_pattern?: 'daily' | 'weekly' | 'monthly'
 }
 

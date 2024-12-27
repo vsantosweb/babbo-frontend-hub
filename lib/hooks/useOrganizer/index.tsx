@@ -37,11 +37,11 @@ export function OrganizerProvider({ children }: { children: ReactNode }) {
     const checkCustomerIsOrganizer = (isOrganizer: boolean) => {
         
         if (!isOrganizer) {
-            disclosure.onOpen()
+            router.push('/setup')
             return;
         }
 
-        router.push('/events/create')
+        router.push('/')
     }
 
     return (

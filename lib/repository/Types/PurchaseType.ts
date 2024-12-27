@@ -20,4 +20,6 @@ export type PurchaseTicketProps = {
     ticket_type: string
     description: string
     qrcode: string
+    total_amount: number;
+
 }

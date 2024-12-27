@@ -9,22 +9,25 @@ export type EventDisplayType = {
 
 export interface EventInterface {
     id: number;
-    uuid?: string;
-    name?: string;
-    slug?: string;
-    description?: string;
-    event_image?: string;
+    uuid: string;
+    name: string;
+    slug: string;
+    description: string;
+    event_image: string;
+    available_tickets: boolean;
     tags?: string;
     start_date?: string;
     end_date?: string;
     geolocation: string;
-    full_address?: string;
+    full_address: string;
     status: string;
-    place_name?: string;
-    place_city?: string;
+    place_name: string;
+    place_city: string;
     place_geolocation: string;
-    city?: string;
-    category?: string;
+    city: string;
+    place_formatted_address: string;
+    is_private: boolean;
+    category: string;
     impress?: number;
     impressions?: number
     clicks?: number
@@ -33,6 +36,10 @@ export interface EventInterface {
     ticket_partner_url?: string;
     customer: Record<string, any>;
     place: Record<string, any>;
+    place_address_2: string;
+    place_zipcode: string;
+    place_state: string;
+    place_address_number: string;
     organizer?: {
         organizer_id?: string,
         organizer_name?: string,
@@ -82,7 +89,7 @@ export interface EventTicketType {
     max_quantity: number;
     balance: number;
     tax: number;
-    price: number;
+    price: string;
     unit_price: number;
     code: string;
     avialable_quantity: number;
@@ -95,6 +102,7 @@ export interface EventTicketType {
 }
 
 export type EventTicketCartType = {
+    id: number,
     customer: string,
     customer_document: string,
     email: string,
@@ -111,7 +119,7 @@ export type EventTicketCartItemType = {
     sold_out?: boolean,
     session?: string | null,
     quantity: number,
-    unit_price: number,
+    unit_price: number | string,
     total: number,
     ticket_type: string,
     tax: number,

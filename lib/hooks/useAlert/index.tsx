@@ -46,7 +46,7 @@ export function AlertProvider({ children }: { children: ReactNode }) {
         eventCreated: {
             status: 'success',
             title: 'Evento ',
-            feedback: 'foi criado com sucesso. Vamos fazer uma análise e disponibiliza-lo na plataforma em até 24h.'
+            feedback: 'foi criado com sucesso.'
         },
         eventUpdated: {
             status: 'info',

@@ -5,14 +5,17 @@ import { AvailableCities } from "../AvailableCities";
 import { Logo } from "../Logo";
 import { CloseIcon, HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
 import { IoCloseOutline, IoLogOutOutline, IoMenu, IoPersonOutline } from "react-icons/io5";
-import { useAuth } from "@/hooks";
+import { useApp, useAuth } from "@/hooks";
 import Link from "next/link";
 import { IoBagHandle } from "react-icons/io5";
+import { useRouter } from "next/router";
 
 export function NavigationMobile() {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { user, logout, setRequestModalLogin } = useAuth()
+    const { setRedirectPath } = useApp();
+    const router = useRouter();
     return (
 
         <Flex
@@ -68,7 +71,11 @@ export function NavigationMobile() {
                                 </Flex>
                             </Link>
 
-                        </Flex> : <Flex p={3} gap='2' onClick={() => setRequestModalLogin({redirect: '/minhas-compras', active: true})} alignItems='center' borderBottom={'solid 1px #f1f1f1'} width={'100%'}>
+                        </Flex> : <Flex p={3} gap='2' onClick={() => {
+                            console.log(router.asPath)
+                            // setRedirectPath(router.asPath)
+                            // setRequestModalLogin({redirect: router.asPath , active: true})
+                        }} alignItems='center' borderBottom={'solid 1px #f1f1f1'} width={'100%'}>
                             <IoPersonOutline /> <span>Entrar</span>
                         </Flex>
                     }

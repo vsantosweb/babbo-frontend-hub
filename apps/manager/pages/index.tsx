@@ -99,24 +99,42 @@ function Events() {
   if (events === null) return <></>
 
   return (
-    <Layout name='manager'>
-      <Stack>
-        <Flex pt='4'>
-          <Box  flex={1}>
-            <Heading flex={1} mb={4} size={'lg'}>Meus eventos</Heading>
-          </Box>
-          <Flex gap={4}>
-            <Stack spacing={4}>
-              <form onSubmit={handleSubmit(handleSearch)}>
-                <InputGroup>
-                  <InputRightElement>
-                    <IconButton type='submit' isLoading={loading} aria-label='event-search' variant={'none'} icon={<Search2Icon color='gray.300' />} />
-                  </InputRightElement>
-                  <Input {...register('name')} type='search' placeholder='Nome do evento...' />
-                </InputGroup>
-              </form>
-            </Stack>
-          </Flex>
+    <Layout name='manager' title='Meus Eventos'>
+      <Stack spacing='4'>
+        <Stack spacing='2'>
+          <HStack>
+            <Heading size='lg' flex='1'>Meus eventos</Heading>
+            <Button as={Link} href='/events/create' size='sm'>Criar evento</Button>
+          </HStack>
+          <Text>Aqui você encontra a lista de todos os seus eventos cadastrados</Text>
+        </Stack>
+        <Flex p='2' gap='2' bg='gray.50'>
+          <Stack flex='1'>
+            <form onSubmit={handleSubmit(handleSearch)}>
+              <InputGroup>
+                <InputRightElement>
+                  <IconButton type='submit'
+                    isLoading={loading}
+                    aria-label='event-search'
+                    variant={'none'}
+                    icon={<Search2Icon
+                      color='gray.300'
+                    />} />
+                </InputRightElement>
+                <Input bg='white' 
+                {...register('name', 
+                { onChange: e => e.target.value.length <= 0 && handleSearch({ name: e.target.value }) })} 
+                placeholder='Pesquise o nome do evento...' 
+                />
+              </InputGroup>
+            </form>
+          </Stack>
+          {/* <Box>
+            <Select>
+              <option>Passados</option>
+              <option>Proximos</option>
+            </Select>
+          </Box> */}
         </Flex>
         <AlertMessage />
         {events?.length === 0 ? <ResultMessage
@@ -127,31 +145,30 @@ function Events() {
           <Stack spacing={8} h={'100%'} flex={1} >
             {events ? <TableContainer width={'100%'}>
               <Table>
-                <TableCaption>
+                {/* <TableCaption>
                   <Button mr={2}>Preview</Button>
                   <Button>Next</Button>
-                </TableCaption>
+                </TableCaption> */}
                 <Thead>
                   <Tr >
                     <Th width='80px'>Data</Th>
                     <Th width='100%'>Evento</Th>
-                    <Th>criado em</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
                   {events?.map((event: EventInterface) => (
-                    <Tr onClick={() => router.push(`/events/${event.uuid}`)} key={event.id} _hover={{ background: useColorModeValue('black.50', 'black.800')}} cursor={'pointer'}>
+                    <Tr onClick={() => router.push(`/events/${event.uuid}`)} key={event.id} _hover={{ background: useColorModeValue('gray.50', 'black.800') }} cursor={'pointer'}>
                       <Td p='0' >
                         <Datebox date={event.start_date} />
                       </Td>
                       <Td p='2' >
-                        <Flex gap={4}>
+                        <Flex gap={4} alignItems='center'>
                           <Box borderRadius={'10px'} overflow={'hidden'}>
                             <Image objectFit={'cover'} src={`${event.event_image}-md.jpg`} alt={event.name} boxSize="70px" />
                           </Box>
-                          <Stack>
-                            <Heading size={'xs'}>{event.name}</Heading>
-                            <Text color='gray.400'>{event.place_name}</Text>
+                          <Stack spacing='0'>
+                            <Heading size={'sm'}>{event.name}</Heading>
+                            <Text fontSize='sm' color='gray.400'>{event.place_name}</Text>
                           </Stack>
                         </Flex>
                       </Td>

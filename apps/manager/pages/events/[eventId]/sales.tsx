@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-import DataTable from 'datatables.net-react';
-
 import Layout from '@/layouts';
 
 import { Table, Thead, Tbody, Tr, Th, Td, Box, TableContainer, useColorModeValue, Stack } from "@chakra-ui/react";

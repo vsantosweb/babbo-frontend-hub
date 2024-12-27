@@ -23,6 +23,7 @@ export const eventValidatorSchema = {
         .min(Yup.ref('start_date'), 'A data de término deve ser posterior à data de início'),
     event_image: Yup.string().required(),
     description: Yup.string().nullable(),
+    is_private: Yup.boolean(),
     has_external_ticket: Yup.boolean(),
     ticket_partner_url: Yup.string().nullable().when('has_external_ticket', (hasTickets, schema) => {
         return hasTickets[0] ? schema.required('A url do parceiro é obrigatória') : schema;

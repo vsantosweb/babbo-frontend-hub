@@ -17,6 +17,9 @@ import {
 import { IconType } from 'react-icons'
 import { NavItemIcon, NavItem } from './sidebar-menu-item'
 import { useNavigation } from '@/hooks'
+import { CiCalendar } from 'react-icons/ci'
+import { FaCalendar } from 'react-icons/fa'
+import { IoCalendar } from 'react-icons/io5'
 
 export interface LinkIconItemProps {
     name: string
@@ -25,9 +28,8 @@ export interface LinkIconItemProps {
 }
 const LinkItems: Array<LinkIconItemProps> = [
     { name: 'Dashboard', icon: FiHome, path: '#' },
+    { name: 'Eventos', icon: IoCalendar, path: '/' },
     { name: 'Pedidos', icon: FiTrendingUp, path: '#' },
-    { name: 'Eventos', icon: FiCompass, path: '#' },
-    { name: 'Favourites', icon: FiStar, path: '#' },
     { name: 'Configurações', icon: FiSettings, path: '#' },
 ]
 

@@ -6,7 +6,7 @@ import { Footer, ManagerNavigation } from '@/components';
 import { theme } from '@/themes/default';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { Flex, IconButton, Box, Tooltip, Button } from '@chakra-ui/react';
+import { Flex, IconButton, Box, Tooltip, Button, Heading } from '@chakra-ui/react';
 import { ArrowLeftIcon } from '@chakra-ui/icons';
 import { FaArrowLeft } from 'react-icons/fa';
 import SidebarEvent from '@/components/SidebarEvent';
@@ -20,16 +20,17 @@ export default function ManagerLayout({
   description,
   image,
   keywords,
+  actions
 }: {
   children?: JSX.Element[] | JSX.Element;
   title?: string;
   description?: string;
   image?: string;
   keywords?: string;
+  actions?: JSX.Element[]
 }) {
 
-  const { event } = useEvent();
-  const router = useRouter();
+  const { eventCustomer } = useEvent();
 
   return (
     <Styled.DefaultWrapper>
@@ -39,15 +40,16 @@ export default function ManagerLayout({
           position={{ base: 'fixed', sm: 'relative' }}
           display='flex' zIndex={1}
           height={'auto'}
+          width={'1300px'}
           flex={1}
           minHeight='100%'
           shadow={{ base: 'lg', md: 'none' }}>
           <Sidebar />
-          {event && <SidebarEvent />}
+          {eventCustomer && <SidebarEvent />}
         </Box>
 
         <Styled.DefaultContainer>
-          <ManagerNavigation />
+          <ManagerNavigation pageTitle={title} />
           <div
             style={{
               display: 'flex',
@@ -55,17 +57,12 @@ export default function ManagerLayout({
               flex: 1,
               height: 'auto',
               // width: '1170px',
-              width: '100%',
+              width: '1300px',
               padding: '0 1em',
               margin: 'auto'
             }}
           >
-            {/* {
-                router.pathname !== '/' && <Flex mb={8} alignItems={'center'}>
-                  <IconButton onClick={() => router.back()} variant={'link'} icon={<FaArrowLeft />} aria-label='back-page' />
-                  Voltar
-                </Flex>
-              } */}
+           
             {children}
           </div>
           <Footer />

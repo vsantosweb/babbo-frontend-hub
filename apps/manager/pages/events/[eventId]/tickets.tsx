@@ -39,8 +39,10 @@ const TicketPage: NextPage = () => {
     const [sessionId, setSessionId] = useState<number>();
 
     const { refresh, setRefresh } = useApp();
-    const { getSessions, event, handleDeleteSession, handleDeleteBatch, handleDeleteTicket } = useEvent();
+    const { getSessions, eventCustomer, handleDeleteSession, handleDeleteBatch, handleDeleteTicket } = useEvent();
 
+    const event = eventCustomer;
+    
     useEffect(() => {
         if (event) {
             getSessions(event.id).then(response => {

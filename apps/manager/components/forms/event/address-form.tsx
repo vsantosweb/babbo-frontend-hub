@@ -24,17 +24,18 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
 
   useEffect(() => {
     if (address?.length > 0) {
-      setValue('place.zipcode', address[6]?.long_name || '', { shouldValidate: true });
-      setValue('place.address_1', address[1]?.long_name || '', { shouldValidate: true });
-      setValue('place.address_2', address[2]?.long_name || '', { shouldValidate: true });
-      setValue('place.city', address[3]?.long_name || '', { shouldValidate: true });
+      // setValue('place.zipcode', address[6]?.long_name || '', { shouldValidate: true });
+      // setValue('place.address_1', address[1]?.long_name || '', { shouldValidate: true });
+      // setValue('place.address_2', address[2]?.long_name || '', { shouldValidate: true });
+      // setValue('place.city', address[3]?.long_name || '', { shouldValidate: true });
       setValue('place.name', place.name || '', { shouldValidate: true });
-      setValue('place.state', address[4]?.short_name || '', { shouldValidate: true });
-      setValue('place.address_number', address[0]?.long_name || '', { shouldValidate: true });
+      setValue('place.full_address', place.formatted_address || '', { shouldValidate: true });
+      // setValue('place.state', address[4]?.short_name || '', { shouldValidate: true });
+      // setValue('place.address_number', address[0]?.long_name || '', { shouldValidate: true });
       setValue('place.geolocation', `${place?.geometry?.location?.lat()}, ${place?.geometry?.location?.lng()}`)
     }
   }, [address, setValue]);
-  
+
   return (
     <Stack>
       <GoogleAutoComplete captureAddress={setPlace}>
@@ -49,7 +50,7 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
         </FormControl>
       </GoogleAutoComplete>
 
-      { hookForm.getValues('place.full_address') && (
+      {hookForm.getValues('place.full_address') && (
         <Stack>
           <FormControl isInvalid={!!errors?.place?.name}>
             <FormLabel>Local</FormLabel>
@@ -63,18 +64,18 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
 
           <input type={'hidden'} {...register('place.geolocation')} />
 
-          <FormControl isInvalid={!!errors?.place?.zipcode}>
+          {/* <FormControl isInvalid={!!errors?.place?.zipcode}>
             <FormLabel>CEP</FormLabel>
             <Input
               {...register('place.zipcode')}
               type="text"
             />
             <FormErrorMessage>{errors?.place?.zipcode?.message as string}</FormErrorMessage>
-          </FormControl>
+          </FormControl> */}
 
 
 
-          <FormControl isInvalid={!!errors?.place?.address_1}>
+          {/* <FormControl isInvalid={!!errors?.place?.address_1}>
             <FormLabel>Endereço</FormLabel>
             <Input
               {...register('place.address_1')}
@@ -82,9 +83,9 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
               type="text"
             />
             <FormErrorMessage>{errors?.place?.address_1?.message as string}</FormErrorMessage>
-          </FormControl>
+          </FormControl> */}
 
-          <FormControl isInvalid={!!errors?.place?.address_2}>
+          {/* <FormControl isInvalid={!!errors?.place?.address_2}>
             <FormLabel>Bairro</FormLabel>
             <Input
               {...register('place.address_2')}
@@ -92,7 +93,7 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
               type="text"
             />
             <FormErrorMessage>{errors?.place?.address_2?.message as string}</FormErrorMessage>
-          </FormControl>
+          </FormControl> */}
 
           <FormControl>
             <FormLabel>Complemento</FormLabel>
@@ -103,7 +104,7 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
             />
           </FormControl>
 
-          <FormControl isInvalid={!!errors?.place?.city}>
+          {/* <FormControl isInvalid={!!errors?.place?.city}>
             <FormLabel>Cidade</FormLabel>
             <Input
               {...register('place.city')}
@@ -111,9 +112,9 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
               type="text"
             />
             <FormErrorMessage>{errors?.place?.city?.message as string}</FormErrorMessage>
-          </FormControl>
+          </FormControl> */}
 
-          <FormControl isInvalid={!!errors?.place?.state}>
+          {/* <FormControl isInvalid={!!errors?.place?.state}>
             <FormLabel>Estado</FormLabel>
             <Input
               {...register('place.state')}
@@ -121,7 +122,8 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
               type="text"
             />
             <FormErrorMessage>{errors?.place?.state?.message as string}</FormErrorMessage>
-          </FormControl>
+          </FormControl> */}
+          {/*           
           <FormControl isInvalid={!!errors?.place?.state}>
             <FormLabel>Nº</FormLabel>
             <Input
@@ -130,7 +132,7 @@ export default function AddressForm({ hookForm }: { hookForm: any }) {
               type="text"
             />
             <FormErrorMessage>{errors?.place?.address_number?.message as string}</FormErrorMessage>
-          </FormControl>
+          </FormControl> */}
         </Stack>
       )}
     </Stack>

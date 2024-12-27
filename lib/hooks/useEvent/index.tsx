@@ -19,6 +19,7 @@ type EventContextType = EventSessionInterface & EventBatchInterface & EventTicke
   loading: boolean;
   error: string | null;
   event: EventInterface | null;
+  eventCustomer: EventInterface | null;
   fetchEvents: (params?: ParsedUrlQuery | Record<string, any>) => Promise<any>;
   fetchEvent: (id: number | string) => Promise<any>;
   summary: (id: number) => Promise<any>;
@@ -54,6 +55,7 @@ export function EventProvider({ children }: EventProviderProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [event, setEvent] = useState<EventInterface | null>(null);
+  const [eventCustomer, setEventCustomer] = useState<EventInterface | null>(null);
   const [reload, setReload] = useState<boolean>(false);
 
   const eventService = container.get<EventRepositoryInterface>('public');
@@ -67,6 +69,7 @@ export function EventProvider({ children }: EventProviderProps) {
   useEffect(() => {
     if (router.query.eventId) {
       fetchEvent(router.query.eventId as string)
+      fetchEventCustomer(router.query.eventId as string)
       return;
     }
     setEvent(null)
@@ -94,6 +97,7 @@ export function EventProvider({ children }: EventProviderProps) {
     try {
       const event = await eventService.event(id);
       setEvent(event.data);
+
       return event;
     } catch (error) {
       setError(
@@ -104,6 +108,25 @@ export function EventProvider({ children }: EventProviderProps) {
       setLoading(false);
     }
   }
+
+  async function fetchEventCustomer(id: number | string) {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const event = await eventServiceManager.event(id);
+      setEventCustomer(event.data);
+      return event;
+    } catch (error) {
+      setError(
+        'Erro ao buscar detalhes do evento. Por favor, tente novamente mais tarde.'
+      );
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  }
+
 
   async function fetchRelatedEvents(id: number | string): Promise<any> {
     setLoading(true);
@@ -252,6 +275,7 @@ export function EventProvider({ children }: EventProviderProps) {
         fetchAvailableCities,
         createEvent,
         event,
+        eventCustomer,
         setEvent,
         reload,
         setReload,

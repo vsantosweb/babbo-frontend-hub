@@ -46,9 +46,11 @@ interface SidebarProps extends BoxProps { }
 
 const SidebarContent = ({ ...rest }: SidebarProps) => {
 
-    const { event } = useEvent()
+    const { eventCustomer } = useEvent();
     const { onClose } = useNavigation();
 
+    const event = eventCustomer;
+    
     const LinkItems: Array<LinkItemProps> = [
         { name: 'Painel de controle', icon: FiPieChart, path: `/events/${event?.uuid}` },
         { name: 'Vendas', icon: FiTrendingUp, path: `/events/${event?.uuid}/sales` },

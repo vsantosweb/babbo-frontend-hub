@@ -1,15 +1,7 @@
-// import { ServiceHeader } from '@/components';
-import { useState, useEffect, useRef, Fragment, Suspense } from 'react';
-import * as Styles from './style';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Banner, EventCard, GoogleAdSense, ResultMessage } from '@/components';
-import { Box, Button, Divider, Flex, Grid, GridItem, Heading, Stack, Text } from '@chakra-ui/react';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import {EventCard, ResultMessage } from '@/components';
+import { Grid, GridItem, Heading, Stack } from '@chakra-ui/react';
 
-import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
-import Link from 'next/link';
 import { EventInterface } from '@/types';
-import { Col, Container, Row } from 'react-grid-system';
 import eventsMock from './discovery.json';
 import _ from 'lodash';
 import { useEvent } from '@/hooks';
@@ -25,8 +17,6 @@ export function HomeDiscovery({ dataDiscovery }: {
   dataDiscovery: EventInterface[] | null;
 }) {
   eventsMock;
-
-  const { loading } = useEvent();
 
   const renderWithAdSense = (event: EventInterface, index: number) => {
     if (index > 0 && index % 10 === 0) {
@@ -53,11 +43,11 @@ export function HomeDiscovery({ dataDiscovery }: {
   />;
 
   return (
-    <>
-      <div className='app-wrapper'>
+    <Stack spacing='8' className='app-wrapper'>
+      <div>
         <Heading fontWeight={'300'} size={'lg'}>Os melhores eventos da sua região em um só lugar</Heading>
       </div>
-      <Grid className='app-wrapper' templateColumns={{
+      <Grid templateColumns={{
         lg: 'repeat(5, minmax(0, 1fr))',
         md: 'repeat(2, minmax(0, 1fr))',
         sm: 'repeat(1, minmax(0, 1fr))',
@@ -65,6 +55,6 @@ export function HomeDiscovery({ dataDiscovery }: {
         gap={4}>
         {dataDiscovery?.map((event, index) => renderWithAdSense(event, index))}
       </Grid>
-    </>
+    </Stack>
   );
 }

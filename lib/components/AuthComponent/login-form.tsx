@@ -4,30 +4,23 @@ import { useAuth } from '@/hooks';
 import Layout from '@/layouts'
 import { CredentialsType } from '@/types';
 import {
-  Flex,
   Box,
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
   Stack,
   Button,
-  Heading,
   Text,
-  useColorModeValue,
   Divider,
   HStack,
-  StackDivider,
 } from '@chakra-ui/react'
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FaApple, FaGoogle } from 'react-icons/fa';
-import { AuthFormContext, AuthFormContextInterface } from '.';
+import { FaGoogle } from 'react-icons/fa';
+import { AuthFormContext } from '.';
 
 export default function LoginForm() {
-  const { handleSubmit, register, formState: { isValid, errors, isSubmitting } } = useForm({ mode: 'onChange' });
+  const { handleSubmit, register, formState: { isValid, isSubmitting } } = useForm({ mode: 'onChange' });
 
   const context = useContext(AuthFormContext)
   const { login } = useAuth();

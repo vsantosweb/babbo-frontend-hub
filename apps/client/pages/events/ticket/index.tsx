@@ -35,40 +35,40 @@ function TicketSaleComponent() {
     };
 
     return (
-        null
-        // <Box p={4} borderWidth="1px" borderRadius="lg">
-        //     <Heading as="h2" size="md" mb={4}>Venda de Ingressos</Heading>
-        //     <Accordion allowMultiple>
-        //         {Object.keys(ticketPrices).map(type => (
-        //             <AccordionItem key={type}>
-        //                 <h2>
-        //                     <AccordionButton>
-        //                         <Box flex="1" textAlign="left">
-        //                             {type} - R$ {ticketPrices[type].toFixed(2)}
-        //                         </Box>
-        //                         <AccordionIcon />
-        //                     </AccordionButton>
-        //                 </h2>
-        //                 <AccordionPanel pb={4}>
-        //                     <NumberInput
-        //                         min={0}
-        //                         max={10}
-        //                         value={ticketCount[type] || 0}
-        //                         onChange={(valueString) => handleTicketCountChange(type, parseInt(valueString))}
-        //                         allowMouseWheel
-        //                     >
-        //                         <NumberInputField />
-        //                         <NumberInputStepper>
-        //                             <Button onClick={() => handleTicketCountChange(type, (ticketCount[type] || 0) - 1)}><MinusIcon /></Button>
-        //                             <Button onClick={() => handleTicketCountChange(type, (ticketCount[type] || 0) + 1)}><AddIcon /></Button>
-        //                         </NumberInputStepper>
-        //                     </NumberInput>
-        //                 </AccordionPanel>
-        //             </AccordionItem>
-        //         ))}
-        //     </Accordion>
-        //     <Button colorScheme="blue" onClick={handleCheckout}>Checkout</Button>
-        // </Box>
+        
+        <Box p={4} borderWidth="1px" borderRadius="lg">
+            <Heading as="h2" size="md" mb={4}>Venda de Ingressos</Heading>
+            <Accordion allowMultiple>
+                {Object.keys(ticketPrices).map(type => (
+                    <AccordionItem key={type}>
+                        <h2>
+                            <AccordionButton>
+                                <Box flex="1" textAlign="left">
+                                    {type} - R$ {ticketPrices[type].toFixed(2)}
+                                </Box>
+                                <AccordionIcon />
+                            </AccordionButton>
+                        </h2>
+                        <AccordionPanel pb={4}>
+                            <NumberInput
+                                min={0}
+                                max={10}
+                                value={ticketCount[type] || 0}
+                                onChange={(valueString) => handleTicketCountChange(type, parseInt(valueString))}
+                                allowMouseWheel
+                            >
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                    <Button onClick={() => handleTicketCountChange(type, (ticketCount[type] || 0) - 1)}><MinusIcon /></Button>
+                                    <Button onClick={() => handleTicketCountChange(type, (ticketCount[type] || 0) + 1)}><AddIcon /></Button>
+                                </NumberInputStepper>
+                            </NumberInput>
+                        </AccordionPanel>
+                    </AccordionItem>
+                ))}
+            </Accordion>
+            <Button colorScheme="blue" onClick={handleCheckout}>Checkout</Button>
+        </Box>
     );
 }
 

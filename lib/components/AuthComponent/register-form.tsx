@@ -22,6 +22,7 @@ export default function RegisterForm() {
             // Aqui você adicionaria a lógica para registrar o usuário, como uma chamada para uma API
             console.log("Dados do formulário:", data);
         } catch (error) {
+            console.log(error, 'errorerrorerror')
             setErrorMessage("Erro ao registrar. Tente novamente.");
         }
     };
@@ -59,7 +60,7 @@ export default function RegisterForm() {
                     </FormControl>
 
                     {/* Celular */}
-                    <FormControl isInvalid={!!errors.phone}>
+                    {/* <FormControl isInvalid={!!errors.phone}>
                         <FormLabel>Celular</FormLabel>
                         <Input
                             type='tel'
@@ -73,7 +74,7 @@ export default function RegisterForm() {
                             })}
                         />
                         <FormErrorMessage>{errors.phone?.message}</FormErrorMessage>
-                    </FormControl>
+                    </FormControl> */}
 
                     {/* Senha */}
                     <FormControl isInvalid={!!errors.password}>

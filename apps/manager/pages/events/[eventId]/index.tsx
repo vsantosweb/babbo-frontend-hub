@@ -45,8 +45,10 @@ const stats = [
 export default function Event() {
 
     const [summaryData, setSummaryData] = useState<Record<string, any>>();
-    const { event, summary } = useEvent();
+    const { eventCustomer, summary } = useEvent();
 
+    const event = eventCustomer;
+    
     useEffect(() => {
 
         if (event) summary(event?.id as number).then(response => {
@@ -111,7 +113,7 @@ export default function Event() {
                             </Stat>
                             <Stat borderRadius={'xl'} gap='2'>
                                 <StatLabel>Repassado para a carteira</StatLabel>
-                                <StatNumber>{formatPrice(summaryData?.financial.average_ticket)}</StatNumber>
+                                <StatNumber>{formatPrice(0)}</StatNumber>
                             </Stat>
                             <Stat borderRadius={'xl'} gap='2'>
                                 <StatLabel>Valor a receber</StatLabel>

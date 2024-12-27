@@ -9,7 +9,7 @@ import Cookies from 'js-cookie';
 import container from '@/container';
 import { LoginModal } from '@/components';
 import { eventCart } from '../useCart';
-
+import { useApp } from '@/hooks'
 
 
 
@@ -87,6 +87,8 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
   const [rendering, setRendering] = useState<boolean>(true);
   const [checkingPermissions, setCheckingPermissions] = useState<boolean>(false);
   const [requestModalLogin, setRequestModalLogin] = useState<{ redirect: string, active: boolean } | null>(null);
+  const { appName, redirectPath } = useApp();
+  const isStoreApp = window.location.origin === process.env.NEXT_PUBLIC_STORE_URL;
 
 
   const router = useRouter();
@@ -101,11 +103,11 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
   const authService = container.get<AuthRepositoryInterface>(middleware);
 
   useEffect(() => {
-    session(router.asPath)
+    session()
   }, [router.pathname]);
 
 
-  const session = async (url: string) => {
+  const session = async () => {
 
     return await authService.session().then((response) => {
 
@@ -145,11 +147,10 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
 
     setCheckingPermissions(true);
 
-    // Verifica se a rota atual corresponde ao padrão '/events/**/**'
-    const isEventRoute = router.pathname.startsWith('/events');
+    const isOrganizerApp = window.location.origin === process.env.NEXT_PUBLIC_ORGANIZER_URL;
 
-    if (isEventRoute && !user.is_organizer) {
-      await router.push('/403').then(() => setCheckingPermissions(false))
+    if (isOrganizerApp && !user.is_organizer) {
+      await router.push('/setup').then(() => setCheckingPermissions(false))
     };
 
     await setCheckingPermissions(false);
@@ -172,18 +173,15 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
 
         Cookies.set('token', response?.data.data.token, { expires: expiresAt })
         Cookies.set('token-exp', expiresAt.toString(), { expires: expiresAt });
-        session(router.asPath);
+        session();
+        router.push(redirectPath)
+        setRequestModalLogin(null)
         
-        eventCart.emit('userLoggedIn');
-
-        if (redirect) router.push(redirect)
-
-        if (requestModalLogin?.redirect) {
-          router.push(requestModalLogin.redirect)
-          setRequestModalLogin(null)
+        if(redirectPath.includes('payment')){
+          eventCart.emit('userLoggedIn')
         }
-        // router.push('/');
       }
+
       // Retorna a resposta da função de login
       return response?.data;
     } catch (error) {
@@ -200,8 +198,13 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
     try {
       // Chama a função de logout do serviço de autenticação
       await authService.logout().then(response => {
+
+        if (isStoreApp) {
+          router.push(router.asPath)
+        }
         if (config?.loginRoute) {
           window.location.href = config?.loginRoute
+          return;
         }
 
       });
@@ -265,10 +268,18 @@ export function AuthProvider({ children, middleware, config }: AuthProviderProps
 
     return authService.register(data).then(response => {
       if (response?.data.success) {
-        const expiresAt = new Date(response.data.data.expires_in * 1000);
-        Cookies.set('token', response?.data.data.token, { expires: expiresAt });
-        Cookies.set('token-exp', expiresAt.toString(), { expires: expiresAt });
-        window.location.href = '/minhas-compras'
+
+        const expiresAt = new Date(response.data.data.expires_in * 1000)
+        Cookies.set('token', response?.data.data.token, { expires: expiresAt })
+        Cookies.set('token-exp', expiresAt.toString(), { expires: expiresAt })
+        session()
+        router.push(redirectPath)
+
+        if(redirectPath.includes('payment')){
+          eventCart.emit('userLoggedIn')
+        }
+
+        setRequestModalLogin(null)
       }
       return response
     })

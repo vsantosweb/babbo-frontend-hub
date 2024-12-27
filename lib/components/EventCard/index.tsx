@@ -50,6 +50,8 @@ export const EventCard = (event: EventInterface) => {
         minHeight='400px'
         borderRadius="lg"
         overflow="hidden"
+        shadow='2xl'
+
         // bg="black.800" // cor de fundo estilo Netflix
       >
         {/* Imagem com bordas arredondadas */}
@@ -60,6 +62,7 @@ export const EventCard = (event: EventInterface) => {
           width="100%"
           height="360px"
           objectFit="cover"
+
           mb={4}
         />
 

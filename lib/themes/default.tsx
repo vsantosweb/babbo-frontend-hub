@@ -14,6 +14,10 @@ import { mode } from '@chakra-ui/theme-tools';
 import { Modal } from './components/modal';
 import { Menu } from './components/menu';
 
+import "@fontsource/inter/400.css";  // Peso 400
+import "@fontsource/inter/600.css";  // Peso 600
+import "@fontsource/inter/700.css";  // Peso 700
+
 const components = ['Button', 'Input', 'NumberInput', 'PinInput', 'Swith', 'Select', 'Textarea', 'Checkbox', 'Radio', 'Badge'];
 
 const defaultProps = withDefaultProps({
@@ -27,15 +31,32 @@ const defaultColorScheme = withDefaultColorScheme({
 })
 
 export const theme: ThemeOverride = extendTheme({
+
+  fonts: {
+    heading: `'inter', sans-serif`, // Usado para títulos
+    body: `'inter', sans-serif`,    // Usado para corpo de texto
+  },
+  styles: {
+    global: (props: any) => ({
+      "*": {
+        fontFamily: `'inter', sans-serif`,
+      },
+      body: {
+        color: mode('white.800', 'whiteAlpha.900')(props),
+        bg: mode('white.50', 'black.600')(props),
+      },
+    }),
+  },
   config: {
-    initialColorMode: 'dark',
+    initiinialColorMode: 'light', // Define o tema padrão
+    useSystemColorMode: false,  // Adapta ao tema do sistema
   },
   defaultRadius: '16px',
   defaultContainer: {
     width: '1280px',
     spacing: '.9em',
   },
-  
+
   colors: {
     primary: {
       50: '#FFE6EF',
@@ -63,14 +84,7 @@ export const theme: ThemeOverride = extendTheme({
       900: "#050505",
     },
   },
-  styles: {
-    global: (props:any) => ({
-      body: {
-        color: mode('gray.800', 'whiteAlpha.900')(props),
-        bg: mode('gray.50', 'black.600')(props),
-      },
-    }),
-  },
+
   components: {
     Button: Button,
     Input: Input,

@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import {
     Button,
@@ -21,15 +21,32 @@ import {
     Select,
     Alert,
     AlertIcon,
+
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    PopoverHeader,
+    PopoverBody,
+    PopoverFooter,
+    PopoverArrow,
+    PopoverCloseButton,
+    PopoverAnchor,
+    ButtonGroup,
+    Flex,
+    IconButton,
+    Divider,
+
 } from '@chakra-ui/react';
 import { EventTicketType } from '@/types';
 import { useApp, useEvent } from '@/hooks';
-import { TextArea } from '@adobe/react-spectrum';
+import { FaQuestionCircle } from "react-icons/fa";
+import { formatPrice } from '@/tools';
 
-export const TicketForm: React.FC<{ ticket?:  EventTicketType | null, sessionId: number|undefined }> = ({ ticket, sessionId }) => {
+export const TicketForm: React.FC<{ ticket?: EventTicketType | null, sessionId: number | undefined }> = ({ ticket, sessionId }) => {
 
     const { register, handleSubmit, watch, setValue, formState: { errors, isSubmitting } } = useForm<EventTicketType>();
     const { setRefresh } = useApp();
+    const [prices, setPrices] = useState<any>();
 
     const state = ticket?.id ? 'Atualizar' : 'Adicionar novo';
 
@@ -56,20 +73,47 @@ export const TicketForm: React.FC<{ ticket?:  EventTicketType | null, sessionId:
         }
     }, [ticket]);
 
+    useEffect(() => {
+        setPrices(calculateFee(watch('price'), watch('include_fee')))
+        console.log(watch('include_fee'))
+    }, [watch('price'), watch('include_fee')])
+
     const handleCreate: SubmitHandler<EventTicketType> = async (formData) => {
-        
+
         sessionId && await handleCreateTicket(formData, sessionId).then(response => {
             setRefresh(prev => !prev);
         });
     };
 
     const handleUpdate: SubmitHandler<EventTicketType> = async (formData) => {
-        console.log(sessionId , ticket?.id)
         sessionId && ticket?.id && await handleUpdateTicket(formData, sessionId, ticket?.id).then(response => {
             setRefresh(prev => !prev);
         });
     };
-    console.log(isTicketFree, 'isTicketFree')
+
+    const calculateFee = (amount: string, includeFee: boolean | number) => {
+        const price = parseFloat(amount);
+        const fixedFee = 2;
+        const percentageFee = price > 25 ? (price * (10 / 100)) : 10 * (0 / 100); // R$ 0,00
+        const totalFee = fixedFee + percentageFee; // R$ 5,00
+
+        if (includeFee) {
+            return {
+                total: price - totalFee,
+                totalFee: totalFee,
+                buyerPrice: price,
+                info: 'Ao absorver a taxa de serviço, ela será incluída no preço final de venda e não será mostrada ao comprador'
+            };
+        }
+        return {
+            total: price,
+            totalFee: totalFee,
+            buyerPrice: price + totalFee,
+            info: 'A taxa de serviço é repassada ao comprador, sendo exibida junto com o valor do ingresso'
+        };
+
+    }
+
     return (
         <Stack pb='4' w='100%' mt={8}>
             <Stack spacing='4'>
@@ -95,8 +139,10 @@ export const TicketForm: React.FC<{ ticket?:  EventTicketType | null, sessionId:
 
                 <FormControl isDisabled={ticket?.is_selling} isInvalid={!!errors.ticket_type}>
                     <FormLabel htmlFor='ticket_type'>Tipo do ingresso</FormLabel>
-                    <Select {...register('ticket_type', { required: 'Ticket type is required', 
-                        onChange: () => setValue('price', 0) })} placeholder='Selecione...'>
+                    <Select {...register('ticket_type', {
+                        required: 'Ticket type is required',
+                        onChange: () => setValue('price', '0')
+                    })} placeholder='Selecione...'>
                         <option value='paid'>Pago</option>
                         <option value='free'>Gratuito</option>
                     </Select>
@@ -104,63 +150,89 @@ export const TicketForm: React.FC<{ ticket?:  EventTicketType | null, sessionId:
                     <FormErrorMessage>{errors.ticket_type && errors.ticket_type.message}</FormErrorMessage>
                 </FormControl>
 
-                <FormControl isDisabled={watch('ticket_type') === 'free' || ticket?.is_selling} isInvalid={!!errors.price}>
-                    <FormLabel htmlFor='price'>Preço</FormLabel>
-                    <InputGroup>
-                        <InputLeftElement pointerEvents='none'> R$ </InputLeftElement>
+                {watch('ticket_type') && <Stack borderRadius='lg' bg='white' borderWidth='1px' spacing='4' p='4'>
+                    <FormControl isDisabled={watch('ticket_type') === 'free' || ticket?.is_selling} isInvalid={!!errors.price}>
+                        <FormLabel htmlFor='price'>Preço</FormLabel>
+                        <HStack spacing='4'>
+                            <InputGroup flex='2'>
+                                <InputLeftElement> R$ </InputLeftElement>
+                                <Input
+                                    type='tel'
+                                    placeholder='0,00'
+                                    {...register('price', { required: !isTicketFree && 'Price is required' })}
+                                />
+                            </InputGroup>
+                        </HStack>
+                        <FormErrorMessage>{errors.price && errors.price.message}</FormErrorMessage>
+                    </FormControl>
+                    {watch('ticket_type') === 'paid' && <Stack fontSize={'sm'} spacing='4'>
+                        <Stack>
+                            <HStack>
+                                <Box flex='1'>Valor a receber</Box>
+                                <Box>{formatPrice(prices.total)}</Box>
+                            </HStack>
+                            <HStack>
+                                <Box flex='1'>Taxa</Box>
+                                <Box>{formatPrice(prices.totalFee)}</Box>
+                            </HStack>
+                        </Stack>
+                        <Divider />
+                        <HStack>
+                            <Box flex='1'>Valor do comprador</Box>
+                            <Box>{formatPrice(prices.buyerPrice)}</Box>
+                        </HStack>
+
+                        <FormControl display='flex' alignItems='center'>
+                            <Switch mr='2' isChecked={!!watch('include_fee')} {...register('include_fee')} />
+                            <FormLabel mb='0'> Absorver taxa de serviço? </FormLabel>
+                        </FormControl>
+                        <Text color='gray.600'> {prices.info} </Text>
+                    </Stack>}
+
+                </Stack>}
+
+                <Stack borderRadius='lg' bg='white' borderWidth='1px' spacing='4' p='4'>
+                    <FormControl isInvalid={!!errors.quantity}>
+                        <FormLabel htmlFor='quantity'>Quantidade</FormLabel>
                         <Input
-                            type='tel'
-                            placeholder='0,00'
-                            {...register('price', { required: !isTicketFree && 'Price is required' })}
+                            id='quantity'
+                            type='number'
+                            {...register('quantity', { required: 'Quantity is required' })}
                         />
+                        <FormErrorMessage>{errors.quantity && errors.quantity.message}</FormErrorMessage>
+                    </FormControl>
 
-                    </InputGroup>
-                    <Checkbox mt='2' isChecked={!!watch('include_fee')} {...register('include_fee')}>Absorver taxa de serviço?</Checkbox>
-                    <FormErrorMessage>{errors.price && errors.price.message}</FormErrorMessage>
-                </FormControl>
-                <FormControl isInvalid={!!errors.quantity}>
-                    <FormLabel htmlFor='quantity'>Quantidade</FormLabel>
-                    <Input
-                        id='quantity'
-                        type='number'
-                        {...register('quantity', { required: 'Quantity is required' })}
-                    />
-                    <FormErrorMessage>{errors.quantity && errors.quantity.message}</FormErrorMessage>
-                </FormControl>
+                    <FormControl isInvalid={!!errors.price}>
+                        <FormLabel htmlFor='price'>Ingressos por pedido</FormLabel>
+                        <HStack>
 
-                <FormControl isInvalid={!!errors.price}>
-                    <FormLabel htmlFor='price'>Ingressos por pedido</FormLabel>
-                    <HStack>
+                            <Box>
+                                <Input
+                                    id='price'
+                                    type='number'
+                                    step='0.01'
+                                    {...register('min_quantity')}
+                                />
+                                <FormHelperText fontSize={'xs'}>Quantitdade mínima</FormHelperText>
+                            </Box>
+                            <Box>
+                                <Input
+                                    id='price'
+                                    type='number'
+                                    step='0.01'
+                                    {...register('max_quantity')}
+                                />
+                                <FormHelperText fontSize={'xs'}>Quantidade máxima</FormHelperText>
+                            </Box>
+                        </HStack>
+                    </FormControl>
 
-                        <Box>
-                            <Input
-                                id='price'
-                                type='number'
-                                step='0.01'
-                                {...register('min_quantity')}
-                            />
-                            <FormHelperText fontSize={'xs'}>Quantitdade mínima</FormHelperText>
-                        </Box>
-                        <Box>
-                            <Input
-                                id='price'
-                                type='number'
-                                step='0.01'
-                                {...register('max_quantity')}
-                            />
-                            <FormHelperText fontSize={'xs'}>Quantidade máxima</FormHelperText>
-                        </Box>
-                    </HStack>
-                </FormControl>
+                    <FormControl display='flex' alignItems='center'>
+                        <FormLabel mb='0'> Visibilidade </FormLabel>
+                        <Switch isChecked={!!watch('is_visible')} {...register('is_visible')} />
+                    </FormControl>
 
-
-
-
-                <FormControl display='flex' alignItems='center'>
-                    <FormLabel htmlFor='email-alerts' mb='0'> Visibilidade </FormLabel>
-                    <Switch isChecked={!!watch('is_visible')} {...register('is_visible')} id='email-alerts' />
-                </FormControl>
-
+                </Stack>
                 <FormControl isInvalid={!!errors.description}>
                     <FormLabel htmlFor='description'>Descrição</FormLabel>
                     <Textarea placeholder='Ex: Acesso VIP com brindes' {...register('description')}></Textarea>

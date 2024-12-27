@@ -90,7 +90,7 @@ export const NavItemIcon = ({ item, ...rest }: { item: LinkIconItemProps }) => {
     return (
         <Box
             as={Link}
-            href='#'
+            href={item.path}
             style={{ textDecoration: 'none' }}
             _focus={{ boxShadow: 'none' }}>
             <Tooltip hasArrow label={item.name} placement='right-start' aria-label={item.name}>
